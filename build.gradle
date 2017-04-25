@@ -61,7 +61,7 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile "org.codetome:hexameter-core:3.0.0"
+        //compile "org.codetome:hexameter-core:3.0.0"
         compile group: 'commons-io', name: 'commons-io', version: '2.5'
     }
 }
