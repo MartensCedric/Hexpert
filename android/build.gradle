@@ -1,6 +1,6 @@
 android {
-    buildToolsVersion "25.0.2"
-    compileSdkVersion 20
+    buildToolsVersion "23.0.3"
+    compileSdkVersion 23
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -18,9 +18,9 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.cedricmartens"
+        applicationId "com.martenscedric.hexcity"
         minSdkVersion 9
-        targetSdkVersion 20
+        targetSdkVersion 23
     }
 }
 
@@ -71,7 +71,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.cedricmartens/com.cedricmartens.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.martenscedric.hexcity/com.martenscedric.hexcity.AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.
