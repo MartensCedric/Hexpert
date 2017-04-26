@@ -17,4 +17,9 @@ public class HexCity extends Game {
 		AssetLoader.load();
 		this.setScreen(new MainMenuScreen());
 	}
+
+	@Override
+	public void render() {
+		super.render();
+	}
 }

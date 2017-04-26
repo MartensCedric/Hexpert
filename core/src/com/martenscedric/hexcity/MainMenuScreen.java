@@ -4,12 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Created by 1544256 on 2017-04-26.
  */
 
-public class MainMenuScreen implements Screen
+public class MainMenuScreen extends StageScreen
 {
     private SpriteBatch batch;
     private SkyEffect skyEffect;

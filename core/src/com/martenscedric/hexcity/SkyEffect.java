@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
+
 /**
  * Created by 1544256 on 2017-04-25.
  */
@@ -27,7 +29,7 @@ public class SkyEffect implements Tickable, Drawable
 
     public SkyEffect()
     {
-        this.cloudTexture = AssetLoader.assetManager.get("sprites/cloud.png");
+        this.cloudTexture = AssetLoader.assetManager.get(TEXTURE_CLOUD);
         createClouds();
     }
 
@@ -64,7 +66,10 @@ public class SkyEffect implements Tickable, Drawable
 
     @Override
     public void draw(Batch batch) {
-
+        for(Cloud c : clouds)
+        {
+            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y);
+        }
     }
 }
 

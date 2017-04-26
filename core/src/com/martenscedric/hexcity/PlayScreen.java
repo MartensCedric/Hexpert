@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * Created by 1544256 on 2017-04-26.
  */
 
-public class PlayScreen implements Screen {
-
+public class PlayScreen  extends StageScreen
+{
     private final HexCity hexCity;
     private SkyEffect skyEffect;
     private SpriteBatch batch;
