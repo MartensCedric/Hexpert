@@ -13,20 +13,21 @@ import java.util.Random;
  * Created by 1544256 on 2017-04-25.
  */
 
-public class SkyEffect implements Tickable
+public class SkyEffect implements Tickable, Drawable
 {
     private final int START_CLOUD_COUNT = 8;
     private final float CLOUD_SPEED_MIN = 0.275f;
     private final float CLOUD_SPEED_MAX = 0.325f;
 
     private static Random r = new Random();
+    private Texture cloudTexture;
 
     public List<Cloud> clouds = new ArrayList<Cloud>();
     private float frequency;
 
-    public SkyEffect(float frequency)
+    public SkyEffect()
     {
-        this.frequency = frequency;
+        this.cloudTexture = AssetLoader.assetManager.get("sprites/cloud.png");
         createClouds();
     }
 
@@ -49,8 +50,7 @@ public class SkyEffect implements Tickable
 
             if(c.getPosition().x > Gdx.graphics.getWidth())
             {
-                clouds.remove(i);
-                i--;
+                c.getPosition().x = -Gdx.graphics.getWidth();
             }else{
                 c.getPosition().x += c.getSpeed();
             }
@@ -60,6 +60,11 @@ public class SkyEffect implements Tickable
     @Override
     public void tick() {
         tickClouds();
+    }
+
+    @Override
+    public void draw(Batch batch) {
+
     }
 }
 
