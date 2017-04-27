@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.io.File;
 
 public class HexCity extends Game {
-	
+
+
+	private MainMenuScreen mainMenuScreen;
 	@Override
 	public void create () {
 		AssetLoader.load();
-		this.setScreen(new MainMenuScreen(this));
+		mainMenuScreen = new MainMenuScreen(this);
+		this.setScreen(mainMenuScreen);
 	}
 
 	@Override

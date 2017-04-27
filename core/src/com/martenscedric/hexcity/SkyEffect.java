@@ -17,11 +17,11 @@ import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
 
 public class SkyEffect implements Tickable, Drawable
 {
-    private final int START_CLOUD_COUNT = 8;
+    private final int START_CLOUD_COUNT = 6;
     private final float CLOUD_SPEED_MIN = 0.275f;
     private final float CLOUD_SPEED_MAX = 0.325f;
 
-    private static Random r = new Random(5);
+    private static Random r = new Random();
     private Texture cloudTexture;
 
     public List<Cloud> clouds = new ArrayList<Cloud>();
@@ -52,7 +52,7 @@ public class SkyEffect implements Tickable, Drawable
 
             if(c.getPosition().x > Gdx.graphics.getWidth())
             {
-                c.getPosition().x = -cloudTexture.getWidth();
+                c.getPosition().x = -cloudTexture.getWidth()*3;
             }else{
                 c.getPosition().x += c.getSpeed();
             }
@@ -68,7 +68,7 @@ public class SkyEffect implements Tickable, Drawable
     public void draw(Batch batch) {
         for(Cloud c : clouds)
         {
-            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y, cloudTexture.getWidth(), cloudTexture.getHeight());
+            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y, cloudTexture.getWidth()*3, cloudTexture.getHeight()*3);
         }
     }
 }
