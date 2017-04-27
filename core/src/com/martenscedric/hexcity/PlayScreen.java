@@ -1,6 +1,8 @@
 package com.martenscedric.hexcity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -10,13 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PlayScreen  extends StageScreen
 {
     private final HexCity hexCity;
-    private SkyEffect skyEffect;
     private SpriteBatch batch;
 
     public PlayScreen(HexCity hexCity) {
         this.hexCity = hexCity;
         this.batch = new SpriteBatch();
-        this.skyEffect = new SkyEffect();
     }
 
     @Override
@@ -25,9 +25,10 @@ public class PlayScreen  extends StageScreen
     }
 
     @Override
-    public void render(float delta) {
-        skyEffect.tick();
-        skyEffect.draw(batch);
+    public void render(float delta)
+    {
+        Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override

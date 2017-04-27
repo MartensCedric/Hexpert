@@ -15,7 +15,7 @@ public class HexCity extends Game {
 	@Override
 	public void create () {
 		AssetLoader.load();
-		this.setScreen(new MainMenuScreen());
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override

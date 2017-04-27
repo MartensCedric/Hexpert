@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * Created by 1544256 on 2017-04-26.
@@ -19,24 +21,39 @@ public class MainMenuScreen extends StageScreen
     private SpriteBatch batch;
     private SkyEffect skyEffect;
     private TextButton playButton;
+    private HexCity hexCity;
 
-    public MainMenuScreen() {
+    public MainMenuScreen(final HexCity hexCity) {
+
         super();
+        this.hexCity = hexCity;
+        Gdx.input.setInputProcessor(getStage());
         batch = new SpriteBatch();
         skyEffect = new SkyEffect();
+
         Skin skin = AssetLoader.getSkin();
         skin.add("default-font", AssetLoader.getFont(), BitmapFont.class);
         playButton = new TextButton("Play", skin);
-        playButton.setX(300);
-        playButton.setY(300);
-        playButton.setWidth(300);
-        playButton.setHeight(100);
+        playButton.setWidth(Gdx.graphics.getWidth()*0.35f);
+        playButton.setHeight(Gdx.graphics.getHeight()*0.20f);
+        playButton.setX(Gdx.graphics.getWidth()/2 - playButton.getWidth()/2);
+        playButton.setY(Gdx.graphics.getHeight()/2 - playButton.getHeight()/2);
+        playButton.getLabel().setFontScale(5f);
+        playButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                hexCity.setScreen(new PlayScreen(hexCity));
+                super.clicked(event, x, y);
+            }
+        });
+
         getStage().addActor(playButton);
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(getStage());
     }
 
     @Override
