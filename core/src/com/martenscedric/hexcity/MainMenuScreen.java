@@ -29,7 +29,7 @@ public class MainMenuScreen extends StageScreen
         this.hexCity = hexCity;
         Gdx.input.setInputProcessor(getStage());
         batch = new SpriteBatch();
-        skyEffect = new SkyEffect();
+        skyEffect = new SkyEffect(hexCity.assetManager);
 
         Skin skin = AssetLoader.getSkin();
         skin.add("default-font", AssetLoader.getFont(), BitmapFont.class);

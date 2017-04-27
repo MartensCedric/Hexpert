@@ -10,13 +10,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.File;
 
+import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
+
 public class HexCity extends Game {
 
-
+	public AssetManager assetManager = new AssetManager();
 	private MainMenuScreen mainMenuScreen;
 	@Override
-	public void create () {
-		AssetLoader.load();
+	public void create ()
+	{
+		assetManager.load(TEXTURE_CLOUD, Texture.class);
+		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
 	}

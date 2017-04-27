@@ -17,14 +17,8 @@ import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
 
 public class AssetLoader
 {
-    public static AssetManager assetManager = new AssetManager();
-    public static BitmapFont font = null;
 
-    public static void load()
-    {
-        assetManager.load(TEXTURE_CLOUD, Texture.class);
-        assetManager.finishLoading();
-    }
+    public static BitmapFont font = null;
 
     public static Skin getSkin()
     {

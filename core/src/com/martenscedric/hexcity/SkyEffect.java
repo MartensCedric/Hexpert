@@ -1,6 +1,7 @@
 package com.martenscedric.hexcity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -27,9 +28,9 @@ public class SkyEffect implements Tickable, Drawable
     public List<Cloud> clouds = new ArrayList<Cloud>();
     private float frequency;
 
-    public SkyEffect()
+    public SkyEffect(AssetManager assetManager)
     {
-        this.cloudTexture = AssetLoader.assetManager.get(TEXTURE_CLOUD);
+        this.cloudTexture = assetManager.get(TEXTURE_CLOUD);
         createClouds();
     }
 
