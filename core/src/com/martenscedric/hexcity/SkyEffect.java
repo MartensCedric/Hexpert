@@ -68,7 +68,7 @@ public class SkyEffect implements Tickable, Drawable
     public void draw(Batch batch) {
         for(Cloud c : clouds)
         {
-            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y, cloudTexture.getWidth()*2, cloudTexture.getHeight()*2);
+            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y, cloudTexture.getWidth(), cloudTexture.getHeight());
         }
     }
 }
