@@ -11,6 +11,17 @@ public abstract class StageScreen implements Screen
 {
     private Stage stage;
 
+    public StageScreen() {
+        stage = new Stage();
+    }
+
+    @Override
+    public void render(float delta) {
+        stage.act();
+
+        stage.draw();
+    }
+
     public Stage getStage() {
         return stage;
     }

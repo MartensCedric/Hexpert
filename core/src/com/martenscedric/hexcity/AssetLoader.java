@@ -1,8 +1,10 @@
 package com.martenscedric.hexcity;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
 
@@ -18,5 +20,12 @@ public class AssetLoader
     {
         assetManager.load(TEXTURE_CLOUD, Texture.class);
         assetManager.finishLoading();
+    }
+
+    public static Skin getSkin()
+    {
+        Skin skin = new Skin();
+        skin.load(Gdx.files.internal("skins/uiskin.json"));
+        return skin;
     }
 }

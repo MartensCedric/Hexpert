@@ -14,7 +14,9 @@ public class MainMenuScreen extends StageScreen
 {
     private SpriteBatch batch;
     private SkyEffect skyEffect;
+
     public MainMenuScreen() {
+        super();
         batch = new SpriteBatch();
         skyEffect = new SkyEffect();
     }
@@ -33,6 +35,7 @@ public class MainMenuScreen extends StageScreen
         batch.begin();
         skyEffect.draw(batch);
         batch.end();
+        super.render(delta);
     }
 
     @Override
