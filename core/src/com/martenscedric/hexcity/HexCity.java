@@ -22,4 +22,11 @@ public class HexCity extends Game {
 	public void render() {
 		super.render();
 	}
+
+	@Override
+	public void resize(int width, int height)
+	{
+		TextureData.scale_ratio = (float)width/(float)height;
+		super.resize(width, height);
+	}
 }

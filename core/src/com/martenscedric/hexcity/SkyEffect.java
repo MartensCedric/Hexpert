@@ -21,7 +21,7 @@ public class SkyEffect implements Tickable, Drawable
     private final float CLOUD_SPEED_MIN = 0.275f;
     private final float CLOUD_SPEED_MAX = 0.325f;
 
-    private static Random r = new Random();
+    private static Random r = new Random(5);
     private Texture cloudTexture;
 
     public List<Cloud> clouds = new ArrayList<Cloud>();
@@ -36,9 +36,9 @@ public class SkyEffect implements Tickable, Drawable
     private void createClouds()
     {
         for(int i = 0; i < START_CLOUD_COUNT; i++) {
-            float x = r.nextInt() % Gdx.graphics.getWidth();
-            float y = r.nextInt() % Gdx.graphics.getHeight();
-            float speed = Math.min(r.nextFloat() * CLOUD_SPEED_MAX, CLOUD_SPEED_MIN);
+            float x = Math.abs(r.nextInt() % Gdx.graphics.getWidth());
+            float y = Math.abs(r.nextInt() % Gdx.graphics.getHeight());
+            float speed = Math.max(r.nextFloat() * CLOUD_SPEED_MAX, CLOUD_SPEED_MIN);
             Cloud cloud = new Cloud(new Vector2(x, y), speed);
             clouds.add(cloud);
         }
@@ -52,7 +52,7 @@ public class SkyEffect implements Tickable, Drawable
 
             if(c.getPosition().x > Gdx.graphics.getWidth())
             {
-                c.getPosition().x = -Gdx.graphics.getWidth();
+                c.getPosition().x = -cloudTexture.getWidth();
             }else{
                 c.getPosition().x += c.getSpeed();
             }
@@ -68,7 +68,7 @@ public class SkyEffect implements Tickable, Drawable
     public void draw(Batch batch) {
         for(Cloud c : clouds)
         {
-            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y);
+            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y, cloudTexture.getWidth()*2, cloudTexture.getHeight()*2);
         }
     }
 }
