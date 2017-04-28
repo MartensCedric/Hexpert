@@ -26,7 +26,6 @@ public class SkyEffect implements Tickable, Drawable
     private Texture cloudTexture;
 
     public List<Cloud> clouds = new ArrayList<Cloud>();
-    private float frequency;
 
     public SkyEffect(AssetManager assetManager)
     {
