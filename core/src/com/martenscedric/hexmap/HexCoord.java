@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Shawn Martens on 2017-04-27.
+ * Created by Cedric Martens on 2017-04-27.
  */
 
 public class HexCoord
