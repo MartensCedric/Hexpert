@@ -27,7 +27,6 @@ public class MainMenuScreen extends StageScreen
 
         super();
         this.hexCity = hexCity;
-        Gdx.input.setInputProcessor(getStage());
         batch = new SpriteBatch();
         skyEffect = new SkyEffect(hexCity.assetManager);
 

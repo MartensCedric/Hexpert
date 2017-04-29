@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.cedricmartens.hexpert.HexGeometry;
@@ -35,8 +36,8 @@ public class PlayScreen  extends StageScreen
                 .setHeight(7)
                 .setWidth(7)
                 .setShape(HexagonShape.HEXAGON)
-                .setStyle(new HexStyle(25, HexagonOrientation.FLAT_TOP))
-                .setOrigin(new Point(200, 200))
+                .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP))
+                .setOrigin(new Point(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/5))
                 .build();
     }
 
@@ -48,6 +49,10 @@ public class PlayScreen  extends StageScreen
     @Override
     public void render(float delta)
     {
+        getCamera().translate(-1, 0);
+        getCamera().update();
+        batch.setProjectionMatrix(getCamera().combined);
+        shapeRenderer.setProjectionMatrix(getCamera().combined);
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -72,6 +77,9 @@ public class PlayScreen  extends StageScreen
         }
 
         shapeRenderer.end();
+        batch.begin();
+        batch.draw(hexCity.assetManager.get("sprites/bank.png", Texture.class), 200, 200);
+        batch.end();
     }
 
     @Override

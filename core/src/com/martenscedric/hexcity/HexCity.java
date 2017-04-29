@@ -20,6 +20,7 @@ public class HexCity extends Game {
 	public void create ()
 	{
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
+		assetManager.load("sprites/bank.png", Texture.class);
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
