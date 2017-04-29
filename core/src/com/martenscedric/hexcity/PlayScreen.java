@@ -1,12 +1,15 @@
 package com.martenscedric.hexcity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 import com.cedricmartens.hexpert.HexGeometry;
 import com.cedricmartens.hexpert.HexStyle;
 import com.cedricmartens.hexpert.Hexagon;
@@ -26,6 +29,8 @@ public class PlayScreen  extends StageScreen
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private HexGrid<Integer> hex;
+    private GestureDetector detector;
+    private StandardGestureBehavior behavior;
 
     public PlayScreen(HexCity hexCity) {
         this.hexCity = hexCity;
@@ -39,6 +44,13 @@ public class PlayScreen  extends StageScreen
                 .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP))
                 .setOrigin(new Point(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/5))
                 .build();
+
+        behavior = new StandardGestureBehavior(getCamera());
+        detector = new GestureDetector(behavior);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(detector);
+        inputMultiplexer.addProcessor(getStage());
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
@@ -49,7 +61,6 @@ public class PlayScreen  extends StageScreen
     @Override
     public void render(float delta)
     {
-        getCamera().translate(-1, 0);
         getCamera().update();
         batch.setProjectionMatrix(getCamera().combined);
         shapeRenderer.setProjectionMatrix(getCamera().combined);
@@ -78,7 +89,7 @@ public class PlayScreen  extends StageScreen
 
         shapeRenderer.end();
         batch.begin();
-        batch.draw(hexCity.assetManager.get("sprites/bank.png", Texture.class), 200, 200);
+        batch.draw(hexCity.assetManager.get("sprites/bank.png", Texture.class), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         batch.end();
     }
 
