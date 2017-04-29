@@ -61,7 +61,6 @@ public class PlayScreen  extends StageScreen
     @Override
     public void render(float delta)
     {
-        getCamera().update();
         batch.setProjectionMatrix(getCamera().combined);
         shapeRenderer.setProjectionMatrix(getCamera().combined);
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);

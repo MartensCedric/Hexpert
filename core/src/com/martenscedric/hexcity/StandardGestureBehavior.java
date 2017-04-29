@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 public class StandardGestureBehavior implements GestureDetector.GestureListener {
 
     private OrthographicCamera camera;
+    private float oldDelta = 0;
 
     public StandardGestureBehavior(OrthographicCamera camera) {
         this.camera = camera;
@@ -40,7 +41,10 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        return false;
+
+        camera.translate(-deltaX*camera.zoom, deltaY*camera.zoom);
+        getCamera().update();
+        return true;
     }
 
     @Override
@@ -50,13 +54,14 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        float delta = initialDistance-distance;
-        getCamera().zoom = 1 + delta/(Gdx.graphics.getWidth()/2);
+        getCamera().zoom = ((initialDistance/10) / (distance/10)) * getCamera().zoom;
 
-        if(getCamera().zoom < 0.5)
-            getCamera().zoom = 0.5f;
-        else if(getCamera().zoom > 3)
-            getCamera().zoom = 4;
+        if(getCamera().zoom < 0.25f)
+            getCamera().zoom = 0.25f;
+        else if(getCamera().zoom > 1.2f)
+            getCamera().zoom = 1.2f;
+
+        getCamera().update();
         return true;
     }
 
