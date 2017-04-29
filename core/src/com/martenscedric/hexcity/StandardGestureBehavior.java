@@ -13,8 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 public class StandardGestureBehavior implements GestureDetector.GestureListener {
 
     private OrthographicCamera camera;
-    private float oldDelta = 0;
-
+    private float BORDER_CONSTRAINT = 4;
     public StandardGestureBehavior(OrthographicCamera camera) {
         this.camera = camera;
     }
@@ -40,10 +39,25 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
     }
 
     @Override
-    public boolean pan(float x, float y, float deltaX, float deltaY) {
+    public boolean pan(float x, float y, float deltaX, float deltaY)
+    {
+        getCamera().translate(-deltaX * camera.zoom, deltaY * camera.zoom);
+        if(getCamera().position.x < Gdx.graphics.getWidth()/4)
+        {
+            getCamera().position.x = Gdx.graphics.getWidth()/BORDER_CONSTRAINT;
+        }else if(getCamera().position.x > Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/BORDER_CONSTRAINT)
+        {
+            getCamera().position.x = Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/BORDER_CONSTRAINT;
+        }else if(getCamera().position.y < Gdx.graphics.getHeight()/BORDER_CONSTRAINT)
+        {
+            getCamera().position.y = Gdx.graphics.getHeight()/BORDER_CONSTRAINT;
+        }else if(getCamera().position.y > Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/BORDER_CONSTRAINT)
+        {
+            getCamera().position.y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/BORDER_CONSTRAINT;
+        }
+            getCamera().update();
 
-        camera.translate(-deltaX*camera.zoom, deltaY*camera.zoom);
-        getCamera().update();
+
         return true;
     }
 
@@ -53,8 +67,16 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
     }
 
     @Override
-    public boolean zoom(float initialDistance, float distance) {
-        getCamera().zoom = ((initialDistance/10) / (distance/10)) * getCamera().zoom;
+    public boolean zoom(float initialDistance, float distance)
+    {
+        float ratio = initialDistance / distance;
+
+        if(ratio < 1)
+            ratio = Math.max(ratio, 0.98f);
+        else if(ratio > 1)
+            ratio = Math.min(ratio, 1.02f);
+
+        getCamera().zoom =  ratio * getCamera().zoom;
 
         if(getCamera().zoom < 0.25f)
             getCamera().zoom = 0.25f;
