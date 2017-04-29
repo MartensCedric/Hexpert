@@ -59,6 +59,7 @@ project(":core") {
 
 
     dependencies {
+        compile project(":Hexpert")
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         //compile "org.codetome:hexameter-core:3.0.0"

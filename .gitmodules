@@ -1,0 +1,3 @@
+[submodule "Hexpert"]
+	path = Hexpert
+	url = http://github.com/MartensCedric/Hexpert.git
