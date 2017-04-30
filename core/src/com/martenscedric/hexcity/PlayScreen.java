@@ -2,14 +2,12 @@ package com.martenscedric.hexcity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
 import com.cedricmartens.hexpert.HexGeometry;
 import com.cedricmartens.hexpert.HexStyle;
 import com.cedricmartens.hexpert.Hexagon;
@@ -26,9 +24,9 @@ import com.cedricmartens.hexpert.grid.HexagonShape;
 public class PlayScreen  extends StageScreen
 {
     private final HexCity hexCity;
+    private Map currentMap;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
-    private HexGrid<Integer> hex;
     private GestureDetector detector;
     private StandardGestureBehavior behavior;
 
@@ -37,13 +35,13 @@ public class PlayScreen  extends StageScreen
         this.batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        hex = new HexGridBuilder<Integer>()
-                .setHeight(7)
-                .setWidth(7)
-                .setShape(HexagonShape.HEXAGON)
-                .setStyle(new HexStyle(80.0 * (Gdx.graphics.getWidth()/1920.0), HexagonOrientation.FLAT_TOP))
-                .setOrigin(new Point(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/5))
-                .build();
+        currentMap = new Map();
+        currentMap.setGrid(new HexGridBuilder<Integer>()
+                            .setHeight(7)
+                            .setWidth(7)
+                            .setShape(HexagonShape.HEXAGON)
+                            .setStyle(new HexStyle(80.0 * (Gdx.graphics.getWidth()/1920.0), HexagonOrientation.FLAT_TOP))
+                            .setOrigin(new Point(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/5)));
 
         behavior = new StandardGestureBehavior(getCamera());
         detector = new GestureDetector(behavior);
@@ -67,7 +65,7 @@ public class PlayScreen  extends StageScreen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         shapeRenderer.begin();
-        Hexagon<Integer>[] hexagons = hex.getHexs();
+        Hexagon<Integer>[] hexagons = currentMap.getGrid().getHexs();
         for(int i = 0; i < hexagons.length; i++)
         {
             HexGeometry hexGeo = hexagons[i].getHexGeometry();
