@@ -10,7 +10,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.File;
 
+import static com.martenscedric.hexcity.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_FACTORY;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_FARM;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_MARKET;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_MENUUI;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_ROCKET;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_WIND;
 
 public class HexCity extends Game {
 
@@ -20,10 +29,15 @@ public class HexCity extends Game {
 	public void create ()
 	{
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
-		assetManager.load("sprites/farm.png", Texture.class);
-		assetManager.load("sprites/house.png", Texture.class);
-		assetManager.load("sprites/bank.png", Texture.class);
-		assetManager.load("sprites/selectmenu.png", Texture.class);
+		assetManager.load(TEXTURE_FARM, Texture.class);
+		assetManager.load(TEXTURE_HOUSE, Texture.class);
+		assetManager.load(TEXTURE_MINE, Texture.class);
+		assetManager.load(TEXTURE_WIND, Texture.class);
+		assetManager.load(TEXTURE_FACTORY, Texture.class);
+		assetManager.load(TEXTURE_MARKET, Texture.class);
+		assetManager.load(TEXTURE_BANK, Texture.class);
+		assetManager.load(TEXTURE_ROCKET, Texture.class);
+		assetManager.load(TEXTURE_MENUUI, Texture.class);
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
@@ -37,7 +51,6 @@ public class HexCity extends Game {
 	@Override
 	public void resize(int width, int height)
 	{
-		TextureData.scale_ratio = (float)width/(float)height;
 		super.resize(width, height);
 	}
 }

@@ -24,6 +24,15 @@ import com.cedricmartens.hexpert.grid.HexagonShape;
 
 import static com.martenscedric.hexcity.Const.HEIGHT;
 import static com.martenscedric.hexcity.Const.WIDTH;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_BANK;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_FACTORY;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_FARM;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_MARKET;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_MENUUI;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_ROCKET;
+import static com.martenscedric.hexcity.TextureData.TEXTURE_WIND;
 
 /**
  * Created by 1544256 on 2017-04-26.
@@ -39,7 +48,7 @@ public class PlayScreen  extends StageScreen
     private StandardGestureBehavior behavior;
     private Table table;
     private Image menuImage;
-    private ImageButton btnFarm, btnHouse, btnBank;
+    private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket;
 
     public PlayScreen(HexCity hexCity) {
         super();
@@ -63,30 +72,50 @@ public class PlayScreen  extends StageScreen
         Gdx.input.setInputProcessor(inputMultiplexer);
 
 
-        menuImage = new Image((Texture)hexCity.assetManager.get("sprites/selectmenu.png"));
+        menuImage = new Image((Texture)hexCity.assetManager.get(TEXTURE_MENUUI));
         menuImage.setX(WIDTH - menuImage.getWidth());
         menuImage.setY(5);
         getStage().addActor(menuImage);
 
-        btnFarm = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get("sprites/farm.png"))));
-        btnFarm.setScale(4);
-        btnHouse = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get("sprites/house.png"))));
-        btnHouse.setScale(4);
-        btnBank = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get("sprites/bank.png"))));
-        btnBank.setScale(4);
-
+        btnFarm = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_FARM))));
+        btnFarm.getImageCell().expand().fill();
+        btnHouse = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_HOUSE))));
+        btnHouse.getImageCell().expand().fill();
+        btnMine = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_MINE))));
+        btnMine.getImageCell().expand().fill();
+        btnWind = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_WIND))));
+        btnWind.getImageCell().expand().fill();
+        btnFactory = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_FACTORY))));
+        btnFactory.getImageCell().expand().fill();
+        btnMarket = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_MARKET))));
+        btnMarket.getImageCell().expand().fill();
+        btnBank = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_BANK))));
+        btnBank.getImageCell().expand().fill();
+        btnRocket = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_ROCKET))));
+        btnRocket.getImageCell().expand().fill();
 
         table = new Table();
-        table.defaults().width(menuImage.getPrefWidth()).pad(5);
+        table.defaults().width(menuImage.getPrefWidth()).height(menuImage.getPrefHeight()/9).pad(5);
         table.add(btnFarm);
         table.row();
         table.add(btnHouse);
         table.row();
+        table.add(btnMine);
+        table.row();
+        table.add(btnWind);
+        table.row();
+        table.add(btnFactory);
+        table.row();
+        table.add(btnMarket);
+        table.row();
         table.add(btnBank);
+        table.row();
+        table.add(btnRocket);
+
 
         table.setX(WIDTH - menuImage.getWidth()/2);
         table.setY(HEIGHT - table.getPrefHeight()/2);
-        table.setDebug(true);
+        table.setDebug(false);
         getStage().addActor(table);
     }
 
