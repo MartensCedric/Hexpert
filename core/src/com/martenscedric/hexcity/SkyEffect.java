@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.martenscedric.hexcity.Const.HEIGHT;
+import static com.martenscedric.hexcity.Const.WIDTH;
 import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
 
 /**
@@ -36,8 +38,8 @@ public class SkyEffect implements Tickable, Drawable
     private void createClouds()
     {
         for(int i = 0; i < START_CLOUD_COUNT; i++) {
-            float x = Math.abs(r.nextInt() % Gdx.graphics.getWidth());
-            float y = Math.abs(r.nextInt() % Gdx.graphics.getHeight());
+            float x = Math.abs(r.nextInt() % WIDTH);
+            float y = Math.abs(r.nextInt() % HEIGHT);
             float speed = Math.max(r.nextFloat() * CLOUD_SPEED_MAX, CLOUD_SPEED_MIN);
             Cloud cloud = new Cloud(new Vector2(x, y), speed);
             clouds.add(cloud);
@@ -52,7 +54,7 @@ public class SkyEffect implements Tickable, Drawable
 
             if(c.getPosition().x > Gdx.graphics.getWidth())
             {
-                c.getPosition().x = -cloudTexture.getWidth()*3;
+                c.getPosition().x = -cloudTexture.getWidth();
             }else{
                 c.getPosition().x += c.getSpeed();
             }
@@ -68,7 +70,7 @@ public class SkyEffect implements Tickable, Drawable
     public void draw(Batch batch) {
         for(Cloud c : clouds)
         {
-            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y, cloudTexture.getWidth()*3, cloudTexture.getHeight()*3);
+            batch.draw(cloudTexture, c.getPosition().x, c.getPosition().y);
         }
     }
 }

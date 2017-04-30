@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -74,7 +75,7 @@ public class PlayScreen  extends StageScreen
 
         menuImage = new Image((Texture)hexCity.assetManager.get(TEXTURE_MENUUI));
         menuImage.setX(WIDTH - menuImage.getWidth());
-        menuImage.setY(5);
+        menuImage.setY(0);
         getStage().addActor(menuImage);
 
         btnFarm = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_FARM))));
