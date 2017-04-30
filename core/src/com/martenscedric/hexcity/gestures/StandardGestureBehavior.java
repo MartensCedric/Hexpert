@@ -1,13 +1,11 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.gestures;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 
-import static com.martenscedric.hexcity.Const.HEIGHT;
-import static com.martenscedric.hexcity.Const.WIDTH;
+import static com.martenscedric.hexcity.misc.Const.HEIGHT;
+import static com.martenscedric.hexcity.misc.Const.WIDTH;
 
 /**
  * Created by Shawn Martens on 2017-04-29.

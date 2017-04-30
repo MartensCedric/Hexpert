@@ -1,4 +1,4 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.misc;
 
 /**
  * Created by Shawn Martens on 2017-04-30.

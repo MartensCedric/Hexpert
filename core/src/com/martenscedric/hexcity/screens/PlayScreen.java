@@ -1,10 +1,9 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,22 +17,24 @@ import com.cedricmartens.hexpert.HexGeometry;
 import com.cedricmartens.hexpert.HexStyle;
 import com.cedricmartens.hexpert.Hexagon;
 import com.cedricmartens.hexpert.coordinate.Point;
-import com.cedricmartens.hexpert.grid.HexGrid;
 import com.cedricmartens.hexpert.grid.HexGridBuilder;
 import com.cedricmartens.hexpert.grid.HexagonOrientation;
 import com.cedricmartens.hexpert.grid.HexagonShape;
+import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.map.Map;
+import com.martenscedric.hexcity.gestures.StandardGestureBehavior;
 
-import static com.martenscedric.hexcity.Const.HEIGHT;
-import static com.martenscedric.hexcity.Const.WIDTH;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_BANK;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_FACTORY;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_FARM;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_HOUSE;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_MARKET;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_MENUUI;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_MINE;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_ROCKET;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_WIND;
+import static com.martenscedric.hexcity.misc.Const.HEIGHT;
+import static com.martenscedric.hexcity.misc.Const.WIDTH;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FACTORY;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FARM;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MARKET;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MENUUI;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_ROCKET;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 
 /**
  * Created by 1544256 on 2017-04-26.

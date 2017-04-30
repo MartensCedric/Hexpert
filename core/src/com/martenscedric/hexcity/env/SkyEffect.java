@@ -1,4 +1,4 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.env;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.martenscedric.hexcity.Const.HEIGHT;
-import static com.martenscedric.hexcity.Const.WIDTH;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
+import static com.martenscedric.hexcity.misc.Const.HEIGHT;
+import static com.martenscedric.hexcity.misc.Const.WIDTH;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_CLOUD;
 
 /**
  * Created by 1544256 on 2017-04-25.

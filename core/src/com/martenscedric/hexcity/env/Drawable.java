@@ -1,4 +1,4 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.env;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 

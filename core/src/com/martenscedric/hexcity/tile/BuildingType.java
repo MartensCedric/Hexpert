@@ -1,4 +1,4 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.tile;
 
 /**
  * Created by Cedric on 2017-04-22.

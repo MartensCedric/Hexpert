@@ -1,30 +1,24 @@
 package com.martenscedric.hexcity;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.io.File;
-
-import static com.martenscedric.hexcity.TextureData.TEXTURE_BANK;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_CLOUD;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_FACTORY;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_FARM;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_HOUSE;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_MARKET;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_MENUUI;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_MINE;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_ROCKET;
-import static com.martenscedric.hexcity.TextureData.TEXTURE_WIND;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_CLOUD;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FACTORY;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FARM;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MARKET;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MENUUI;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_ROCKET;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 
 public class HexCity extends Game {
 
 	public AssetManager assetManager = new AssetManager();
-	private MainMenuScreen mainMenuScreen;
+	private com.martenscedric.hexcity.screens.MainMenuScreen mainMenuScreen;
 	@Override
 	public void create ()
 	{
@@ -39,7 +33,7 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_ROCKET, Texture.class);
 		assetManager.load(TEXTURE_MENUUI, Texture.class);
 		assetManager.finishLoading();
-		mainMenuScreen = new MainMenuScreen(this);
+		mainMenuScreen = new com.martenscedric.hexcity.screens.MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
 	}
 

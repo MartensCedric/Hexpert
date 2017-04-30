@@ -1,19 +1,19 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.martenscedric.hexcity.misc.AssetLoader;
+import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.env.SkyEffect;
 
-import static com.martenscedric.hexcity.Const.HEIGHT;
-import static com.martenscedric.hexcity.Const.WIDTH;
+import static com.martenscedric.hexcity.misc.Const.HEIGHT;
+import static com.martenscedric.hexcity.misc.Const.WIDTH;
 
 /**
  * Created by 1544256 on 2017-04-26.

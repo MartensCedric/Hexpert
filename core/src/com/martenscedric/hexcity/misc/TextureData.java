@@ -1,4 +1,4 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.misc;
 
 import com.badlogic.gdx.Gdx;
 

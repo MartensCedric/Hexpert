@@ -1,7 +1,8 @@
-package com.martenscedric.hexcity;
+package com.martenscedric.hexcity.map;
 
 import com.cedricmartens.hexpert.grid.HexGrid;
 import com.cedricmartens.hexpert.grid.HexGridBuilder;
+import com.martenscedric.hexcity.tile.TileData;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
