@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexpert.HexGeometry;
 import com.cedricmartens.hexpert.HexStyle;
 import com.cedricmartens.hexpert.Hexagon;
@@ -34,7 +37,9 @@ public class PlayScreen  extends StageScreen
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private StandardGestureBehavior behavior;
+    private Table table;
     private Image menuImage;
+    private ImageButton btnFarm, btnHouse, btnBank;
 
     public PlayScreen(HexCity hexCity) {
         super();
@@ -56,10 +61,33 @@ public class PlayScreen  extends StageScreen
         inputMultiplexer.addProcessor(detector);
         inputMultiplexer.addProcessor(getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+
         menuImage = new Image((Texture)hexCity.assetManager.get("sprites/selectmenu.png"));
         menuImage.setX(WIDTH - menuImage.getWidth());
-        menuImage.setY(0);
+        menuImage.setY(5);
         getStage().addActor(menuImage);
+
+        btnFarm = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get("sprites/farm.png"))));
+        btnFarm.setScale(4);
+        btnHouse = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get("sprites/house.png"))));
+        btnHouse.setScale(4);
+        btnBank = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get("sprites/bank.png"))));
+        btnBank.setScale(4);
+
+
+        table = new Table();
+        table.defaults().width(menuImage.getPrefWidth()).pad(5);
+        table.add(btnFarm);
+        table.row();
+        table.add(btnHouse);
+        table.row();
+        table.add(btnBank);
+
+        table.setX(WIDTH - menuImage.getWidth()/2);
+        table.setY(HEIGHT - table.getPrefHeight()/2);
+        table.setDebug(true);
+        getStage().addActor(table);
     }
 
     @Override
@@ -97,7 +125,7 @@ public class PlayScreen  extends StageScreen
 
         shapeRenderer.end();
         batch.begin();
-        batch.draw(hexCity.assetManager.get("sprites/bank.png", Texture.class), WIDTH/2, HEIGHT/2);
+
         batch.end();
         super.render(delta);
     }

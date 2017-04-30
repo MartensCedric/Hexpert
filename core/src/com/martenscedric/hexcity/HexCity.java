@@ -20,6 +20,8 @@ public class HexCity extends Game {
 	public void create ()
 	{
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
+		assetManager.load("sprites/farm.png", Texture.class);
+		assetManager.load("sprites/house.png", Texture.class);
 		assetManager.load("sprites/bank.png", Texture.class);
 		assetManager.load("sprites/selectmenu.png", Texture.class);
 		assetManager.finishLoading();
