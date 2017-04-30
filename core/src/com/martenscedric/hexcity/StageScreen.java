@@ -20,7 +20,7 @@ public abstract class StageScreen implements Screen
         stage = new Stage();
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-        viewport = new StretchViewport(2000, 2000, camera);
+        viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         Gdx.input.setInputProcessor(getStage());
     }
 
@@ -41,7 +41,7 @@ public abstract class StageScreen implements Screen
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, false);
+       stage.getViewport().update(width, height, false);
     }
 
     public OrthographicCamera getCamera() {

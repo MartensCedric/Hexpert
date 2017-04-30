@@ -41,7 +41,7 @@ public class PlayScreen  extends StageScreen
                 .setHeight(7)
                 .setWidth(7)
                 .setShape(HexagonShape.HEXAGON)
-                .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP))
+                .setStyle(new HexStyle(80.0 * (Gdx.graphics.getWidth()/1920.0), HexagonOrientation.FLAT_TOP))
                 .setOrigin(new Point(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/5))
                 .build();
 
