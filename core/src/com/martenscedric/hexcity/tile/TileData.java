@@ -53,7 +53,11 @@ public class TileData {
         sprite = new PolygonSprite(polygonRegion);
     }
 
-/*
+    public PolygonSprite getSprite() {
+        return sprite;
+    }
+
+    /*
 
     public void setBuilding(BuildingType buildingType) {
         this.buildingType = buildingType;

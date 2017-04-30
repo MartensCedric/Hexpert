@@ -5,12 +5,18 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexpert.HexGeometry;
@@ -23,6 +29,8 @@ import com.cedricmartens.hexpert.grid.HexagonShape;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.gestures.StandardGestureBehavior;
+import com.martenscedric.hexcity.misc.AssetLoader;
+import com.martenscedric.hexcity.tile.TileData;
 
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
@@ -42,29 +50,42 @@ import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 
 public class PlayScreen  extends StageScreen
 {
-    private final HexCity hexCity;
+    private HexCity hexCity;
     private Map currentMap;
     private SpriteBatch batch;
+    private PolygonSpriteBatch polyBatch;
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private StandardGestureBehavior behavior;
     private Table table;
     private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket;
+    private Label lblScore;
+    private String scoreTxt = "SCORE : %d";
+    private int score = 0;
 
     public PlayScreen(HexCity hexCity) {
         super();
         this.hexCity = hexCity;
         this.batch = new SpriteBatch();
+        this.polyBatch = new PolygonSpriteBatch();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         currentMap = new Map();
         currentMap.setGrid(new HexGridBuilder<Integer>()
-                            .setHeight(7)
-                            .setWidth(7)
+                            .setHeight(5)
+                            .setWidth(5)
                             .setShape(HexagonShape.HEXAGON)
                             .setStyle(new HexStyle(80.0, HexagonOrientation.FLAT_TOP))
                             .setOrigin(new Point(WIDTH/4, HEIGHT/5)));
+
+        for(int i = 0; i < currentMap.getGrid().getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = currentMap.getGrid().getHexs()[i];
+            TileData data = new TileData(hex);
+            data.setColor(0x11FF38FF);
+            hex.setHexData(data);
+        }
 
         behavior = new StandardGestureBehavior(getCamera());
         detector = new GestureDetector(behavior);
@@ -118,7 +139,14 @@ public class PlayScreen  extends StageScreen
         table.setX(WIDTH - menuImage.getWidth()/2);
         table.setY(HEIGHT - table.getPrefHeight()/2);
         table.setDebug(false);
+
+        lblScore = new Label(String.format(scoreTxt, score), AssetLoader.getSkin());
+        lblScore.setFontScale(5);
+        lblScore.setX(5);
+        lblScore.setY(25);
+
         getStage().addActor(table);
+        getStage().addActor(lblScore);
     }
 
     @Override
@@ -131,8 +159,19 @@ public class PlayScreen  extends StageScreen
     {
         batch.setProjectionMatrix(getCamera().combined);
         shapeRenderer.setProjectionMatrix(getCamera().combined);
+        polyBatch.setProjectionMatrix(getCamera().combined);
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        polyBatch.begin();
+        for(int i = 0; i < currentMap.getGrid().getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = currentMap.getGrid().getHexs()[i];
+            PolygonSprite sprite = hex.getHexData().getSprite();
+            Point middle = hex.getHexGeometry().getMiddlePoint();
+            sprite.draw(polyBatch);
+        }
+        polyBatch.end();
 
         shapeRenderer.begin();
         Hexagon<Integer>[] hexagons = currentMap.getGrid().getHexs();
@@ -155,9 +194,8 @@ public class PlayScreen  extends StageScreen
         }
 
         shapeRenderer.end();
-        batch.begin();
 
-        batch.end();
+        lblScore.setText(String.format(scoreTxt, score));
         super.render(delta);
     }
 
