@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.utils.ShortArray;
+import com.cedricmartens.hexpert.Hexagon;
+import com.cedricmartens.hexpert.coordinate.Point;
 
 /**
  * Created by Cedric on 2017-04-21.
@@ -14,42 +16,42 @@ public class TileData {
     private BuildingType buildingType;
     private PolygonSprite sprite;
     private Texture texture;
-    //private Hexagon<TileData> parent;
-    private int drawCalls = 0;
-    private boolean tileFlipped = false;
+    private Hexagon<TileData> parent;
 
-
+    public TileData(Hexagon<TileData> parent) {
+        this.parent = parent;
+    }
 
     public BuildingType getBuildingType() {
         return buildingType;
     }
 
-    /*public void setColor(int color) {
+    public void setColor(int color) {
         Pixmap pix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pix.setColor(color);
         pix.fill();
         Texture tex = new Texture(pix);
         TextureRegion region = new TextureRegion(tex);
 
-        Point p1 = (Point) parent.getPoints().toArray()[0];
-        Point p2 = (Point) parent.getPoints().toArray()[1];
-        Point p3 = (Point) parent.getPoints().toArray()[2];
-        Point p4 = (Point) parent.getPoints().toArray()[3];
-        Point p5 = (Point) parent.getPoints().toArray()[4];
-        Point p6 = (Point) parent.getPoints().toArray()[5];
+        Point p1 = (Point) parent.getHexGeometry().getPoints().toArray()[0];
+        Point p2 = (Point) parent.getHexGeometry().getPoints().toArray()[1];
+        Point p3 = (Point) parent.getHexGeometry().getPoints().toArray()[2];
+        Point p4 = (Point) parent.getHexGeometry().getPoints().toArray()[3];
+        Point p5 = (Point) parent.getHexGeometry().getPoints().toArray()[4];
+        Point p6 = (Point) parent.getHexGeometry().getPoints().toArray()[5];
 
         float[] vertices = new float[]{(
-                float) p1.getCoordinateX(), (float)p1.getCoordinateY(),
-                (float)p2.getCoordinateX(), (float)p2.getCoordinateY(),
-                (float)p3.getCoordinateX(), (float)p3.getCoordinateY(),
-                (float) p4.getCoordinateX(), (float)p4.getCoordinateY(),
-                (float)p5.getCoordinateX(), (float)p5.getCoordinateY(),
-                (float)p6.getCoordinateX(), (float)p6.getCoordinateY()};
+                float) p1.getX(), (float)p1.getY(),
+                (float)p2.getX(), (float)p2.getY(),
+                (float)p3.getX(), (float)p3.getY(),
+                (float) p4.getX(), (float)p4.getY(),
+                (float)p5.getX(), (float)p5.getY(),
+                (float)p6.getX(), (float)p6.getY()};
         EarClippingTriangulator triangulator = new EarClippingTriangulator();
         ShortArray triangleIndices = triangulator.computeTriangles(vertices);
         PolygonRegion polygonRegion = new PolygonRegion(region, vertices, triangleIndices.toArray());
         sprite = new PolygonSprite(polygonRegion);
-    }*/
+    }
 
 /*
 

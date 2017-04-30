@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import static com.martenscedric.hexcity.Const.HEIGHT;
+import static com.martenscedric.hexcity.Const.WIDTH;
+
 /**
  * Created by 1544256 on 2017-04-26.
  */
@@ -33,11 +36,12 @@ public class MainMenuScreen extends StageScreen
         Skin skin = AssetLoader.getSkin();
         skin.add("default-font", AssetLoader.getFont(), BitmapFont.class);
         playButton = new TextButton("Play", skin);
-        playButton.setWidth(Gdx.graphics.getWidth()*0.35f);
-        playButton.setHeight(Gdx.graphics.getHeight()*0.20f);
-        playButton.setX(Gdx.graphics.getWidth()/2 - playButton.getWidth()/2);
-        playButton.setY(Gdx.graphics.getHeight()/2 - playButton.getHeight()/2);
-        playButton.getLabel().setFontScale(5f);
+        playButton.setWidth(WIDTH*0.35f);
+        playButton.setHeight(HEIGHT*0.20f);
+        playButton.setX(WIDTH/2 - playButton.getWidth()/2);
+        playButton.setY(HEIGHT/2 - playButton.getHeight()/2);
+
+        playButton.getLabel().setFontScale(5);
         playButton.addListener(new ClickListener()
         {
             @Override

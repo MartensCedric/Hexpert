@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cedricmartens.hexpert.HexGeometry;
 import com.cedricmartens.hexpert.HexStyle;
 import com.cedricmartens.hexpert.Hexagon;
@@ -16,6 +18,9 @@ import com.cedricmartens.hexpert.grid.HexGrid;
 import com.cedricmartens.hexpert.grid.HexGridBuilder;
 import com.cedricmartens.hexpert.grid.HexagonOrientation;
 import com.cedricmartens.hexpert.grid.HexagonShape;
+
+import static com.martenscedric.hexcity.Const.HEIGHT;
+import static com.martenscedric.hexcity.Const.WIDTH;
 
 /**
  * Created by 1544256 on 2017-04-26.
@@ -29,8 +34,10 @@ public class PlayScreen  extends StageScreen
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private StandardGestureBehavior behavior;
+    private Image menuImage;
 
     public PlayScreen(HexCity hexCity) {
+        super();
         this.hexCity = hexCity;
         this.batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -40,8 +47,8 @@ public class PlayScreen  extends StageScreen
                             .setHeight(7)
                             .setWidth(7)
                             .setShape(HexagonShape.HEXAGON)
-                            .setStyle(new HexStyle(80.0 * (Gdx.graphics.getWidth()/1920.0), HexagonOrientation.FLAT_TOP))
-                            .setOrigin(new Point(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/5)));
+                            .setStyle(new HexStyle(80.0, HexagonOrientation.FLAT_TOP))
+                            .setOrigin(new Point(WIDTH/4, HEIGHT/5)));
 
         behavior = new StandardGestureBehavior(getCamera());
         detector = new GestureDetector(behavior);
@@ -49,6 +56,10 @@ public class PlayScreen  extends StageScreen
         inputMultiplexer.addProcessor(detector);
         inputMultiplexer.addProcessor(getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
+        menuImage = new Image((Texture)hexCity.assetManager.get("sprites/selectmenu.png"));
+        menuImage.setX(WIDTH - menuImage.getWidth());
+        menuImage.setY(0);
+        getStage().addActor(menuImage);
     }
 
     @Override
@@ -86,8 +97,9 @@ public class PlayScreen  extends StageScreen
 
         shapeRenderer.end();
         batch.begin();
-        batch.draw(hexCity.assetManager.get("sprites/bank.png", Texture.class), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+        batch.draw(hexCity.assetManager.get("sprites/bank.png", Texture.class), WIDTH/2, HEIGHT/2);
         batch.end();
+        super.render(delta);
     }
 
     @Override

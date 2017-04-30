@@ -60,6 +60,7 @@ project(":core") {
 
     dependencies {
         compile project(":Hexpert")
+        compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         //compile "org.codetome:hexameter-core:3.0.0"

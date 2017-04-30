@@ -4,7 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+
+import static com.martenscedric.hexcity.Const.HEIGHT;
+import static com.martenscedric.hexcity.Const.WIDTH;
 
 /**
  * Created by 1544256 on 2017-04-26.
@@ -14,13 +20,12 @@ public abstract class StageScreen implements Screen
 {
     private Stage stage;
     private OrthographicCamera camera;
-    private StretchViewport viewport;
 
     public StageScreen() {
-        stage = new Stage();
-        camera = new OrthographicCamera();
+
+        camera = new OrthographicCamera(WIDTH, HEIGHT);
         camera.setToOrtho(false);
-        viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        stage = new Stage(new StretchViewport(WIDTH, HEIGHT, camera));
         Gdx.input.setInputProcessor(getStage());
     }
 
@@ -46,9 +51,5 @@ public abstract class StageScreen implements Screen
 
     public OrthographicCamera getCamera() {
         return camera;
-    }
-
-    public StretchViewport getViewport() {
-        return viewport;
     }
 }

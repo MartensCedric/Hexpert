@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.martenscedric.hexcity.Const.HEIGHT;
+import static com.martenscedric.hexcity.Const.WIDTH;
+
 /**
  * Created by Shawn Martens on 2017-04-29.
  */
@@ -42,18 +45,18 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
     public boolean pan(float x, float y, float deltaX, float deltaY)
     {
         getCamera().translate(-deltaX * camera.zoom, deltaY * camera.zoom);
-        if(getCamera().position.x < Gdx.graphics.getWidth()/4)
+        if(getCamera().position.x < WIDTH/4)
         {
-            getCamera().position.x = Gdx.graphics.getWidth()/BORDER_CONSTRAINT;
-        }else if(getCamera().position.x > Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/BORDER_CONSTRAINT)
+            getCamera().position.x = WIDTH/BORDER_CONSTRAINT;
+        }else if(getCamera().position.x > WIDTH - WIDTH/BORDER_CONSTRAINT)
         {
-            getCamera().position.x = Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/BORDER_CONSTRAINT;
-        }else if(getCamera().position.y < Gdx.graphics.getHeight()/BORDER_CONSTRAINT)
+            getCamera().position.x = WIDTH - WIDTH/BORDER_CONSTRAINT;
+        }else if(getCamera().position.y < HEIGHT/BORDER_CONSTRAINT)
         {
-            getCamera().position.y = Gdx.graphics.getHeight()/BORDER_CONSTRAINT;
-        }else if(getCamera().position.y > Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/BORDER_CONSTRAINT)
+            getCamera().position.y = HEIGHT/BORDER_CONSTRAINT;
+        }else if(getCamera().position.y > HEIGHT - HEIGHT/BORDER_CONSTRAINT)
         {
-            getCamera().position.y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/BORDER_CONSTRAINT;
+            getCamera().position.y = HEIGHT - HEIGHT/BORDER_CONSTRAINT;
         }
             getCamera().update();
 
