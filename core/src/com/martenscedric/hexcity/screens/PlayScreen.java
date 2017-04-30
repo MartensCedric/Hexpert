@@ -64,7 +64,7 @@ public class PlayScreen  extends StageScreen
     private String scoreTxt = "SCORE : %d";
     private int score = 0;
 
-    public PlayScreen(HexCity hexCity) {
+    public PlayScreen(final HexCity hexCity) {
         super();
         this.hexCity = hexCity;
         this.batch = new SpriteBatch();

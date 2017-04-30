@@ -3,6 +3,8 @@ package com.martenscedric.hexcity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.martenscedric.hexcity.screens.LevelSelectScreen;
+import com.martenscedric.hexcity.screens.MainMenuScreen;
 
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_CLOUD;
@@ -18,7 +20,7 @@ import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 public class HexCity extends Game {
 
 	public AssetManager assetManager = new AssetManager();
-	private com.martenscedric.hexcity.screens.MainMenuScreen mainMenuScreen;
+	private MainMenuScreen mainMenuScreen;
 	@Override
 	public void create ()
 	{
@@ -33,7 +35,7 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_ROCKET, Texture.class);
 		assetManager.load(TEXTURE_MENUUI, Texture.class);
 		assetManager.finishLoading();
-		mainMenuScreen = new com.martenscedric.hexcity.screens.MainMenuScreen(this);
+		mainMenuScreen = new MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
 	}
 
