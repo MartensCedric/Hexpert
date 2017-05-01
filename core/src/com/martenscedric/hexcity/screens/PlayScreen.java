@@ -84,6 +84,8 @@ public class PlayScreen  extends StageScreen
         }
 
         behavior = new StandardGestureBehavior(getCamera());
+        getCamera().translate(WIDTH/2, HEIGHT/2);
+        getCamera().update();
         detector = new GestureDetector(behavior);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(detector);
