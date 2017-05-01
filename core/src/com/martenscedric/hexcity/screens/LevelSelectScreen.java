@@ -17,7 +17,9 @@ import com.google.gson.GsonBuilder;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.misc.AssetLoader;
+import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
+import com.martenscedric.hexcity.tile.TileType;
 
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
@@ -66,13 +68,12 @@ public class LevelSelectScreen extends StageScreen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                Map m = new Map();
                 Gson gson = new GsonBuilder().create();
 
-                String map = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-                HexGridBuilder<TileData> result = gson.fromJson(map, HexGridBuilder.class);
-                m.setGrid(result);
-                hexCity.setScreen(new PlayScreen(hexCity, m));
+                String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
+                Map result = gson.fromJson(mapLoc, Map.class);
+
+                hexCity.setScreen(new PlayScreen(hexCity, result));
             }
         });
         button.getLabel().setFontScale(5);

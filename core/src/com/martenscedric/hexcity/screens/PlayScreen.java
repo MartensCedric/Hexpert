@@ -23,6 +23,7 @@ import com.cedricmartens.hexpert.HexGeometry;
 import com.cedricmartens.hexpert.HexStyle;
 import com.cedricmartens.hexpert.Hexagon;
 import com.cedricmartens.hexpert.coordinate.Point;
+import com.cedricmartens.hexpert.grid.HexGrid;
 import com.cedricmartens.hexpert.grid.HexGridBuilder;
 import com.cedricmartens.hexpert.grid.HexagonOrientation;
 import com.cedricmartens.hexpert.grid.HexagonShape;
@@ -31,6 +32,7 @@ import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.gestures.StandardGestureBehavior;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.TileData;
+import com.martenscedric.hexcity.tile.TileType;
 
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
@@ -51,7 +53,7 @@ import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 public class PlayScreen  extends StageScreen
 {
     private HexCity hexCity;
-    private Map currentMap;
+    private HexGrid<TileData> grid;
     private SpriteBatch batch;
     private PolygonSpriteBatch polyBatch;
     private ShapeRenderer shapeRenderer;
@@ -71,13 +73,13 @@ public class PlayScreen  extends StageScreen
         this.polyBatch = new PolygonSpriteBatch();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        currentMap = map;
+        grid = map.getGrid();
 
-        for(int i = 0; i < currentMap.getGrid().getHexs().length; i++)
+        for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<TileData> hex = currentMap.getGrid().getHexs()[i];
-            TileData data = new TileData(hex);
-            data.setColor(0x11FF38FF);
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            TileData data = hex.getHexData();
+            data.setColor(TileType.values()[data.getTileType().ordinal()].getColor());
             hex.setHexData(data);
         }
 
@@ -158,9 +160,9 @@ public class PlayScreen  extends StageScreen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         polyBatch.begin();
-        for(int i = 0; i < currentMap.getGrid().getHexs().length; i++)
+        for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<TileData> hex = currentMap.getGrid().getHexs()[i];
+            Hexagon<TileData> hex = grid.getHexs()[i];
             PolygonSprite sprite = hex.getHexData().getSprite();
             Point middle = hex.getHexGeometry().getMiddlePoint();
             sprite.draw(polyBatch);
@@ -168,7 +170,7 @@ public class PlayScreen  extends StageScreen
         polyBatch.end();
 
         shapeRenderer.begin();
-        Hexagon<Integer>[] hexagons = currentMap.getGrid().getHexs();
+        Hexagon<Integer>[] hexagons = grid.getHexs();
         for(int i = 0; i < hexagons.length; i++)
         {
             HexGeometry hexGeo = hexagons[i].getHexGeometry();

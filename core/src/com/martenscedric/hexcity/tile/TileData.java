@@ -12,7 +12,7 @@ import com.cedricmartens.hexpert.coordinate.Point;
  * Created by Cedric on 2017-04-21.
  */
 public class TileData {
-    //private TileType tileType;
+    private TileType tileType;
     private BuildingType buildingType;
     private PolygonSprite sprite;
     private Texture texture;
@@ -20,10 +20,6 @@ public class TileData {
 
     public TileData(Hexagon<TileData> parent) {
         this.parent = parent;
-    }
-
-    public BuildingType getBuildingType() {
-        return buildingType;
     }
 
     public void setColor(int color) {
@@ -94,4 +90,20 @@ public class TileData {
         }
     }
 */
+
+    public BuildingType getBuildingType() {
+        return buildingType;
+    }
+
+    public void setBuildingType(BuildingType buildingType) {
+        this.buildingType = buildingType;
+    }
+
+    public TileType getTileType() {
+        return tileType;
+    }
+
+    public void setTileType(TileType tileType) {
+        this.tileType = tileType;
+    }
 }
