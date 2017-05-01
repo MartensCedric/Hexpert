@@ -6,8 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.cedricmartens.hexpert.HexStyle;
+import com.cedricmartens.hexpert.coordinate.Point;
 import com.cedricmartens.hexpert.grid.HexGrid;
+import com.cedricmartens.hexpert.grid.HexGridBuilder;
+import com.cedricmartens.hexpert.grid.HexagonOrientation;
+import com.cedricmartens.hexpert.grid.HexagonShape;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.TileData;
 
@@ -22,8 +30,9 @@ public class LevelSelectScreen extends StageScreen
 {
     private Table table;
     private int levelsToDisplay = 5;
-    private HexCity hexCity;
+    private final HexCity hexCity;
     private HexGrid<TileData> previewGrid;
+    private int levelSelect = 1;
 
     public LevelSelectScreen(final HexCity hexCity)
     {
@@ -39,6 +48,15 @@ public class LevelSelectScreen extends StageScreen
         {
             TextButton button = new TextButton(Integer.toString(i + 1), AssetLoader.getSkin());
             button.getLabel().setFontScale(5);
+            final int level = i + 1;
+            button.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y)
+                {
+                    levelSelect = level;
+                }
+            });
             table.add(button);
         }
         table.row();
@@ -46,8 +64,15 @@ public class LevelSelectScreen extends StageScreen
         button.addListener(new ClickListener()
         {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                hexCity.setScreen(new PlayScreen(hexCity));
+            public void clicked(InputEvent event, float x, float y)
+            {
+                Map m = new Map();
+                Gson gson = new GsonBuilder().create();
+
+                String map = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
+                HexGridBuilder<TileData> result = gson.fromJson(map, HexGridBuilder.class);
+                m.setGrid(result);
+                hexCity.setScreen(new PlayScreen(hexCity, m));
             }
         });
         button.getLabel().setFontScale(5);

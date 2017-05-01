@@ -64,20 +64,14 @@ public class PlayScreen  extends StageScreen
     private String scoreTxt = "SCORE : %d";
     private int score = 0;
 
-    public PlayScreen(final HexCity hexCity) {
+    public PlayScreen(final HexCity hexCity, Map map) {
         super();
         this.hexCity = hexCity;
         this.batch = new SpriteBatch();
         this.polyBatch = new PolygonSpriteBatch();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        currentMap = new Map();
-        currentMap.setGrid(new HexGridBuilder<Integer>()
-                            .setHeight(5)
-                            .setWidth(5)
-                            .setShape(HexagonShape.HEXAGON)
-                            .setStyle(new HexStyle(80.0, HexagonOrientation.FLAT_TOP))
-                            .setOrigin(new Point(WIDTH/4, HEIGHT/5)));
+        currentMap = map;
 
         for(int i = 0; i < currentMap.getGrid().getHexs().length; i++)
         {
