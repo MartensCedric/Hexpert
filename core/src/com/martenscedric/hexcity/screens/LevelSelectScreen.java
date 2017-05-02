@@ -90,11 +90,6 @@ public class LevelSelectScreen extends StageScreen
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void pause() {
 
     }

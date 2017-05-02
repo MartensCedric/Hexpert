@@ -20,7 +20,8 @@ import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 public class HexCity extends Game {
 
 	public AssetManager assetManager = new AssetManager();
-	private MainMenuScreen mainMenuScreen;
+	public MainMenuScreen mainMenuScreen;
+	public LevelSelectScreen levelSelectScreen;
 	@Override
 	public void create ()
 	{
@@ -36,6 +37,7 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_MENUUI, Texture.class);
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
+		levelSelectScreen = new LevelSelectScreen(this);
 		this.setScreen(mainMenuScreen);
 	}
 

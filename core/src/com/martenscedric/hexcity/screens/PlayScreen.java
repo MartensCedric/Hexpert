@@ -1,6 +1,7 @@
 package com.martenscedric.hexcity.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -83,14 +84,10 @@ public class PlayScreen  extends StageScreen
             hex.setHexData(data);
         }
 
-        behavior = new StandardGestureBehavior(getCamera());
+
         getCamera().translate(WIDTH/2, HEIGHT/2);
         getCamera().update();
-        detector = new GestureDetector(behavior);
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(detector);
-        inputMultiplexer.addProcessor(getStage());
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        setMultiplexer();
 
 
         menuImage = new Image((Texture)hexCity.assetManager.get(TEXTURE_MENUUI));
@@ -147,14 +144,29 @@ public class PlayScreen  extends StageScreen
         getStage().addActor(lblScore);
     }
 
+    private void setMultiplexer()
+    {
+        behavior = new StandardGestureBehavior(getCamera());
+        detector = new GestureDetector(behavior);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(detector);
+        inputMultiplexer.addProcessor(getStage());
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
     @Override
     public void show() {
-
+        setMultiplexer();
     }
 
     @Override
     public void render(float delta)
     {
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK))
+        {
+            hexCity.setScreen(hexCity.levelSelectScreen);
+        }
+
         batch.setProjectionMatrix(getCamera().combined);
         shapeRenderer.setProjectionMatrix(getCamera().combined);
         polyBatch.setProjectionMatrix(getCamera().combined);

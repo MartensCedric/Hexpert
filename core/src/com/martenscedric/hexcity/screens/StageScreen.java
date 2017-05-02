@@ -46,6 +46,11 @@ public abstract class StageScreen implements Screen
        stage.getViewport().update(width, height, false);
     }
 
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(getStage());
+    }
+
     public OrthographicCamera getCamera() {
         return camera;
     }

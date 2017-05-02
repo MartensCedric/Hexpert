@@ -46,7 +46,7 @@ public class MainMenuScreen extends StageScreen
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                hexCity.setScreen(new LevelSelectScreen(hexCity));
+                hexCity.setScreen(hexCity.levelSelectScreen);
                 super.clicked(event, x, y);
             }
         });
