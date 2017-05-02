@@ -49,47 +49,20 @@ public class TileData {
         sprite = new PolygonSprite(polygonRegion);
     }
 
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+
+
     public PolygonSprite getSprite() {
         return sprite;
     }
 
-    /*
-
-    public void setBuilding(BuildingType buildingType) {
-        this.buildingType = buildingType;
-
-        switch (buildingType)
-        {
-            case HOUSE:
-                setTexture(AssetLoader.assetManager.get("house.png", Texture.class));
-                break;
-            case WIND:
-                setTexture(AssetLoader.assetManager.get("wind.png", Texture.class));
-                break;
-            case FARM:
-                setTexture(AssetLoader.assetManager.get("farm.png", Texture.class));
-                break;
-            case MINE:
-                setTexture(AssetLoader.assetManager.get("mine.png", Texture.class));
-                break;
-            case FACTORY:
-                setTexture(AssetLoader.assetManager.get("factory.png", Texture.class));
-                break;
-            case MARKET:
-                setTexture(AssetLoader.assetManager.get("market.png", Texture.class));
-                break;
-            case BANK:
-                setTexture(AssetLoader.assetManager.get("bank.png", Texture.class));
-                break;
-            case ROCKET:
-                setTexture(AssetLoader.assetManager.get("rocket.png", Texture.class));
-                break;
-            case NONE:
-                setTexture(null);
-                break;
-        }
-    }
-*/
 
     public BuildingType getBuildingType() {
         return buildingType;

@@ -29,9 +29,11 @@ import com.cedricmartens.hexpert.grid.HexGridBuilder;
 import com.cedricmartens.hexpert.grid.HexagonOrientation;
 import com.cedricmartens.hexpert.grid.HexagonShape;
 import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.gestures.StandardGestureBehavior;
 import com.martenscedric.hexcity.misc.AssetLoader;
+import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
 
@@ -59,7 +61,7 @@ public class PlayScreen  extends StageScreen
     private PolygonSpriteBatch polyBatch;
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
-    private StandardGestureBehavior behavior;
+    private PlayScreenGestureBehavior behavior;
     private Table table;
     private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket;
@@ -81,6 +83,8 @@ public class PlayScreen  extends StageScreen
             Hexagon<TileData> hex = grid.getHexs()[i];
             TileData data = hex.getHexData();
             data.setColor(TileType.values()[data.getTileType().ordinal()].getColor());
+            data.setBuildingType(BuildingType.ROCKET);
+            data.setTexture(hexCity.getTextureByBuilding(BuildingType.ROCKET));
             hex.setHexData(data);
         }
 
@@ -146,7 +150,7 @@ public class PlayScreen  extends StageScreen
 
     private void setMultiplexer()
     {
-        behavior = new StandardGestureBehavior(getCamera());
+        behavior = new PlayScreenGestureBehavior(getCamera(), getStage(), grid, hexCity);
         detector = new GestureDetector(behavior);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(detector);
@@ -178,10 +182,22 @@ public class PlayScreen  extends StageScreen
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
             PolygonSprite sprite = hex.getHexData().getSprite();
-            Point middle = hex.getHexGeometry().getMiddlePoint();
             sprite.draw(polyBatch);
         }
         polyBatch.end();
+
+        batch.begin();
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+            batch.draw(hex.getHexData().getTexture(),
+                    (float)(middlePoint.x - grid.getStyle().getSize()/2),
+                    (float)(middlePoint.y - grid.getStyle().getSize()/2),
+                    (float)grid.getStyle().getSize(),
+                    (float)grid.getStyle().getSize());
+        }
+        batch.end();
 
         shapeRenderer.begin();
         Hexagon<Integer>[] hexagons = grid.getHexs();

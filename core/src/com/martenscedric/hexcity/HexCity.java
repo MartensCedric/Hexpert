@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.martenscedric.hexcity.screens.LevelSelectScreen;
 import com.martenscedric.hexcity.screens.MainMenuScreen;
+import com.martenscedric.hexcity.tile.BuildingType;
 
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_CLOUD;
@@ -22,6 +23,8 @@ public class HexCity extends Game {
 	public AssetManager assetManager = new AssetManager();
 	public MainMenuScreen mainMenuScreen;
 	public LevelSelectScreen levelSelectScreen;
+
+
 	@Override
 	public void create ()
 	{
@@ -50,5 +53,41 @@ public class HexCity extends Game {
 	public void resize(int width, int height)
 	{
 		super.resize(width, height);
+	}
+
+
+	public Texture getTextureByBuilding(BuildingType buildingType)
+	{
+		Texture texture = null;
+
+		switch (buildingType)
+		{
+			case HOUSE:
+				texture = assetManager.get("sprites/house.png", Texture.class);
+				break;
+			case WIND:
+				texture = assetManager.get("sprites/wind.png", Texture.class);
+				break;
+			case FARM:
+				texture = assetManager.get("sprites/farm.png", Texture.class);
+				break;
+			case MINE:
+				texture = assetManager.get("sprites/mine.png", Texture.class);
+				break;
+			case FACTORY:
+				texture = assetManager.get("sprites/factory.png", Texture.class);
+				break;
+			case MARKET:
+				texture = assetManager.get("sprites/market.png", Texture.class);
+				break;
+			case BANK:
+				texture = assetManager.get("sprites/bank.png", Texture.class);
+				break;
+			case ROCKET:
+				texture = assetManager.get("sprites/rocket.png", Texture.class);
+				break;
+		}
+
+		return texture;
 	}
 }
