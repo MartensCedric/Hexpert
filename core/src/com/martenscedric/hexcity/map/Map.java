@@ -1,8 +1,10 @@
 package com.martenscedric.hexcity.map;
 
-import com.cedricmartens.hexpert.Hexagon;
-import com.cedricmartens.hexpert.grid.HexGrid;
-import com.cedricmartens.hexpert.grid.HexGridBuilder;
+import com.cedricmartens.hexmap.hexagon.Hexagon;
+import com.cedricmartens.hexmap.map.HexBuilder;
+import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
+import com.cedricmartens.hexmap.map.grid.HexGridBuilder;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
@@ -13,16 +15,12 @@ import com.martenscedric.hexcity.tile.TileType;
 
 public class Map
 {
-    private HexGridBuilder<TileData> gridBuilder;
+    private HexFreeShapeBuilder<TileData> builder;
     private TileType[] tileTypes;
     private BuildingType[] buildingTypes;
 
-    public Map() {
-
-    }
-
-    public void setGridBuilder(HexGridBuilder<TileData> gridBuilder) {
-        this.gridBuilder = gridBuilder;
+    public void setBuilder(HexFreeShapeBuilder<TileData> builder) {
+        this.builder = builder;
     }
 
     public void setTileTypes(TileType[] tileTypes) {
@@ -33,9 +31,13 @@ public class Map
         this.buildingTypes = buildingTypes;
     }
 
-    public HexGrid<TileData> getGrid()
+    public HexFreeShapeBuilder<TileData> getBuilder() {
+        return builder;
+    }
+
+    public HexMap<TileData> getGrid()
     {
-        HexGrid<TileData> grid = gridBuilder.build();
+        HexMap<TileData> grid = builder.build();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {

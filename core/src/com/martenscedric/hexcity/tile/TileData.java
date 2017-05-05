@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.utils.ShortArray;
-import com.cedricmartens.hexpert.Hexagon;
-import com.cedricmartens.hexpert.coordinate.Point;
+import com.cedricmartens.hexmap.coordinate.Point;
+import com.cedricmartens.hexmap.hexagon.Hexagon;
 
 /**
  * Created by Cedric on 2017-04-21.
@@ -37,12 +37,12 @@ public class TileData {
         Point p6 = (Point) parent.getHexGeometry().getPoints().toArray()[5];
 
         float[] vertices = new float[]{(
-                float) p1.getX(), (float)p1.getY(),
-                (float)p2.getX(), (float)p2.getY(),
-                (float)p3.getX(), (float)p3.getY(),
-                (float) p4.getX(), (float)p4.getY(),
-                (float)p5.getX(), (float)p5.getY(),
-                (float)p6.getX(), (float)p6.getY()};
+                float) p1.x, (float)p1.y,
+                (float)p2.x, (float)p2.y,
+                (float)p3.x, (float)p3.y,
+                (float) p4.x, (float)p4.y,
+                (float)p5.x, (float)p5.y,
+                (float)p6.x, (float)p6.y};
         EarClippingTriangulator triangulator = new EarClippingTriangulator();
         ShortArray triangleIndices = triangulator.computeTriangles(vertices);
         PolygonRegion polygonRegion = new PolygonRegion(region, vertices, triangleIndices.toArray());

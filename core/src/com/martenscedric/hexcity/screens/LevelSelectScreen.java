@@ -6,12 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.cedricmartens.hexpert.HexStyle;
-import com.cedricmartens.hexpert.coordinate.Point;
-import com.cedricmartens.hexpert.grid.HexGrid;
-import com.cedricmartens.hexpert.grid.HexGridBuilder;
-import com.cedricmartens.hexpert.grid.HexagonOrientation;
-import com.cedricmartens.hexpert.grid.HexagonShape;
+import com.cedricmartens.hexmap.coordinate.CoordinateSystem;
+import com.cedricmartens.hexmap.coordinate.CubeCoordinate;
+import com.cedricmartens.hexmap.coordinate.IndexedCoordinate;
+import com.cedricmartens.hexmap.coordinate.Point;
+import com.cedricmartens.hexmap.hexagon.HexStyle;
+import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
+import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.martenscedric.hexcity.HexCity;
@@ -33,7 +35,7 @@ public class LevelSelectScreen extends StageScreen
     private Table table;
     private int levelsToDisplay = 5;
     private final HexCity hexCity;
-    private HexGrid<TileData> previewGrid;
+    private HexMap<TileData> previewGrid;
     private int levelSelect = 1;
 
     public LevelSelectScreen(final HexCity hexCity)
@@ -68,7 +70,45 @@ public class LevelSelectScreen extends StageScreen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                Gson gson = new GsonBuilder().create();
+                Gson gson = new GsonBuilder()
+                        .create();
+
+                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
+                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
+
+                builder.addHex(new Point(0, 0));
+                builder.addHexNextTo(0, 0);
+                builder.addHexNextTo(0, 1);
+                builder.addHexNextTo(0, 2);
+                builder.addHexNextTo(0, 3);
+                builder.addHexNextTo(0, 4);
+                builder.addHexNextTo(0, 5);
+                builder.addHexNextTo(5, 5);
+                builder.addHexNextTo(2, 2);
+                builder.addHexNextTo(1, 1);
+
+                TileType[] tileTypes = new TileType[10];
+                BuildingType[] buildingTypes = new BuildingType[10];
+
+                for (int i = 0; i < tileTypes.length; i++)
+                {
+                    tileTypes[i] = TileType.GRASS;
+                }
+
+                tileTypes[6] = TileType.SAND;
+                tileTypes[4] = TileType.FOREST;
+
+                for (int i = 0; i < buildingTypes.length; i++)
+                {
+                    buildingTypes[i] = BuildingType.NONE;
+                }
+
+                Map map = new Map();
+                map.setBuilder(builder);
+                map.setTileTypes(tileTypes);
+                map.setBuildingType(buildingTypes);
+
+                String mapString = gson.toJson(map, Map.class);
 
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
                 Map result = gson.fromJson(mapLoc, Map.class);
@@ -109,7 +149,7 @@ public class LevelSelectScreen extends StageScreen
 
     }
 
-    private HexGrid<TileData> loadLevel(int levelId)
+    private HexMap<TileData> loadLevel(int levelId)
     {
         return null;
     }

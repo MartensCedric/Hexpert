@@ -1,0 +1,3 @@
+[submodule "HexMap"]
+	path = HexMap
+	url = https://github.com/MartensCedric/HexMap.git

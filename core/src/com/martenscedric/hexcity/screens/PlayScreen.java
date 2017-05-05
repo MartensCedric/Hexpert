@@ -20,14 +20,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.cedricmartens.hexpert.HexGeometry;
-import com.cedricmartens.hexpert.HexStyle;
-import com.cedricmartens.hexpert.Hexagon;
-import com.cedricmartens.hexpert.coordinate.Point;
-import com.cedricmartens.hexpert.grid.HexGrid;
-import com.cedricmartens.hexpert.grid.HexGridBuilder;
-import com.cedricmartens.hexpert.grid.HexagonOrientation;
-import com.cedricmartens.hexpert.grid.HexagonShape;
+import com.cedricmartens.hexmap.coordinate.Point;
+import com.cedricmartens.hexmap.hexagon.HexGeometry;
+import com.cedricmartens.hexmap.hexagon.Hexagon;
+import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexcity.map.Map;
@@ -56,7 +52,7 @@ import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 public class PlayScreen  extends StageScreen
 {
     private HexCity hexCity;
-    private HexGrid<TileData> grid;
+    private HexMap<TileData> grid;
     private SpriteBatch batch;
     private PolygonSpriteBatch polyBatch;
     private ShapeRenderer shapeRenderer;
@@ -89,7 +85,6 @@ public class PlayScreen  extends StageScreen
         }
 
 
-        getCamera().translate(WIDTH/2, HEIGHT/2);
         getCamera().update();
         setMultiplexer();
 
@@ -206,15 +201,15 @@ public class PlayScreen  extends StageScreen
             HexGeometry hexGeo = hexagons[i].getHexGeometry();
             Point p0 = (Point) hexGeo.getPoints().toArray()[0];
             Point pLast = (Point) hexGeo.getPoints().toArray()[hexGeo.getPoints().size() - 1];
-            shapeRenderer.line((float)p0.getX(), (float)p0.getY(),
-                    (float)pLast.getX(), (float)pLast.getY(),
+            shapeRenderer.line((float)p0.x, (float)p0.y,
+                    (float)pLast.x, (float)pLast.y,
                     Color.BLACK, Color.BLACK);
             for(int j = 1; j < hexGeo.getPoints().size(); j++)
             {
                 Point current = (Point)hexGeo.getPoints().toArray()[j];
                 Point precedent = (Point)hexGeo.getPoints().toArray()[j - 1];
-                shapeRenderer.line((float)current.getX(), (float)current.getY(),
-                        (float)precedent.getX(), (float)precedent.getY(),
+                shapeRenderer.line((float)current.x, (float)current.y,
+                        (float)precedent.x, (float)precedent.y,
                         Color.BLACK, Color.BLACK);
             }
         }

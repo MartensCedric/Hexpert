@@ -5,13 +5,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cedricmartens.hexpert.Hexagon;
-import com.cedricmartens.hexpert.coordinate.Point;
-import com.cedricmartens.hexpert.grid.HexGrid;
+
+import com.cedricmartens.hexmap.coordinate.Point;
+import com.cedricmartens.hexmap.hexagon.Hexagon;
+import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
-import com.sun.prism.image.ViewPort;
 
 /**
  * Created by 1544256 on 2017-05-02.
@@ -20,10 +20,10 @@ import com.sun.prism.image.ViewPort;
 public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
     private Stage stage;
-    private HexGrid<TileData> grid;
+    private HexMap<TileData> grid;
     private HexCity hexCity;
 
-    public PlayScreenGestureBehavior(OrthographicCamera camera, Stage stage, HexGrid<TileData> grid, HexCity hexCity) {
+    public PlayScreenGestureBehavior(OrthographicCamera camera, Stage stage, HexMap<TileData> grid, HexCity hexCity) {
         super(camera);
         this.stage = stage;
         this.grid = grid;
