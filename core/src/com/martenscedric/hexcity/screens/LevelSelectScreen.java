@@ -14,14 +14,15 @@ import com.cedricmartens.hexmap.hexagon.HexStyle;
 import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
+
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
@@ -70,8 +71,8 @@ public class LevelSelectScreen extends StageScreen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                Gson gson = new GsonBuilder()
-                        .create();
+                JSONSerializer jsonSerializer = new JSONSerializer();
+
 
                 HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
                         .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
@@ -82,10 +83,6 @@ public class LevelSelectScreen extends StageScreen
                 builder.addHexNextTo(0, 2);
                 builder.addHexNextTo(0, 3);
                 builder.addHexNextTo(0, 4);
-                builder.addHexNextTo(0, 5);
-                builder.addHexNextTo(5, 5);
-                builder.addHexNextTo(2, 2);
-                builder.addHexNextTo(1, 1);
 
                 TileType[] tileTypes = new TileType[10];
                 BuildingType[] buildingTypes = new BuildingType[10];
@@ -108,10 +105,10 @@ public class LevelSelectScreen extends StageScreen
                 map.setTileTypes(tileTypes);
                 map.setBuildingType(buildingTypes);
 
-                String mapString = gson.toJson(map, Map.class);
+                String mapString = jsonSerializer.deepSerialize(map);
 
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-                Map result = gson.fromJson(mapLoc, Map.class);
+                Map result = new JSONDeserializer<Map>().deserialize(mapString);
 
                 hexCity.setScreen(new PlayScreen(hexCity, result));
             }

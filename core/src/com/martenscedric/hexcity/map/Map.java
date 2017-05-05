@@ -31,6 +31,14 @@ public class Map
         this.buildingTypes = buildingTypes;
     }
 
+    public BuildingType[] getBuildingTypes() {
+        return buildingTypes;
+    }
+
+    public TileType[] getTileTypes() {
+        return tileTypes;
+    }
+
     public HexFreeShapeBuilder<TileData> getBuilder() {
         return builder;
     }
