@@ -6,18 +6,15 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexmap.coordinate.Point;
@@ -27,7 +24,6 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexcity.map.Map;
-import com.martenscedric.hexcity.gestures.StandardGestureBehavior;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
@@ -72,7 +68,7 @@ public class PlayScreen  extends StageScreen
         this.polyBatch = new PolygonSpriteBatch();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        grid = map.getGrid();
+        grid = map.build();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {

@@ -43,7 +43,7 @@ public class Map
         return builder;
     }
 
-    public HexMap<TileData> getGrid()
+    public HexMap<TileData> build()
     {
         HexMap<TileData> grid = builder.build();
 

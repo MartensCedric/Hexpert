@@ -83,6 +83,11 @@ public class LevelSelectScreen extends StageScreen
                 builder.addHexNextTo(0, 2);
                 builder.addHexNextTo(0, 3);
                 builder.addHexNextTo(0, 4);
+                builder.addHexNextTo(0, 5);
+                builder.addHexNextTo(1, 1);
+                builder.addHexNextTo(1, 2);
+                builder.addHexNextTo(3, 3);
+                builder.addHexNextTo(4, 3);
 
                 TileType[] tileTypes = new TileType[10];
                 BuildingType[] buildingTypes = new BuildingType[10];
@@ -108,7 +113,7 @@ public class LevelSelectScreen extends StageScreen
                 String mapString = jsonSerializer.deepSerialize(map);
 
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-                Map result = new JSONDeserializer<Map>().deserialize(mapString);
+                Map result = new JSONDeserializer<Map>().deserialize(mapLoc);
 
                 hexCity.setScreen(new PlayScreen(hexCity, result));
             }
