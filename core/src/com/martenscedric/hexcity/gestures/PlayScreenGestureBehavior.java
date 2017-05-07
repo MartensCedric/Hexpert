@@ -1,7 +1,5 @@
 package com.martenscedric.hexcity.gestures;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -12,7 +10,6 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.Rules;
 import com.martenscedric.hexcity.screens.PlayScreen;
-import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
 
@@ -48,7 +45,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 != TileType.WATER && Rules.isValid(data.getHexData(), playScreen.getSelection()))
         {
             data.getHexData().setBuildingType(playScreen.getSelection());
-            data.getHexData().setTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
+            data.getHexData().setBuildingTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
             playScreen.setSelection(null);
             playScreen.getPlacementHistory().push(data.getHexData());
         }

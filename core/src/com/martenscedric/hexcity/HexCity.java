@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.martenscedric.hexcity.screens.LevelSelectScreen;
 import com.martenscedric.hexcity.screens.MainMenuScreen;
 import com.martenscedric.hexcity.tile.BuildingType;
+import com.martenscedric.hexcity.tile.TileType;
 
 import static com.martenscedric.hexcity.misc.TextureData.*;
 
@@ -31,6 +32,7 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_MENUUI, Texture.class);
 		assetManager.load(TEXTURE_UNDO, Texture.class);
 		assetManager.load(TEXTURE_RESET, Texture.class);
+		assetManager.load(TEXTURE_GRASS, Texture.class);
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);
@@ -56,28 +58,46 @@ public class HexCity extends Game {
 		switch (buildingType)
 		{
 			case HOUSE:
-				texture = assetManager.get("sprites/house.png", Texture.class);
+				texture = assetManager.get(TEXTURE_HOUSE, Texture.class);
 				break;
 			case WIND:
-				texture = assetManager.get("sprites/wind.png", Texture.class);
+				texture = assetManager.get(TEXTURE_WIND, Texture.class);
 				break;
 			case FARM:
-				texture = assetManager.get("sprites/farm.png", Texture.class);
+				texture = assetManager.get(TEXTURE_FARM, Texture.class);
 				break;
 			case MINE:
-				texture = assetManager.get("sprites/mine.png", Texture.class);
+				texture = assetManager.get(TEXTURE_MINE, Texture.class);
 				break;
 			case FACTORY:
-				texture = assetManager.get("sprites/factory.png", Texture.class);
+				texture = assetManager.get(TEXTURE_FACTORY, Texture.class);
 				break;
 			case MARKET:
-				texture = assetManager.get("sprites/market.png", Texture.class);
+				texture = assetManager.get(TEXTURE_MARKET, Texture.class);
 				break;
 			case BANK:
-				texture = assetManager.get("sprites/bank.png", Texture.class);
+				texture = assetManager.get(TEXTURE_BANK, Texture.class);
 				break;
 			case ROCKET:
-				texture = assetManager.get("sprites/rocket.png", Texture.class);
+				texture = assetManager.get(TEXTURE_ROCKET, Texture.class);
+				break;
+		}
+
+		return texture;
+	}
+
+	public Texture getTextureByTerrain(TileType tileType)
+	{
+		Texture texture = null;
+		switch (tileType) {
+			case GRASS:
+				texture = assetManager.get(TEXTURE_GRASS, Texture.class);
+				break;
+			case WATER:
+				break;
+			case SAND:
+				break;
+			case FOREST:
 				break;
 		}
 

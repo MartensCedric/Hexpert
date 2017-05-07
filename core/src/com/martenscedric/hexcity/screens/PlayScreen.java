@@ -57,8 +57,6 @@ public class PlayScreen  extends StageScreen
     private HexMap<TileData> grid;
     private Map map;
     private SpriteBatch batch;
-    private PolygonSpriteBatch polyBatch;
-    private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private PlayScreenGestureBehavior behavior;
     private Table table;
@@ -77,16 +75,13 @@ public class PlayScreen  extends StageScreen
         this.hexCity = hexCity;
         this.map = map;
         this.batch = new SpriteBatch();
-        this.polyBatch = new PolygonSpriteBatch();
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
         grid = map.build();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
             TileData data = hex.getHexData();
-            data.setColor(TileType.values()[data.getTileType().ordinal()].getColor());
+            data.setTerrainTexture(hexCity.getTextureByTerrain(data.getTileType()));
             hex.setHexData(data);
         }
 
@@ -276,28 +271,31 @@ public class PlayScreen  extends StageScreen
         }
 
         batch.setProjectionMatrix(getCamera().combined);
-        shapeRenderer.setProjectionMatrix(getCamera().combined);
-        polyBatch.setProjectionMatrix(getCamera().combined);
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        polyBatch.begin();
-        for(int i = 0; i < grid.getHexs().length; i++)
-        {
-            Hexagon<TileData> hex = grid.getHexs()[i];
-            PolygonSprite sprite = hex.getHexData().getSprite();
-            sprite.draw(polyBatch);
-        }
-        polyBatch.end();
-
         batch.begin();
+
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
-            if(hex.getHexData().getTexture() != null)
+
+            Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+            batch.draw(hex.getHexData().getTerrainTexture(),
+                    (float)(middlePoint.x - grid.getStyle().getSize()),
+                    (float)(middlePoint.y - grid.getStyle().getSize()*Math.sqrt(3)/2),
+                    (float)grid.getStyle().getSize()*2,
+                    (float) ((float)grid.getStyle().getSize()*2 * Math.sqrt(3)/2));
+
+        }
+
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            if(hex.getHexData().getBuildingTexture() != null)
             {
                 Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-                batch.draw(hex.getHexData().getTexture(),
+                batch.draw(hex.getHexData().getBuildingTexture(),
                         (float)(middlePoint.x - grid.getStyle().getSize()/2),
                         (float)(middlePoint.y - grid.getStyle().getSize()/2),
                         (float)grid.getStyle().getSize(),
@@ -305,28 +303,6 @@ public class PlayScreen  extends StageScreen
             }
         }
         batch.end();
-
-        shapeRenderer.begin();
-        Hexagon<Integer>[] hexagons = grid.getHexs();
-        for(int i = 0; i < hexagons.length; i++)
-        {
-            HexGeometry hexGeo = hexagons[i].getHexGeometry();
-            Point p0 = (Point) hexGeo.getPoints().toArray()[0];
-            Point pLast = (Point) hexGeo.getPoints().toArray()[hexGeo.getPoints().size() - 1];
-            shapeRenderer.line((float)p0.x, (float)p0.y,
-                    (float)pLast.x, (float)pLast.y,
-                    Color.BLACK, Color.BLACK);
-            for(int j = 1; j < hexGeo.getPoints().size(); j++)
-            {
-                Point current = (Point)hexGeo.getPoints().toArray()[j];
-                Point precedent = (Point)hexGeo.getPoints().toArray()[j - 1];
-                shapeRenderer.line((float)current.x, (float)current.y,
-                        (float)precedent.x, (float)precedent.y,
-                        Color.BLACK, Color.BLACK);
-            }
-        }
-
-        shapeRenderer.end();
 
         updateScore();
         super.render(delta);
@@ -399,7 +375,7 @@ public class PlayScreen  extends StageScreen
         {
             TileData data = (TileData) grid.getHexs()[i].getHexData();
             data.setBuildingType(map.getBuildingTypes()[i]);
-            data.setTexture(hexCity.getTextureByBuilding(map.getBuildingTypes()[i]));
+            data.setBuildingTexture(hexCity.getTextureByBuilding(map.getBuildingTypes()[i]));
         }
 
         setSelection(null);
@@ -411,7 +387,7 @@ public class PlayScreen  extends StageScreen
         if(placementHistory.size() > 0)
         {
             TileData data = placementHistory.pop();
-            data.setTexture(null);
+            data.setBuildingTexture(null);
             data.setBuildingType(BuildingType.NONE);
             setSelection(null);
             updateScore();
