@@ -44,22 +44,22 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY)
     {
-        getCamera().translate(-deltaX * camera.zoom, deltaY * camera.zoom);
-        if(getCamera().position.x < WIDTH/4)
-        {
-            getCamera().position.x = WIDTH/BORDER_CONSTRAINT;
-        }else if(getCamera().position.x > WIDTH - WIDTH/BORDER_CONSTRAINT)
-        {
-            getCamera().position.x = WIDTH - WIDTH/BORDER_CONSTRAINT;
-        }else if(getCamera().position.y < HEIGHT/BORDER_CONSTRAINT)
-        {
-            getCamera().position.y = HEIGHT/BORDER_CONSTRAINT;
-        }else if(getCamera().position.y > HEIGHT - HEIGHT/BORDER_CONSTRAINT)
-        {
-            getCamera().position.y = HEIGHT - HEIGHT/BORDER_CONSTRAINT;
-        }
-            getCamera().update();
+        float newX = getCamera().position.x + -deltaX * camera.zoom;
+        float newY = getCamera().position.y + deltaY * camera.zoom;
 
+        if(newX + getCamera().viewportWidth/2 > WIDTH/BORDER_CONSTRAINT
+            && newX + getCamera().viewportWidth/2 < WIDTH - WIDTH/BORDER_CONSTRAINT)
+        {
+            getCamera().position.x = newX;
+
+        }
+
+        if(newY + getCamera().viewportHeight/2 > HEIGHT/BORDER_CONSTRAINT
+                && newY + getCamera().viewportHeight/2 < HEIGHT - HEIGHT/BORDER_CONSTRAINT)
+        {
+            getCamera().position.y = newY;
+        }
+        getCamera().update();
 
         return true;
     }

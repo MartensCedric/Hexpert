@@ -32,20 +32,14 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        Gdx.app.log("gdxdebug", x + " " + y);
         Viewport viewPort = stage.getViewport();
         Vector3 pos = getCamera().unproject(new Vector3(x,y,0),
                 viewPort.getScreenX(), viewPort.getScreenY(),
                 viewPort.getScreenWidth(), viewPort.getScreenHeight());
 
-        Gdx.app.log("gdxdebug", pos
-                .toString());
-
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data == null)
-            Gdx.app.log("gdxdebug", "NULL");
-        else
+        if(data != null)
         {
             data.getHexData().setBuildingType(BuildingType.HOUSE);
             data.getHexData().setTexture(hexCity.getTextureByBuilding(BuildingType.HOUSE));
