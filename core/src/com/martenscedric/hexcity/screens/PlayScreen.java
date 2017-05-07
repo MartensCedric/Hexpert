@@ -241,7 +241,7 @@ public class PlayScreen  extends StageScreen
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
+                undo();
             }
         });
 
@@ -344,6 +344,10 @@ public class PlayScreen  extends StageScreen
         return selection;
     }
 
+    public Stack<TileData> getPlacementHistory() {
+        return placementHistory;
+    }
+
     public void setSelection(BuildingType selection) {
         this.selection = selection;
     }
@@ -398,13 +402,19 @@ public class PlayScreen  extends StageScreen
             data.setTexture(hexCity.getTextureByBuilding(map.getBuildingTypes()[i]));
         }
 
+        setSelection(null);
         updateScore();
     }
 
     private void undo()
     {
-        TileData data = placementHistory.pop();
-        data.setTexture(null);
-        data.setBuildingType(BuildingType.NONE);
+        if(placementHistory.size() > 0)
+        {
+            TileData data = placementHistory.pop();
+            data.setTexture(null);
+            data.setBuildingType(BuildingType.NONE);
+            setSelection(null);
+            updateScore();
+        }
     }
 }
