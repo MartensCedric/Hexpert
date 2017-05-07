@@ -12,10 +12,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
@@ -60,6 +62,7 @@ public class PlayScreen  extends StageScreen
     private Label lblScore;
     private String scoreTxt = "SCORE : %d";
     private int score = 0;
+    private BuildingType selection;
 
     public PlayScreen(final HexCity hexCity, Map map) {
         super();
@@ -92,20 +95,98 @@ public class PlayScreen  extends StageScreen
 
         btnFarm = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_FARM))));
         btnFarm.getImageCell().expand().fill();
+        btnFarm.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    selection = BuildingType.FARM;
+                }
+            }
+        );
+
         btnHouse = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_HOUSE))));
         btnHouse.getImageCell().expand().fill();
+
+        btnHouse.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    selection = BuildingType.HOUSE;
+                }
+            }
+        );
+
         btnMine = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_MINE))));
         btnMine.getImageCell().expand().fill();
+
+        btnMine.addListener(new ClickListener()
+             {
+                 @Override
+                 public void clicked(InputEvent event, float x, float y) {
+                     selection = BuildingType.MINE;
+                 }
+             }
+        );
+
+
         btnWind = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_WIND))));
         btnWind.getImageCell().expand().fill();
+
+        btnWind.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    selection = BuildingType.WIND;
+                }
+            }
+        );
+
         btnFactory = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_FACTORY))));
         btnFactory.getImageCell().expand().fill();
+        btnFactory.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    selection = BuildingType.FACTORY;
+                }
+            }
+        );
+
         btnMarket = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_MARKET))));
         btnMarket.getImageCell().expand().fill();
+
+        btnMarket.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    selection = BuildingType.MARKET;
+                }
+            }
+        );
+
         btnBank = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_BANK))));
         btnBank.getImageCell().expand().fill();
+
+        btnBank.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    selection = BuildingType.BANK;
+                }
+            }
+        );
+
         btnRocket = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexCity.assetManager.get(TEXTURE_ROCKET))));
         btnRocket.getImageCell().expand().fill();
+
+        btnRocket.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    selection = BuildingType.ROCKET;
+                }
+            }
+        );
 
         table = new Table();
         table.defaults().width(menuImage.getPrefWidth()).height(menuImage.getPrefHeight()/9).pad(5);
@@ -141,11 +222,11 @@ public class PlayScreen  extends StageScreen
 
     private void setMultiplexer()
     {
-        behavior = new PlayScreenGestureBehavior(getCamera(), getStage(), grid, hexCity);
+        behavior = new PlayScreenGestureBehavior(this);
         detector = new GestureDetector(behavior);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(detector);
         inputMultiplexer.addProcessor(getStage());
+        inputMultiplexer.addProcessor(detector);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -214,6 +295,26 @@ public class PlayScreen  extends StageScreen
 
         lblScore.setText(String.format(scoreTxt, score));
         super.render(delta);
+    }
+
+    public HexCity getHexCity() {
+        return hexCity;
+    }
+
+    public HexMap<TileData> getGrid() {
+        return grid;
+    }
+
+    public BuildingType getSelection() {
+        return selection;
+    }
+
+    public void setSelection(BuildingType selection) {
+        this.selection = selection;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
     }
 
     @Override

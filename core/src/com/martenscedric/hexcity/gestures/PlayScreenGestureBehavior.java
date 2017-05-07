@@ -10,6 +10,7 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.screens.PlayScreen;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 
@@ -22,12 +23,14 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
     private Stage stage;
     private HexMap<TileData> grid;
     private HexCity hexCity;
+    private PlayScreen playScreen;
 
-    public PlayScreenGestureBehavior(OrthographicCamera camera, Stage stage, HexMap<TileData> grid, HexCity hexCity) {
-        super(camera);
-        this.stage = stage;
-        this.grid = grid;
-        this.hexCity = hexCity;
+    public PlayScreenGestureBehavior(PlayScreen playScreen) {
+        super(playScreen.getCamera());
+        this.stage = playScreen.getStage();
+        this.grid = playScreen.getGrid();
+        this.hexCity = playScreen.getHexCity();
+        this.playScreen = playScreen;
     }
 
     @Override
@@ -39,10 +42,10 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null)
+        if(data != null &&  playScreen.getSelection() != null)
         {
-            data.getHexData().setBuildingType(BuildingType.HOUSE);
-            data.getHexData().setTexture(hexCity.getTextureByBuilding(BuildingType.HOUSE));
+            data.getHexData().setBuildingType(playScreen.getSelection());
+            data.getHexData().setTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
         }
         return true;
     }
