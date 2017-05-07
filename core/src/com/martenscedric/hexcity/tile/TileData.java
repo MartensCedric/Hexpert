@@ -57,8 +57,6 @@ public class TileData {
         return texture;
     }
 
-
-
     public PolygonSprite getSprite() {
         return sprite;
     }
@@ -78,5 +76,9 @@ public class TileData {
 
     public void setTileType(TileType tileType) {
         this.tileType = tileType;
+    }
+
+    public Hexagon<TileData> getParent() {
+        return parent;
     }
 }

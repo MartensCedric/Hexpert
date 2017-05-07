@@ -10,6 +10,7 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.Rules;
 import com.martenscedric.hexcity.screens.PlayScreen;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
@@ -43,7 +44,8 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null &&  playScreen.getSelection() != null && data.getHexData().getTileType() != TileType.WATER)
+        if(data != null &&  playScreen.getSelection() != null && data.getHexData().getTileType()
+                != TileType.WATER && Rules.isValid(data.getHexData(), playScreen.getSelection()))
         {
             data.getHexData().setBuildingType(playScreen.getSelection());
             data.getHexData().setTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
