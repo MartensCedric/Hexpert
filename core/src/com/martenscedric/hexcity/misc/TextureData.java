@@ -22,4 +22,8 @@ public class TextureData
     public static final String TEXTURE_RESET = SPRITE_FOLDER + "reset.png";
     public static final String TEXTURE_UNDO = SPRITE_FOLDER + "undo.png";
     public static final String TEXTURE_GRASS = SPRITE_FOLDER + "grass_tile.png";
+    public static final String TEXTURE_WATER = SPRITE_FOLDER + "water_tile.png";
+    public static final String TEXTURE_SAND = SPRITE_FOLDER + "sand_tile.png";
+    public static final String TEXTURE_SNOW = SPRITE_FOLDER + "snow_tile.png";
+
 }

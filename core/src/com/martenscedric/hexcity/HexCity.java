@@ -33,6 +33,9 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_UNDO, Texture.class);
 		assetManager.load(TEXTURE_RESET, Texture.class);
 		assetManager.load(TEXTURE_GRASS, Texture.class);
+		assetManager.load(TEXTURE_SAND, Texture.class);
+		assetManager.load(TEXTURE_SNOW, Texture.class);
+		assetManager.load(TEXTURE_WATER, Texture.class);
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);
@@ -94,10 +97,13 @@ public class HexCity extends Game {
 				texture = assetManager.get(TEXTURE_GRASS, Texture.class);
 				break;
 			case WATER:
+				texture = assetManager.get(TEXTURE_WATER, Texture.class);
 				break;
 			case SAND:
+				texture = assetManager.get(TEXTURE_SAND, Texture.class);
 				break;
-			case FOREST:
+			case SNOW:
+				texture = assetManager.get(TEXTURE_SNOW, Texture.class);
 				break;
 		}
 
