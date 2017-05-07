@@ -13,6 +13,7 @@ import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.screens.PlayScreen;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
+import com.martenscedric.hexcity.tile.TileType;
 
 /**
  * Created by 1544256 on 2017-05-02.
@@ -42,7 +43,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null &&  playScreen.getSelection() != null)
+        if(data != null &&  playScreen.getSelection() != null && data.getHexData().getTileType() != TileType.WATER)
         {
             data.getHexData().setBuildingType(playScreen.getSelection());
             data.getHexData().setTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));

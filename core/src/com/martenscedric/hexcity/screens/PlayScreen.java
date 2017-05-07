@@ -78,8 +78,6 @@ public class PlayScreen  extends StageScreen
             Hexagon<TileData> hex = grid.getHexs()[i];
             TileData data = hex.getHexData();
             data.setColor(TileType.values()[data.getTileType().ordinal()].getColor());
-            data.setBuildingType(BuildingType.ROCKET);
-            data.setTexture(hexCity.getTextureByBuilding(BuildingType.ROCKET));
             hex.setHexData(data);
         }
 
@@ -262,12 +260,15 @@ public class PlayScreen  extends StageScreen
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
-            Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-            batch.draw(hex.getHexData().getTexture(),
-                    (float)(middlePoint.x - grid.getStyle().getSize()/2),
-                    (float)(middlePoint.y - grid.getStyle().getSize()/2),
-                    (float)grid.getStyle().getSize(),
-                    (float)grid.getStyle().getSize());
+            if(hex.getHexData().getTexture() != null)
+            {
+                Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+                batch.draw(hex.getHexData().getTexture(),
+                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
+                        (float)(middlePoint.y - grid.getStyle().getSize()/2),
+                        (float)grid.getStyle().getSize(),
+                        (float)grid.getStyle().getSize());
+            }
         }
         batch.end();
 
@@ -293,7 +294,7 @@ public class PlayScreen  extends StageScreen
 
         shapeRenderer.end();
 
-        lblScore.setText(String.format(scoreTxt, score));
+        updateScore();
         super.render(delta);
     }
 
@@ -340,5 +341,17 @@ public class PlayScreen  extends StageScreen
     @Override
     public void dispose() {
 
+    }
+
+    private void updateScore()
+    {
+        score = 0;
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            TileData data = (TileData) grid.getHexs()[i].getHexData();
+            score+=data.getBuildingType().getScore() * data.getTileType().getMultiplier();
+        }
+
+        lblScore.setText(String.format(scoreTxt, score));
     }
 }
