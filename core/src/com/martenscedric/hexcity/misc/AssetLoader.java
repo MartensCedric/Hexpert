@@ -18,7 +18,7 @@ public class AssetLoader
 
     public static Skin getSkin()
     {
-        return new Skin(Gdx.files.internal("skins/default/flat-earth-ui.json"));
+        return new Skin(Gdx.files.internal("skins/flat-earth/flat-earth-ui.json"));
     }
 
     public static BitmapFont getFont() {

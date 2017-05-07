@@ -47,6 +47,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
         {
             data.getHexData().setBuildingType(playScreen.getSelection());
             data.getHexData().setTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
+            playScreen.setSelection(null);
         }
         return true;
     }
