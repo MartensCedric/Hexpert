@@ -19,4 +19,6 @@ public class TextureData
     public static final String TEXTURE_BANK = SPRITE_FOLDER + "bank.png";
     public static final String TEXTURE_ROCKET = SPRITE_FOLDER + "rocket.png";
     public static final String TEXTURE_MENUUI = SPRITE_FOLDER + "selectmenu.png";
+    public static final String TEXTURE_RESET = SPRITE_FOLDER + "reset.png";
+    public static final String TEXTURE_UNDO = SPRITE_FOLDER + "undo.png";
 }

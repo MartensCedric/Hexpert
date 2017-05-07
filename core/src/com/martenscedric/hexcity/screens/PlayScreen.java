@@ -31,6 +31,8 @@ import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
 
+import java.util.Stack;
+
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
@@ -40,7 +42,9 @@ import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MENUUI;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_RESET;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_ROCKET;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_UNDO;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
 
 /**
@@ -51,6 +55,7 @@ public class PlayScreen  extends StageScreen
 {
     private HexCity hexCity;
     private HexMap<TileData> grid;
+    private Map map;
     private SpriteBatch batch;
     private PolygonSpriteBatch polyBatch;
     private ShapeRenderer shapeRenderer;
@@ -58,15 +63,19 @@ public class PlayScreen  extends StageScreen
     private PlayScreenGestureBehavior behavior;
     private Table table;
     private Image menuImage;
-    private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket;
+    private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
+                btnReset, btnUndo;
     private Label lblScore;
     private String scoreTxt = "SCORE : %d";
     private int score = 0;
     private BuildingType selection;
 
+    private Stack<TileData> placementHistory = new Stack<TileData>();
+
     public PlayScreen(final HexCity hexCity, Map map) {
         super();
         this.hexCity = hexCity;
+        this.map = map;
         this.batch = new SpriteBatch();
         this.polyBatch = new PolygonSpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -214,8 +223,33 @@ public class PlayScreen  extends StageScreen
         lblScore.setX(5);
         lblScore.setY(25);
 
+        btnReset = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexCity.assetManager.get(TEXTURE_RESET))));
+        btnReset.setX(5);
+        btnReset.setY(HEIGHT-btnReset.getPrefHeight());
+        btnReset.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                resetGrid();
+            }
+        });
+
+        btnUndo = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexCity.assetManager.get(TEXTURE_UNDO))));
+        btnUndo.setX(10 + btnReset.getPrefWidth());
+        btnUndo.setY(HEIGHT-btnUndo.getPrefHeight());
+        btnUndo.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+            }
+        });
+
+
         getStage().addActor(table);
         getStage().addActor(lblScore);
+        getStage().addActor(btnReset);
+        getStage().addActor(btnUndo);
     }
 
     private void setMultiplexer()
@@ -353,5 +387,24 @@ public class PlayScreen  extends StageScreen
         }
 
         lblScore.setText(String.format(scoreTxt, score));
+    }
+
+    private void resetGrid()
+    {
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            TileData data = (TileData) grid.getHexs()[i].getHexData();
+            data.setBuildingType(map.getBuildingTypes()[i]);
+            data.setTexture(hexCity.getTextureByBuilding(map.getBuildingTypes()[i]));
+        }
+
+        updateScore();
+    }
+
+    private void undo()
+    {
+        TileData data = placementHistory.pop();
+        data.setTexture(null);
+        data.setBuildingType(BuildingType.NONE);
     }
 }

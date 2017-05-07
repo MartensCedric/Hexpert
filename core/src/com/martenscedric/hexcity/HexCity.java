@@ -1,23 +1,13 @@
 package com.martenscedric.hexcity;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.martenscedric.hexcity.screens.LevelSelectScreen;
 import com.martenscedric.hexcity.screens.MainMenuScreen;
 import com.martenscedric.hexcity.tile.BuildingType;
 
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_CLOUD;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FACTORY;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FARM;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_HOUSE;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MARKET;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MENUUI;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_MINE;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_ROCKET;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_WIND;
+import static com.martenscedric.hexcity.misc.TextureData.*;
 
 public class HexCity extends Game {
 
@@ -39,6 +29,8 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_BANK, Texture.class);
 		assetManager.load(TEXTURE_ROCKET, Texture.class);
 		assetManager.load(TEXTURE_MENUUI, Texture.class);
+		assetManager.load(TEXTURE_UNDO, Texture.class);
+		assetManager.load(TEXTURE_RESET, Texture.class);
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);
