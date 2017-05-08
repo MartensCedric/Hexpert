@@ -8,13 +8,13 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
-import com.martenscedric.hexcity.PointTime;
+import com.martenscedric.hexcity.misc.PointTime;
 import com.martenscedric.hexcity.Rules;
+import com.martenscedric.hexcity.misc.IntPointTime;
 import com.martenscedric.hexcity.screens.PlayScreen;
+import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
-
-import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 
 /**
  * Created by 1544256 on 2017-05-02.
@@ -44,7 +44,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null && playScreen.getSelection() != null)
+        if(data != null && playScreen.getSelection() != null && data.getHexData().getBuildingType() == BuildingType.NONE)
         {
 
             if(data.getHexData().getTileType()
@@ -54,6 +54,10 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 data.getHexData().setBuildingTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
                 playScreen.setSelection(null);
                 playScreen.getPlacementHistory().push(data.getHexData());
+
+                int score = data.getHexData().getBuildingType().getScore() * data.getHexData().getTileType().getMultiplier();
+
+                playScreen.getMoveEventManager().getScoreList().add(new IntPointTime(score, new Point(pos.x, pos.y), 0.35f));
                 hexCity.sounds.get("click").play();
             }else{
                 playScreen.getMoveEventManager().getBadMoves().add(new PointTime(new Point(pos.x,pos.y), 0.35f));

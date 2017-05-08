@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -60,6 +61,7 @@ public class PlayScreen  extends StageScreen
     private HexMap<TileData> grid;
     private Map map;
     private SpriteBatch batch;
+    private SpriteBatch absBatch;
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private PlayScreenGestureBehavior behavior;
@@ -67,7 +69,6 @@ public class PlayScreen  extends StageScreen
     private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
                 btnReset, btnUndo;
-    private Label lblScore;
     private String scoreTxt = "SCORE : %d";
     private int score = 0;
     private BuildingType selection;
@@ -82,6 +83,7 @@ public class PlayScreen  extends StageScreen
         this.hexCity = hexCity;
         this.map = map;
         this.batch = new SpriteBatch();
+        this.absBatch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         moveEventManager = new MoveEventManager(this);
@@ -231,11 +233,6 @@ public class PlayScreen  extends StageScreen
         table.setY(HEIGHT - table.getPrefHeight()/2);
         table.setDebug(false);
 
-        lblScore = new Label(String.format(scoreTxt, score), AssetLoader.getSkin());
-        lblScore.setFontScale(5);
-        lblScore.setX(5);
-        lblScore.setY(25);
-
         btnReset = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexCity.assetManager.get(TEXTURE_RESET))));
         btnReset.setX(5);
         btnReset.setY(HEIGHT-btnReset.getPrefHeight());
@@ -260,7 +257,6 @@ public class PlayScreen  extends StageScreen
 
 
         getStage().addActor(table);
-        getStage().addActor(lblScore);
         getStage().addActor(btnReset);
         getStage().addActor(btnUndo);
     }
@@ -320,9 +316,10 @@ public class PlayScreen  extends StageScreen
                         (float)grid.getStyle().getSize());
             }
         }
-
         batch.end();
-
+        absBatch.begin();
+        AssetLoader.getFont().draw(absBatch, String.format(scoreTxt, score), 5, 25);
+        absBatch.end();
         if(debug)
         {
             shapeRenderer.begin();
@@ -419,8 +416,6 @@ public class PlayScreen  extends StageScreen
             TileData data = (TileData) grid.getHexs()[i].getHexData();
             score+=data.getBuildingType().getScore() * data.getTileType().getMultiplier();
         }
-
-        lblScore.setText(String.format(scoreTxt, score));
     }
 
     private void resetGrid()
