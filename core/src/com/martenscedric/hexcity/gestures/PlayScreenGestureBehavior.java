@@ -41,13 +41,19 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null &&  playScreen.getSelection() != null && data.getHexData().getTileType()
-                != TileType.WATER && Rules.isValid(data.getHexData(), playScreen.getSelection()))
+        if(data != null && playScreen.getSelection() != null)
         {
-            data.getHexData().setBuildingType(playScreen.getSelection());
-            data.getHexData().setBuildingTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
-            playScreen.setSelection(null);
-            playScreen.getPlacementHistory().push(data.getHexData());
+
+            if(data.getHexData().getTileType()
+                    != TileType.WATER && Rules.isValid(data.getHexData(), playScreen.getSelection()))
+            {
+                data.getHexData().setBuildingType(playScreen.getSelection());
+                data.getHexData().setBuildingTexture(hexCity.getTextureByBuilding(playScreen.getSelection()));
+                playScreen.setSelection(null);
+                playScreen.getPlacementHistory().push(data.getHexData());
+            }else{
+
+            }
         }
         return true;
     }

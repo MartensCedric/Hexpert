@@ -36,6 +36,7 @@ import java.util.Stack;
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
+import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BADMOVE;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FACTORY;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FARM;
@@ -316,6 +317,7 @@ public class PlayScreen  extends StageScreen
                         (float)grid.getStyle().getSize());
             }
         }
+
         batch.end();
 
         if(debug)

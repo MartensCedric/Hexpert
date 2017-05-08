@@ -36,6 +36,7 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_SAND, Texture.class);
 		assetManager.load(TEXTURE_SNOW, Texture.class);
 		assetManager.load(TEXTURE_WATER, Texture.class);
+		assetManager.load(TEXTURE_BADMOVE, Texture.class);
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);
