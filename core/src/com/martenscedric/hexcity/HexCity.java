@@ -1,12 +1,16 @@
 package com.martenscedric.hexcity;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.martenscedric.hexcity.screens.LevelSelectScreen;
 import com.martenscedric.hexcity.screens.MainMenuScreen;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileType;
+
+import java.util.HashMap;
 
 import static com.martenscedric.hexcity.misc.TextureData.*;
 
@@ -15,6 +19,7 @@ public class HexCity extends Game {
 	public AssetManager assetManager = new AssetManager();
 	public MainMenuScreen mainMenuScreen;
 	public LevelSelectScreen levelSelectScreen;
+	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 
 
 	@Override
@@ -37,6 +42,9 @@ public class HexCity extends Game {
 		assetManager.load(TEXTURE_SNOW, Texture.class);
 		assetManager.load(TEXTURE_WATER, Texture.class);
 		assetManager.load(TEXTURE_BADMOVE, Texture.class);
+		sounds.put("click", Gdx.audio.newSound(Gdx.files.internal("sounds/click.wav")));
+		sounds.put("bad", Gdx.audio.newSound(Gdx.files.internal("sounds/bad.wav")));
+		sounds.put("select", Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav")));
 		assetManager.finishLoading();
 		mainMenuScreen = new MainMenuScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);

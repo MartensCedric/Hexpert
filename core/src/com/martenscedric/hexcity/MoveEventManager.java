@@ -51,7 +51,7 @@ public class MoveEventManager
         for(int i = 0; i < badMoves.size(); i++)
         {
             PointTime pointTime = badMoves.get(i);
-            batch.draw(badMoveTexture, (float)((pointTime.x - SCALE/2) + Math.sin(TimeUtils.millis()) * 2), (float)(pointTime.y - SCALE/2), SCALE, SCALE);
+            batch.draw(badMoveTexture, (float)((pointTime.x - SCALE/2) + Math.sin(TimeUtils.millis()/15) * 5), (float)(pointTime.y - SCALE/2), SCALE, SCALE);
         }
         batch.end();
     }
