@@ -70,6 +70,7 @@ public class PlayScreen  extends StageScreen
     private int score = 0;
     private BuildingType selection;
     private ImageButton selectedButton;
+    private boolean debug = false;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -296,9 +297,9 @@ public class PlayScreen  extends StageScreen
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
-                    (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO),
+                    (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO) - 3,
                     (float)grid.getStyle().getSize()*2,
-                    (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO));
+                    (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 6);
 
         }
 
@@ -317,7 +318,29 @@ public class PlayScreen  extends StageScreen
         }
         batch.end();
 
+        if(debug)
+        {
+            shapeRenderer.begin();
+            shapeRenderer.setProjectionMatrix(getCamera().combined);
+            Hexagon<Integer>[] hexagons = grid.getHexs();
+            for (int i = 0; i < hexagons.length; i++) {
+                HexGeometry hexGeo = hexagons[i].getHexGeometry();
+                Point p0 = (Point) hexGeo.getPoints().toArray()[0];
+                Point pLast = (Point) hexGeo.getPoints().toArray()[hexGeo.getPoints().size() - 1];
+                shapeRenderer.line((float) p0.x, (float) p0.y,
+                        (float) pLast.x, (float) pLast.y,
+                        Color.BLACK, Color.BLACK);
+                for (int j = 1; j < hexGeo.getPoints().size(); j++) {
+                    Point current = (Point) hexGeo.getPoints().toArray()[j];
+                    Point precedent = (Point) hexGeo.getPoints().toArray()[j - 1];
+                    shapeRenderer.line((float) current.x, (float) current.y,
+                            (float) precedent.x, (float) precedent.y,
+                            Color.BLACK, Color.BLACK);
+                }
+            }
 
+            shapeRenderer.end();
+        }
 
         updateScore();
         super.render(delta);

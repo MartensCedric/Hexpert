@@ -1,5 +1,6 @@
 package com.martenscedric.hexcity.map;
 
+import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexBuilder;
 import com.cedricmartens.hexmap.map.HexMap;
@@ -8,6 +9,13 @@ import com.cedricmartens.hexmap.map.grid.HexGridBuilder;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -56,6 +64,28 @@ public class Map
             dataHexagon.setHexData(tileData);
         }
 
+        List<Hexagon> hexagons = Arrays.asList(grid.getHexs());
+
+        List<Hexagon<TileData>> sortedHexs = new ArrayList<Hexagon<TileData>>();
+
+        while(sortedHexs.size() != grid.getHexs().length)
+        {
+            double currentBestY = Double.MIN_VALUE;
+            int ibest = -1;
+            for(int i = 0; i < hexagons.size(); i++)
+            {
+                double y = hexagons.get(i).getHexGeometry().getMiddlePoint().y;
+                if(currentBestY < y)
+                {
+                    currentBestY = y;
+                    ibest = i;
+                }
+            }
+
+            sortedHexs.add(hexagons.get(ibest));
+            hexagons.remove(hexagons.get(ibest));
+        }
+        grid.setHexs((Hexagon[]) sortedHexs.toArray());
         return grid;
     }
 }
