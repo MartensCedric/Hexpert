@@ -64,28 +64,45 @@ public class Map
             dataHexagon.setHexData(tileData);
         }
 
-        List<Hexagon> hexagons = Arrays.asList(grid.getHexs());
+        Hexagon<TileData>[] hexagons = grid.getHexs();
 
         List<Hexagon<TileData>> sortedHexs = new ArrayList<Hexagon<TileData>>();
 
-        while(sortedHexs.size() != grid.getHexs().length)
+
+        boolean nulls = false;
+        while (!nulls)
         {
-            double currentBestY = Double.MIN_VALUE;
-            int ibest = -1;
-            for(int i = 0; i < hexagons.size(); i++)
+            nulls = true;
+            int iBest = -1;
+            Hexagon<TileData> best = null;
+            for(int i = 0; i < hexagons.length; i++)
             {
-                double y = hexagons.get(i).getHexGeometry().getMiddlePoint().y;
-                if(currentBestY < y)
+                if(hexagons[i] != null)
                 {
-                    currentBestY = y;
-                    ibest = i;
+                    nulls = false;
+                    if(best == null || best.getHexGeometry().getMiddlePoint().y <= hexagons[i].getHexGeometry().getMiddlePoint().y)
+                    {
+                        best = hexagons[i];
+                        iBest = i;
+                    }
                 }
             }
 
-            sortedHexs.add(hexagons.get(ibest));
-            hexagons.remove(hexagons.get(ibest));
+            if(best != null)
+            {
+                sortedHexs.add(best);
+                hexagons[iBest] = null;
+            }
         }
-        grid.setHexs((Hexagon[]) sortedHexs.toArray());
+
+        Hexagon<TileData>[] res = new Hexagon[sortedHexs.size()];
+
+        for(int i = 0; i < res.length; i++)
+        {
+            res[i] = sortedHexs.get(i);
+        }
+
+        grid.setHexs(res);
         return grid;
     }
 }

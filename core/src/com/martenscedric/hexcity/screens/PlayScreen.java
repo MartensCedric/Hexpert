@@ -297,9 +297,9 @@ public class PlayScreen  extends StageScreen
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
-                    (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO) - 3,
+                    (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO) - 24,
                     (float)grid.getStyle().getSize()*2,
-                    (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 6);
+                    (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
 
         }
 
