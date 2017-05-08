@@ -34,6 +34,7 @@ import com.martenscedric.hexcity.tile.TileType;
 import java.util.Stack;
 
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
+import static com.martenscedric.hexcity.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FACTORY;
@@ -57,6 +58,7 @@ public class PlayScreen  extends StageScreen
     private HexMap<TileData> grid;
     private Map map;
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private PlayScreenGestureBehavior behavior;
     private Table table;
@@ -67,6 +69,7 @@ public class PlayScreen  extends StageScreen
     private String scoreTxt = "SCORE : %d";
     private int score = 0;
     private BuildingType selection;
+    private ImageButton selectedButton;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -75,6 +78,8 @@ public class PlayScreen  extends StageScreen
         this.hexCity = hexCity;
         this.map = map;
         this.batch = new SpriteBatch();
+        this.shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setAutoShapeType(true);
         grid = map.build();
 
         for(int i = 0; i < grid.getHexs().length; i++)
@@ -102,6 +107,7 @@ public class PlayScreen  extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selection = BuildingType.FARM;
+                    selectedButton = btnFarm;
                 }
             }
         );
@@ -114,6 +120,7 @@ public class PlayScreen  extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selection = BuildingType.HOUSE;
+                    selectedButton = btnHouse;
                 }
             }
         );
@@ -126,6 +133,7 @@ public class PlayScreen  extends StageScreen
                  @Override
                  public void clicked(InputEvent event, float x, float y) {
                      selection = BuildingType.MINE;
+                     selectedButton = btnMine;
                  }
              }
         );
@@ -139,6 +147,7 @@ public class PlayScreen  extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selection = BuildingType.WIND;
+                    selectedButton = btnWind;
                 }
             }
         );
@@ -150,6 +159,7 @@ public class PlayScreen  extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selection = BuildingType.FACTORY;
+                    selectedButton = btnFactory;
                 }
             }
         );
@@ -162,6 +172,7 @@ public class PlayScreen  extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selection = BuildingType.MARKET;
+                    selectedButton = btnMarket;
                 }
             }
         );
@@ -174,6 +185,7 @@ public class PlayScreen  extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selection = BuildingType.BANK;
+                    selectedButton = btnBank;
                 }
             }
         );
@@ -186,6 +198,7 @@ public class PlayScreen  extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selection = BuildingType.ROCKET;
+                    selectedButton = btnRocket;
                 }
             }
         );
@@ -283,9 +296,9 @@ public class PlayScreen  extends StageScreen
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
-                    (float)(middlePoint.y - grid.getStyle().getSize()*Math.sqrt(3)/2),
+                    (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO),
                     (float)grid.getStyle().getSize()*2,
-                    (float) ((float)grid.getStyle().getSize()*2 * Math.sqrt(3)/2));
+                    (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO));
 
         }
 
@@ -304,8 +317,19 @@ public class PlayScreen  extends StageScreen
         }
         batch.end();
 
+
+
         updateScore();
         super.render(delta);
+
+        if(selectedButton != null)
+        {
+            shapeRenderer.begin();
+            shapeRenderer.setColor(Color.GREEN);
+            shapeRenderer.rect(WIDTH - 160, selectedButton.getY() + 567, selectedButton.getImage().getImageWidth() + 2, selectedButton.getImage().getImageHeight() + 2);
+            shapeRenderer.end();
+            shapeRenderer.end();
+        }
     }
 
     public HexCity getHexCity() {
@@ -326,6 +350,8 @@ public class PlayScreen  extends StageScreen
 
     public void setSelection(BuildingType selection) {
         this.selection = selection;
+        if(selection == null)
+            selectedButton = null;
     }
 
     public SpriteBatch getBatch() {
@@ -379,6 +405,7 @@ public class PlayScreen  extends StageScreen
         }
 
         setSelection(null);
+        placementHistory.clear();
         updateScore();
     }
 
