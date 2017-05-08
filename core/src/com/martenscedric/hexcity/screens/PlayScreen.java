@@ -24,6 +24,7 @@ import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.MoveEventManager;
 import com.martenscedric.hexcity.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.misc.AssetLoader;
@@ -71,6 +72,7 @@ public class PlayScreen  extends StageScreen
     private int score = 0;
     private BuildingType selection;
     private ImageButton selectedButton;
+    private MoveEventManager moveEventManager;
     private boolean debug = false;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
@@ -82,6 +84,7 @@ public class PlayScreen  extends StageScreen
         this.batch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
+        moveEventManager = new MoveEventManager(this);
         grid = map.build();
 
         for(int i = 0; i < grid.getHexs().length; i++)
@@ -343,7 +346,7 @@ public class PlayScreen  extends StageScreen
 
             shapeRenderer.end();
         }
-
+        moveEventManager.render(delta);
         updateScore();
         super.render(delta);
 
@@ -444,5 +447,9 @@ public class PlayScreen  extends StageScreen
             setSelection(null);
             updateScore();
         }
+    }
+
+    public MoveEventManager getMoveEventManager() {
+        return moveEventManager;
     }
 }

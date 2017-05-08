@@ -8,10 +8,13 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexcity.HexCity;
+import com.martenscedric.hexcity.PointTime;
 import com.martenscedric.hexcity.Rules;
 import com.martenscedric.hexcity.screens.PlayScreen;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
+
+import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 
 /**
  * Created by 1544256 on 2017-05-02.
@@ -52,7 +55,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 playScreen.setSelection(null);
                 playScreen.getPlacementHistory().push(data.getHexData());
             }else{
-
+                playScreen.getMoveEventManager().getBadMoves().add(new PointTime(new Point(pos.x,pos.y), 0.35f));
             }
         }
         return true;

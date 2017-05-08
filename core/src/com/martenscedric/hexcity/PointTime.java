@@ -8,20 +8,14 @@ import com.cedricmartens.hexmap.coordinate.Point;
 
 public class PointTime
 {
-    private Point point;
+    public double x;
+    public double y;
     private float time;
 
     public PointTime(Point point, float time) {
-        this.point = point;
+        this.x = point.x;
+        this.y = point.y;
         this.time = time;
-    }
-
-    public Point getPoint() {
-        return point;
-    }
-
-    public void setPoint(Point point) {
-        this.point = point;
     }
 
     public float getTime() {
