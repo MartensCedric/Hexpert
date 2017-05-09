@@ -74,7 +74,7 @@ public class PlayScreen  extends StageScreen
     private BuildingType selection;
     private ImageButton selectedButton;
     private MoveEventManager moveEventManager;
-    private boolean debug = false;
+    private boolean debug = true;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -343,6 +343,14 @@ public class PlayScreen  extends StageScreen
             }
 
             shapeRenderer.end();
+            batch.begin();
+            for (int i = 0; i < hexagons.length; i++) {
+                HexGeometry hexGeo = hexagons[i].getHexGeometry();
+                AssetLoader.getFont().draw(batch, Integer.toString(hexagons[i].getCoordinateSystem().toIndexed().getIndex()),
+                        (float)hexGeo.getMiddlePoint().x, (float)hexGeo.getMiddlePoint().y);
+            }
+
+            batch.end();
         }
         moveEventManager.render(delta);
         updateScore();
@@ -353,7 +361,6 @@ public class PlayScreen  extends StageScreen
             shapeRenderer.begin();
             shapeRenderer.setColor(Color.GREEN);
             shapeRenderer.rect(WIDTH - 160, selectedButton.getY() + 567, selectedButton.getImage().getImageWidth() + 2, selectedButton.getImage().getImageHeight() + 2);
-            shapeRenderer.end();
             shapeRenderer.end();
         }
     }

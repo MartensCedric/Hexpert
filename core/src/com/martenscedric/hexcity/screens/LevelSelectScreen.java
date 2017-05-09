@@ -79,19 +79,24 @@ public class LevelSelectScreen extends StageScreen
 //                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
 //
 //                builder.addHex(new Point(0, 0));
+//                builder.addHexNextTo(0, 0);
 //                builder.addHexNextTo(0, 1);
 //                builder.addHexNextTo(0, 2);
 //                builder.addHexNextTo(0, 3);
-//                builder.addHexNextTo(0, 5);
-//                builder.addHexNextTo(2, 1);
-//                builder.addHexNextTo(2, 2);
-//                builder.addHexNextTo(2, 3);
-//                builder.addHexNextTo(6, 1);
-//                builder.addHexNextTo(6, 2);
-//                builder.addHexNextTo(6, 3);
+//                builder.addHexNextTo(3, 1);
+//                builder.addHexNextTo(3, 2);
+//                builder.addHexNextTo(3, 3);
+//                builder.addHexNextTo(4, 3);
+//                builder.addHexNextTo(8, 5);
+//                builder.addHexNextTo(5, 2);
+//                builder.addHexNextTo(9, 0);
+//                builder.addHexNextTo(8, 2);
+//                builder.addHexNextTo(12, 1);
+//                builder.addHexNextTo(12, 2);
+//                builder.addHexNextTo(10, 3);
 //
-//                TileType[] tileTypes = new TileType[11];
-//                BuildingType[] buildingTypes = new BuildingType[11];
+//                TileType[] tileTypes = new TileType[17];
+//                BuildingType[] buildingTypes = new BuildingType[17];
 //
 //                for (int i = 0; i < tileTypes.length; i++)
 //                {
@@ -107,9 +112,9 @@ public class LevelSelectScreen extends StageScreen
 //                map.setBuilder(builder);
 //                map.setTileTypes(tileTypes);
 //                map.setBuildingType(buildingTypes);
-
+//
 //                String mapString = jsonSerializer.deepSerialize(map);
-
+//
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
                 Map result = new JSONDeserializer<Map>().deserialize(mapLoc);
 
