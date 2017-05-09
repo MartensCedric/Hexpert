@@ -2,6 +2,8 @@ package com.martenscedric.hexcity.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -11,6 +13,7 @@ import com.cedricmartens.hexmap.coordinate.CubeCoordinate;
 import com.cedricmartens.hexmap.coordinate.IndexedCoordinate;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexStyle;
+import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
@@ -25,6 +28,7 @@ import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
+import static com.martenscedric.hexcity.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
 
 /**
@@ -38,17 +42,20 @@ public class LevelSelectScreen extends StageScreen
     private final HexCity hexCity;
     private HexMap<TileData> previewGrid;
     private int levelSelect = 1;
+    private HexMap<TileData> grid;
+    private SpriteBatch batch;
 
     public LevelSelectScreen(final HexCity hexCity)
     {
         super();
         this.hexCity = hexCity;
+        this.batch = new SpriteBatch();
         table = new Table();
         table.setX(WIDTH/2);
         table.setY(HEIGHT/4);
         table.defaults().pad(20);
         previewGrid = loadLevel(1);
-
+        getCamera().update();
         for(int i = 0; i < levelsToDisplay; i++)
         {
             TextButton button = new TextButton(Integer.toString(i + 1), AssetLoader.getSkin());
@@ -60,6 +67,7 @@ public class LevelSelectScreen extends StageScreen
                 public void clicked(InputEvent event, float x, float y)
                 {
                     levelSelect = level;
+                    loadDisplayLevel();
                 }
             });
             table.add(button);
@@ -124,13 +132,44 @@ public class LevelSelectScreen extends StageScreen
         button.getLabel().setFontScale(5);
         table.add(button).colspan(levelsToDisplay);
         getStage().addActor(table);
+        loadDisplayLevel();
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.setProjectionMatrix(getCamera().combined);
+        batch.begin();
 
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = grid.getHexs()[i];
+
+            Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+            batch.draw(hex.getHexData().getTerrainTexture(),
+                    (float)(middlePoint.x - grid.getStyle().getSize()),
+                    (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO) - 24,
+                    (float)grid.getStyle().getSize()*2,
+                    (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
+
+        }
+
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            if(hex.getHexData().getBuildingTexture() != null)
+            {
+                Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+                batch.draw(hex.getHexData().getBuildingTexture(),
+                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
+                        (float)(middlePoint.y - grid.getStyle().getSize()/2),
+                        (float)grid.getStyle().getSize(),
+                        (float)grid.getStyle().getSize());
+            }
+        }
+
+        batch.end();
         super.render(delta);
     }
 
@@ -157,5 +196,34 @@ public class LevelSelectScreen extends StageScreen
     private HexMap<TileData> loadLevel(int levelId)
     {
         return null;
+    }
+
+    private void loadDisplayLevel()
+    {
+        String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
+        Map result = new JSONDeserializer<Map>().deserialize(mapLoc);
+        grid = result.build();
+
+        double maxHeight = -1;
+        double minHeight = Double.MAX_VALUE;
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            TileData data = hex.getHexData();
+            data.setTerrainTexture(hexCity.getTextureByTerrain(data.getTileType()));
+            data.setBuildingTexture(hexCity.getTextureByBuilding(data.getBuildingType()));
+            hex.setHexData(data);
+
+            if(hex.getHexGeometry().getMiddlePoint().y < minHeight)
+                minHeight = hex.getHexGeometry().getMiddlePoint().y;
+
+            if(hex.getHexGeometry().getMiddlePoint().y > maxHeight)
+                maxHeight = hex.getHexGeometry().getMiddlePoint().y;
+        }
+        double delta = (maxHeight - minHeight);
+        getCamera().zoom = (float) (delta/340.0);
+        getCamera().position.setZero();
+        getCamera().translate(0, -150 + (float)(maxHeight/delta)*50);
+        getCamera().update();
     }
 }

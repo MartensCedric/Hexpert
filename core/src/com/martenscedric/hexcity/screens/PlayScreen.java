@@ -74,7 +74,7 @@ public class PlayScreen  extends StageScreen
     private BuildingType selection;
     private ImageButton selectedButton;
     private MoveEventManager moveEventManager;
-    private boolean debug = true;
+    private boolean debug = false;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -98,10 +98,8 @@ public class PlayScreen  extends StageScreen
             hex.setHexData(data);
         }
 
-
         getCamera().update();
         setMultiplexer();
-
 
         menuImage = new Image((Texture)hexCity.assetManager.get(TEXTURE_MENUUI));
         menuImage.setX(WIDTH - menuImage.getWidth());
