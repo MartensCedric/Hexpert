@@ -67,7 +67,8 @@ public class Map
         Hexagon<TileData>[] hexagons = grid.getHexs();
 
         List<Hexagon<TileData>> sortedHexs = new ArrayList<Hexagon<TileData>>();
-
+        List<BuildingType> bTypes = new ArrayList<BuildingType>();
+        List<TileType> tTypes = new ArrayList<TileType>();
 
         boolean nulls = false;
         while (!nulls)
@@ -91,6 +92,8 @@ public class Map
             if(best != null)
             {
                 sortedHexs.add(best);
+                bTypes.add(best.getHexData().getBuildingType());
+                tTypes.add(best.getHexData().getTileType());
                 hexagons[iBest] = null;
             }
         }
@@ -100,6 +103,8 @@ public class Map
         for(int i = 0; i < res.length; i++)
         {
             res[i] = sortedHexs.get(i);
+            buildingTypes[i] = bTypes.get(i);
+            tileTypes[i] = tTypes.get(i);
         }
 
         grid.setHexs(res);
