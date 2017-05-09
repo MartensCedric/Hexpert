@@ -72,43 +72,43 @@ public class LevelSelectScreen extends StageScreen
             public void clicked(InputEvent event, float x, float y)
             {
 
-                JSONSerializer jsonSerializer = new JSONSerializer();
+//                JSONSerializer jsonSerializer = new JSONSerializer();
+//
+//
+//                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
+//                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
+//
+//                builder.addHex(new Point(0, 0));
+//                builder.addHexNextTo(0, 1);
+//                builder.addHexNextTo(0, 2);
+//                builder.addHexNextTo(0, 3);
+//                builder.addHexNextTo(0, 5);
+//                builder.addHexNextTo(2, 1);
+//                builder.addHexNextTo(2, 2);
+//                builder.addHexNextTo(2, 3);
+//                builder.addHexNextTo(6, 1);
+//                builder.addHexNextTo(6, 2);
+//                builder.addHexNextTo(6, 3);
+//
+//                TileType[] tileTypes = new TileType[11];
+//                BuildingType[] buildingTypes = new BuildingType[11];
+//
+//                for (int i = 0; i < tileTypes.length; i++)
+//                {
+//                    tileTypes[i] = TileType.GRASS;
+//                }
+//
+//                for (int i = 0; i < buildingTypes.length; i++)
+//                {
+//                    buildingTypes[i] = BuildingType.NONE;
+//                }
+//
+//                Map map = new Map();
+//                map.setBuilder(builder);
+//                map.setTileTypes(tileTypes);
+//                map.setBuildingType(buildingTypes);
 
-
-                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
-                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
-
-                builder.addHex(new Point(0, 0));
-                builder.addHexNextTo(0, 1);
-                builder.addHexNextTo(0, 2);
-                builder.addHexNextTo(0, 3);
-                builder.addHexNextTo(0, 5);
-                builder.addHexNextTo(2, 1);
-                builder.addHexNextTo(2, 2);
-                builder.addHexNextTo(2, 3);
-                builder.addHexNextTo(6, 1);
-                builder.addHexNextTo(6, 2);
-                builder.addHexNextTo(6, 3);
-
-                TileType[] tileTypes = new TileType[11];
-                BuildingType[] buildingTypes = new BuildingType[11];
-
-                for (int i = 0; i < tileTypes.length; i++)
-                {
-                    tileTypes[i] = TileType.GRASS;
-                }
-
-                for (int i = 0; i < buildingTypes.length; i++)
-                {
-                    buildingTypes[i] = BuildingType.NONE;
-                }
-
-                Map map = new Map();
-                map.setBuilder(builder);
-                map.setTileTypes(tileTypes);
-                map.setBuildingType(buildingTypes);
-
-                String mapString = jsonSerializer.deepSerialize(map);
+//                String mapString = jsonSerializer.deepSerialize(map);
 
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
                 Map result = new JSONDeserializer<Map>().deserialize(mapLoc);

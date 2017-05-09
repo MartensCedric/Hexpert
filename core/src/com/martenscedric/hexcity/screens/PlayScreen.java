@@ -94,6 +94,7 @@ public class PlayScreen  extends StageScreen
             Hexagon<TileData> hex = grid.getHexs()[i];
             TileData data = hex.getHexData();
             data.setTerrainTexture(hexCity.getTextureByTerrain(data.getTileType()));
+            data.setBuildingTexture(hexCity.getTextureByBuilding(data.getBuildingType()));
             hex.setHexData(data);
         }
 
