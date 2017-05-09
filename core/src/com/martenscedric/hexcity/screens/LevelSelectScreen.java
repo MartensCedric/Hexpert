@@ -19,6 +19,7 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.map.Map;
+import com.martenscedric.hexcity.map.MapResult;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
@@ -44,6 +45,7 @@ public class LevelSelectScreen extends StageScreen
     private int levelSelect = 1;
     private HexMap<TileData> grid;
     private SpriteBatch batch;
+    private MapResult result;
 
     public LevelSelectScreen(final HexCity hexCity)
     {
@@ -221,6 +223,17 @@ public class LevelSelectScreen extends StageScreen
                 maxHeight = hex.getHexGeometry().getMiddlePoint().y;
         }
         double delta = (maxHeight - minHeight);
+
+        String mapString = Integer.toString(levelSelect) + ".mapres";
+        if(Gdx.files.local(mapString).exists())
+        {
+            MapResult mapResult = new MapResult(levelSelect, 0);
+            JSONSerializer jsonSerializer = new JSONSerializer();
+            Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(mapResult), false);
+        }else{
+
+        }
+
         getCamera().zoom = (float) (delta/340.0);
         getCamera().position.setZero();
         getCamera().translate(0, -150 + (float)(maxHeight/delta)*50);
