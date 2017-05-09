@@ -69,6 +69,7 @@ public class LevelSelectScreen extends StageScreen
                 public void clicked(InputEvent event, float x, float y)
                 {
                     levelSelect = level;
+                    hexCity.sounds.get("select").play();
                     loadDisplayLevel();
                 }
             });
@@ -81,6 +82,8 @@ public class LevelSelectScreen extends StageScreen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+
+                  hexCity.sounds.get("select").play();
 
 //                JSONSerializer jsonSerializer = new JSONSerializer();
 //
@@ -126,9 +129,12 @@ public class LevelSelectScreen extends StageScreen
 //                String mapString = jsonSerializer.deepSerialize(map);
 //
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-                Map result = new JSONDeserializer<Map>().deserialize(mapLoc);
+                Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
-                hexCity.setScreen(new PlayScreen(hexCity, result));
+                String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
+                MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
+
+                hexCity.setScreen(new PlayScreen(hexCity, map, mapResult));
             }
         });
         button.getLabel().setFontScale(5);
@@ -225,7 +231,7 @@ public class LevelSelectScreen extends StageScreen
         double delta = (maxHeight - minHeight);
 
         String mapString = Integer.toString(levelSelect) + ".mapres";
-        if(Gdx.files.local(mapString).exists())
+        if(!Gdx.files.local(mapString).exists())
         {
             MapResult mapResult = new MapResult(levelSelect, 0);
             JSONSerializer jsonSerializer = new JSONSerializer();

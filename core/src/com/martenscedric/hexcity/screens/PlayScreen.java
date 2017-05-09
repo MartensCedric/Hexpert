@@ -28,12 +28,15 @@ import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.MoveEventManager;
 import com.martenscedric.hexcity.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexcity.map.Map;
+import com.martenscedric.hexcity.map.MapResult;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
 import com.martenscedric.hexcity.tile.TileType;
 
 import java.util.Stack;
+
+import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.HEX_HEIGHT_RATIO;
@@ -70,24 +73,28 @@ public class PlayScreen  extends StageScreen
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
                 btnReset, btnUndo;
     private String scoreTxt = "SCORE : %d";
+    private String highscoreTxt = "BEST : %d";
     private int score = 0;
     private BuildingType selection;
     private ImageButton selectedButton;
     private MoveEventManager moveEventManager;
     private boolean debug = false;
+    private MapResult mapResult;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
-    public PlayScreen(final HexCity hexCity, Map map) {
+    public PlayScreen(final HexCity hexCity, Map map, MapResult result) {
         super();
         this.hexCity = hexCity;
         this.map = map;
+        mapResult = result;
         this.batch = new SpriteBatch();
         this.absBatch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
+
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -318,6 +325,7 @@ public class PlayScreen  extends StageScreen
         batch.end();
         absBatch.begin();
         AssetLoader.getFont().draw(absBatch, String.format(scoreTxt, score), 5, 25);
+        AssetLoader.getFont().draw(absBatch, String.format(highscoreTxt, mapResult.getScore()), 5, 55);
         absBatch.end();
         if(debug)
         {
@@ -421,6 +429,13 @@ public class PlayScreen  extends StageScreen
         {
             TileData data = (TileData) grid.getHexs()[i].getHexData();
             score+=data.getBuildingType().getScore() * data.getTileType().getMultiplier();
+        }
+
+        if(score > mapResult.getScore())
+        {
+            mapResult.setScore(score);
+            JSONSerializer jsonSerializer = new JSONSerializer();
+            Gdx.files.local(mapResult.getMapId() + ".mapres").writeString(jsonSerializer.deepSerialize(mapResult), false);
         }
     }
 
