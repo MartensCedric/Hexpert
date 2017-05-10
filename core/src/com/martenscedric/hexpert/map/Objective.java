@@ -1,7 +1,10 @@
 package com.martenscedric.hexpert.map;
 
+import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.tile.TileData;
+
+import static com.martenscedric.hexpert.misc.Const.BUILDING_COUNT;
 
 /**
  * Created by 1544256 on 2017-05-10.
@@ -15,6 +18,9 @@ public class Objective
     }
 
     public Objective(int[] buildingRequirement, int minScore) {
+
+        if(buildingRequirement.length != BUILDING_COUNT)
+            throw new IllegalArgumentException();
 
         this.buildingRequirement = buildingRequirement;
         this.minScore = minScore;
@@ -36,9 +42,23 @@ public class Objective
         this.buildingRequirement = buildingRequirement;
     }
 
-
-    public static boolean hasPassed(HexMap<TileData> grid, Objective objectives)
+    public boolean hasPassed(HexMap<TileData> grid)
     {
-        return false;
+        int score = 0;
+        int[] buildings = new int[BUILDING_COUNT];
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            score += hex.getHexData().getBuildingType().getScore() * hex.getHexData().getTileType().getMultiplier();
+            buildings[hex.getHexData().getBuildingType().ordinal() + 1]++;
+        }
+
+        for(int i = 0; i < BUILDING_COUNT; i++)
+        {
+            if(buildings[i] < buildingRequirement[i])
+                return false;
+        }
+
+        return score >= minScore;
     }
 }
