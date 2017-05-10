@@ -20,6 +20,7 @@ import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexcity.HexCity;
 import com.martenscedric.hexcity.map.Map;
 import com.martenscedric.hexcity.map.MapResult;
+import com.martenscedric.hexcity.map.Objective;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
@@ -85,7 +86,7 @@ public class LevelSelectScreen extends StageScreen
 
                   hexCity.sounds.get("select").play();
 
-//                JSONSerializer jsonSerializer = new JSONSerializer();
+//             JSONSerializer jsonSerializer = new JSONSerializer();
 //
 //
 //                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
@@ -125,11 +126,14 @@ public class LevelSelectScreen extends StageScreen
 //                map.setBuilder(builder);
 //                map.setTileTypes(tileTypes);
 //                map.setBuildingType(buildingTypes);
+//                map.setCalculateScore(false);
+//                map.setObjectives(new Objective[]{new Objective(new int[]{0, 0, 0, 0, 1, 0, 0, 0}, 0)});
 //
 //                String mapString = jsonSerializer.deepSerialize(map);
-//
+
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
+
 
                 String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
                 MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
@@ -233,7 +237,7 @@ public class LevelSelectScreen extends StageScreen
         String mapString = Integer.toString(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
-            MapResult mapResult = new MapResult(levelSelect, 0);
+            MapResult mapResult = new MapResult(levelSelect, 0, 0);
             JSONSerializer jsonSerializer = new JSONSerializer();
             Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(mapResult), false);
         }else{

@@ -6,9 +6,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -16,7 +13,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
@@ -33,7 +29,6 @@ import com.martenscedric.hexcity.map.MapResult;
 import com.martenscedric.hexcity.misc.AssetLoader;
 import com.martenscedric.hexcity.tile.BuildingType;
 import com.martenscedric.hexcity.tile.TileData;
-import com.martenscedric.hexcity.tile.TileType;
 
 import java.util.Stack;
 
@@ -42,7 +37,6 @@ import flexjson.JSONSerializer;
 import static com.martenscedric.hexcity.misc.Const.HEIGHT;
 import static com.martenscedric.hexcity.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexcity.misc.Const.WIDTH;
-import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BADMOVE;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FACTORY;
 import static com.martenscedric.hexcity.misc.TextureData.TEXTURE_FARM;
@@ -426,7 +420,8 @@ public class PlayScreen  extends StageScreen
         batch.end();
         absBatch.begin();
         AssetLoader.getFont().draw(absBatch, String.format(scoreTxt, score), 5, 25);
-        AssetLoader.getFont().draw(absBatch, String.format(highscoreTxt, mapResult.getScore()), 5, 55);
+        if(map.scoreIsCalculated())
+            AssetLoader.getFont().draw(absBatch, String.format(highscoreTxt, mapResult.getScore()), 5, 55);
         absBatch.end();
         if(debug)
         {
@@ -532,7 +527,7 @@ public class PlayScreen  extends StageScreen
             score+=data.getBuildingType().getScore() * data.getTileType().getMultiplier();
         }
 
-        if(score > mapResult.getScore())
+        if(map.scoreIsCalculated() && score > mapResult.getScore())
         {
             mapResult.setScore(score);
             JSONSerializer jsonSerializer = new JSONSerializer();

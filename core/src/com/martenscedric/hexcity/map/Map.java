@@ -26,6 +26,8 @@ public class Map
     private HexFreeShapeBuilder<TileData> builder;
     private TileType[] tileTypes;
     private BuildingType[] buildingTypes;
+    private boolean calculateScore;
+    private Objective[] objectives;
 
     public void setBuilder(HexFreeShapeBuilder<TileData> builder) {
         this.builder = builder;
@@ -49,6 +51,30 @@ public class Map
 
     public HexFreeShapeBuilder<TileData> getBuilder() {
         return builder;
+    }
+
+    public Objective[] getObjectives() {
+        return objectives;
+    }
+
+    public boolean isCalculateScore() {
+        return calculateScore;
+    }
+
+    public boolean scoreIsCalculated() {
+        return calculateScore;
+    }
+
+    public void setCalculateScore(boolean calculateScore) {
+        this.calculateScore = calculateScore;
+    }
+
+    public void setBuildingTypes(BuildingType[] buildingTypes) {
+        this.buildingTypes = buildingTypes;
+    }
+
+    public void setObjectives(Objective[] objectives) {
+        this.objectives = objectives;
     }
 
     public HexMap<TileData> build()

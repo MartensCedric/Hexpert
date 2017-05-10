@@ -8,13 +8,15 @@ public class MapResult
 {
     private int mapId;
     private int score;
+    private int objectivePassed;
 
     public MapResult() {
     }
 
-    public MapResult(int mapId, int score) {
+    public MapResult(int mapId, int score, int objectivePassed) {
         this.mapId = mapId;
         this.score = score;
+        this.objectivePassed = objectivePassed;
     }
 
     public int getMapId() {
@@ -31,5 +33,13 @@ public class MapResult
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getObjectivePassed() {
+        return objectivePassed;
+    }
+
+    public void setObjectivePassed(int objectivePassed) {
+        this.objectivePassed = objectivePassed;
     }
 }
