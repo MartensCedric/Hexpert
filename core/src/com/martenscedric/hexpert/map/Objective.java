@@ -2,6 +2,7 @@ package com.martenscedric.hexpert.map;
 
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
+import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 
 import static com.martenscedric.hexpert.misc.Const.BUILDING_COUNT;
@@ -60,5 +61,30 @@ public class Objective
         }
 
         return score >= minScore;
+    }
+
+    @Override
+    public String toString() {
+
+        String s = "";
+
+        if(minScore != Integer.MIN_VALUE)
+        {
+            s+= String.format("Have a score better than %d\n", minScore);
+        }
+
+        for(int i = 0; i < BUILDING_COUNT; i++)
+        {
+            if(buildingRequirement[i] > 0)
+            {
+                s+= String.format("Have atleast %d %ss\n", buildingRequirement[i + 1], BuildingType.values()[i + 1].getName().toLowerCase());
+            }
+        }
+
+        if(s.length() > 0)
+        {
+            s.substring(0, s.length() - 2);
+        }
+        return s;
     }
 }
