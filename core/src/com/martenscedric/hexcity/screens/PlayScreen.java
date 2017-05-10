@@ -64,7 +64,7 @@ public class PlayScreen  extends StageScreen
     private GestureDetector detector;
     private PlayScreenGestureBehavior behavior;
     private Table table;
-    private Image menuImage, imFarm, imHouse, imMine, imWind, imFactory, imMarket, imBank, imRocket;
+    private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
                 btnReset, btnUndo;
     private String scoreTxt = "SCORE : %d";
@@ -390,7 +390,6 @@ public class PlayScreen  extends StageScreen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];

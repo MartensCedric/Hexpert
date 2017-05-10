@@ -86,53 +86,57 @@ public class LevelSelectScreen extends StageScreen
 
                   hexCity.sounds.get("select").play();
 
-//             JSONSerializer jsonSerializer = new JSONSerializer();
-//
-//
-//                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
-//                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
-//
-//                builder.addHex(new Point(0, 0));
-//                builder.addHexNextTo(0, 0);
-//                builder.addHexNextTo(0, 1);
-//                builder.addHexNextTo(0, 2);
-//                builder.addHexNextTo(0, 3);
-//                builder.addHexNextTo(3, 1);
-//                builder.addHexNextTo(3, 2);
-//                builder.addHexNextTo(3, 3);
-//                builder.addHexNextTo(4, 3);
-//                builder.addHexNextTo(8, 5);
-//                builder.addHexNextTo(5, 2);
-//                builder.addHexNextTo(9, 0);
-//                builder.addHexNextTo(8, 2);
-//                builder.addHexNextTo(12, 1);
-//                builder.addHexNextTo(12, 2);
-//                builder.addHexNextTo(10, 3);
-//
-//                TileType[] tileTypes = new TileType[17];
-//                BuildingType[] buildingTypes = new BuildingType[17];
-//
-//                for (int i = 0; i < tileTypes.length; i++)
-//                {
-//                    tileTypes[i] = TileType.GRASS;
-//                }
-//
-//                for (int i = 0; i < buildingTypes.length; i++)
-//                {
-//                    buildingTypes[i] = BuildingType.NONE;
-//                }
-//
-//                Map map = new Map();
-//                map.setBuilder(builder);
-//                map.setTileTypes(tileTypes);
-//                map.setBuildingType(buildingTypes);
-//                map.setCalculateScore(false);
-//                map.setObjectives(new Objective[]{new Objective(new int[]{0, 0, 0, 0, 1, 0, 0, 0}, 0)});
-//
-//                String mapString = jsonSerializer.deepSerialize(map);
+             JSONSerializer jsonSerializer = new JSONSerializer();
+
+
+                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
+                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
+
+                builder.addHex(new Point(0, 0));
+                builder.addHexNextTo(0, 0);
+                builder.addHexNextTo(0, 1);
+                builder.addHexNextTo(0, 2);
+                builder.addHexNextTo(0, 3);
+                builder.addHexNextTo(0, 4);
+                builder.addHexNextTo(0, 5);
+                builder.addHexNextTo(1, 0);
+                builder.addHexNextTo(2, 0);
+                builder.addHexNextTo(3, 1);
+                builder.addHexNextTo(3, 2);
+                builder.addHexNextTo(3, 3);
+                builder.addHexNextTo(4, 4);
+                builder.addHexNextTo(4, 3);
+                builder.addHexNextTo(6, 4);
+                builder.addHexNextTo(1, 5);
+                builder.addHexNextTo(6, 5);
+
+
+                TileType[] tileTypes = new TileType[17];
+                BuildingType[] buildingTypes = new BuildingType[17];
+
+                for (int i = 0; i < tileTypes.length; i++)
+                {
+                    tileTypes[i] = TileType.GRASS;
+                }
+
+                tileTypes[0] = TileType.WATER;
+
+                for (int i = 0; i < buildingTypes.length; i++)
+                {
+                    buildingTypes[i] = BuildingType.NONE;
+                }
+
+                Map map = new Map();
+                map.setBuilder(builder);
+                map.setTileTypes(tileTypes);
+                map.setBuildingType(buildingTypes);
+                map.setCalculateScore(false);
+                map.setObjectives(new Objective[]{new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 40)});
+
+                String mapString = jsonSerializer.deepSerialize(map);
 
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-                Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
+                //Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
 
                 String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
@@ -237,7 +241,7 @@ public class LevelSelectScreen extends StageScreen
         String mapString = Integer.toString(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
-            MapResult mapResult = new MapResult(levelSelect, 0, 0);
+            MapResult mapResult = new MapResult(levelSelect, 0, new boolean[result.getObjectives().length]);
             JSONSerializer jsonSerializer = new JSONSerializer();
             Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(mapResult), false);
         }else{
