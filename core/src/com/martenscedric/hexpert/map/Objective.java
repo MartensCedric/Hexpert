@@ -77,7 +77,7 @@ public class Objective
         {
             if(buildingRequirement[i] > 0)
             {
-                s+= String.format("Have atleast %d %ss\n", buildingRequirement[i + 1], BuildingType.values()[i + 1].getName().toLowerCase());
+                s+= String.format("Have atleast %d %ss\n", buildingRequirement[i], BuildingType.values()[i + 1].getName().toLowerCase());
             }
         }
 
