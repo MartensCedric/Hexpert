@@ -37,6 +37,7 @@ import flexjson.JSONSerializer;
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
@@ -63,10 +64,10 @@ public class PlayScreen  extends StageScreen
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private PlayScreenGestureBehavior behavior;
-    private Table table;
+    private Table table, tableBtn;
     private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-                btnReset, btnUndo;
+                btnReset, btnUndo, btnBack;
     private String scoreTxt = "SCORE : %d";
     private String highscoreTxt = "BEST : %d";
     private int score = 0;
@@ -333,9 +334,19 @@ public class PlayScreen  extends StageScreen
         });
         table.setDebug(false);
 
+        btnBack = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BACK))));
+        btnBack.setX(5);
+        btnBack.setY(HEIGHT - btnBack.getPrefHeight());
+        btnBack.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    hexpert.setScreen(hexpert.levelSelectScreen);
+                }
+            }
+        );
+
         btnReset = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RESET))));
-        btnReset.setX(5);
-        btnReset.setY(HEIGHT-btnReset.getPrefHeight());
         btnReset.addListener(new ClickListener()
         {
             @Override
@@ -345,8 +356,6 @@ public class PlayScreen  extends StageScreen
         });
 
         btnUndo = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_UNDO))));
-        btnUndo.setX(10 + btnReset.getPrefWidth());
-        btnUndo.setY(HEIGHT-btnUndo.getPrefHeight());
         btnUndo.addListener(new ClickListener()
         {
             @Override
@@ -355,10 +364,21 @@ public class PlayScreen  extends StageScreen
             }
         });
 
+        tableBtn = new Table();
+        tableBtn.setY(HEIGHT - 55);
+        tableBtn.setX(205);
+        tableBtn.defaults().width(100).height(100).pad(5);
+
+        btnBack.getImageCell().expand().fill();
+        btnReset.getImageCell().expand().fill();
+        btnUndo.getImageCell().expand().fill();
+
+        tableBtn.add(btnBack);
+        tableBtn.add(btnReset);
+        tableBtn.add(btnUndo);
 
         getStage().addActor(table);
-        getStage().addActor(btnReset);
-        getStage().addActor(btnUndo);
+        getStage().addActor(tableBtn);
     }
 
     private void setMultiplexer()

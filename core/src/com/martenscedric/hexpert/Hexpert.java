@@ -26,6 +26,7 @@ public class Hexpert extends Game {
 	public void create ()
 	{
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
+
 		assetManager.load(TEXTURE_FARM, Texture.class);
 		assetManager.load(TEXTURE_HOUSE, Texture.class);
 		assetManager.load(TEXTURE_MINE, Texture.class);
@@ -34,14 +35,19 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_MARKET, Texture.class);
 		assetManager.load(TEXTURE_BANK, Texture.class);
 		assetManager.load(TEXTURE_ROCKET, Texture.class);
+
 		assetManager.load(TEXTURE_MENUUI, Texture.class);
 		assetManager.load(TEXTURE_UNDO, Texture.class);
 		assetManager.load(TEXTURE_RESET, Texture.class);
+		assetManager.load(TEXTURE_BACK, Texture.class);
+
 		assetManager.load(TEXTURE_GRASS, Texture.class);
 		assetManager.load(TEXTURE_SAND, Texture.class);
 		assetManager.load(TEXTURE_SNOW, Texture.class);
 		assetManager.load(TEXTURE_WATER, Texture.class);
+
 		assetManager.load(TEXTURE_BADMOVE, Texture.class);
+
 		sounds.put("click", Gdx.audio.newSound(Gdx.files.internal("sounds/click.wav")));
 		sounds.put("bad", Gdx.audio.newSound(Gdx.files.internal("sounds/bad.wav")));
 		sounds.put("select", Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav")));
