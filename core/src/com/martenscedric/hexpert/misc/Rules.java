@@ -1,4 +1,4 @@
-package com.martenscedric.hexpert;
+package com.martenscedric.hexpert.misc;
 
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.martenscedric.hexpert.tile.BuildingType;

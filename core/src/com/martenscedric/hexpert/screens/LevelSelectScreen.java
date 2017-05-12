@@ -194,6 +194,10 @@ public class LevelSelectScreen extends StageScreen
         batch.end();
         absBatch.begin();
         AssetLoader.getFont().draw(absBatch, currentObjective, 50, HEIGHT - 50);
+
+        if(result.getScore() > 0)
+            AssetLoader.getFont().draw(absBatch, String.format("BEST : %d", result.getScore()), WIDTH - 200, HEIGHT - 100);
+
         absBatch.end();
         super.render(delta);
     }
@@ -226,8 +230,8 @@ public class LevelSelectScreen extends StageScreen
     private Map loadDisplayLevel()
     {
         String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-        Map result = new JSONDeserializer<Map>().deserialize(mapLoc);
-        grid = result.build();
+        Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
+        grid = map.build();
 
         double maxHeight = -1;
         double minHeight = Double.MAX_VALUE;
@@ -250,18 +254,19 @@ public class LevelSelectScreen extends StageScreen
         String mapString = Integer.toString(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
-            MapResult mapResult = new MapResult(levelSelect, 0, new boolean[result.getObjectives().length]);
+            MapResult mapResult = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
             JSONSerializer jsonSerializer = new JSONSerializer();
             Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(mapResult), false);
         }else{
-
+            JSONDeserializer<MapResult> deserializer = new JSONDeserializer<>();
+            result = deserializer.deserialize(Gdx.files.local(mapString).readString());
         }
 
         getCamera().zoom = (float) (delta/340.0);
         getCamera().position.setZero();
         getCamera().translate(0, -150 + (float)(maxHeight/delta)*50);
         getCamera().update();
-        return result;
+        return map;
     }
 
     private void selectLevel(int levelID)

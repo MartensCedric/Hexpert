@@ -1,9 +1,10 @@
-package com.martenscedric.hexpert;
+package com.martenscedric.hexpert.env;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.misc.PointTime;
 import com.martenscedric.hexpert.misc.IntPointTime;
