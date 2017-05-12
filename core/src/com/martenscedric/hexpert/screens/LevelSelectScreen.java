@@ -36,25 +36,28 @@ import static com.martenscedric.hexpert.misc.Const.WIDTH;
 public class LevelSelectScreen extends StageScreen
 {
     private Table table;
-    private int levelsToDisplay = 5;
+    private int levelsToDisplay = 6;
     private final Hexpert hexpert;
     private HexMap<TileData> previewGrid;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
-    private SpriteBatch batch;
+    private SpriteBatch batch, absBatch;
     private MapResult result;
+    private String currentObjective = "";
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
         super();
         this.hexpert = hexpert;
         this.batch = new SpriteBatch();
+        this.absBatch = new SpriteBatch();
         table = new Table();
         table.setX(WIDTH/2);
         table.setY(HEIGHT/4);
         table.defaults().pad(20);
         previewGrid = loadLevel(1);
         getCamera().update();
+
         for(int i = 0; i < levelsToDisplay; i++)
         {
             TextButton button = new TextButton(Integer.toString(i + 1), AssetLoader.getSkin());
@@ -65,14 +68,15 @@ public class LevelSelectScreen extends StageScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y)
                 {
-                    levelSelect = level;
-                    hexpert.sounds.get("select").play();
-                    loadDisplayLevel();
+                    selectLevel(level);
                 }
             });
             table.add(button);
         }
         table.row();
+        selectLevel(1);
+
+
         TextButton button = new TextButton("Select", AssetLoader.getSkin());
         button.addListener(new ClickListener()
         {
@@ -82,9 +86,9 @@ public class LevelSelectScreen extends StageScreen
 
                hexpert.sounds.get("select").play();
 
-//             JSONSerializer jsonSerializer = new JSONSerializer();
-//
-//
+                JSONSerializer jsonSerializer = new JSONSerializer();
+
+
 //                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
 //                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
 //
@@ -95,31 +99,32 @@ public class LevelSelectScreen extends StageScreen
 //                builder.addHexNextTo(0, 3);
 //                builder.addHexNextTo(0, 4);
 //                builder.addHexNextTo(0, 5);
-//                builder.addHexNextTo(3, 1);
-//                builder.addHexNextTo(3, 2);
-//                builder.addHexNextTo(3, 3);
-//                builder.addHexNextTo(4, 3);
-//                builder.addHexNextTo(4, 4);
-//                builder.addHexNextTo(5, 4);
-//                builder.addHexNextTo(6, 0);
-//                builder.addHexNextTo(6, 4);
-//                builder.addHexNextTo(6, 5);
-//                builder.addHexNextTo(13, 0);
-//                builder.addHexNextTo(13, 5);
+//                builder.addHexNextTo(1, 1);
+//                builder.addHexNextTo(7, 0);
+//                builder.addHexNextTo(7, 1);
+//                builder.addHexNextTo(7, 2);
+//                builder.addHexNextTo(7, 5);
+//                builder.addHexNextTo(9, 0);
+//                builder.addHexNextTo(12, 2);
+//                builder.addHexNextTo(12, 5);
+//                builder.addHexNextTo(12, 0);
+//                builder.addHexNextTo(12, 1);
+//                builder.addHexNextTo(2, 2);
+//                builder.addHexNextTo(9, 2);
 //
-//
-//                TileType[] tileTypes = new TileType[18];
-//                BuildingType[] buildingTypes = new BuildingType[18];
+//                TileType[] tileTypes = new TileType[19];
+//                BuildingType[] buildingTypes = new BuildingType[19];
 //
 //                for (int i = 0; i < tileTypes.length; i++)
 //                {
 //                    tileTypes[i] = TileType.GRASS;
 //                }
 //
-//                tileTypes[1] = TileType.WATER;
-//                tileTypes[10] = TileType.WATER;
-//                tileTypes[5] = TileType.SAND;
+//                tileTypes[0] = TileType.SNOW;
+//                tileTypes[17] = TileType.SAND;
+//                tileTypes[18] = TileType.SNOW;
 //
+//                tileTypes[12] = TileType.SAND;
 //
 //                for (int i = 0; i < buildingTypes.length; i++)
 //                {
@@ -132,13 +137,13 @@ public class LevelSelectScreen extends StageScreen
 //                map.setBuildingType(buildingTypes);
 //                map.setCalculateScore(true);
 //                map.setObjectives(new Objective[]{
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 12),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 14),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 16)});
-//
-//                String mapString = jsonSerializer.deepSerialize(map);
-//
-              String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
+//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 0}, 12),
+//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 1}, 14),
+//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 2}, 16)});
+
+                //String mapString = jsonSerializer.deepSerialize(map);
+
+                String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
 
@@ -151,7 +156,6 @@ public class LevelSelectScreen extends StageScreen
         button.getLabel().setFontScale(5);
         table.add(button).colspan(levelsToDisplay);
         getStage().addActor(table);
-        loadDisplayLevel();
     }
 
     @Override
@@ -187,8 +191,10 @@ public class LevelSelectScreen extends StageScreen
                         (float)grid.getStyle().getSize());
             }
         }
-
         batch.end();
+        absBatch.begin();
+        AssetLoader.getFont().draw(absBatch, currentObjective, 50, HEIGHT - 50);
+        absBatch.end();
         super.render(delta);
     }
 
@@ -217,7 +223,7 @@ public class LevelSelectScreen extends StageScreen
         return null;
     }
 
-    private void loadDisplayLevel()
+    private Map loadDisplayLevel()
     {
         String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
         Map result = new JSONDeserializer<Map>().deserialize(mapLoc);
@@ -255,5 +261,19 @@ public class LevelSelectScreen extends StageScreen
         getCamera().position.setZero();
         getCamera().translate(0, -150 + (float)(maxHeight/delta)*50);
         getCamera().update();
+        return result;
+    }
+
+    private void selectLevel(int levelID)
+    {
+        levelSelect = levelID;
+        hexpert.sounds.get("select").play();
+        Map map = loadDisplayLevel();
+        String str = "";
+        for(int i = 0; i < map.getObjectives().length; i++)
+        {
+            str+= map.getObjectives()[i].toString();
+        }
+        currentObjective = str;
     }
 }
