@@ -82,62 +82,64 @@ public class LevelSelectScreen extends StageScreen
 
                hexpert.sounds.get("select").play();
 
-//             JSONSerializer jsonSerializer = new JSONSerializer();
-//
-//
-//                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
-//                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
-//
-//                builder.addHex(new Point(0, 0));
-//                builder.addHexNextTo(0, 0);
-//                builder.addHexNextTo(0, 1);
-//                builder.addHexNextTo(0, 2);
-//                builder.addHexNextTo(0, 3);
-//                builder.addHexNextTo(0, 4);
-//                builder.addHexNextTo(0, 5);
-//                builder.addHexNextTo(1, 0);
-//                builder.addHexNextTo(2, 0);
-//                builder.addHexNextTo(3, 1);
-//                builder.addHexNextTo(3, 2);
-//                builder.addHexNextTo(3, 3);
-//                builder.addHexNextTo(4, 4);
-//                builder.addHexNextTo(4, 3);
-//                builder.addHexNextTo(6, 4);
-//                builder.addHexNextTo(1, 5);
-//                builder.addHexNextTo(6, 5);
-//                builder.addHexNextTo(5, 4);
-//                builder.addHexNextTo(2, 1);
-//
-//
-//                TileType[] tileTypes = new TileType[19];
-//                BuildingType[] buildingTypes = new BuildingType[19];
-//
-//                for (int i = 0; i < tileTypes.length; i++)
-//                {
-//                    tileTypes[i] = TileType.GRASS;
-//                }
-//
-//                tileTypes[0] = TileType.WATER;
-//
-//                for (int i = 0; i < buildingTypes.length; i++)
-//                {
-//                    buildingTypes[i] = BuildingType.NONE;
-//                }
-//
-//                Map map = new Map();
-//                map.setBuilder(builder);
-//                map.setTileTypes(tileTypes);
-//                map.setBuildingType(buildingTypes);
-//                map.setCalculateScore(true);
-//                map.setObjectives(new Objective[]{
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 10),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 12),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 15)});
-//
-//                String mapString = jsonSerializer.deepSerialize(map);
+             JSONSerializer jsonSerializer = new JSONSerializer();
+
+
+                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
+                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
+
+                builder.addHex(new Point(0, 0));
+                builder.addHexNextTo(0, 0);
+                builder.addHexNextTo(0, 1);
+                builder.addHexNextTo(0, 2);
+                builder.addHexNextTo(0, 3);
+                builder.addHexNextTo(0, 4);
+                builder.addHexNextTo(0, 5);
+                builder.addHexNextTo(3, 1);
+                builder.addHexNextTo(3, 2);
+                builder.addHexNextTo(3, 3);
+                builder.addHexNextTo(4, 3);
+                builder.addHexNextTo(4, 4);
+                builder.addHexNextTo(5, 4);
+                builder.addHexNextTo(6, 0);
+                builder.addHexNextTo(6, 4);
+                builder.addHexNextTo(6, 5);
+                builder.addHexNextTo(13, 0);
+                builder.addHexNextTo(13, 5);
+
+
+                TileType[] tileTypes = new TileType[18];
+                BuildingType[] buildingTypes = new BuildingType[18];
+
+                for (int i = 0; i < tileTypes.length; i++)
+                {
+                    tileTypes[i] = TileType.GRASS;
+                }
+
+                tileTypes[1] = TileType.WATER;
+                tileTypes[10] = TileType.WATER;
+                tileTypes[5] = TileType.SAND;
+
+
+                for (int i = 0; i < buildingTypes.length; i++)
+                {
+                    buildingTypes[i] = BuildingType.NONE;
+                }
+
+                Map map = new Map();
+                map.setBuilder(builder);
+                map.setTileTypes(tileTypes);
+                map.setBuildingType(buildingTypes);
+                map.setCalculateScore(true);
+                map.setObjectives(new Objective[]{
+                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 12),
+                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 14),
+                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 16)});
+
+                String mapString = jsonSerializer.deepSerialize(map);
 
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-                Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
+                //Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
 
                 String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
