@@ -254,9 +254,9 @@ public class LevelSelectScreen extends StageScreen
         String mapString = Integer.toString(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
-            MapResult mapResult = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
+            result = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
             JSONSerializer jsonSerializer = new JSONSerializer();
-            Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(mapResult), false);
+            Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
         }else{
             JSONDeserializer<MapResult> deserializer = new JSONDeserializer<>();
             result = deserializer.deserialize(Gdx.files.local(mapString).readString());
