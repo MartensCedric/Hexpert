@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.misc.AssetLoader;
-import com.martenscedric.hexpert.misc.PointTime;
 import com.martenscedric.hexpert.misc.IntPointTime;
+import com.martenscedric.hexpert.misc.PointTime;
 import com.martenscedric.hexpert.screens.PlayScreen;
 
 import java.util.ArrayList;

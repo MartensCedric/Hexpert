@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.env.SkyEffect;
+import com.martenscedric.hexpert.misc.AssetLoader;
 
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;

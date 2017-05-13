@@ -12,7 +12,25 @@ import com.martenscedric.hexpert.tile.TileType;
 
 import java.util.HashMap;
 
-import static com.martenscedric.hexpert.misc.TextureData.*;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BADMOVE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CLOUD;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_GRASS;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_SAND;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_SNOW;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_UNDO;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WATER;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 
 public class Hexpert extends Game {
 
