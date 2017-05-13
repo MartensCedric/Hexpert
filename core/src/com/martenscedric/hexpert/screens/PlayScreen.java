@@ -26,6 +26,7 @@ import com.martenscedric.hexpert.env.MoveEventManager;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
+import com.martenscedric.hexpert.map.Objective;
 import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
@@ -78,6 +79,7 @@ public class PlayScreen  extends StageScreen
     private boolean debug = false;
     private MapResult mapResult;
     private boolean drawerOpen = false;
+    private boolean[] objectivePassed;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -92,6 +94,7 @@ public class PlayScreen  extends StageScreen
         shapeRenderer.setAutoShapeType(true);
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
+        objectivePassed = new boolean[map.getObjectives().length];
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -559,8 +562,7 @@ public class PlayScreen  extends StageScreen
             if(score > mapResult.getScore())
             {
                 mapResult.setScore(score);
-                JSONSerializer jsonSerializer = new JSONSerializer();
-                Gdx.files.local(mapResult.getMapId() + ".mapres").writeString(jsonSerializer.deepSerialize(mapResult), false);
+                savemap();
             }
         }
     }
@@ -593,5 +595,49 @@ public class PlayScreen  extends StageScreen
 
     public MoveEventManager getMoveEventManager() {
         return moveEventManager;
+    }
+
+    public void updateObjectives() {
+
+        for(int i = 0; i < map.getObjectives().length; i++)
+        {
+            objectivePassed[i] = (map.getObjectives()[i].hasPassed(grid));
+        }
+
+        if(numObjectivesPassedCurrent() > numObjectivesPassedSave())
+        {
+            mapResult.setObjectivePassed(objectivePassed);
+            savemap();
+        }
+    }
+
+    private int numObjectivesPassedCurrent()
+    {
+        int n = 0;
+        for(int i = 0; i < map.getObjectives().length; i++)
+        {
+            if(objectivePassed[i])
+                n++;
+        }
+
+        return n;
+    }
+
+    private int numObjectivesPassedSave()
+    {
+        int n = 0;
+        for(int i = 0; i < map.getObjectives().length; i++)
+        {
+            if(mapResult.getObjectivePassed()[i])
+                n++;
+        }
+
+        return n;
+    }
+
+    private void savemap()
+    {
+        JSONSerializer jsonSerializer = new JSONSerializer();
+        Gdx.files.local(mapResult.getMapId() + ".mapres").writeString(jsonSerializer.deepSerialize(mapResult), false);
     }
 }

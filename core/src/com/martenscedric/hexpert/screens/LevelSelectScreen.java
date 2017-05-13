@@ -209,7 +209,7 @@ public class LevelSelectScreen extends StageScreen
 
     @Override
     public void resume() {
-
+       
     }
 
     @Override
@@ -220,6 +220,12 @@ public class LevelSelectScreen extends StageScreen
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        selectLevel(levelSelect);
     }
 
     private HexMap<TileData> loadLevel(int levelId)
@@ -277,7 +283,7 @@ public class LevelSelectScreen extends StageScreen
         String str = "";
         for(int i = 0; i < map.getObjectives().length; i++)
         {
-            str+= map.getObjectives()[i].toString();
+            str+= (result.getObjectivePassed()[i] ? "[DONE] " : "") + map.getObjectives()[i].toString();
         }
         currentObjective = str;
     }
