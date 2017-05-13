@@ -16,7 +16,6 @@ public enum  BuildingType
     ROCKET("Rocket", 8);
 
     private String name;
-    private String desc;
     private int score;
 
     BuildingType(String name, int score)
@@ -27,10 +26,6 @@ public enum  BuildingType
 
     public String getName() {
         return name;
-    }
-
-    public String getDesc() {
-        return desc;
     }
 
     public int getScore() {

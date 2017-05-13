@@ -50,8 +50,12 @@ public class Objective
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
-            score += hex.getHexData().getBuildingType().getScore() * hex.getHexData().getTileType().getMultiplier();
-            buildings[hex.getHexData().getBuildingType().ordinal() + 1]++;
+
+            if(hex.getHexData().getBuildingType() != BuildingType.NONE)
+            {
+                score += hex.getHexData().getBuildingType().getScore() * hex.getHexData().getTileType().getMultiplier();
+                buildings[hex.getHexData().getBuildingType().ordinal() - 1]++;
+            }
         }
 
         for(int i = 0; i < BUILDING_COUNT; i++)

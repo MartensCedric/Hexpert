@@ -36,7 +36,7 @@ import static com.martenscedric.hexpert.misc.Const.WIDTH;
 public class LevelSelectScreen extends StageScreen
 {
     private Table table;
-    private int levelsToDisplay = 6;
+    private int levelsToDisplay = 7;
     private final Hexpert hexpert;
     private HexMap<TileData> previewGrid;
     private int levelSelect = 1;
@@ -86,9 +86,9 @@ public class LevelSelectScreen extends StageScreen
 
                hexpert.sounds.get("select").play();
 
-                JSONSerializer jsonSerializer = new JSONSerializer();
-
-
+//                JSONSerializer jsonSerializer = new JSONSerializer();
+//
+//
 //                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
 //                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
 //
@@ -140,9 +140,9 @@ public class LevelSelectScreen extends StageScreen
 //                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 0}, 12),
 //                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 1}, 14),
 //                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 2}, 16)});
-
-                //String mapString = jsonSerializer.deepSerialize(map);
-
+//
+//                String mapString = jsonSerializer.deepSerialize(map);
+//
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
@@ -209,7 +209,7 @@ public class LevelSelectScreen extends StageScreen
 
     @Override
     public void resume() {
-       
+
     }
 
     @Override
