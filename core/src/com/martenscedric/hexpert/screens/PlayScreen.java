@@ -41,6 +41,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
@@ -67,7 +68,7 @@ public class PlayScreen  extends StageScreen
     private Table table, tableBtn;
     private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-                btnReset, btnUndo, btnBack;
+                btnReset, btnUndo, btnBack, btnHelp;
     private String scoreTxt = "SCORE : %d";
     private String highscoreTxt = "BEST : %d";
     private int score = 0;
@@ -76,6 +77,7 @@ public class PlayScreen  extends StageScreen
     private MoveEventManager moveEventManager;
     private boolean debug = false;
     private MapResult mapResult;
+    private boolean drawerOpen = false;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -114,7 +116,7 @@ public class PlayScreen  extends StageScreen
         TextureRegionDrawable drawableWind = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_WIND)));
         TextureRegionDrawable drawableFactory = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FACTORY)));
         TextureRegionDrawable drawableMarket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MARKET)));
-        TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK)));
+        final TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK)));
         TextureRegionDrawable drawableRocket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET)));
 
         btnFarm = new ImageButton(drawableFarm);
@@ -323,15 +325,6 @@ public class PlayScreen  extends StageScreen
         table.setX(WIDTH + menuImage.getWidth()/2 + table.getPrefWidth()/5);
         table.setY(HEIGHT - table.getPrefHeight()/2);
 
-        table.addListener(new DragListener()
-        {
-            @Override
-            public void drag(InputEvent event, float x, float y, int pointer) {
-                //super.drag(event, x, y, pointer);
-                table.setX(table.getX() - getDeltaX());
-                menuImage.setX(menuImage.getX() - getDeltaX());
-            }
-        });
         table.setDebug(false);
 
         btnBack = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BACK))));
@@ -364,18 +357,30 @@ public class PlayScreen  extends StageScreen
             }
         });
 
+        btnHelp = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HELP))));
+        btnHelp.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                table.setX(table.getX() + (drawerOpen ? 900 : -900));
+                drawerOpen = !drawerOpen;
+            }
+        });
+
         tableBtn = new Table();
-        tableBtn.setY(HEIGHT - 55);
-        tableBtn.setX(205);
-        tableBtn.defaults().width(100).height(100).pad(5);
+        tableBtn.setY(HEIGHT - 75);
+        tableBtn.setX(295);
+        tableBtn.defaults().width(125).height(125).pad(15);
 
         btnBack.getImageCell().expand().fill();
         btnReset.getImageCell().expand().fill();
         btnUndo.getImageCell().expand().fill();
+        btnHelp.getImageCell().expand().fill();
 
         tableBtn.add(btnBack);
         tableBtn.add(btnReset);
         tableBtn.add(btnUndo);
+        tableBtn.add(btnHelp);
 
         getStage().addActor(table);
         getStage().addActor(tableBtn);

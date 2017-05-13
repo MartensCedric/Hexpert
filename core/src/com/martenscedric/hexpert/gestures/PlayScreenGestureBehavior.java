@@ -52,7 +52,6 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
             {
                 data.getHexData().setBuildingType(playScreen.getSelection());
                 data.getHexData().setBuildingTexture(hexpert.getTextureByBuilding(playScreen.getSelection()));
-                playScreen.setSelection(null);
                 playScreen.getPlacementHistory().push(data.getHexData());
 
                 int score = data.getHexData().getBuildingType().getScore() * data.getHexData().getTileType().getMultiplier();
