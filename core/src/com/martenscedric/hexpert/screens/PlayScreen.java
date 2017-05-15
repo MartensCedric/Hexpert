@@ -22,6 +22,7 @@ import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.env.MoveEventManager;
+import com.martenscedric.hexpert.env.SkyEffect;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
@@ -77,6 +78,7 @@ public class PlayScreen  extends StageScreen
     private boolean debug = false;
     private MapResult mapResult;
     private boolean drawerOpen = false;
+    private SkyEffect skyEffect;
     private boolean[] objectivePassed;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
@@ -93,6 +95,7 @@ public class PlayScreen  extends StageScreen
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
         objectivePassed = new boolean[map.getObjectives().length];
+        skyEffect = new SkyEffect(hexpert.assetManager);
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -405,6 +408,8 @@ public class PlayScreen  extends StageScreen
     @Override
     public void render(float delta)
     {
+        skyEffect.tick();
+
         if(Gdx.input.isKeyPressed(Input.Keys.BACK))
         {
             hexpert.setScreen(hexpert.levelSelectScreen);
@@ -415,6 +420,7 @@ public class PlayScreen  extends StageScreen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+        skyEffect.draw(batch);
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
