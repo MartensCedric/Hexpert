@@ -30,7 +30,8 @@ import static com.martenscedric.hexpert.misc.Const.WIDTH;
 public class LevelSelectScreen extends StageScreen
 {
     private Table table;
-    private int levelsToDisplay = 7;
+    private int levelsToDisplay = 5;
+    private int totalLevels = 7;
     private final Hexpert hexpert;
     private HexMap<TileData> previewGrid;
     private int levelSelect = 1;
@@ -38,6 +39,7 @@ public class LevelSelectScreen extends StageScreen
     private SpriteBatch batch, absBatch;
     private MapResult result;
     private String currentObjective = "";
+    private int starCount = 0;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -69,6 +71,7 @@ public class LevelSelectScreen extends StageScreen
         }
         table.row();
         selectLevel(1);
+        starCount = getStarCount();
 
 
         TextButton button = new TextButton("Select", AssetLoader.getSkin());
@@ -192,6 +195,8 @@ public class LevelSelectScreen extends StageScreen
         if(result.getScore() > 0)
             AssetLoader.getFont().draw(absBatch, String.format("BEST : %d", result.getScore()), WIDTH - 200, HEIGHT - 100);
 
+        AssetLoader.getFont().draw(absBatch, String.format("Stars : %d", starCount), WIDTH - 400, 100);
+
         absBatch.end();
         super.render(delta);
     }
@@ -220,6 +225,7 @@ public class LevelSelectScreen extends StageScreen
     public void show() {
         super.show();
         selectLevel(levelSelect);
+        starCount = getStarCount();
     }
 
     private HexMap<TileData> loadLevel(int levelId)
@@ -280,5 +286,31 @@ public class LevelSelectScreen extends StageScreen
             str+= (result.getObjectivePassed()[i] ? "[DONE] " : "") + map.getObjectives()[i].toString();
         }
         currentObjective = str;
+    }
+
+    private int getStarCount()
+    {
+        int total = 0;
+        for(int i = 1; i <= totalLevels; i++)
+        {
+            if(Gdx.files.local(i + ".mapres").exists())
+            {
+                String mapResLoc = Gdx.files.local(i + ".mapres").readString();
+                MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
+
+                for(int j = 0; j < mapResult.getObjectivePassed().length; j++)
+                {
+                    total += mapResult.getObjectivePassed()[j] ? 1 : 0;
+                }
+            }else{
+                String mapString = "maps/" + i + ".mapres";
+                Map map = new JSONDeserializer<Map>().deserialize(mapString);
+                MapResult res = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
+                JSONSerializer jsonSerializer = new JSONSerializer();
+                Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
+            }
+        }
+
+        return total;
     }
 }
