@@ -1,12 +1,17 @@
 package com.martenscedric.hexpert.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
@@ -16,12 +21,16 @@ import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.tile.TileData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -32,14 +41,15 @@ public class LevelSelectScreen extends StageScreen
     private Table table;
     private int levelsToDisplay = 5;
     private int totalLevels = 7;
+    private int currentWorld = 1;
     private final Hexpert hexpert;
-    private HexMap<TileData> previewGrid;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
     private SpriteBatch batch, absBatch;
     private MapResult result;
     private String currentObjective = "";
     private int starCount = 0;
+    private List<TextButton> buttonList;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -51,28 +61,60 @@ public class LevelSelectScreen extends StageScreen
         table.setX(WIDTH/2);
         table.setY(HEIGHT/4);
         table.defaults().pad(20);
-        previewGrid = loadLevel(1);
         getCamera().update();
 
+        buttonList = new ArrayList<>();
+
+        ImageButton btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
+        btnLeft.getImageCell().expand().fill();
+
+        btnLeft.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                if(currentWorld > 1)
+                {
+                    currentWorld--;
+                    updateButtons();
+                }
+            }
+        });
+
+        table.add(btnLeft);
         for(int i = 0; i < levelsToDisplay; i++)
         {
-            TextButton button = new TextButton(Integer.toString(i + 1), AssetLoader.getSkin());
+            final TextButton button = new TextButton(Integer.toString(i + 1), AssetLoader.getSkin());
             button.getLabel().setFontScale(5);
-            final int level = i + 1;
             button.addListener(new ClickListener()
             {
                 @Override
                 public void clicked(InputEvent event, float x, float y)
                 {
-                    selectLevel(level);
+                    selectLevel(Integer.parseInt(button.getText().toString()));
                 }
             });
+            buttonList.add(button);
             table.add(button);
         }
-        table.row();
+
+        ImageButton btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelright.png"))));
+        btnRight.getImageCell().expand().fill();
+        btnRight.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                currentWorld++;
+                updateButtons();
+            }
+        });
+        table.add(btnRight);
+
         selectLevel(1);
         starCount = getStarCount();
 
+        table.row();
 
         TextButton button = new TextButton("Select", AssetLoader.getSkin());
         button.addListener(new ClickListener()
@@ -228,11 +270,6 @@ public class LevelSelectScreen extends StageScreen
         starCount = getStarCount();
     }
 
-    private HexMap<TileData> loadLevel(int levelId)
-    {
-        return null;
-    }
-
     private Map loadDisplayLevel()
     {
         String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
@@ -303,14 +340,22 @@ public class LevelSelectScreen extends StageScreen
                     total += mapResult.getObjectivePassed()[j] ? 1 : 0;
                 }
             }else{
-                String mapString = "maps/" + i + ".mapres";
+                String mapString = Gdx.files.internal("maps/" + i + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapString);
-                MapResult res = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
+                MapResult res = new MapResult(i, 0, new boolean[map.getObjectives().length]);
                 JSONSerializer jsonSerializer = new JSONSerializer();
-                Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
+                Gdx.files.local(i + ".mapres").writeString(jsonSerializer.deepSerialize(res), false);
             }
         }
 
         return total;
+    }
+
+    private void updateButtons()
+    {
+        for(int i = 0; i < buttonList.size(); i++)
+        {
+            buttonList.get(i).setText(Integer.toString((currentWorld - 1) * levelsToDisplay + 1 + i));
+        }
     }
 }

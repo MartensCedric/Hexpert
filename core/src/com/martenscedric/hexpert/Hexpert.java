@@ -67,6 +67,9 @@ public class Hexpert extends Game {
 
 		assetManager.load(TEXTURE_BADMOVE, Texture.class);
 
+		assetManager.load("sprites/nextlevelleft.png", Texture.class);
+		assetManager.load("sprites/nextlevelright.png", Texture.class);
+
 		sounds.put("click", Gdx.audio.newSound(Gdx.files.internal("sounds/click.wav")));
 		sounds.put("bad", Gdx.audio.newSound(Gdx.files.internal("sounds/bad.wav")));
 		sounds.put("select", Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav")));
