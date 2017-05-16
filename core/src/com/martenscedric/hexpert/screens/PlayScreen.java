@@ -69,8 +69,6 @@ public class PlayScreen  extends StageScreen
     private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
                 btnReset, btnUndo, btnBack, btnHelp;
-    private String scoreTxt = "SCORE : %d";
-    private String highscoreTxt = "BEST : %d";
     private int score = 0;
     private BuildingType selection;
     private ImageButton selectedButton;
@@ -448,8 +446,8 @@ public class PlayScreen  extends StageScreen
         if(map.scoreIsCalculated())
         {
             absBatch.begin();
-            AssetLoader.getFont().draw(absBatch, String.format(scoreTxt, score), 5, 25);
-            AssetLoader.getFont().draw(absBatch, String.format(highscoreTxt, mapResult.getScore()), 5, 55);
+            AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("score", score), 5, 25);
+            AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("best", mapResult.getScore()), 5, 55);
             absBatch.end();
         }
 

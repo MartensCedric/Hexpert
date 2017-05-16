@@ -124,7 +124,7 @@ public class LevelSelectScreen extends StageScreen
 
         table.row();
 
-        TextButton button = new TextButton("Select", AssetLoader.getSkin());
+        TextButton button = new TextButton(hexpert.i18NBundle.get("select"), AssetLoader.getSkin());
         button.addListener(new ClickListener()
         {
             @Override
@@ -243,9 +243,9 @@ public class LevelSelectScreen extends StageScreen
         AssetLoader.getFont().draw(absBatch, currentObjective, 50, HEIGHT - 50);
 
         if(result.getScore() > 0)
-            AssetLoader.getFont().draw(absBatch, String.format("BEST : %d", result.getScore()), WIDTH - 200, HEIGHT - 100);
+            AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("best", result.getScore()), WIDTH - 200, HEIGHT - 100);
 
-        AssetLoader.getFont().draw(absBatch, String.format("Stars : %d", starCount), WIDTH - 400, 100);
+        AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("star", result.getScore()), WIDTH - 400, 100);
 
         absBatch.end();
         super.render(delta);

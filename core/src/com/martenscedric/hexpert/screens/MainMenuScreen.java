@@ -35,7 +35,7 @@ public class MainMenuScreen extends StageScreen
 
         Skin skin = AssetLoader.getSkin();
         skin.add("default-font", AssetLoader.getFont(), BitmapFont.class);
-        playButton = new TextButton("Play", skin);
+        playButton = new TextButton(hexpert.i18NBundle.get("play"), skin);
         playButton.setWidth(WIDTH*0.35f);
         playButton.setHeight(HEIGHT*0.20f);
         playButton.setX(WIDTH/2 - playButton.getWidth()/2);
