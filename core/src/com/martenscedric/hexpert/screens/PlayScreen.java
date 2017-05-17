@@ -87,7 +87,7 @@ public class PlayScreen  extends StageScreen
     public PlayScreen(final Hexpert hexpert, Map map, MapResult result) {
         super();
         this.hexpert = hexpert;
-        this.exitDialog = new ExitDialog(hexpert.i18NBundle, AssetLoader.getSkin());
+        this.exitDialog = new ExitDialog(AssetLoader.getSkin(), hexpert);
         this.map = map;
         mapResult = result;
         this.batch = new SpriteBatch();
@@ -498,8 +498,7 @@ public class PlayScreen  extends StageScreen
             shapeRenderer.end();
         }
 
-        if(numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length
-                && !exitDialog.hasBeenShown())
+        if(!exitDialog.hasBeenShown() && numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length)
         {
             exitDialog.show(getStage());
         }
