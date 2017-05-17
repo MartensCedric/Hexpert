@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -21,6 +22,7 @@ import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
+import com.martenscedric.hexpert.env.ExitDialog;
 import com.martenscedric.hexpert.env.MoveEventManager;
 import com.martenscedric.hexpert.env.SkyEffect;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
@@ -78,12 +80,14 @@ public class PlayScreen  extends StageScreen
     private boolean drawerOpen = false;
     private SkyEffect skyEffect;
     private boolean[] objectivePassed;
+    private ExitDialog exitDialog;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
     public PlayScreen(final Hexpert hexpert, Map map, MapResult result) {
         super();
         this.hexpert = hexpert;
+        this.exitDialog = new ExitDialog(hexpert.i18NBundle, AssetLoader.getSkin());
         this.map = map;
         mapResult = result;
         this.batch = new SpriteBatch();
@@ -492,6 +496,12 @@ public class PlayScreen  extends StageScreen
             shapeRenderer.setColor(Color.GREEN);
             shapeRenderer.rect(WIDTH - 160, selectedButton.getY() + 567, selectedButton.getImage().getImageWidth() + 2, selectedButton.getImage().getImageHeight() + 2);
             shapeRenderer.end();
+        }
+
+        if(numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length
+                && !exitDialog.hasBeenShown())
+        {
+            exitDialog.show(getStage());
         }
     }
 
