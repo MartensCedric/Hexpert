@@ -72,6 +72,8 @@ public class LevelSelectScreen extends StageScreen
         table.defaults().pad(20);
         getCamera().update();
 
+        starCount = getStarCount();
+
         buttonList = new ArrayList<>();
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
@@ -261,7 +263,7 @@ public class LevelSelectScreen extends StageScreen
         if(result.getScore() > 0)
             AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("best", result.getScore()), WIDTH - 200, HEIGHT - 100);
 
-        AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("star", result.getScore()), WIDTH - 400, 100);
+        AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("star", starCount), WIDTH - 400, 100);
 
         absBatch.end();
         super.render(delta);
