@@ -500,6 +500,7 @@ public class PlayScreen  extends StageScreen
 
         if(!exitDialog.hasBeenShown() && numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length)
         {
+            exitDialog.setShown(true);
             exitDialog.show(getStage());
         }
     }
