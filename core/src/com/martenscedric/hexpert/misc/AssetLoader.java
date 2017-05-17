@@ -25,12 +25,9 @@ public class AssetLoader
         if (font == null) {
             FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/VCROSDMono.ttf"));
             FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameter.size = 30;
+            parameter.size = 35;
             parameter.borderWidth = 1;
             parameter.color = Color.BLACK;
-            parameter.shadowOffsetX = 2;
-            parameter.shadowOffsetY = 2;
-            parameter.shadowColor = new Color(0, 1f, 0, 0.5f);
             font = generator.generateFont(parameter);
             generator.dispose();
         }

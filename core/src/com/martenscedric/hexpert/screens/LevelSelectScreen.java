@@ -56,6 +56,7 @@ public class LevelSelectScreen extends StageScreen
     private MapResult result;
     private String currentObjective = "";
     private int starCount = 0;
+    private ImageButton btnLeft, btnRight;
     private List<TextButton> buttonList;
 
     public LevelSelectScreen(final Hexpert hexpert)
@@ -73,7 +74,8 @@ public class LevelSelectScreen extends StageScreen
 
         buttonList = new ArrayList<>();
 
-        ImageButton btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
+        btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
+        btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelright.png"))));
         btnLeft.getImageCell().expand().fill();
 
         btnLeft.addListener(new ClickListener()
@@ -85,6 +87,10 @@ public class LevelSelectScreen extends StageScreen
                 {
                     currentWorld--;
                     updateButtons();
+
+
+                    hexpert.sounds.get("select").play();
+                    selectLevel((currentWorld - 1) * levelsToDisplay + 1);
                 }
             }
         });
@@ -100,21 +106,29 @@ public class LevelSelectScreen extends StageScreen
                 public void clicked(InputEvent event, float x, float y)
                 {
                     selectLevel(Integer.parseInt(button.getText().toString()));
+                    hexpert.sounds.get("select").play();
                 }
             });
             buttonList.add(button);
             table.add(button);
         }
 
-        ImageButton btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelright.png"))));
+
         btnRight.getImageCell().expand().fill();
         btnRight.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                currentWorld++;
-                updateButtons();
+                if(currentWorld * levelsToDisplay < totalLevels)
+                {
+                    currentWorld++;
+                    updateButtons();
+
+
+                    hexpert.sounds.get("select").play();
+                    selectLevel((currentWorld - 1) * levelsToDisplay + 1);
+                }
             }
         });
         table.add(btnRight);
@@ -211,6 +225,8 @@ public class LevelSelectScreen extends StageScreen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(getCamera().combined);
         batch.begin();
+        btnLeft.setVisible(currentWorld > 1);
+        btnRight.setVisible(currentWorld * levelsToDisplay < totalLevels);
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -324,7 +340,6 @@ public class LevelSelectScreen extends StageScreen
     {
         try{
             levelSelect = levelID;
-            hexpert.sounds.get("select").play();
             Map map = loadDisplayLevel();
             String str = "";
             for(int i = 0; i < map.getObjectives().length; i++)
