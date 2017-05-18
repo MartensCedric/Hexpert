@@ -4,7 +4,10 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="23" />
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/app_id" />
 
     <application
         android:allowBackup="true"

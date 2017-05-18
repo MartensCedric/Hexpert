@@ -40,7 +40,6 @@ public class Hexpert extends Game {
 	public LevelSelectScreen levelSelectScreen;
 	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	public I18NBundle i18NBundle;
-
 	@Override
 	public void create ()
 	{

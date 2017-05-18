@@ -1,1 +1,1 @@
-include 'android', 'core', 'HexMap'
+include 'android', 'core', 'HexMap', ':BaseGameUtils'
