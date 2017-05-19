@@ -58,12 +58,12 @@ public class LevelSelectScreen extends StageScreen
     private HexMap<TileData> grid;
     private SpriteBatch batch, uiBatch, displayBatch;
     private MapResult result;
-    private Camera uiCamera, displayLevelCamera;
+    private OrthographicCamera uiCamera, displayLevelCamera;
     private String currentObjective = "";
     private int starCount = 0;
     private ImageButton btnLeft, btnRight;
     private List<TextButton> buttonList;
-    private boolean debug = true;
+    private boolean debug = false;
     private ShapeRenderer shapeRenderer;
 
     public LevelSelectScreen(final Hexpert hexpert)
@@ -404,27 +404,35 @@ public class LevelSelectScreen extends StageScreen
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
             hex.setHexData(data);
 
-            if(hex.getHexGeometry().getMiddlePoint().y < minHeight)
-                minHeight = hex.getHexGeometry().getMiddlePoint().y;
 
-            if(hex.getHexGeometry().getMiddlePoint().y > maxHeight)
-                maxHeight = hex.getHexGeometry().getMiddlePoint().y;
+            for(Point p : hex.getHexGeometry().getPoints())
+            {
+                if(p.y < minHeight)
+                    minHeight = p.y;
 
-            if(hex.getHexGeometry().getMiddlePoint().x < minWidth)
-                minWidth = hex.getHexGeometry().getMiddlePoint().x;
+                if(p.y > maxHeight)
+                    maxHeight = p.y;
 
-            if(hex.getHexGeometry().getMiddlePoint().x > maxWidth)
-                maxWidth = hex.getHexGeometry().getMiddlePoint().x;
+                if(p.x < minWidth)
+                    minWidth = p.x;
 
+                if(p.x > maxWidth)
+                    maxWidth = p.x;
+            }
         }
 
-        double deltaX = minWidth - maxWidth;
+        double deltaX = maxWidth - minWidth;
         double middleX = minWidth + deltaX/2;
-        //getCamera().zoom = (float) (delta/340.0);
-        //getCamera().position.setZero();
-       // getCamera().translate((float) (WIDTH/2- middleX), 0, 0);
-        getCamera().zoom = 1;
-        getCamera().update();
+
+        double deltaY = maxHeight - minHeight;
+        double middleY = minHeight + deltaY/2;
+
+        displayLevelCamera.position.setZero();
+        displayLevelCamera.translate((float) middleX, (float) (middleY - 50), 0);
+        displayLevelCamera.zoom = 1;
+        displayLevelCamera.update();
+
+        Gdx.app.log("gdxdebug", Double.toString(deltaY) + " " + Double.toString(middleY));
         return map;
     }
 
