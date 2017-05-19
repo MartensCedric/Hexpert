@@ -4,7 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.martenscedric.hexpert.google.PlayServices;
 import com.martenscedric.hexpert.screens.LevelSelectScreen;
@@ -42,6 +45,7 @@ public class Hexpert extends Game {
 	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	public I18NBundle i18NBundle;
 	public PlayServices playServices;
+    private BitmapFont font;
 
 	public Hexpert(PlayServices playServices) {
 		this.playServices = playServices;
@@ -155,4 +159,19 @@ public class Hexpert extends Game {
 
 		return texture;
 	}
+
+
+
+    public BitmapFont getFont() {
+        if (font == null) {
+            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/VCROSDMono.ttf"));
+            FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+            parameter.size = 35;
+            parameter.borderWidth = 1;
+            parameter.color = Color.BLACK;
+            font = generator.generateFont(parameter);
+            generator.dispose();
+        }
+        return font;
+    }
 }

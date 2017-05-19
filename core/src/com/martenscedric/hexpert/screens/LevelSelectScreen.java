@@ -258,12 +258,12 @@ public class LevelSelectScreen extends StageScreen
         }
         batch.end();
         absBatch.begin();
-        AssetLoader.getFont().draw(absBatch, currentObjective, 50, HEIGHT - 50);
+        hexpert.getFont().draw(absBatch, currentObjective, 50, HEIGHT - 50);
 
         if(result.getScore() > 0)
-            AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("best", result.getScore()), WIDTH - 200, HEIGHT - 100);
+            hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("best", result.getScore()), WIDTH - 200, HEIGHT - 100);
 
-        AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("star", starCount), WIDTH - 400, 100);
+        hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("star", starCount), WIDTH - 400, 100);
 
         absBatch.end();
         super.render(delta);

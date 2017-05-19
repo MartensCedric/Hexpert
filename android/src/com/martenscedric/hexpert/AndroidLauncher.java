@@ -40,13 +40,13 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		gameHelper.onStart(this);
+		//gameHelper.onStart(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		gameHelper.onStop();
+		//gameHelper.onStop();
 	}
 
 	@Override

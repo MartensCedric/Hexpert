@@ -34,7 +34,7 @@ public class MainMenuScreen extends StageScreen
         skyEffect = new SkyEffect(hexpert.assetManager);
 
         Skin skin = AssetLoader.getSkin();
-        skin.add("default-font", AssetLoader.getFont(), BitmapFont.class);
+        skin.add("default-font", hexpert.getFont(), BitmapFont.class);
         playButton = new TextButton(hexpert.i18NBundle.get("play"), skin);
         playButton.setWidth(WIDTH*0.35f);
         playButton.setHeight(HEIGHT*0.20f);

@@ -450,8 +450,8 @@ public class PlayScreen  extends StageScreen
         if(map.scoreIsCalculated())
         {
             absBatch.begin();
-            AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("score", score), 5, 25);
-            AssetLoader.getFont().draw(absBatch, hexpert.i18NBundle.format("best", mapResult.getScore()), 5, 55);
+            hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("score", score), 5, 25);
+            hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("best", mapResult.getScore()), 5, 55);
             absBatch.end();
         }
 
@@ -480,7 +480,7 @@ public class PlayScreen  extends StageScreen
             batch.begin();
             for (int i = 0; i < hexagons.length; i++) {
                 HexGeometry hexGeo = hexagons[i].getHexGeometry();
-                AssetLoader.getFont().draw(batch, Integer.toString(hexagons[i].getCoordinateSystem().toIndexed().getIndex()),
+                hexpert.getFont().draw(batch, Integer.toString(hexagons[i].getCoordinateSystem().toIndexed().getIndex()),
                         (float)hexGeo.getMiddlePoint().x, (float)hexGeo.getMiddlePoint().y);
             }
 

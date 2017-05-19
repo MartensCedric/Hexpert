@@ -78,7 +78,7 @@ public class MoveEventManager
         {
             IntPointTime pointTime = score.get(i);
 
-            BitmapFont f = AssetLoader.getFont();
+            BitmapFont f = hexpert.getFont();
             f.draw(batch, pointTime.getN() >=0 ? "+" + Integer.toString(pointTime.getN()) : Integer.toString(pointTime.getN()), (float)pointTime.x, (float)pointTime.y);
         }
         batch.end();
