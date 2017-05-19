@@ -20,7 +20,7 @@ android {
     }
     defaultConfig {
         applicationId "com.martenscedric.hexcity"
-        minSdkVersion 9
+        minSdkVersion 15
         targetSdkVersion 23
     }
 }
@@ -127,4 +127,8 @@ idea {
             }
         }
     }
+}
+
+dependencies {
+    compile project(path: ':BaseGameUtils')
 }

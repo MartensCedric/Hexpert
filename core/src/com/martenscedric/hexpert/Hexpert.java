@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.martenscedric.hexpert.google.PlayServices;
 import com.martenscedric.hexpert.screens.LevelSelectScreen;
 import com.martenscedric.hexpert.screens.MainMenuScreen;
 import com.martenscedric.hexpert.tile.BuildingType;
@@ -40,6 +41,12 @@ public class Hexpert extends Game {
 	public LevelSelectScreen levelSelectScreen;
 	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	public I18NBundle i18NBundle;
+	public PlayServices playServices;
+
+	public Hexpert(PlayServices playServices) {
+		this.playServices = playServices;
+	}
+
 	@Override
 	public void create ()
 	{

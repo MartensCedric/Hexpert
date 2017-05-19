@@ -42,11 +42,11 @@ android {
 
     // Set defaults so that BaseGameUtils can be used outside of BasicSamples
     if (!project.hasProperty('android_min_sdk_version')) {
-        ext.android_min_sdk_version = 9
+        ext.android_min_sdk_version = 15
     }
 
     compileSdkVersion android_compile_version
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion android_min_version
