@@ -174,4 +174,17 @@ public class Hexpert extends Game {
         }
         return font;
     }
+
+    public BitmapFont createFont(int size)
+	{
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/VCROSDMono.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = size;
+		parameter.borderWidth = 1;
+		parameter.color = Color.BLACK;
+		BitmapFont f = generator.generateFont(parameter);
+		generator.dispose();
+
+		return f;
+	}
 }

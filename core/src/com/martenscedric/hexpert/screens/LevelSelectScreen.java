@@ -2,7 +2,9 @@ package com.martenscedric.hexpert.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -52,8 +54,9 @@ public class LevelSelectScreen extends StageScreen
     private final Hexpert hexpert;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
-    private SpriteBatch batch, absBatch;
+    private SpriteBatch batch, uiBatch;
     private MapResult result;
+    private Camera uiCamera;
     private String currentObjective = "";
     private int starCount = 0;
     private ImageButton btnLeft, btnRight;
@@ -64,11 +67,12 @@ public class LevelSelectScreen extends StageScreen
         super();
         this.hexpert = hexpert;
         this.batch = new SpriteBatch();
-        this.absBatch = new SpriteBatch();
+        this.uiBatch = new SpriteBatch();
+        this.uiCamera = new OrthographicCamera(WIDTH, HEIGHT);
         table = new Table();
         table.defaults().width(150).height(150);
-        table.setX(WIDTH/2);
-        table.setY(HEIGHT/4);
+        table.setX(900);
+        table.setY(100);
         table.defaults().pad(20);
         getCamera().update();
 
@@ -93,6 +97,10 @@ public class LevelSelectScreen extends StageScreen
 
                     hexpert.sounds.get("select").play();
                     selectLevel((currentWorld - 1) * levelsToDisplay + 1);
+
+                    for(int i = 0; i < buttonList.size(); i++)
+                        buttonList.get(i).setChecked(i == 0);
+
                 }
             }
         });
@@ -109,6 +117,9 @@ public class LevelSelectScreen extends StageScreen
                 {
                     selectLevel(Integer.parseInt(button.getText().toString()));
                     hexpert.sounds.get("select").play();
+                    for(TextButton b : buttonList)
+                        b.setChecked(false);
+                    button.setChecked(true);
                 }
             });
             buttonList.add(button);
@@ -127,27 +138,30 @@ public class LevelSelectScreen extends StageScreen
                     currentWorld++;
                     updateButtons();
 
-
                     hexpert.sounds.get("select").play();
                     selectLevel((currentWorld - 1) * levelsToDisplay + 1);
+
+                    for(int i = 0; i < buttonList.size(); i++)
+                        buttonList.get(i).setChecked(i == 0);
                 }
             }
         });
         table.add(btnRight);
 
+        for(int i = 0; i < buttonList.size(); i++)
+            buttonList.get(i).setChecked(i == 0);
+
         selectLevel(1);
         starCount = getStarCount();
 
-        table.row();
-
-        TextButton button = new TextButton(hexpert.i18NBundle.get("select"), AssetLoader.getSkin());
+        final TextButton button = new TextButton(hexpert.i18NBundle.get("select"), AssetLoader.getSkin());
         button.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-
-               hexpert.sounds.get("select").play();
+                button.setChecked(false);
+                hexpert.sounds.get("select").play();
 
 //                JSONSerializer jsonSerializer = new JSONSerializer();
 //
@@ -256,16 +270,18 @@ public class LevelSelectScreen extends StageScreen
                         (float)grid.getStyle().getSize());
             }
         }
+
         batch.end();
-        absBatch.begin();
-        hexpert.getFont().draw(absBatch, currentObjective, 50, HEIGHT - 50);
+        uiBatch.begin();
+
+        uiBatch.setProjectionMatrix(uiCamera.combined);
+        hexpert.getFont().draw(uiBatch, currentObjective, -850, 500);
 
         if(result.getScore() > 0)
-            hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("best", result.getScore()), WIDTH - 200, HEIGHT - 100);
+            hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 400);
 
-        hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("star", starCount), WIDTH - 400, 100);
-
-        absBatch.end();
+        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("star", starCount), 700, 500);
+        uiBatch.end();
         super.render(delta);
     }
 
@@ -331,9 +347,10 @@ public class LevelSelectScreen extends StageScreen
             result = deserializer.deserialize(Gdx.files.local(mapString).readString());
         }
 
-        getCamera().zoom = (float) (delta/340.0);
-        getCamera().position.setZero();
-        getCamera().translate(0, -150 + (float)(maxHeight/delta)*50);
+        //getCamera().zoom = (float) (delta/340.0);
+        //getCamera().position.setZero();
+        //getCamera().translate(0, -150 + (float)(maxHeight/delta)*50);
+        getCamera().zoom = 1;
         getCamera().update();
         return map;
     }

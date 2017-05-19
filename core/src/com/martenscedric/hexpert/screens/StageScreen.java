@@ -19,7 +19,6 @@ public abstract class StageScreen implements Screen
     private OrthographicCamera camera;
 
 
-
     public StageScreen() {
         camera = new OrthographicCamera(WIDTH, HEIGHT);
         stage = new Stage(new StretchViewport(WIDTH, HEIGHT));
