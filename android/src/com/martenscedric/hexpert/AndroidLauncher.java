@@ -11,7 +11,6 @@ import com.martenscedric.hexpert.google.PlayServices;
 public class AndroidLauncher extends AndroidApplication implements PlayServices {
 
 	private GameHelper gameHelper;
-	private static int request_code = 1;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
