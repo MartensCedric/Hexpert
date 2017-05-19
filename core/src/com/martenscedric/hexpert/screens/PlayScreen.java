@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -28,6 +27,7 @@ import com.martenscedric.hexpert.env.SkyEffect;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
+import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
@@ -389,6 +389,8 @@ public class PlayScreen  extends StageScreen
 
         getStage().addActor(table);
         getStage().addActor(tableBtn);
+
+        MapUtils.adjustCamera(getCamera(), grid);
     }
 
     private void setMultiplexer()

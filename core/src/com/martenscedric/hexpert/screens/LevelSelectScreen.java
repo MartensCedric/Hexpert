@@ -1,8 +1,6 @@
 package com.martenscedric.hexpert.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,21 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexmap.coordinate.Point;
-import com.cedricmartens.hexmap.hexagon.HexStyle;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
-import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
-import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
-import com.martenscedric.hexpert.map.Objective;
+import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.misc.AssetLoader;
-import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
-import com.martenscedric.hexpert.tile.TileType;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +33,6 @@ import flexjson.JSONSerializer;
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -394,45 +385,16 @@ public class LevelSelectScreen extends StageScreen
             result = deserializer.deserialize(Gdx.files.local(mapString).readString());
         }
 
-        double maxHeight = -1, maxWidth = -1;
-        double minHeight = Double.MAX_VALUE, minWidth = Double.MAX_VALUE;
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<TileData> hex = grid.getHexs()[i];
-            TileData data = hex.getHexData();
-            data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
+            TileData data = (TileData) grid.getHexs()[i].getHexData();
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
-            hex.setHexData(data);
-
-
-            for(Point p : hex.getHexGeometry().getPoints())
-            {
-                if(p.y < minHeight)
-                    minHeight = p.y;
-
-                if(p.y > maxHeight)
-                    maxHeight = p.y;
-
-                if(p.x < minWidth)
-                    minWidth = p.x;
-
-                if(p.x > maxWidth)
-                    maxWidth = p.x;
-            }
+            data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
         }
 
-        double deltaX = maxWidth - minWidth;
-        double middleX = minWidth + deltaX/2;
-
-        double deltaY = maxHeight - minHeight;
-        double middleY = minHeight + deltaY/2;
-
         displayLevelCamera.position.setZero();
-        displayLevelCamera.translate((float) middleX, (float) (middleY - 50), 0);
-        displayLevelCamera.zoom = 1;
-        displayLevelCamera.update();
+        MapUtils.adjustCamera(displayLevelCamera, grid);
 
-        Gdx.app.log("gdxdebug", Double.toString(deltaY) + " " + Double.toString(middleY));
         return map;
     }
 
