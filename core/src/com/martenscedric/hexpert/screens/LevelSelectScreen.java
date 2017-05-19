@@ -318,8 +318,20 @@ public class LevelSelectScreen extends StageScreen
         Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
         grid = map.build();
 
-        double maxHeight = -1;
-        double minHeight = Double.MAX_VALUE;
+
+        String mapString = Integer.toString(levelSelect) + ".mapres";
+        if(!Gdx.files.local(mapString).exists())
+        {
+            result = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
+            JSONSerializer jsonSerializer = new JSONSerializer();
+            Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
+        }else{
+            JSONDeserializer<MapResult> deserializer = new JSONDeserializer<>();
+            result = deserializer.deserialize(Gdx.files.local(mapString).readString());
+        }
+
+        double maxHeight = -1, maxWidth = -1;
+        double minHeight = Double.MAX_VALUE, minWidth = Double.MAX_VALUE;
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
@@ -333,23 +345,20 @@ public class LevelSelectScreen extends StageScreen
 
             if(hex.getHexGeometry().getMiddlePoint().y > maxHeight)
                 maxHeight = hex.getHexGeometry().getMiddlePoint().y;
-        }
-        double delta = (maxHeight - minHeight);
 
-        String mapString = Integer.toString(levelSelect) + ".mapres";
-        if(!Gdx.files.local(mapString).exists())
-        {
-            result = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
-            JSONSerializer jsonSerializer = new JSONSerializer();
-            Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
-        }else{
-            JSONDeserializer<MapResult> deserializer = new JSONDeserializer<>();
-            result = deserializer.deserialize(Gdx.files.local(mapString).readString());
+            if(hex.getHexGeometry().getMiddlePoint().x < minWidth)
+                minWidth = hex.getHexGeometry().getMiddlePoint().x;
+
+            if(hex.getHexGeometry().getMiddlePoint().x > maxWidth)
+                maxWidth = hex.getHexGeometry().getMiddlePoint().x;
+
         }
 
+        double deltaX = minWidth - maxWidth;
+        double middleX = minWidth + deltaX/2;
         //getCamera().zoom = (float) (delta/340.0);
         //getCamera().position.setZero();
-        //getCamera().translate(0, -150 + (float)(maxHeight/delta)*50);
+       // getCamera().translate((float) (WIDTH/2- middleX), 0, 0);
         getCamera().zoom = 1;
         getCamera().update();
         return map;
