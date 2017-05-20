@@ -12,9 +12,11 @@ public class TileData {
     private Texture terrainTexture;
     private Texture buildingTexture;
     private Hexagon<TileData> parent;
+    private boolean active;
 
     public TileData(Hexagon<TileData> parent) {
         this.parent = parent;
+        setActive(true);
     }
 
 //    public void setColor(int color) {
@@ -78,5 +80,17 @@ public class TileData {
 
     public Hexagon<TileData> getParent() {
         return parent;
+    }
+
+    public void setParent(Hexagon<TileData> parent) {
+        this.parent = parent;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

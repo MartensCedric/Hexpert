@@ -1,5 +1,6 @@
 package com.martenscedric.hexpert.gestures;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -15,8 +16,10 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
 
     private OrthographicCamera camera;
     private float BORDER_CONSTRAINT = 4;
+    private float currentZoom;
     public StandardGestureBehavior(OrthographicCamera camera) {
         this.camera = camera;
+        this.currentZoom = getCamera().zoom;
     }
 
     @Override
@@ -64,20 +67,14 @@ public class StandardGestureBehavior implements GestureDetector.GestureListener 
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
-        return false;
+        currentZoom = getCamera().zoom;
+        return true;
     }
 
     @Override
     public boolean zoom(float initialDistance, float distance)
     {
-        float ratio = initialDistance / distance;
-
-        if(ratio < 1)
-            ratio = Math.max(ratio, 0.98f);
-        else if(ratio > 1)
-            ratio = Math.min(ratio, 1.02f);
-
-        getCamera().zoom =  ratio * getCamera().zoom;
+        getCamera().zoom = initialDistance / distance * currentZoom;
 
         if(getCamera().zoom < 0.25f)
             getCamera().zoom = 0.25f;
