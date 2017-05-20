@@ -15,14 +15,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexmap.coordinate.Point;
+import com.cedricmartens.hexmap.hexagon.HexStyle;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
+import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
+import com.martenscedric.hexpert.map.Objective;
 import com.martenscedric.hexpert.misc.AssetLoader;
+import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
+import com.martenscedric.hexpert.tile.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +48,7 @@ public class LevelSelectScreen extends StageScreen
 {
     private Table table;
     private int levelsToDisplay = 5;
-    private int totalLevels = 7;
+    private int totalLevels = 9;
     private int currentWorld = 1;
     private final Hexpert hexpert;
     private int levelSelect = 1;
@@ -175,32 +181,50 @@ public class LevelSelectScreen extends StageScreen
 //                builder.addHexNextTo(0, 3);
 //                builder.addHexNextTo(0, 4);
 //                builder.addHexNextTo(0, 5);
+//                builder.addHexNextTo(1, 0);
+//                builder.addHexNextTo(1, 1);
 //                builder.addHexNextTo(2, 1);
 //                builder.addHexNextTo(2, 2);
+//                builder.addHexNextTo(3, 2);
+//                builder.addHexNextTo(3, 3);
+//                builder.addHexNextTo(4, 3);
+//                builder.addHexNextTo(4, 4);
 //                builder.addHexNextTo(5, 4);
 //                builder.addHexNextTo(5, 5);
+//                builder.addHexNextTo(6, 5);
+//                builder.addHexNextTo(6, 0);
+//                builder.addHexNextTo(7, 5);
+//                builder.addHexNextTo(7, 0);
 //                builder.addHexNextTo(7, 1);
 //                builder.addHexNextTo(8, 1);
-//                builder.addHexNextTo(9, 4);
-//                builder.addHexNextTo(10, 4);
-//                builder.addHexNextTo(10, 5);
-//                builder.addHexNextTo(6, 5);
-//                builder.addHexNextTo(3, 2);
-//                builder.addHexNextTo(8, 2);
+//                builder.addHexNextTo(9, 1);
+//                builder.addHexNextTo(9, 2);
+//                builder.addHexNextTo(10, 2);
+//                builder.addHexNextTo(11, 2);
+//                builder.addHexNextTo(12, 2);
+//                builder.addHexNextTo(13, 2);
+//                builder.addHexNextTo(13, 3);
+//                builder.addHexNextTo(14, 3);
+//                builder.addHexNextTo(15, 3);
+//                builder.addHexNextTo(15, 4);
+//                builder.addHexNextTo(15, 5);
+//                builder.addHexNextTo(16, 5);
+//                builder.addHexNextTo(17, 5);
+//                builder.addHexNextTo(18, 5);
 //
-//
-//
-//                TileType[] tileTypes = new TileType[20];
-//                BuildingType[] buildingTypes = new BuildingType[20];
+//                TileType[] tileTypes = new TileType[builder.getHexagons().size()];
+//                BuildingType[] buildingTypes = new BuildingType[builder.getHexagons().size()];
 //
 //                for (int i = 0; i < tileTypes.length; i++)
 //                {
 //                    tileTypes[i] = TileType.GRASS;
 //                }
-//
-//                tileTypes[2] = TileType.SAND;
-//                tileTypes[5] = TileType.SNOW;
-//
+//                tileTypes[13] = TileType.SNOW;
+//                tileTypes[9] = TileType.SNOW;
+//                tileTypes[15] = TileType.SAND;
+//                tileTypes[7] = TileType.SAND;
+//                tileTypes[17] = TileType.WATER;
+//                tileTypes[11] = TileType.SAND;
 //
 //                for (int i = 0; i < buildingTypes.length; i++)
 //                {
@@ -213,15 +237,14 @@ public class LevelSelectScreen extends StageScreen
 //                map.setBuildingType(buildingTypes);
 //                map.setCalculateScore(true);
 //                map.setObjectives(new Objective[]{
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 0}, 12),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 1}, 14),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 1, 2}, 16)});
+//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 60),
+//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 68),
+//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 76)});
 //
 //                String mapString = jsonSerializer.deepSerialize(map);
-
+//
                 String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
-
 
                 String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
                 MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
