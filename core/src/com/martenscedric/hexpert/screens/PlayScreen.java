@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexmap.coordinate.Point;
@@ -28,6 +29,7 @@ import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
+import com.martenscedric.hexpert.map.Objective;
 import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
@@ -81,6 +83,7 @@ public class PlayScreen  extends StageScreen
     private SkyEffect skyEffect;
     private boolean[] objectivePassed;
     private ExitDialog exitDialog;
+    private TextButton objectivesButton;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -121,7 +124,7 @@ public class PlayScreen  extends StageScreen
         TextureRegionDrawable drawableWind = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_WIND)));
         TextureRegionDrawable drawableFactory = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FACTORY)));
         TextureRegionDrawable drawableMarket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MARKET)));
-        final TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK)));
+        TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK)));
         TextureRegionDrawable drawableRocket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET)));
 
         btnFarm = new ImageButton(drawableFarm);
@@ -372,8 +375,9 @@ public class PlayScreen  extends StageScreen
             }
         });
 
+
         tableBtn = new Table();
-        tableBtn.setY(HEIGHT - 75);
+        tableBtn.setY(HEIGHT - 150);
         tableBtn.setX(295);
         tableBtn.defaults().width(125).height(125).pad(15);
 
@@ -382,10 +386,23 @@ public class PlayScreen  extends StageScreen
         btnUndo.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
 
+        objectivesButton = new TextButton(hexpert.i18NBundle.get("objectives"), AssetLoader.getSkin());
+        objectivesButton.getLabel().setFontScale(5);
+
+        objectivesButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                objectivesButton.setChecked(false);
+            }
+        });
+
         tableBtn.add(btnBack);
         tableBtn.add(btnReset);
         tableBtn.add(btnUndo);
         tableBtn.add(btnHelp);
+        tableBtn.row();
+        tableBtn.add(objectivesButton).colspan(4).width(500);
 
         getStage().addActor(table);
         getStage().addActor(tableBtn);
@@ -454,6 +471,14 @@ public class PlayScreen  extends StageScreen
             absBatch.begin();
             hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("score", score), 5, 25);
             hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("best", mapResult.getScore()), 5, 55);
+            absBatch.end();
+        }
+
+        Objective nextObjective = getNextObjective();
+        if(nextObjective != null)
+        {
+            absBatch.begin();
+            hexpert.getFont().draw(absBatch, nextObjective.toString(), 5, 450);
             absBatch.end();
         }
 
@@ -645,9 +670,24 @@ public class PlayScreen  extends StageScreen
         return n;
     }
 
+    private Objective getNextObjective()
+    {
+        for(int i = 0; i < map.getObjectives().length; i++)
+        {
+            if(!mapResult.getObjectivePassed()[i])
+                return map.getObjectives()[i];
+        }
+
+        return null;
+    }
+
     private void savemap()
     {
         JSONSerializer jsonSerializer = new JSONSerializer();
         Gdx.files.local(mapResult.getMapId() + ".mapres").writeString(jsonSerializer.deepSerialize(mapResult), false);
+    }
+
+    public Map getMap() {
+        return map;
     }
 }

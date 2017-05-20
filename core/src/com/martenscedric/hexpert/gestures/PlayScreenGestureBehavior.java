@@ -55,7 +55,12 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
                 int score = data.getHexData().getBuildingType().getScore() * data.getHexData().getTileType().getMultiplier();
 
-                playScreen.getMoveEventManager().getScoreList().add(new IntPointTime(score, new Point(pos.x, pos.y), 0.35f));
+                if(playScreen.getMap().isCalculateScore())
+                    playScreen.getMoveEventManager()
+                            .getScoreList().add(
+                                    new IntPointTime(score, new Point(pos.x, pos.y), 0.35f)
+                                    );
+
                 playScreen.updateObjectives();
                 hexpert.sounds.get("click").play();
             }else{
