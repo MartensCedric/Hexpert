@@ -9,6 +9,9 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	title: {
 		file: font-title-export.fnt
 	}
+	vcr: {
+		file: vcr.fnt
+	}
 }
 com.badlogic.gdx.graphics.Color: {
 	black: {
@@ -316,8 +319,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: font
-		fontColor: color
+		font: vcr
+		fontColor: black
 	}
 	button: {
 		font: button
@@ -405,14 +408,13 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
-		font: button
-		fontColor: white
-		downFontColor: white
-		overFontColor: gray
-		up: button-c
-		down: button-p
-		over: button-h
-		checked: button-p
+		font: font
+		fontColor: black
+		downFontColor: black
+		overFontColor: black
+		up: hexbutton
+		down: hexbutton-p
+		checked: hexbutton-c
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
@@ -444,8 +446,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
-		background: window-w
-		titleFont: font
+		background: window-c
+		titleFont: vcr
 		titleFontColor: white
 	}
 }
