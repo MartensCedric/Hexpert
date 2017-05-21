@@ -31,5 +31,5 @@ public class TextureData
     public static final String TEXTURE_SNOW = SPRITE_FOLDER + "snow_tile.png";
 
     public static final String TEXTURE_BADMOVE = SPRITE_FOLDER + "badmove.png";
-
+    public static final String TEXTURE_CORRECT = SPRITE_FOLDER + "correct.png";
 }

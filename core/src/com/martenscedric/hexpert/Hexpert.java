@@ -77,6 +77,7 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_WATER, Texture.class);
 
 		assetManager.load(TEXTURE_BADMOVE, Texture.class);
+		assetManager.load("sprites/correct.png", Texture.class);
 		assetManager.load("i18n/language", I18NBundle.class);
 
 		assetManager.load("sprites/nextlevelleft.png", Texture.class);

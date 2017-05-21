@@ -1,16 +1,24 @@
 package com.martenscedric.hexpert.event;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.map.Objective;
+
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BADMOVE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
 
 /**
  * Created by martens on 5/20/17.
@@ -61,14 +69,17 @@ public class ObjectiveDialog extends Dialog {
         getContentTable().setDebug(false);
         for(int i = 0; i < objectives.length; i++)
         {
-            CheckBox checkBox = new CheckBox("", getSkin());
-            checkBox.setChecked(objectiveStatus[i]);
-            
+            ImageButton imgCheck = new ImageButton(new TextureRegionDrawable(
+                    new TextureRegion((Texture)
+                            hexpert.assetManager.get(objectiveStatus[i] ? TEXTURE_CORRECT : TEXTURE_BADMOVE
+                    ))));
+
             Label labelObjective = new Label(objectives[i].toString(), getSkin());
 
             labelObjective.setFontScale(5);
 
-            getContentTable().add(checkBox);
+            getContentTable().add(imgCheck).width(100).height(80);
+            imgCheck.getImageCell().expand().fill();
             getContentTable().add(labelObjective);
             getContentTable().row();
         }

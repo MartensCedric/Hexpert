@@ -336,7 +336,6 @@ public class LevelSelectScreen extends StageScreen
 
                     if(p.x > maxWidth)
                         maxWidth = p.x;
-
                 }
             }
 

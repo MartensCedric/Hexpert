@@ -74,7 +74,7 @@ public class Objective
 
         if(minScore != Integer.MIN_VALUE)
         {
-            s+= String.format("Have a score better than %d", minScore);
+            s+= String.format("Have a score of atleast %d", minScore);
         }
 
         for(int i = 0; i < BUILDING_COUNT; i++)
