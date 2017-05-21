@@ -356,7 +356,6 @@ public class LevelSelectScreen extends StageScreen
             shapeRenderer.end();
         }
 
-
         super.render(delta);
     }
 
