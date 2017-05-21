@@ -6,6 +6,45 @@ filter: Linear,Linear
 repeat: none
 vcr
   rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+hexpert2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vcr35
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+hexpert3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vcr701
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+hexpert4.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vcr702
+  rotate: false
   xy: 1, 511
   size: 512, 512
   orig: 512, 512
@@ -16,34 +55,6 @@ badmove
   xy: 250, 480
   size: 16, 16
   orig: 16, 16
-  offset: 0, 0
-  index: -1
-correct
-  rotate: false
-  xy: 515, 662
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-hexbutton
-  rotate: false
-  xy: 1, 4
-  size: 24, 16
-  orig: 24, 16
-  offset: 0, 0
-  index: -1
-hexbutton-c
-  rotate: false
-  xy: 695, 903
-  size: 24, 16
-  orig: 24, 16
-  offset: 0, 0
-  index: -1
-hexbutton-p
-  rotate: false
-  xy: 736, 925
-  size: 24, 16
-  orig: 24, 16
   offset: 0, 0
   index: -1
 button
@@ -57,7 +68,7 @@ button
   index: -1
 button-close
   rotate: false
-  xy: 85, 39
+  xy: 142, 133
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -83,6 +94,13 @@ checkbox-pressed
   xy: 605, 776
   size: 29, 24
   orig: 29, 24
+  offset: 0, 0
+  index: -1
+correct
+  rotate: false
+  xy: 515, 662
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 earth
@@ -111,6 +129,27 @@ font-title-export
   xy: 1, 247
   size: 247, 249
   orig: 247, 249
+  offset: 0, 0
+  index: -1
+hexbutton
+  rotate: false
+  xy: 1, 4
+  size: 24, 16
+  orig: 24, 16
+  offset: 0, 0
+  index: -1
+hexbutton-c
+  rotate: false
+  xy: 85, 47
+  size: 24, 16
+  orig: 24, 16
+  offset: 0, 0
+  index: -1
+hexbutton-p
+  rotate: false
+  xy: 695, 903
+  size: 24, 16
+  orig: 24, 16
   offset: 0, 0
   index: -1
 list
@@ -252,7 +291,7 @@ touchpad-knob
   index: -1
 tree-minus
   rotate: false
-  xy: 142, 140
+  xy: 736, 924
   size: 22, 17
   orig: 22, 17
   offset: 0, 0

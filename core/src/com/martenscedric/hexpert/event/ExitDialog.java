@@ -41,7 +41,6 @@ public class ExitDialog extends Dialog {
         getButtonTable().addActor(textButtonYes);
 
         TextButton textButtonNo = new TextButton(bundle.get("no"), skin);
-        textButtonNo.getLabel().setFontScale(5);
         textButtonNo.setX(600);
         textButtonNo.setY(50);
         textButtonNo.setWidth(200);

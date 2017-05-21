@@ -12,6 +12,12 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	vcr: {
 		file: vcr.fnt
 	}
+	vcr35: {
+		file: vcr35.fnt
+	}
+	vcr70: {
+		file: vcr70.fnt
+	}
 }
 com.badlogic.gdx.graphics.Color: {
 	black: {
@@ -408,7 +414,7 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
-		font: vcr
+		font: vcr70
 		fontColor: black
 		downFontColor: black
 		overFontColor: black
