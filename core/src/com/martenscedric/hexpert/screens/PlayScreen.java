@@ -390,7 +390,6 @@ public class PlayScreen  extends StageScreen
         btnHelp.getImageCell().expand().fill();
 
         objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), AssetLoader.getSkin());
-        objectivesButton.getLabel().setFontScale(4);
 
         objectivesButton.addListener(new ClickListener()
         {

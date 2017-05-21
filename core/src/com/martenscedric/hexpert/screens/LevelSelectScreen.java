@@ -114,7 +114,6 @@ public class LevelSelectScreen extends StageScreen
         for(int i = 0; i < levelsToDisplay; i++)
         {
             final TextButton button = new TextButton(Integer.toString(i + 1), AssetLoader.getSkin());
-            button.getLabel().setFontScale(5);
             button.addListener(new ClickListener()
             {
                 @Override
@@ -252,7 +251,6 @@ public class LevelSelectScreen extends StageScreen
                 hexpert.setScreen(new PlayScreen(hexpert, map, mapResult));
             }
         });
-        button.getLabel().setFontScale(5);
         table.add(button).colspan(levelsToDisplay).width(350).center();
         getStage().addActor(table);
     }

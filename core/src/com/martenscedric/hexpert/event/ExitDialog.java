@@ -26,7 +26,6 @@ public class ExitDialog extends Dialog {
         content.setAlignment(Align.center);
         getBackground().setMinWidth(1000);
         getBackground().setMinHeight(600);
-        content.setFontScale(5);
         content.setWrap(true);
         content.setY(375);
         content.setX(50);
@@ -34,7 +33,6 @@ public class ExitDialog extends Dialog {
         getContentTable().addActor(content);
 
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
-        textButtonYes.getLabel().setFontScale(5);
         textButtonYes.setX(250);
         textButtonYes.setY(50);
         textButtonYes.setWidth(200);

@@ -41,7 +41,6 @@ public class MainMenuScreen extends StageScreen
         playButton.setX(WIDTH/2 - playButton.getWidth()/2);
         playButton.setY(HEIGHT/2 - playButton.getHeight()/2);
 
-        playButton.getLabel().setFontScale(5);
         playButton.addListener(new ClickListener()
         {
             @Override

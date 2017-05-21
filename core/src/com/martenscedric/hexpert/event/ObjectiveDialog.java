@@ -36,7 +36,6 @@ public class ObjectiveDialog extends Dialog {
         getBackground().setMinWidth(1000);
 
         final TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), skin);
-        textButtonOK.getLabel().setFontScale(5);
         textButtonOK.setX(400);
         textButtonOK.setY(50);
         textButtonOK.setWidth(200);
@@ -75,8 +74,6 @@ public class ObjectiveDialog extends Dialog {
                     ))));
 
             Label labelObjective = new Label(objectives[i].toString(), getSkin());
-
-            labelObjective.setFontScale(5);
 
             getContentTable().add(imgCheck).width(100).height(80);
             imgCheck.getImageCell().expand().fill();
