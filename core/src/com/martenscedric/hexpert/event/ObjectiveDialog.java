@@ -1,9 +1,12 @@
 package com.martenscedric.hexpert.event;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.map.Objective;
@@ -17,32 +20,31 @@ public class ObjectiveDialog extends Dialog {
     private Hexpert hexpert;
     private Objective[] objectives;
     private boolean[] objectiveStatus;
-    private Label content;
 
     public ObjectiveDialog(Skin skin, Hexpert hexpert) {
-        super(hexpert.i18NBundle.get("goals"), skin);
-        this.hexpert = hexpert;
-
-        content = new Label("", skin);
-        content.setWidth(900);
-        content.setAlignment(Align.center);
+        super("", skin);
+        this.hexpert = hexpert;;
         getBackground().setMinWidth(1000);
-        getBackground().setMinHeight(600);
-        content.setFontScale(5);
-        content.setWrap(true);
-        content.setY(375);
-        content.setX(50);
 
-        getContentTable().addActor(content);
+        final TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), skin);
+        textButtonOK.getLabel().setFontScale(5);
+        textButtonOK.setX(400);
+        textButtonOK.setY(50);
+        textButtonOK.setWidth(200);
+        textButtonOK.setHeight(120);
 
-        TextButton textButtonNo = new TextButton(hexpert.i18NBundle.get("ok"), skin);
-        textButtonNo.getLabel().setFontScale(5);
-        textButtonNo.setX(400);
-        textButtonNo.setY(50);
-        textButtonNo.setWidth(200);
-        textButtonNo.setHeight(120);
-        setObject(textButtonNo, null);
-        getButtonTable().addActor(textButtonNo);
+        textButtonOK.addListener(new ClickListener(){
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                textButtonOK.setChecked(false);
+            }
+        });
+        setObject(textButtonOK, null);
+        getButtonTable().addActor(textButtonOK);
+
+        getContentTable().defaults().pad(5, 0, 5, 15);
+        getContentTable().top();
     }
 
     public void setObjectives(Objective[] objectives, boolean[] objectiveStatus)
@@ -53,15 +55,20 @@ public class ObjectiveDialog extends Dialog {
         if(objectives.length != objectiveStatus.length)
             throw new IllegalArgumentException();
 
-        String str = "";
-
+        getContentTable().clearChildren();
+        getBackground().setMinHeight(200 + 100 * objectives.length);
+        getContentTable().setDebug(false);
         for(int i = 0; i < objectives.length; i++)
         {
-            str+=objectiveStatus[i] ? "[DONE] " : "";
-            str+=objectives[i].toString();
+            Label labelStatus = new Label(objectiveStatus[i] ? "X" : "O", getSkin());
+            Label labelObjective = new Label(objectives[i].toString(), getSkin());
+
+            labelStatus.setFontScale(5);
+            labelObjective.setFontScale(5);
+
+            getContentTable().add(labelStatus);
+            getContentTable().add(labelObjective);
+            getContentTable().row();
         }
-
-        content.setText(str);
     }
-
 }

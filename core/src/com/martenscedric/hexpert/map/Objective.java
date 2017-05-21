@@ -74,21 +74,19 @@ public class Objective
 
         if(minScore != Integer.MIN_VALUE)
         {
-            s+= String.format("Have a score better than %d\n", minScore);
+            s+= String.format("Have a score better than %d", minScore);
         }
 
         for(int i = 0; i < BUILDING_COUNT; i++)
         {
             if(buildingRequirement[i] > 0)
             {
-                s+= String.format("Have atleast %d %s\n", buildingRequirement[i], BuildingType.values()[i + 1].getName().toLowerCase());
+                if(!s.equals(""))
+                    s+="\n";
+                s+= String.format("Have atleast %d %s", buildingRequirement[i], BuildingType.values()[i + 1].getName().toLowerCase());
             }
         }
 
-        if(s.length() > 0)
-        {
-            s.substring(0, s.length() - 2);
-        }
         return s;
     }
 }

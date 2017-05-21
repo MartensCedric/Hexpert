@@ -397,7 +397,7 @@ public class PlayScreen  extends StageScreen
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 objectivesButton.setChecked(false);
-                objectiveDialog.setObjectives(map.getObjectives(), objectivePassed);
+                objectiveDialog.setObjectives(map.getObjectives(), mapResult.getObjectivePassed());
                 objectiveDialog.show(getStage());
             }
         });

@@ -429,7 +429,7 @@ public class LevelSelectScreen extends StageScreen
             String str = "";
             for(int i = 0; i < map.getObjectives().length; i++)
             {
-                str+= (result.getObjectivePassed()[i] ? "[DONE] " : "") + map.getObjectives()[i].toString();
+                str+= (result.getObjectivePassed()[i] ? "[DONE] " : "") + map.getObjectives()[i].toString() + "\n";
             }
             currentObjective = str;
         }catch (Exception e)
