@@ -1,4 +1,4 @@
-package com.martenscedric.hexpert.env;
+package com.martenscedric.hexpert.event;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -35,11 +35,11 @@ public class ExitDialog extends Dialog {
 
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
         textButtonYes.getLabel().setFontScale(5);
-        setObject(textButtonYes, 1);
         textButtonYes.setX(250);
         textButtonYes.setY(50);
         textButtonYes.setWidth(200);
         textButtonYes.setHeight(120);
+        setObject(textButtonYes, 1);
         getButtonTable().addActor(textButtonYes);
 
         TextButton textButtonNo = new TextButton(bundle.get("no"), skin);
@@ -48,6 +48,7 @@ public class ExitDialog extends Dialog {
         textButtonNo.setY(50);
         textButtonNo.setWidth(200);
         textButtonNo.setHeight(120);
+        setObject(textButtonNo, null);
         getButtonTable().addActor(textButtonNo);
     }
 

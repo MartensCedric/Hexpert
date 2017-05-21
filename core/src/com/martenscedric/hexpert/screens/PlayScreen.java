@@ -22,9 +22,10 @@ import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
-import com.martenscedric.hexpert.env.ExitDialog;
+import com.martenscedric.hexpert.event.ExitDialog;
 import com.martenscedric.hexpert.env.MoveEventManager;
 import com.martenscedric.hexpert.env.SkyEffect;
+import com.martenscedric.hexpert.event.ObjectiveDialog;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
@@ -83,14 +84,16 @@ public class PlayScreen  extends StageScreen
     private SkyEffect skyEffect;
     private boolean[] objectivePassed;
     private ExitDialog exitDialog;
+    private ObjectiveDialog objectiveDialog;
     private TextButton objectivesButton;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
-    public PlayScreen(final Hexpert hexpert, Map map, MapResult result) {
+    public PlayScreen(final Hexpert hexpert, final Map map, MapResult result) {
         super();
         this.hexpert = hexpert;
         this.exitDialog = new ExitDialog(AssetLoader.getSkin(), hexpert);
+        this.objectiveDialog = new ObjectiveDialog(AssetLoader.getSkin(), hexpert);
         this.map = map;
         mapResult = result;
         this.batch = new SpriteBatch();
@@ -386,14 +389,16 @@ public class PlayScreen  extends StageScreen
         btnUndo.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
 
-        objectivesButton = new TextButton(hexpert.i18NBundle.get("objectives"), AssetLoader.getSkin());
-        objectivesButton.getLabel().setFontScale(5);
+        objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), AssetLoader.getSkin());
+        objectivesButton.getLabel().setFontScale(4);
 
         objectivesButton.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 objectivesButton.setChecked(false);
+                objectiveDialog.setObjectives(map.getObjectives(), objectivePassed);
+                objectiveDialog.show(getStage());
             }
         });
 
@@ -471,14 +476,6 @@ public class PlayScreen  extends StageScreen
             absBatch.begin();
             hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("score", score), 5, 25);
             hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("best", mapResult.getScore()), 5, 55);
-            absBatch.end();
-        }
-
-        Objective nextObjective = getNextObjective();
-        if(nextObjective != null)
-        {
-            absBatch.begin();
-            hexpert.getFont().draw(absBatch, nextObjective.toString(), 5, 450);
             absBatch.end();
         }
 

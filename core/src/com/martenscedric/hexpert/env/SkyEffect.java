@@ -18,7 +18,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CLOUD;
  * Created by 1544256 on 2017-04-25.
  */
 
-public class SkyEffect implements Tickable, Drawable
+public class SkyEffect
 {
     private final int START_CLOUD_COUNT = 6;
     private final float CLOUD_SPEED_MIN = 0.275f;
@@ -61,12 +61,10 @@ public class SkyEffect implements Tickable, Drawable
         }
     }
 
-    @Override
     public void tick() {
         tickClouds();
     }
 
-    @Override
     public void draw(Batch batch) {
         for(Cloud c : clouds)
         {
