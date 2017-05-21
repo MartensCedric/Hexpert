@@ -37,7 +37,7 @@ public class ObjectiveDialog extends Dialog {
 
         TextButton textButtonNo = new TextButton(hexpert.i18NBundle.get("ok"), skin);
         textButtonNo.getLabel().setFontScale(5);
-        textButtonNo.setX(500);
+        textButtonNo.setX(400);
         textButtonNo.setY(50);
         textButtonNo.setWidth(200);
         textButtonNo.setHeight(120);
@@ -58,7 +58,7 @@ public class ObjectiveDialog extends Dialog {
         for(int i = 0; i < objectives.length; i++)
         {
             str+=objectiveStatus[i] ? "[DONE] " : "";
-            str+=objectives[i].toString() + "\n";
+            str+=objectives[i].toString();
         }
 
         content.setText(str);
