@@ -1,6 +1,7 @@
 package com.martenscedric.hexpert.event;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -60,13 +61,14 @@ public class ObjectiveDialog extends Dialog {
         getContentTable().setDebug(false);
         for(int i = 0; i < objectives.length; i++)
         {
-            Label labelStatus = new Label(objectiveStatus[i] ? "X" : "O", getSkin());
+            CheckBox checkBox = new CheckBox("", getSkin());
+            checkBox.setChecked(objectiveStatus[i]);
+            
             Label labelObjective = new Label(objectives[i].toString(), getSkin());
 
-            labelStatus.setFontScale(5);
             labelObjective.setFontScale(5);
 
-            getContentTable().add(labelStatus);
+            getContentTable().add(checkBox);
             getContentTable().add(labelObjective);
             getContentTable().row();
         }
