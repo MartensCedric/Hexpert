@@ -381,7 +381,7 @@ public class PlayScreen  extends StageScreen
 
         tableBtn = new Table();
         tableBtn.setY(HEIGHT - 150);
-        tableBtn.setX(295);
+        tableBtn.setX(310);
         tableBtn.defaults().width(125).height(125).pad(15);
 
         btnBack.getImageCell().expand().fill();
@@ -512,14 +512,6 @@ public class PlayScreen  extends StageScreen
         moveEventManager.render(delta);
         updateScore();
         super.render(delta);
-
-        if(selectedButton != null)
-        {
-            shapeRenderer.begin();
-            shapeRenderer.setColor(Color.GREEN);
-            shapeRenderer.rect(WIDTH - 160, selectedButton.getY() + 567, selectedButton.getImage().getImageWidth() + 2, selectedButton.getImage().getImageHeight() + 2);
-            shapeRenderer.end();
-        }
 
         if(!exitDialog.hasBeenShown() && numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length)
         {
