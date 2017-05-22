@@ -1,6 +1,8 @@
 package com.martenscedric.hexpert.screens;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,18 +11,26 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.cedricmartens.hexmap.coordinate.Point;
+import com.cedricmartens.hexmap.hexagon.HexStyle;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
+import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
+import com.cedricmartens.hexmap.map.HexBuilder;
 import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.map.Map;
+import com.martenscedric.hexpert.map.MapLoadException;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.tile.TileData;
@@ -36,6 +46,7 @@ import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_GRASS;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -51,12 +62,12 @@ public class LevelSelectScreen extends StageScreen
     private final Hexpert hexpert;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
+    private HexMap<boolean[]> gridLvlSelect;
     private SpriteBatch batch, uiBatch, displayBatch;
     private MapResult result;
     private OrthographicCamera uiCamera, displayLevelCamera;
     private int starCount = 0;
     private ImageButton btnLeft, btnRight;
-    private List<TextButton> buttonList;
     private boolean debug = false;
     private ShapeRenderer shapeRenderer;
 
@@ -76,6 +87,7 @@ public class LevelSelectScreen extends StageScreen
         objectiveTable.setY(850);
         objectiveTable.defaults().pad(20);
         getStage().addActor(objectiveTable);
+        starCount = getStarCount();
 
         table = new Table();
         table.defaults().width(150).height(150);
@@ -83,10 +95,6 @@ public class LevelSelectScreen extends StageScreen
         table.setY(100);
         table.defaults().pad(20);
         getCamera().update();
-
-        starCount = getStarCount();
-
-        buttonList = new ArrayList<>();
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
         btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelright.png"))));
@@ -100,38 +108,30 @@ public class LevelSelectScreen extends StageScreen
                 if(currentWorld > 1)
                 {
                     currentWorld--;
-                    updateButtons();
+                    updateLabels();
+                    updateLevelSelectGrid();
 
 
                     hexpert.sounds.get("select").play();
                     selectLevel((currentWorld - 1) * levelsToDisplay + 1);
-
-                    for(int i = 0; i < buttonList.size(); i++)
-                        buttonList.get(i).setChecked(i == 0);
-
                 }
             }
         });
 
         table.add(btnLeft);
-        for(int i = 0; i < levelsToDisplay; i++)
-        {
-            final TextButton button = new TextButton(Integer.toString(i + 1), hexpert.getSkin());
-            button.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y)
-                {
-                    selectLevel(Integer.parseInt(button.getText().toString()));
-                    hexpert.sounds.get("select").play();
-                    for(TextButton b : buttonList)
-                        b.setChecked(false);
-                    button.setChecked(true);
-                }
-            });
-            buttonList.add(button);
-            table.add(button);
-        }
+
+//            button.addListener(new ClickListener()
+//            {
+//                @Override
+//                public void clicked(InputEvent event, float x, float y)
+//                {
+//                    selectLevel((currentWorld - 1) * levelsToDisplay + finalI + 1);
+//                    hexpert.sounds.get("select").play();
+//                }
+//            });
+
+
+        table.add(new WidgetGroup()).width(500);
 
 
         btnRight.getImageCell().expand().fill();
@@ -143,23 +143,18 @@ public class LevelSelectScreen extends StageScreen
                 if(currentWorld * levelsToDisplay < totalLevels)
                 {
                     currentWorld++;
-                    updateButtons();
+                    updateLabels();
+                    updateLevelSelectGrid();
 
                     hexpert.sounds.get("select").play();
                     selectLevel((currentWorld - 1) * levelsToDisplay + 1);
 
-                    for(int i = 0; i < buttonList.size(); i++)
-                        buttonList.get(i).setChecked(i == 0);
                 }
             }
         });
         table.add(btnRight);
 
-        for(int i = 0; i < buttonList.size(); i++)
-            buttonList.get(i).setChecked(i == 0);
-
-        starCount = getStarCount();
-
+        createLevelSelectGrid();
         final TextButton button = new TextButton(hexpert.i18NBundle.get("select"), hexpert.getSkin());
         button.addListener(new ClickListener()
         {
@@ -268,6 +263,20 @@ public class LevelSelectScreen extends StageScreen
 
         batch.setProjectionMatrix(getCamera().combined);
         batch.begin();
+
+        for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
+        {
+
+            Hexagon<boolean[]> hex = gridLvlSelect.getHexs()[i];
+            Point p = hex.getHexGeometry().getMiddlePoint();
+            batch.draw(hexpert.assetManager.get(TEXTURE_GRASS, Texture.class),
+                    (float)(p.x - gridLvlSelect.getStyle().getSize() - 400),
+                    (float)(p.y - gridLvlSelect.getStyle().getSize() * HEX_HEIGHT_RATIO - 400),
+                    (float)gridLvlSelect.getStyle().getSize()*2,
+                    (float)((float)gridLvlSelect.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
+
+            hexpert.getFont().draw(batch, Integer.toString(i), (int)p.x - 400, (int)p.y - 350);
+        }
 
         batch.end();
         displayBatch.setProjectionMatrix(displayLevelCamera.combined);
@@ -393,7 +402,6 @@ public class LevelSelectScreen extends StageScreen
         Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
         grid = map.build();
 
-
         String mapString = Integer.toString(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
@@ -452,7 +460,6 @@ public class LevelSelectScreen extends StageScreen
 
             for(int i = 0; i < map.getObjectives().length; i++)
             {
-                long timeObjective = TimeUtils.millis();
                 ImageButton imgBad = new ImageButton(textureBad);
                 ImageButton imgCorrect = new ImageButton(textureCorrect);
 
@@ -501,11 +508,52 @@ public class LevelSelectScreen extends StageScreen
         return total;
     }
 
-    private void updateButtons()
+    private boolean[] getObjectivePassed(int level)
     {
-        for(int i = 0; i < buttonList.size(); i++)
+        FileHandle mapresFile = Gdx.files.local(level + ".mapres");
+
+        if(mapresFile.exists())
         {
-            buttonList.get(i).setText(Integer.toString((currentWorld - 1) * levelsToDisplay + 1 + i));
+            MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapresFile.readString());
+            return mapResult.getObjectivePassed();
+        }else{
+            throw new MapLoadException(String.format("Can't find %d.mapres", level));
+        }
+    }
+
+    private void updateLabels()
+    {
+        //for(int i = 0; i < labelList.size(); i++)
+       // {
+        //    labelList.get(i).setText(Integer.toString((currentWorld - 1) * levelsToDisplay + 1 + i));
+        //}
+    }
+
+    private void createLevelSelectGrid()
+    {
+        HexFreeShapeBuilder<boolean[]> builder = new HexFreeShapeBuilder<>();
+        builder.setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
+        builder.addHex(new Point(0, 0));
+        builder.addHexNextTo(0, 0);
+        builder.addHexNextTo(1, 1);
+        builder.addHexNextTo(2, 0);
+        builder.addHexNextTo(3, 1);
+        gridLvlSelect = builder.build();
+
+        updateLevelSelectGrid();
+    }
+
+    private void updateLevelSelectGrid()
+    {
+        for(int i = 0; i < gridLvlSelect.getHexs().length; i++)
+        {
+            try{
+                boolean[] objectiveStatus = getObjectivePassed((currentWorld - 1) * levelsToDisplay + i + 1);
+                gridLvlSelect.getHexs()[i].setHexData(objectiveStatus);
+            }catch (MapLoadException e)
+            {
+                gridLvlSelect.getHexs()[i].setHexData(null);
+            }
         }
     }
 }
