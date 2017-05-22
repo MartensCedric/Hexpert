@@ -13,8 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class AssetLoader
 {
+    private static Skin skin;
     public static Skin getSkin()
     {
-        return new Skin(Gdx.files.internal("skins/hexpert/hexpert.json"));
+        if(skin == null)
+        {
+            skin = new Skin(Gdx.files.internal("skins/hexpert/hexpert.json"));
+        }
+
+        return skin;
     }
 }

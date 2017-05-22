@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
@@ -159,7 +160,6 @@ public class LevelSelectScreen extends StageScreen
         for(int i = 0; i < buttonList.size(); i++)
             buttonList.get(i).setChecked(i == 0);
 
-        selectLevel(1);
         starCount = getStarCount();
 
         final TextButton button = new TextButton(hexpert.i18NBundle.get("select"), AssetLoader.getSkin());
@@ -431,7 +431,6 @@ public class LevelSelectScreen extends StageScreen
             TextureRegionDrawable textureCorrect = new TextureRegionDrawable(
                     new TextureRegion(hexpert.assetManager.get(TEXTURE_CORRECT, Texture.class)));
 
-
             float y = 750;
 
             switch (result.getObjectivePassed().length)
@@ -449,9 +448,13 @@ public class LevelSelectScreen extends StageScreen
 
             objectiveTable.setY(y);
 
+
             objectiveTable.clearChildren();
+
+
             for(int i = 0; i < map.getObjectives().length; i++)
             {
+                long timeObjective = TimeUtils.millis();
                 ImageButton imgBad = new ImageButton(textureBad);
                 ImageButton imgCorrect = new ImageButton(textureCorrect);
 
@@ -463,9 +466,9 @@ public class LevelSelectScreen extends StageScreen
                 Label lblDesc = new Label(map.getObjectives()[i].toString(), AssetLoader.getSkin());
                 lblDesc.setWidth(200);
                 lblDesc.setWrap(true);
+
                 objectiveTable.add(lblDesc);
                 objectiveTable.row();
-
             }
 
         }catch (Exception e)
