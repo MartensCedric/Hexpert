@@ -36,10 +36,6 @@ public abstract class StageScreen implements Screen
         return stage;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     @Override
     public void resize(int width, int height) {
        stage.getViewport().update(width, height, false);

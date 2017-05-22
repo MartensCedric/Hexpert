@@ -2,6 +2,7 @@ package com.martenscedric.hexpert.screens;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -29,6 +31,8 @@ import com.cedricmartens.hexmap.map.HexBuilder;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
+import com.martenscedric.hexpert.gestures.LevelSelectGesture;
+import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapLoadException;
 import com.martenscedric.hexpert.map.MapResult;
@@ -73,6 +77,8 @@ public class LevelSelectScreen extends StageScreen
     private ImageButton btnLeft, btnRight;
     private boolean debug = false;
     private ShapeRenderer shapeRenderer;
+    private LevelSelectGesture behavior;
+    private GestureDetector detector;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -416,6 +422,7 @@ public class LevelSelectScreen extends StageScreen
         super.show();
         selectLevel(levelSelect);
         starCount = getStarCount();
+        setMultiplexer();
     }
 
     private Map loadDisplayLevel()
@@ -448,7 +455,7 @@ public class LevelSelectScreen extends StageScreen
         return map;
     }
 
-    private void selectLevel(int levelID)
+    public void selectLevel(int levelID)
     {
         try{
             levelSelect = levelID;
@@ -587,6 +594,9 @@ public class LevelSelectScreen extends StageScreen
             if(!objective[i])
                 missingObjectives++;
 
+        if(missingObjectives == objective.length)
+            return hexpert.assetManager.get(TEXTURE_GRASS, Texture.class);
+
         switch (missingObjectives)
         {
             case 0 :
@@ -598,5 +608,27 @@ public class LevelSelectScreen extends StageScreen
             default:
                 return hexpert.assetManager.get(TEXTURE_GRASS, Texture.class);
         }
+    }
+
+    public HexMap<Texture> getLvlSelectGrid() {
+        return gridLvlSelect;
+    }
+
+    private void setMultiplexer()
+    {
+        behavior = new LevelSelectGesture(this);
+        detector = new GestureDetector(behavior);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(getStage());
+        inputMultiplexer.addProcessor(detector);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    public int getLevelsToDisplay() {
+        return levelsToDisplay;
+    }
+
+    public int getCurrentWorld() {
+        return currentWorld;
     }
 }
