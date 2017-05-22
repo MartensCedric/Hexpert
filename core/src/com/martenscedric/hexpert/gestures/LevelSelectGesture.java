@@ -50,6 +50,7 @@ public class LevelSelectGesture  implements GestureDetector.GestureListener
             levelSelectScreen.selectLevel(
                     (levelSelectScreen.getCurrentWorld() - 1) * levelSelectScreen.getLevelsToDisplay()
                             + hex.getCoordinateSystem().toIndexed().getIndex() + 1);
+            levelSelectScreen.hexpert.sounds.get("select").play();
         }
 
         return true;

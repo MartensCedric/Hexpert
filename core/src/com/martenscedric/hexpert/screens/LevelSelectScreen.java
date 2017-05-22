@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexStyle;
@@ -66,7 +68,7 @@ public class LevelSelectScreen extends StageScreen
     private int levelsToDisplay = 5;
     private int totalLevels = 9;
     private int currentWorld = 1;
-    private final Hexpert hexpert;
+    public final Hexpert hexpert;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
     private HexMap<Texture> gridLvlSelect;
@@ -79,6 +81,7 @@ public class LevelSelectScreen extends StageScreen
     private ShapeRenderer shapeRenderer;
     private LevelSelectGesture behavior;
     private GestureDetector detector;
+    private ShaderProgram shdDark;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -97,6 +100,12 @@ public class LevelSelectScreen extends StageScreen
         objectiveTable.defaults().pad(20);
         getStage().addActor(objectiveTable);
         starCount = getStarCount();
+
+
+        String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
+        String darkShader = Gdx.files.internal("shaders/darkness.fs").readString();
+        shdDark = new ShaderProgram(vertexShader, darkShader);
+        if (!shdDark.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shdDark.getLog());
 
         table = new Table();
         table.defaults().width(150).height(150);
@@ -277,6 +286,9 @@ public class LevelSelectScreen extends StageScreen
         for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
         {
             if(i % 2 == 1) continue;
+
+            batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i + 1 ? shdDark : null);
+
             Hexagon<Texture> hex = gridLvlSelect.getHexs()[i];
             Point p = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData(),
@@ -293,6 +305,7 @@ public class LevelSelectScreen extends StageScreen
         for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
         {
             if(i % 2 == 0) continue;
+            batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i + 1 ? shdDark : null);
             Hexagon<Texture> hex = gridLvlSelect.getHexs()[i];
             Point p = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData(),
@@ -305,6 +318,7 @@ public class LevelSelectScreen extends StageScreen
                     Integer.toString((currentWorld - 1) * levelsToDisplay + i + 1),
                     (int)p.x - 10, (int)p.y + 30);
         }
+        batch.setShader(null);
 
         batch.end();
         displayBatch.setProjectionMatrix(displayLevelCamera.combined);
@@ -421,6 +435,7 @@ public class LevelSelectScreen extends StageScreen
     public void show() {
         super.show();
         selectLevel(levelSelect);
+        updateLevelSelectGrid();
         starCount = getStarCount();
         setMultiplexer();
     }
@@ -568,8 +583,6 @@ public class LevelSelectScreen extends StageScreen
         builder.addHexNextTo(2, 0);
         builder.addHexNextTo(3, 1);
         gridLvlSelect = builder.build();
-
-        updateLevelSelectGrid();
     }
 
     private void updateLevelSelectGrid()

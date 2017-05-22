@@ -19,7 +19,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.martenscedric.hexcity"
+        applicationId "com.martenscedric.hexpert"
         minSdkVersion 15
         targetSdkVersion 23
     }
