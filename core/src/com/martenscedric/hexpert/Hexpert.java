@@ -36,7 +36,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_SAND;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_SNOW;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FOREST;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_UNDO;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WATER;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
@@ -77,7 +77,7 @@ public class Hexpert extends Game {
 
 		assetManager.load(TEXTURE_GRASS, Texture.class);
 		assetManager.load(TEXTURE_SAND, Texture.class);
-		assetManager.load(TEXTURE_SNOW, Texture.class);
+		assetManager.load(TEXTURE_FOREST, Texture.class);
 		assetManager.load(TEXTURE_WATER, Texture.class);
 
 		assetManager.load(TEXTURE_BAD, Texture.class);
@@ -163,7 +163,7 @@ public class Hexpert extends Game {
 				texture = assetManager.get(TEXTURE_SAND, Texture.class);
 				break;
 			case SNOW:
-				texture = assetManager.get(TEXTURE_SNOW, Texture.class);
+				texture = assetManager.get(TEXTURE_FOREST, Texture.class);
 				break;
 		}
 

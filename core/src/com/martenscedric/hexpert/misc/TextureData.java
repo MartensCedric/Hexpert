@@ -27,7 +27,7 @@ public class TextureData {
     public static final String TEXTURE_GRASS = SPRITE_FOLDER + "grass_tile.png";
     public static final String TEXTURE_WATER = SPRITE_FOLDER + "water_tile.png";
     public static final String TEXTURE_SAND = SPRITE_FOLDER + "sand_tile.png";
-    public static final String TEXTURE_SNOW = SPRITE_FOLDER + "snow_tile.png";
+    public static final String TEXTURE_FOREST = SPRITE_FOLDER + "forest_tile.png";
 
     public static final String TEXTURE_BAD = SPRITE_FOLDER + "badmove.png";
     public static final String TEXTURE_CORRECT = SPRITE_FOLDER + "correct.png";
