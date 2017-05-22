@@ -9,26 +9,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexmap.coordinate.Point;
-import com.cedricmartens.hexmap.hexagon.HexStyle;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
-import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
-import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
-import com.martenscedric.hexpert.map.Objective;
 import com.martenscedric.hexpert.misc.AssetLoader;
-import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
-import com.martenscedric.hexpert.tile.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +35,8 @@ import flexjson.JSONSerializer;
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -47,6 +45,7 @@ import static com.martenscedric.hexpert.misc.Const.WIDTH;
 public class LevelSelectScreen extends StageScreen
 {
     private Table table;
+    private Table objectiveTable;
     private int levelsToDisplay = 5;
     private int totalLevels = 9;
     private int currentWorld = 1;
@@ -56,7 +55,6 @@ public class LevelSelectScreen extends StageScreen
     private SpriteBatch batch, uiBatch, displayBatch;
     private MapResult result;
     private OrthographicCamera uiCamera, displayLevelCamera;
-    private String currentObjective = "";
     private int starCount = 0;
     private ImageButton btnLeft, btnRight;
     private List<TextButton> buttonList;
@@ -74,6 +72,12 @@ public class LevelSelectScreen extends StageScreen
         this.displayLevelCamera = new OrthographicCamera(WIDTH, HEIGHT);
         this.shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
+        this.objectiveTable = new Table();
+        objectiveTable.setX(150);
+        objectiveTable.setY(850);
+        objectiveTable.defaults().pad(20);
+        getStage().addActor(objectiveTable);
+
         table = new Table();
         table.defaults().width(150).height(150);
         table.setX(900);
@@ -301,7 +305,6 @@ public class LevelSelectScreen extends StageScreen
         uiBatch.begin();
 
         uiBatch.setProjectionMatrix(uiCamera.combined);
-        hexpert.getFont().draw(uiBatch, currentObjective, -850, 500);
 
         if(result.getScore() > 0)
             hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 400);
@@ -422,12 +425,49 @@ public class LevelSelectScreen extends StageScreen
         try{
             levelSelect = levelID;
             Map map = loadDisplayLevel();
-            String str = "";
+            TextureRegionDrawable textureBad = new TextureRegionDrawable(
+                    new TextureRegion(hexpert.assetManager.get(TEXTURE_BAD, Texture.class)));
+
+            TextureRegionDrawable textureCorrect = new TextureRegionDrawable(
+                    new TextureRegion(hexpert.assetManager.get(TEXTURE_CORRECT, Texture.class)));
+
+
+            float y = 750;
+
+            switch (result.getObjectivePassed().length)
+            {
+                case 1 :
+                    y = 1000;
+                    break;
+                case 2 :
+                    y = 800;
+                    break;
+                case 3 :
+                    y = 860;
+                    break;
+            }
+
+            objectiveTable.setY(y);
+
+            objectiveTable.clearChildren();
             for(int i = 0; i < map.getObjectives().length; i++)
             {
-                str+= (result.getObjectivePassed()[i] ? "[DONE] " : "") + map.getObjectives()[i].toString() + "\n";
+                ImageButton imgBad = new ImageButton(textureBad);
+                ImageButton imgCorrect = new ImageButton(textureCorrect);
+
+                imgBad.getImageCell().expand().fill();
+                imgCorrect.getImageCell().expand().fill();
+
+                objectiveTable.add(result.getObjectivePassed()[i] ? imgCorrect : imgBad).width(100).height(100);
+
+                Label lblDesc = new Label(map.getObjectives()[i].toString(), AssetLoader.getSkin());
+                lblDesc.setWidth(200);
+                lblDesc.setWrap(true);
+                objectiveTable.add(lblDesc);
+                objectiveTable.row();
+
             }
-            currentObjective = str;
+
         }catch (Exception e)
         {
 

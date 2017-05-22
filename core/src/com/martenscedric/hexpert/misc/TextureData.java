@@ -4,8 +4,7 @@ package com.martenscedric.hexpert.misc;
  * Created by 1544256 on 2017-04-26.
  */
 
-public class TextureData
-{
+public class TextureData {
     public static final String SPRITE_FOLDER = "sprites/";
 
     public static final String TEXTURE_CLOUD = SPRITE_FOLDER + "cloud.png";
@@ -30,6 +29,10 @@ public class TextureData
     public static final String TEXTURE_SAND = SPRITE_FOLDER + "sand_tile.png";
     public static final String TEXTURE_SNOW = SPRITE_FOLDER + "snow_tile.png";
 
-    public static final String TEXTURE_BADMOVE = SPRITE_FOLDER + "badmove.png";
+    public static final String TEXTURE_BAD = SPRITE_FOLDER + "badmove.png";
     public static final String TEXTURE_CORRECT = SPRITE_FOLDER + "correct.png";
+
+    public static final String TEXTURE_HEXGOLD = SPRITE_FOLDER + "goldhex.png";
+    public static final String TEXTURE_HEXSILVER = SPRITE_FOLDER + "silverhex.png";
+    public static final String TEXTURE_HEXBRONZE = SPRITE_FOLDER + "bronzehex.png";
 }

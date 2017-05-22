@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.martenscedric.hexpert.Hexpert;
-import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.misc.IntPointTime;
 import com.martenscedric.hexpert.misc.PointTime;
 import com.martenscedric.hexpert.screens.PlayScreen;
@@ -13,7 +12,7 @@ import com.martenscedric.hexpert.screens.PlayScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BADMOVE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
 
 /**
  * Created by 1544256 on 2017-05-08.
@@ -31,7 +30,7 @@ public class MoveEventManager
     public MoveEventManager(PlayScreen screen) {
         batch = screen.getBatch();
         this.hexpert = screen.getHexpert();
-        this.badMoveTexture = hexpert.assetManager.get(TEXTURE_BADMOVE, Texture.class);
+        this.badMoveTexture = hexpert.assetManager.get(TEXTURE_BAD, Texture.class);
         badMoves = new ArrayList<PointTime>();
         score = new ArrayList<IntPointTime>();
     }

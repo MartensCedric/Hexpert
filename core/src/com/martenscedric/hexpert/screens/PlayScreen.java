@@ -330,7 +330,6 @@ public class PlayScreen  extends StageScreen
         imbBank1.getImageCell().expand().fill();
         table.add(imbBank1);
 
-
         menuImage.setVisible(false);
 
         table.setX(WIDTH + menuImage.getWidth()/2 + table.getPrefWidth()/5);

@@ -18,13 +18,17 @@ import com.martenscedric.hexpert.tile.TileType;
 import java.util.HashMap;
 
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BADMOVE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CLOUD;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_GRASS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
@@ -76,8 +80,13 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_SNOW, Texture.class);
 		assetManager.load(TEXTURE_WATER, Texture.class);
 
-		assetManager.load(TEXTURE_BADMOVE, Texture.class);
-		assetManager.load("sprites/correct.png", Texture.class);
+		assetManager.load(TEXTURE_BAD, Texture.class);
+		assetManager.load(TEXTURE_CORRECT, Texture.class);
+
+		assetManager.load(TEXTURE_HEXGOLD, Texture.class);
+		assetManager.load(TEXTURE_HEXSILVER, Texture.class);
+		assetManager.load(TEXTURE_HEXBRONZE, Texture.class);
+
 		assetManager.load("i18n/language", I18NBundle.class);
 
 		assetManager.load("sprites/nextlevelleft.png", Texture.class);
