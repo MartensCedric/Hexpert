@@ -47,6 +47,9 @@ import static com.martenscedric.hexpert.misc.Const.WIDTH;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_GRASS;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -62,7 +65,7 @@ public class LevelSelectScreen extends StageScreen
     private final Hexpert hexpert;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
-    private HexMap<boolean[]> gridLvlSelect;
+    private HexMap<Texture> gridLvlSelect;
     private SpriteBatch batch, uiBatch, displayBatch;
     private MapResult result;
     private OrthographicCamera uiCamera, displayLevelCamera;
@@ -94,6 +97,7 @@ public class LevelSelectScreen extends StageScreen
         table.setX(900);
         table.setY(100);
         table.defaults().pad(20);
+        getCamera().translate(400, 400);
         getCamera().update();
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
@@ -131,7 +135,7 @@ public class LevelSelectScreen extends StageScreen
 //            });
 
 
-        table.add(new WidgetGroup()).width(500);
+        table.add(new WidgetGroup()).width(800);
 
 
         btnRight.getImageCell().expand().fill();
@@ -266,16 +270,34 @@ public class LevelSelectScreen extends StageScreen
 
         for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
         {
-
-            Hexagon<boolean[]> hex = gridLvlSelect.getHexs()[i];
+            if(i % 2 == 1) continue;
+            Hexagon<Texture> hex = gridLvlSelect.getHexs()[i];
             Point p = hex.getHexGeometry().getMiddlePoint();
-            batch.draw(hexpert.assetManager.get(TEXTURE_GRASS, Texture.class),
-                    (float)(p.x - gridLvlSelect.getStyle().getSize() - 400),
-                    (float)(p.y - gridLvlSelect.getStyle().getSize() * HEX_HEIGHT_RATIO - 400),
+            batch.draw(hex.getHexData(),
+                    (float)(p.x - gridLvlSelect.getStyle().getSize()),
+                    (float)(p.y - gridLvlSelect.getStyle().getSize() * HEX_HEIGHT_RATIO),
                     (float)gridLvlSelect.getStyle().getSize()*2,
                     (float)((float)gridLvlSelect.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
 
-            hexpert.getFont().draw(batch, Integer.toString(i), (int)p.x - 400, (int)p.y - 350);
+            hexpert.getFont().draw(batch,
+                    Integer.toString((currentWorld - 1) * levelsToDisplay + i + 1),
+                    (int)p.x - 10, (int)p.y + 30);
+        }
+
+        for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
+        {
+            if(i % 2 == 0) continue;
+            Hexagon<Texture> hex = gridLvlSelect.getHexs()[i];
+            Point p = hex.getHexGeometry().getMiddlePoint();
+            batch.draw(hex.getHexData(),
+                    (float)(p.x - gridLvlSelect.getStyle().getSize()),
+                    (float)(p.y - gridLvlSelect.getStyle().getSize() * HEX_HEIGHT_RATIO),
+                    (float)gridLvlSelect.getStyle().getSize()*2,
+                    (float)((float)gridLvlSelect.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
+
+            hexpert.getFont().draw(batch,
+                    Integer.toString((currentWorld - 1) * levelsToDisplay + i + 1),
+                    (int)p.x - 10, (int)p.y + 30);
         }
 
         batch.end();
@@ -531,7 +553,7 @@ public class LevelSelectScreen extends StageScreen
 
     private void createLevelSelectGrid()
     {
-        HexFreeShapeBuilder<boolean[]> builder = new HexFreeShapeBuilder<>();
+        HexFreeShapeBuilder<Texture> builder = new HexFreeShapeBuilder<>();
         builder.setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
         builder.addHex(new Point(0, 0));
         builder.addHexNextTo(0, 0);
@@ -549,11 +571,32 @@ public class LevelSelectScreen extends StageScreen
         {
             try{
                 boolean[] objectiveStatus = getObjectivePassed((currentWorld - 1) * levelsToDisplay + i + 1);
-                gridLvlSelect.getHexs()[i].setHexData(objectiveStatus);
+                gridLvlSelect.getHexs()[i].setHexData(getTextureByObjectiveStatus(objectiveStatus));
             }catch (MapLoadException e)
             {
-                gridLvlSelect.getHexs()[i].setHexData(null);
+                gridLvlSelect.getHexs()[i].setHexData(hexpert.assetManager.get(TEXTURE_GRASS));
             }
+        }
+    }
+
+    private Texture getTextureByObjectiveStatus(boolean[] objective)
+    {
+        int missingObjectives = 0;
+
+        for(int i = 0; i < objective.length; i++)
+            if(!objective[i])
+                missingObjectives++;
+
+        switch (missingObjectives)
+        {
+            case 0 :
+                return hexpert.assetManager.get(TEXTURE_HEXGOLD, Texture.class);
+            case 1 :
+                return hexpert.assetManager.get(TEXTURE_HEXSILVER, Texture.class);
+            case 2:
+                return hexpert.assetManager.get(TEXTURE_HEXBRONZE, Texture.class);
+            default:
+                return hexpert.assetManager.get(TEXTURE_GRASS, Texture.class);
         }
     }
 }
