@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.env.SkyEffect;
-import com.martenscedric.hexpert.misc.AssetLoader;
 
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
@@ -33,7 +32,7 @@ public class MainMenuScreen extends StageScreen
         batch = new SpriteBatch();
         skyEffect = new SkyEffect(hexpert.assetManager);
 
-        Skin skin = AssetLoader.getSkin();
+        Skin skin = hexpert.getSkin();
         skin.add("default-font", hexpert.getFont(), BitmapFont.class);
         playButton = new TextButton(hexpert.i18NBundle.get("play"), skin);
         playButton.setWidth(WIDTH*0.35f);

@@ -13,6 +13,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,6 +23,8 @@ import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
+import com.martenscedric.hexpert.event.Action;
+import com.martenscedric.hexpert.event.ActionDialog;
 import com.martenscedric.hexpert.event.ExitDialog;
 import com.martenscedric.hexpert.env.MoveEventManager;
 import com.martenscedric.hexpert.env.SkyEffect;
@@ -31,7 +34,6 @@ import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.map.Objective;
-import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 
@@ -92,8 +94,8 @@ public class PlayScreen  extends StageScreen
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result) {
         super();
         this.hexpert = hexpert;
-        this.exitDialog = new ExitDialog(AssetLoader.getSkin(), hexpert);
-        this.objectiveDialog = new ObjectiveDialog(AssetLoader.getSkin(), hexpert);
+        this.exitDialog = new ExitDialog(hexpert.getSkin(), hexpert);
+        this.objectiveDialog = new ObjectiveDialog(hexpert.getSkin(), hexpert);
         this.map = map;
         mapResult = result;
         this.batch = new SpriteBatch();
@@ -344,7 +346,16 @@ public class PlayScreen  extends StageScreen
             {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    hexpert.setScreen(hexpert.levelSelectScreen);
+
+                    Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
+                    ActionDialog actionDialog = new ActionDialog(text, new Action() {
+                        @Override
+                        public void doAction() {
+                            hexpert.setScreen(hexpert.levelSelectScreen);
+                        }
+                    }, hexpert.i18NBundle, hexpert.getSkin());
+
+                    actionDialog.show(getStage());
                 }
             }
         );
@@ -388,7 +399,7 @@ public class PlayScreen  extends StageScreen
         btnUndo.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
 
-        objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), AssetLoader.getSkin());
+        objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), hexpert.getSkin());
 
         objectivesButton.addListener(new ClickListener()
         {
@@ -591,16 +602,28 @@ public class PlayScreen  extends StageScreen
 
     private void resetGrid()
     {
-        for(int i = 0; i < grid.getHexs().length; i++)
-        {
-            TileData data = (TileData) grid.getHexs()[i].getHexData();
-            data.setBuildingType(map.getBuildingTypes()[i]);
-            data.setBuildingTexture(hexpert.getTextureByBuilding(map.getBuildingTypes()[i]));
-        }
+        if(placementHistory.size() > 0) {
 
-        setSelection(null);
-        placementHistory.clear();
-        updateScore();
+            Label label = new Label(hexpert.i18NBundle.get("confirm_reset"), hexpert.getSkin());
+            ActionDialog actionDialog = new ActionDialog(label, new Action(){
+
+                @Override
+                public void doAction()
+                {
+                    for (int i = 0; i < grid.getHexs().length; i++) {
+                        TileData data = (TileData) grid.getHexs()[i].getHexData();
+                        data.setBuildingType(map.getBuildingTypes()[i]);
+                        data.setBuildingTexture(hexpert.getTextureByBuilding(map.getBuildingTypes()[i]));
+                    }
+
+                    setSelection(null);
+                    placementHistory.clear();
+                    updateScore();
+                }
+            }, hexpert.i18NBundle, hexpert.getSkin());
+
+            actionDialog.show(getStage());
+        }
     }
 
     private void undo()

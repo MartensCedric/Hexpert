@@ -1,6 +1,5 @@
 package com.martenscedric.hexpert.event;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -10,28 +9,25 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.martenscedric.hexpert.Hexpert;
 
 /**
- * Created by Shawn Martens on 2017-05-17.
+ * Created by martens on 5/22/17.
  */
 
-public class ExitDialog extends Dialog {
+public class ActionDialog extends Dialog {
 
-    private boolean shown = false;
-    private Hexpert hexpert;
-    public ExitDialog(Skin skin, Hexpert hexpert) {
+    private Action action;
+    public ActionDialog(Label text, Action action, I18NBundle bundle, Skin skin) {
         super("", skin);
-        this.hexpert = hexpert;
-        I18NBundle bundle = hexpert.i18NBundle;
-        Label content = new Label(bundle.get("all_objectives_finished"), skin);
-        content.setWidth(900);
-        content.setAlignment(Align.center);
+        this.action = action;
+
         getBackground().setMinWidth(1000);
         getBackground().setMinHeight(600);
-        content.setWrap(true);
+        text.setWrap(true);
+        text.setWidth(900);
+        text.setAlignment(Align.center);
+        text.setX(50);
+        text.setY(375);
 
-        content.setX(50);
-        content.setY(375);
-
-        getContentTable().addActor(content);
+        getContentTable().addActor(text);
 
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
         textButtonYes.setX(250);
@@ -52,21 +48,11 @@ public class ExitDialog extends Dialog {
 
     @Override
     protected void result(Object object) {
-
         if(object != null && (int)object == 1)
         {
-            hexpert.setScreen(hexpert.levelSelectScreen);
+            action.doAction();
         }
 
         super.result(object);
-    }
-
-
-    public void setShown(boolean shown) {
-        this.shown = shown;
-    }
-
-    public boolean hasBeenShown() {
-        return shown;
     }
 }

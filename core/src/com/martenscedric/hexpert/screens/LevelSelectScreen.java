@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -24,7 +23,6 @@ import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
-import com.martenscedric.hexpert.misc.AssetLoader;
 import com.martenscedric.hexpert.tile.TileData;
 
 import java.util.ArrayList;
@@ -118,7 +116,7 @@ public class LevelSelectScreen extends StageScreen
         table.add(btnLeft);
         for(int i = 0; i < levelsToDisplay; i++)
         {
-            final TextButton button = new TextButton(Integer.toString(i + 1), AssetLoader.getSkin());
+            final TextButton button = new TextButton(Integer.toString(i + 1), hexpert.getSkin());
             button.addListener(new ClickListener()
             {
                 @Override
@@ -162,7 +160,7 @@ public class LevelSelectScreen extends StageScreen
 
         starCount = getStarCount();
 
-        final TextButton button = new TextButton(hexpert.i18NBundle.get("select"), AssetLoader.getSkin());
+        final TextButton button = new TextButton(hexpert.i18NBundle.get("select"), hexpert.getSkin());
         button.addListener(new ClickListener()
         {
             @Override
@@ -463,7 +461,7 @@ public class LevelSelectScreen extends StageScreen
 
                 objectiveTable.add(result.getObjectivePassed()[i] ? imgCorrect : imgBad).width(100).height(100);
 
-                Label lblDesc = new Label(map.getObjectives()[i].toString(), AssetLoader.getSkin());
+                Label lblDesc = new Label(map.getObjectives()[i].toString(), hexpert.getSkin());
                 lblDesc.setWidth(200);
                 lblDesc.setWrap(true);
 
