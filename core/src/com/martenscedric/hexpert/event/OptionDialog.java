@@ -2,6 +2,7 @@ package com.martenscedric.hexpert.event;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.martenscedric.hexpert.Hexpert;
 
 /**
@@ -14,5 +15,9 @@ public class OptionDialog extends Dialog
     public OptionDialog(Hexpert hexpert, Skin skin) {
         super("", skin);
         this.hexpert = hexpert;
+
+        getButtonTable().add(new TextButton(hexpert.i18NBundle.get("ok"), skin));
     }
+
+
 }

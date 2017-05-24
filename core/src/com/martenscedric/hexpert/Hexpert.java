@@ -74,7 +74,7 @@ public class Hexpert extends Game {
 			config = new HexpertConfig();
 			config.save();
 		}
-		
+
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
 
 		assetManager.load(TEXTURE_FARM, Texture.class);
