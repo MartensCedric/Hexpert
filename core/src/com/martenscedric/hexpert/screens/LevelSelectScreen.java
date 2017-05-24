@@ -91,6 +91,7 @@ public class LevelSelectScreen extends StageScreen
         objectiveTable.defaults().pad(20);
         getStage().addActor(objectiveTable);
         hexCount = getHexCount();
+        hexpert.playServices.showAchievementsUI();
 
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
@@ -120,7 +121,6 @@ public class LevelSelectScreen extends StageScreen
                     currentWorld--;
                     updateLabels();
                     updateLevelSelectGrid();
-
 
                     hexpert.sounds.get("select").play();
                     selectLevel((currentWorld - 1) * levelsToDisplay + 1);
@@ -349,7 +349,7 @@ public class LevelSelectScreen extends StageScreen
         if(result.getScore() > 0)
             hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 400);
 
-        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), -500, -250);
+        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), -950, -300);
         uiBatch.end();
 
         if(debug)

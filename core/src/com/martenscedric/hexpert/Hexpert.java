@@ -68,7 +68,7 @@ public class Hexpert extends Game {
 		FileHandle options = Gdx.files.local("options.config");
 		if(options.exists())
 		{
-			config = new JSONDeserializer<HexpertConfig>().deserialize("options.config");
+			config = new JSONDeserializer<HexpertConfig>().deserialize(options.readString());
 		}else
 		{
 			config = new HexpertConfig();

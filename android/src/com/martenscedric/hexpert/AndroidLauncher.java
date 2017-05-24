@@ -5,6 +5,11 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.achievement.Achievements;
+import com.google.android.gms.games.internal.api.AchievementsImpl;
+import com.google.android.gms.games.internal.constants.AchievementState;
 import com.google.example.games.basegameutils.GameHelper;
 import com.martenscedric.hexpert.google.PlayServices;
 
@@ -40,13 +45,13 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		//gameHelper.onStart(this);
+		gameHelper.onStart(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		//gameHelper.onStop();
+		gameHelper.onStop();
 	}
 
 	@Override
@@ -94,11 +99,17 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 	@Override
 	public void unlockAchievement(String id) {
-
+		Games.Achievements.unlock(gameHelper.getApiClient(), id);
 	}
 
 	@Override
 	public boolean isSignedIn() {
 		return gameHelper.isSignedIn();
+	}
+
+	@Override
+	public void showAchievementsUI() {
+		Intent intent = Games.Achievements.getAchievementsIntent(gameHelper.getApiClient());
+		startActivityForResult(intent, 1);
 	}
 }

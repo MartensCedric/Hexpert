@@ -6,9 +6,10 @@ package com.martenscedric.hexpert.google;
 
 public interface PlayServices
 {
-    public void signIn();
-    public void signOut();
-    public void rateGame();
-    public void unlockAchievement(String id);
-    public boolean isSignedIn();
+    void signIn();
+    void signOut();
+    void rateGame();
+    void unlockAchievement(String id);
+    void showAchievementsUI();
+    boolean isSignedIn();
 }
