@@ -37,7 +37,7 @@ android {
         ext.android_min_version = 15
     }
     if (!project.hasProperty('android_version')) {
-        ext.build_tools_version = "23.0.2"
+        ext.build_tools_version = "25.0.0"
     }
 
     // Set defaults so that BaseGameUtils can be used outside of BasicSamples

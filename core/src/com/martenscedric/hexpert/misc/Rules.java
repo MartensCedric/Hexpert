@@ -14,6 +14,8 @@ public class Rules
 {
     public static boolean isValid(TileData data, BuildingType selection)
     {
+        if(data.getBuildingType() != BuildingType.NONE)
+            return false;
         List<Hexagon<TileData>> neighbors = data.getParent().getNeighbors();
 
         boolean farm = false;

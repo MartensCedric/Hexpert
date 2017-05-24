@@ -63,6 +63,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
                 playScreen.updateObjectives();
                 hexpert.sounds.get("click").play();
+                playScreen.setSelection(null);
             }else{
                 playScreen.getMoveEventManager().getBadMoves().add(new PointTime(new Point(pos.x,pos.y), 0.35f));
                 hexpert.sounds.get("bad").play();

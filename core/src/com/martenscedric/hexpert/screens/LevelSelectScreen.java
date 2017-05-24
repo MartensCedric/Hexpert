@@ -1,6 +1,5 @@
 package com.martenscedric.hexpert.screens;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -22,27 +20,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexStyle;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
-import com.cedricmartens.hexmap.map.HexBuilder;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.gestures.LevelSelectGesture;
-import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapLoadException;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.tile.TileData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
@@ -75,7 +66,7 @@ public class LevelSelectScreen extends StageScreen
     private SpriteBatch batch, uiBatch, displayBatch;
     private MapResult result;
     private OrthographicCamera uiCamera, displayLevelCamera;
-    private int starCount = 0;
+    private int hexCount = 0;
     private ImageButton btnLeft, btnRight;
     private boolean debug = false;
     private ShapeRenderer shapeRenderer;
@@ -99,7 +90,7 @@ public class LevelSelectScreen extends StageScreen
         objectiveTable.setY(850);
         objectiveTable.defaults().pad(20);
         getStage().addActor(objectiveTable);
-        starCount = getStarCount();
+        hexCount = getHexCount();
 
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
@@ -358,7 +349,7 @@ public class LevelSelectScreen extends StageScreen
         if(result.getScore() > 0)
             hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 400);
 
-        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("star", starCount), 700, 500);
+        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), 0, -500);
         uiBatch.end();
 
         if(debug)
@@ -436,7 +427,7 @@ public class LevelSelectScreen extends StageScreen
         super.show();
         selectLevel(levelSelect);
         updateLevelSelectGrid();
-        starCount = getStarCount();
+        hexCount = getHexCount();
         setMultiplexer();
     }
 
@@ -526,7 +517,7 @@ public class LevelSelectScreen extends StageScreen
         }
     }
 
-    private int getStarCount()
+    private int getHexCount()
     {
         int total = 0;
         for(int i = 1; i <= totalLevels; i++)

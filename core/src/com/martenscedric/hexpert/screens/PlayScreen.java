@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
@@ -34,8 +36,10 @@ import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.map.Objective;
+import com.martenscedric.hexpert.misc.Rules;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
+import com.martenscedric.hexpert.tile.TileType;
 
 import java.util.Stack;
 
@@ -88,6 +92,7 @@ public class PlayScreen  extends StageScreen
     private ExitDialog exitDialog;
     private ObjectiveDialog objectiveDialog;
     private TextButton objectivesButton;
+    private ShaderProgram hintShader;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -105,6 +110,11 @@ public class PlayScreen  extends StageScreen
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
         objectivePassed = new boolean[map.getObjectives().length];
+
+        String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
+        String hint = Gdx.files.internal("shaders/hint.fs").readString();
+        hintShader = new ShaderProgram(vertexShader, hint);
+        if (!hintShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + hintShader.getLog());
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -456,6 +466,12 @@ public class PlayScreen  extends StageScreen
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
+            if(getSelection() != null
+                    && hex.getHexData().getTileType() != TileType.WATER && Rules.isValid(hex.getHexData(), getSelection()))
+            {
+                batch.setShader(hintShader);
+            }
+
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
@@ -463,6 +479,7 @@ public class PlayScreen  extends StageScreen
                     (float)grid.getStyle().getSize()*2,
                     (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
 
+            batch.setShader(null);
         }
 
         for(int i = 0; i < grid.getHexs().length; i++)
