@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,12 +12,15 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.martenscedric.hexpert.google.PlayServices;
+import com.martenscedric.hexpert.misc.HexpertConfig;
 import com.martenscedric.hexpert.screens.LevelSelectScreen;
 import com.martenscedric.hexpert.screens.MainMenuScreen;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileType;
 
 import java.util.HashMap;
+
+import flexjson.JSONDeserializer;
 
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
@@ -50,6 +54,7 @@ public class Hexpert extends Game {
 	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	public I18NBundle i18NBundle;
 	public PlayServices playServices;
+	public HexpertConfig config;
     private BitmapFont font;
 	private Skin skin;
 
@@ -60,6 +65,16 @@ public class Hexpert extends Game {
 	@Override
 	public void create ()
 	{
+		FileHandle options = Gdx.files.local("options.config");
+		if(options.exists())
+		{
+			config = new JSONDeserializer<HexpertConfig>().deserialize("options.config");
+		}else
+		{
+			config = new HexpertConfig();
+			config.save();
+		}
+		
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
 
 		assetManager.load(TEXTURE_FARM, Texture.class);

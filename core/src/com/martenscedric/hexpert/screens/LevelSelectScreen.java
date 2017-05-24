@@ -349,7 +349,7 @@ public class LevelSelectScreen extends StageScreen
         if(result.getScore() > 0)
             hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 400);
 
-        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), 0, -500);
+        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), -500, -250);
         uiBatch.end();
 
         if(debug)
