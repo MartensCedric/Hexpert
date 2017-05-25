@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.martenscedric.hexpert.google.PlayServices;
 import com.martenscedric.hexpert.misc.HexpertConfig;
 import com.martenscedric.hexpert.screens.LevelSelectScreen;
-import com.martenscedric.hexpert.screens.MainMenuScreen;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileType;
 
@@ -49,7 +48,6 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 public class Hexpert extends Game {
 
 	public AssetManager assetManager = new AssetManager();
-	public MainMenuScreen mainMenuScreen;
 	public LevelSelectScreen levelSelectScreen;
 	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	public I18NBundle i18NBundle;
@@ -114,9 +112,8 @@ public class Hexpert extends Game {
 		sounds.put("select", Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav")));
 		assetManager.finishLoading();
 		i18NBundle = assetManager.get("i18n/language", I18NBundle.class);
-		mainMenuScreen = new MainMenuScreen(this);
 		levelSelectScreen = new LevelSelectScreen(this);
-		this.setScreen(mainMenuScreen);
+		this.setScreen(levelSelectScreen);
 	}
 
 	@Override
