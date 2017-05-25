@@ -40,6 +40,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEFT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RIGHT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
@@ -97,6 +98,7 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_RESET, Texture.class);
 		assetManager.load(TEXTURE_BACK, Texture.class);
 		assetManager.load(TEXTURE_HELP, Texture.class);
+		assetManager.load(TEXTURE_OPTIONS, Texture.class);
 		assetManager.load(TEXTURE_ACHIEVEMENTS, Texture.class);
 
 		assetManager.load(TEXTURE_GRASS, Texture.class);

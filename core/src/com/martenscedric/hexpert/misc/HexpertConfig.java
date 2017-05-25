@@ -16,7 +16,7 @@ public class HexpertConfig
 
     public HexpertConfig()
     {
-        buildHelp = false;
+        buildHelp = true;
         keepSelection = false;
     }
 

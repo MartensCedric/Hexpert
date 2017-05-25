@@ -48,6 +48,7 @@ import flexjson.JSONSerializer;
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
@@ -57,6 +58,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_UNDO;
@@ -79,7 +81,7 @@ public class PlayScreen  extends StageScreen
     private Table table, tableBtn;
     private Image menuImage;
     private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-                btnReset, btnUndo, btnBack, btnHelp;
+                btnReset, btnUndo, btnBack, btnHelp, btnOptions;
     private int score = 0;
     private BuildingType selection;
     private ImageButton selectedButton;
@@ -398,16 +400,27 @@ public class PlayScreen  extends StageScreen
             }
         });
 
+        btnOptions = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_OPTIONS))));
+        btnOptions.addListener(new ClickListener()
+           {
+               @Override
+               public void clicked(InputEvent event, float x, float y) {
+                   optionDialog = new OptionDialog(hexpert, hexpert.getSkin());
+                   optionDialog.show(getStage());
+               }
+           }
+        );
 
         tableBtn = new Table();
         tableBtn.setY(HEIGHT - 150);
-        tableBtn.setX(310);
+        tableBtn.setX(375);
         tableBtn.defaults().width(125).height(125).pad(15);
 
         btnBack.getImageCell().expand().fill();
         btnReset.getImageCell().expand().fill();
         btnUndo.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
+        btnOptions.getImageCell().expand().fill();
 
         objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), hexpert.getSkin());
 
@@ -425,6 +438,7 @@ public class PlayScreen  extends StageScreen
         tableBtn.add(btnReset);
         tableBtn.add(btnUndo);
         tableBtn.add(btnHelp);
+        tableBtn.add(btnOptions);
         tableBtn.row();
         tableBtn.add(objectivesButton).colspan(4).width(500);
 
@@ -469,7 +483,7 @@ public class PlayScreen  extends StageScreen
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(getSelection() != null
+            if(hexpert.config.isBuildHelp() && getSelection() != null
                     && hex.getHexData().getTileType() != TileType.WATER && Rules.isValid(hex.getHexData(), getSelection()))
             {
                 batch.setShader(hintShader);

@@ -23,6 +23,7 @@ public class TextureData {
     public static final String TEXTURE_UNDO = SPRITE_FOLDER + "undo.png";
     public static final String TEXTURE_BACK = SPRITE_FOLDER + "back.png";
     public static final String TEXTURE_HELP = SPRITE_FOLDER + "help.png";
+    public static final String TEXTURE_OPTIONS = SPRITE_FOLDER + "options.png";
     public static final String TEXTURE_ACHIEVEMENTS = SPRITE_FOLDER + "achievements.png";
 
     public static final String TEXTURE_GRASS = SPRITE_FOLDER + "grass_tile.png";

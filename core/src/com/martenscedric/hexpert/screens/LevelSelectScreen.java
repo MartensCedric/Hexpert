@@ -261,7 +261,7 @@ public class LevelSelectScreen extends StageScreen
         uiBatch.setProjectionMatrix(uiCamera.combined);
 
         if(result.getScore() > 0)
-            hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 400);
+            hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 300);
 
         hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), -900, -300);
         uiBatch.end();
