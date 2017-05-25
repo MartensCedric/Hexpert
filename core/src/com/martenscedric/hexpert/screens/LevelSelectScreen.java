@@ -43,12 +43,15 @@ import flexjson.JSONSerializer;
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_GRASS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEFT;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RIGHT;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -69,7 +72,7 @@ public class LevelSelectScreen extends StageScreen
     private MapResult result;
     private OrthographicCamera uiCamera, displayLevelCamera;
     private int hexCount = 0;
-    private ImageButton btnLeft, btnRight;
+    private ImageButton btnLeft, btnRight, btnAchievements;
     private boolean debug = false;
     private Rectangle mapCollision;
     private ShapeRenderer shapeRenderer;
@@ -108,8 +111,21 @@ public class LevelSelectScreen extends StageScreen
         getCamera().translate(390, 350);
         getCamera().update();
 
-        btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
-        btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelright.png"))));
+        btnAchievements = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS))));
+
+        btnAchievements.setX(1800);
+        btnAchievements.setY(800);
+        btnAchievements.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                hexpert.playServices.showAchievementsUI();
+            }
+        });
+        getStage().addActor(btnAchievements);
+
+        btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_LEFT))));
+        btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RIGHT))));
         btnLeft.getImageCell().expand().fill();
 
         btnLeft.addListener(new ClickListener()
@@ -454,7 +470,7 @@ public class LevelSelectScreen extends StageScreen
     private void updateLabels()
     {
         //for(int i = 0; i < labelList.size(); i++)
-       // {
+        // {
         //    labelList.get(i).setText(Integer.toString((currentWorld - 1) * levelsToDisplay + 1 + i));
         //}
     }
