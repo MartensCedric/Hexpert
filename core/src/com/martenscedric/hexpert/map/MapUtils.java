@@ -51,7 +51,7 @@ public class MapUtils
 
         double biggestDelta = deltaY;
 
-        camera.zoom = (float) (biggestDelta / 675);
+        camera.zoom = (float) (biggestDelta / 500);
         camera.update();
     }
 }

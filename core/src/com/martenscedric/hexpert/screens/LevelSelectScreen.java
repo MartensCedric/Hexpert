@@ -70,7 +70,7 @@ public class LevelSelectScreen extends StageScreen
     private OrthographicCamera uiCamera, displayLevelCamera;
     private int hexCount = 0;
     private ImageButton btnLeft, btnRight;
-    private boolean debug = true;
+    private boolean debug = false;
     private Rectangle mapCollision;
     private ShapeRenderer shapeRenderer;
     private LevelSelectGesture behavior;
@@ -105,7 +105,7 @@ public class LevelSelectScreen extends StageScreen
         table.setX(900);
         table.setY(100);
         table.defaults().pad(20);
-        getCamera().translate(420, 300);
+        getCamera().translate(390, 350);
         getCamera().update();
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));

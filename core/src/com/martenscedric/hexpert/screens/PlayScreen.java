@@ -87,7 +87,6 @@ public class PlayScreen  extends StageScreen
     private boolean debug = false;
     private MapResult mapResult;
     private boolean drawerOpen = false;
-    private SkyEffect skyEffect;
     private boolean[] objectivePassed;
     private ExitDialog exitDialog;
     private ObjectiveDialog objectiveDialog;
@@ -432,6 +431,9 @@ public class PlayScreen  extends StageScreen
         getStage().addActor(tableBtn);
 
         MapUtils.adjustCamera(getCamera(), grid);
+        getCamera().zoom *= 0.6;
+        getCamera().translate(0, 25);
+        getCamera().update();
     }
 
     private void setMultiplexer()

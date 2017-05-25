@@ -1,6 +1,7 @@
 package com.martenscedric.hexpert.misc;
 
 import com.cedricmartens.hexmap.hexagon.Hexagon;
+import com.martenscedric.hexpert.google.PlayServices;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 
