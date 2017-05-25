@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -29,6 +30,7 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.gestures.LevelSelectGesture;
+import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapLoadException;
 import com.martenscedric.hexpert.map.MapResult;
@@ -68,7 +70,8 @@ public class LevelSelectScreen extends StageScreen
     private OrthographicCamera uiCamera, displayLevelCamera;
     private int hexCount = 0;
     private ImageButton btnLeft, btnRight;
-    private boolean debug = false;
+    private boolean debug = true;
+    private Rectangle mapCollision;
     private ShapeRenderer shapeRenderer;
     private LevelSelectGesture behavior;
     private GestureDetector detector;
@@ -86,13 +89,11 @@ public class LevelSelectScreen extends StageScreen
         this.shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         this.objectiveTable = new Table();
-        objectiveTable.setX(150);
+        objectiveTable.setX(100);
         objectiveTable.setY(850);
         objectiveTable.defaults().pad(20);
         getStage().addActor(objectiveTable);
         hexCount = getHexCount();
-        hexpert.playServices.showAchievementsUI();
-
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String darkShader = Gdx.files.internal("shaders/darkness.fs").readString();
@@ -104,7 +105,7 @@ public class LevelSelectScreen extends StageScreen
         table.setX(900);
         table.setY(100);
         table.defaults().pad(20);
-        getCamera().translate(400, 400);
+        getCamera().translate(420, 300);
         getCamera().update();
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get("sprites/nextlevelleft.png"))));
@@ -129,18 +130,6 @@ public class LevelSelectScreen extends StageScreen
         });
 
         table.add(btnLeft);
-
-//            button.addListener(new ClickListener()
-//            {
-//                @Override
-//                public void clicked(InputEvent event, float x, float y)
-//                {
-//                    selectLevel((currentWorld - 1) * levelsToDisplay + finalI + 1);
-//                    hexpert.sounds.get("select").play();
-//                }
-//            });
-
-
         table.add(new WidgetGroup()).width(800);
 
 
@@ -163,102 +152,7 @@ public class LevelSelectScreen extends StageScreen
             }
         });
         table.add(btnRight);
-
         createLevelSelectGrid();
-        final TextButton button = new TextButton(hexpert.i18NBundle.get("select"), hexpert.getSkin());
-        button.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                button.setChecked(false);
-                hexpert.sounds.get("select").play();
-
-//                JSONSerializer jsonSerializer = new JSONSerializer();
-//
-//
-//                HexFreeShapeBuilder builder = new HexFreeShapeBuilder()
-//                        .setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
-//
-//                builder.addHex(new Point(0, 0));
-//                builder.addHexNextTo(0, 0);
-//                builder.addHexNextTo(0, 1);
-//                builder.addHexNextTo(0, 2);
-//                builder.addHexNextTo(0, 3);
-//                builder.addHexNextTo(0, 4);
-//                builder.addHexNextTo(0, 5);
-//                builder.addHexNextTo(1, 0);
-//                builder.addHexNextTo(1, 1);
-//                builder.addHexNextTo(2, 1);
-//                builder.addHexNextTo(2, 2);
-//                builder.addHexNextTo(3, 2);
-//                builder.addHexNextTo(3, 3);
-//                builder.addHexNextTo(4, 3);
-//                builder.addHexNextTo(4, 4);
-//                builder.addHexNextTo(5, 4);
-//                builder.addHexNextTo(5, 5);
-//                builder.addHexNextTo(6, 5);
-//                builder.addHexNextTo(6, 0);
-//                builder.addHexNextTo(7, 5);
-//                builder.addHexNextTo(7, 0);
-//                builder.addHexNextTo(7, 1);
-//                builder.addHexNextTo(8, 1);
-//                builder.addHexNextTo(9, 1);
-//                builder.addHexNextTo(9, 2);
-//                builder.addHexNextTo(10, 2);
-//                builder.addHexNextTo(11, 2);
-//                builder.addHexNextTo(12, 2);
-//                builder.addHexNextTo(13, 2);
-//                builder.addHexNextTo(13, 3);
-//                builder.addHexNextTo(14, 3);
-//                builder.addHexNextTo(15, 3);
-//                builder.addHexNextTo(15, 4);
-//                builder.addHexNextTo(15, 5);
-//                builder.addHexNextTo(16, 5);
-//                builder.addHexNextTo(17, 5);
-//                builder.addHexNextTo(18, 5);
-//
-//                TileType[] tileTypes = new TileType[builder.getHexagons().size()];
-//                BuildingType[] buildingTypes = new BuildingType[builder.getHexagons().size()];
-//
-//                for (int i = 0; i < tileTypes.length; i++)
-//                {
-//                    tileTypes[i] = TileType.GRASS;
-//                }
-//                tileTypes[13] = TileType.SNOW;
-//                tileTypes[9] = TileType.SNOW;
-//                tileTypes[15] = TileType.SAND;
-//                tileTypes[7] = TileType.SAND;
-//                tileTypes[17] = TileType.WATER;
-//                tileTypes[11] = TileType.SAND;
-//
-//                for (int i = 0; i < buildingTypes.length; i++)
-//                {
-//                    buildingTypes[i] = BuildingType.NONE;
-//                }
-//
-//                Map map = new Map();
-//                map.setBuilder(builder);
-//                map.setTileTypes(tileTypes);
-//                map.setBuildingType(buildingTypes);
-//                map.setCalculateScore(true);
-//                map.setObjectives(new Objective[]{
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 60),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 68),
-//                        new Objective(new int[]{0, 0, 0, 0, 0, 0, 0, 0}, 76)});
-//
-//                String mapString = jsonSerializer.deepSerialize(map);
-//
-                String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
-                Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
-
-                String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
-                MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
-
-                hexpert.setScreen(new PlayScreen(hexpert, map, mapResult));
-            }
-        });
-        table.add(button).colspan(levelsToDisplay).width(350).center();
         getStage().addActor(table);
     }
 
@@ -349,7 +243,7 @@ public class LevelSelectScreen extends StageScreen
         if(result.getScore() > 0)
             hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 400);
 
-        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), -950, -300);
+        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), -900, -300);
         uiBatch.end();
 
         if(debug)
@@ -457,6 +351,7 @@ public class LevelSelectScreen extends StageScreen
 
         displayLevelCamera.position.setZero();
         MapUtils.adjustCamera(displayLevelCamera, grid);
+        setMapCollision();
 
         return map;
     }
@@ -567,7 +462,7 @@ public class LevelSelectScreen extends StageScreen
     private void createLevelSelectGrid()
     {
         HexFreeShapeBuilder<Texture> builder = new HexFreeShapeBuilder<>();
-        builder.setStyle(new HexStyle(80, HexagonOrientation.FLAT_TOP));
+        builder.setStyle(new HexStyle(100, HexagonOrientation.FLAT_TOP));
         builder.addHex(new Point(0, 0));
         builder.addHexNextTo(0, 0);
         builder.addHexNextTo(1, 1);
@@ -600,6 +495,10 @@ public class LevelSelectScreen extends StageScreen
 
         if(missingObjectives == objective.length)
             return hexpert.assetManager.get(TEXTURE_GRASS, Texture.class);
+
+        if(objective.length >= 3 && missingObjectives == 0)
+            hexpert.playServices.unlockAchievement(Achievement.PERFECT);
+
 
         switch (missingObjectives)
         {
@@ -634,5 +533,62 @@ public class LevelSelectScreen extends StageScreen
 
     public int getCurrentWorld() {
         return currentWorld;
+    }
+
+    private void setMapCollision()
+    {
+        double maxHeight = -1, maxWidth = -1;
+        double minHeight = Double.MAX_VALUE, minWidth = Double.MAX_VALUE;
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            TileData data = hex.getHexData();
+            data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
+            data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
+            hex.setHexData(data);
+
+            for(Point p : hex.getHexGeometry().getPoints())
+            {
+                if(p.y < minHeight)
+                    minHeight = p.y;
+
+                if(p.y > maxHeight)
+                    maxHeight = p.y;
+
+                if(p.x < minWidth)
+                    minWidth = p.x;
+
+                if(p.x > maxWidth)
+                    maxWidth = p.x;
+            }
+        }
+
+        double deltaX = maxWidth - minWidth;
+        double middleX = minWidth + deltaX/2;
+
+        double deltaY = maxHeight - minHeight;
+        double middleY = minHeight + deltaY/2;
+
+        shapeRenderer.setProjectionMatrix(displayLevelCamera.combined);
+        mapCollision = new Rectangle((float)minWidth, (float)minHeight, (float)deltaX, (float)deltaY);
+    }
+
+    public OrthographicCamera getDisplayLevelCam() {
+        return displayLevelCamera;
+    }
+
+    public void goToLevel()
+    {
+        String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
+        Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
+
+        String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
+        MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
+
+        hexpert.setScreen(new PlayScreen(hexpert, map, mapResult));
+    }
+
+    public Rectangle getMapCollision() {
+        return mapCollision;
     }
 }

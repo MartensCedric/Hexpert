@@ -22,12 +22,14 @@ public class LevelSelectGesture  implements GestureDetector.GestureListener
     private HexMap<Texture> grid;
     private Stage stage;
     private OrthographicCamera camera;
+    private OrthographicCamera displayLevelCam;
 
     public LevelSelectGesture(LevelSelectScreen levelSelectScreen) {
         this.levelSelectScreen = levelSelectScreen;
         this.grid = levelSelectScreen.getLvlSelectGrid();
         this.stage = levelSelectScreen.getStage();
         this.camera = levelSelectScreen.getCamera();
+        this.displayLevelCam = levelSelectScreen.getDisplayLevelCam();
     }
 
     @Override
@@ -51,6 +53,15 @@ public class LevelSelectGesture  implements GestureDetector.GestureListener
                     (levelSelectScreen.getCurrentWorld() - 1) * levelSelectScreen.getLevelsToDisplay()
                             + hex.getCoordinateSystem().toIndexed().getIndex() + 1);
             levelSelectScreen.hexpert.sounds.get("select").play();
+        }else{
+            pos = displayLevelCam.unproject(new Vector3(x, y, 0),
+                        viewPort.getScreenX(), viewPort.getScreenY(),
+                    viewPort.getScreenWidth(), viewPort.getScreenHeight());
+
+            if(levelSelectScreen.getMapCollision().contains(new Vector2(pos.x, pos.y)))
+            {
+                levelSelectScreen.goToLevel();
+            }
         }
 
         return true;
