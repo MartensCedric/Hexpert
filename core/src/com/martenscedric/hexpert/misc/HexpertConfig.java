@@ -35,10 +35,4 @@ public class HexpertConfig
     public void setKeepSelection(boolean keepSelection) {
         this.keepSelection = keepSelection;
     }
-
-    public void save()
-    {
-        JSONSerializer jsonSerializer = new JSONSerializer();
-        Gdx.files.local("options.config").writeString(jsonSerializer.serialize(this), false);
-    }
 }

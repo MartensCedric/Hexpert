@@ -113,8 +113,8 @@ public class LevelSelectScreen extends StageScreen
 
         btnAchievements = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS))));
 
-        btnAchievements.setX(1800);
-        btnAchievements.setY(800);
+        btnAchievements.setX(1700);
+        btnAchievements.setY(900);
         btnAchievements.addListener(new ClickListener()
         {
             @Override
@@ -122,6 +122,10 @@ public class LevelSelectScreen extends StageScreen
                 hexpert.playServices.showAchievementsUI();
             }
         });
+
+        btnAchievements.setWidth(160);
+        btnAchievements.setHeight(160);
+        btnAchievements.getImageCell().expand().fill();
         getStage().addActor(btnAchievements);
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_LEFT))));
@@ -470,7 +474,7 @@ public class LevelSelectScreen extends StageScreen
     private void updateLabels()
     {
         //for(int i = 0; i < labelList.size(); i++)
-       // {
+        // {
         //    labelList.get(i).setText(Integer.toString((currentWorld - 1) * levelsToDisplay + 1 + i));
         //}
     }

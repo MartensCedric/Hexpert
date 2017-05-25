@@ -20,6 +20,7 @@ import com.martenscedric.hexpert.tile.TileType;
 import java.util.HashMap;
 
 import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
@@ -56,7 +57,7 @@ public class Hexpert extends Game {
 	public I18NBundle i18NBundle;
 	public PlayServices playServices;
 	public HexpertConfig config;
-    private BitmapFont font;
+	private BitmapFont font;
 	private Skin skin;
 
 	public Hexpert(PlayServices playServices) {
@@ -69,13 +70,15 @@ public class Hexpert extends Game {
 		FileHandle options = Gdx.files.local("options.config");
 		if(options.exists())
 		{
-            String content = options.readString();
-            Gdx.app.log("gdxdebug", content);
+
+           		 String content = options.readString();
+           
 			config = new JSONDeserializer<HexpertConfig>().deserialize(content);
 		}else
 		{
 			config = new HexpertConfig();
-			config.save();
+			JSONSerializer jsonSerializer = new JSONSerializer();
+			Gdx.files.local("options.config").writeString(jsonSerializer.serialize(config), false);
 		}
 
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
@@ -192,18 +195,18 @@ public class Hexpert extends Game {
 
 
 
-    public BitmapFont getFont() {
-        if (font == null) {
-            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/VCROSDMono.ttf"));
-            FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameter.size = 35;
-            parameter.borderWidth = 1;
-            parameter.color = Color.BLACK;
-            font = generator.generateFont(parameter);
-            generator.dispose();
-        }
-        return font;
-    }
+	public BitmapFont getFont() {
+		if (font == null) {
+			FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/VCROSDMono.ttf"));
+			FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+			parameter.size = 35;
+			parameter.borderWidth = 1;
+			parameter.color = Color.BLACK;
+			font = generator.generateFont(parameter);
+			generator.dispose();
+		}
+		return font;
+	}
 
 	public Skin getSkin()
 	{
@@ -215,3 +218,4 @@ public class Hexpert extends Game {
 		return skin;
 	}
 }
+
