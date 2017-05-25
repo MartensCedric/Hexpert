@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 import flexjson.JSONDeserializer;
 
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BAD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
@@ -34,10 +35,12 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEFT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RIGHT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_SAND;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FOREST;
@@ -66,7 +69,9 @@ public class Hexpert extends Game {
 		FileHandle options = Gdx.files.local("options.config");
 		if(options.exists())
 		{
-			config = new JSONDeserializer<HexpertConfig>().deserialize(options.readString());
+            String content = options.readString();
+            Gdx.app.log("gdxdebug", content);
+			config = new JSONDeserializer<HexpertConfig>().deserialize(content);
 		}else
 		{
 			config = new HexpertConfig();
@@ -89,6 +94,7 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_RESET, Texture.class);
 		assetManager.load(TEXTURE_BACK, Texture.class);
 		assetManager.load(TEXTURE_HELP, Texture.class);
+		assetManager.load(TEXTURE_ACHIEVEMENTS, Texture.class);
 
 		assetManager.load(TEXTURE_GRASS, Texture.class);
 		assetManager.load(TEXTURE_SAND, Texture.class);
@@ -104,8 +110,8 @@ public class Hexpert extends Game {
 
 		assetManager.load("i18n/language", I18NBundle.class);
 
-		assetManager.load("sprites/nextlevelleft.png", Texture.class);
-		assetManager.load("sprites/nextlevelright.png", Texture.class);
+		assetManager.load(TEXTURE_LEFT, Texture.class);
+		assetManager.load(TEXTURE_RIGHT, Texture.class);
 
 		sounds.put("click", Gdx.audio.newSound(Gdx.files.internal("sounds/click.wav")));
 		sounds.put("bad", Gdx.audio.newSound(Gdx.files.internal("sounds/bad.wav")));

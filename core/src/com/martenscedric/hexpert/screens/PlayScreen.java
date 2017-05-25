@@ -27,10 +27,10 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.event.Action;
 import com.martenscedric.hexpert.event.ActionDialog;
-import com.martenscedric.hexpert.event.ExitDialog;
+import com.martenscedric.hexpert.event.LevelComplete;
 import com.martenscedric.hexpert.env.MoveEventManager;
-import com.martenscedric.hexpert.env.SkyEffect;
 import com.martenscedric.hexpert.event.ObjectiveDialog;
+import com.martenscedric.hexpert.event.OptionDialog;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
@@ -88,8 +88,9 @@ public class PlayScreen  extends StageScreen
     private MapResult mapResult;
     private boolean drawerOpen = false;
     private boolean[] objectivePassed;
-    private ExitDialog exitDialog;
+    private LevelComplete exitDialog;
     private ObjectiveDialog objectiveDialog;
+    private OptionDialog optionDialog;
     private TextButton objectivesButton;
     private ShaderProgram hintShader;
 
@@ -98,9 +99,9 @@ public class PlayScreen  extends StageScreen
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result) {
         super();
         this.hexpert = hexpert;
-        this.exitDialog = new ExitDialog(hexpert.getSkin(), hexpert);
         this.objectiveDialog = new ObjectiveDialog(hexpert.getSkin(), hexpert);
         this.map = map;
+        this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
         mapResult = result;
         this.batch = new SpriteBatch();
         this.absBatch = new SpriteBatch();
@@ -544,6 +545,7 @@ public class PlayScreen  extends StageScreen
 
         if(!exitDialog.hasBeenShown() && numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length)
         {
+            this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
             exitDialog.setShown(true);
             exitDialog.show(getStage());
         }

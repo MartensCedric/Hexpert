@@ -23,6 +23,7 @@ public class TextureData {
     public static final String TEXTURE_UNDO = SPRITE_FOLDER + "undo.png";
     public static final String TEXTURE_BACK = SPRITE_FOLDER + "back.png";
     public static final String TEXTURE_HELP = SPRITE_FOLDER + "help.png";
+    public static final String TEXTURE_ACHIEVEMENTS = SPRITE_FOLDER + "achievements.png";
 
     public static final String TEXTURE_GRASS = SPRITE_FOLDER + "grass_tile.png";
     public static final String TEXTURE_WATER = SPRITE_FOLDER + "water_tile.png";
@@ -35,4 +36,7 @@ public class TextureData {
     public static final String TEXTURE_HEXGOLD = SPRITE_FOLDER + "goldhex.png";
     public static final String TEXTURE_HEXSILVER = SPRITE_FOLDER + "silverhex.png";
     public static final String TEXTURE_HEXBRONZE = SPRITE_FOLDER + "bronzehex.png";
+
+    public static final String TEXTURE_LEFT = SPRITE_FOLDER + "nextlevelleft.png";
+    public static final String TEXTURE_RIGHT = SPRITE_FOLDER + "nextleveright.png";
 }

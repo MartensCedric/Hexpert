@@ -39,6 +39,6 @@ public class HexpertConfig
     public void save()
     {
         JSONSerializer jsonSerializer = new JSONSerializer();
-        Gdx.files.local("options.config").writeString(jsonSerializer.deepSerialize(this), false);
+        Gdx.files.local("options.config").writeString(jsonSerializer.serialize(this), false);
     }
 }
