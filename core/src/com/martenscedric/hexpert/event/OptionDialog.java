@@ -61,7 +61,7 @@ public class OptionDialog extends Dialog
         chkTileHelp.getImageCell().expand().fill();
         getContentTable().add(lblTileHelp);
         getContentTable().row();
-
+        getContentTable().pad(10);
         Label lblDeactivateSelection = new Label(i18n.get("option_keep_selection"), hexpert.getSkin());
         final ImageButton chkDeactivateSelection = new ImageButton(imgStyle);
         chkDeactivateSelection.setChecked(config.isKeepSelection());
@@ -86,10 +86,7 @@ public class OptionDialog extends Dialog
 
         textButtonOK.setX(400);
         textButtonOK.setY(50);
-        textButtonOK.setWidth(200);
-        textButtonOK.setHeight(120);
-
-        getButtonTable().add(textButtonOK);
+        getButtonTable().add(textButtonOK).width(200).height(120);
         setObject(textButtonOK, null);
     }
 

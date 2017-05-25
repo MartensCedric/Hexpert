@@ -7,6 +7,7 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
+import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.misc.IntPointTime;
 import com.martenscedric.hexpert.misc.PointTime;
 import com.martenscedric.hexpert.misc.Rules;
@@ -63,7 +64,12 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
                 playScreen.updateObjectives();
                 hexpert.sounds.get("click").play();
-                playScreen.setSelection(null);
+
+                if(playScreen.getSelection() == BuildingType.ROCKET)
+                    playScreen.getHexpert().playServices.unlockAchievement(Achievement.TO_SPACE);
+
+                if(!hexpert.config.isKeepSelection())
+                    playScreen.setSelection(null);
             }else{
                 playScreen.getMoveEventManager().getBadMoves().add(new PointTime(new Point(pos.x,pos.y), 0.35f));
                 hexpert.sounds.get("bad").play();
