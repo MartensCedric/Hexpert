@@ -38,5 +38,5 @@ public class TextureData {
     public static final String TEXTURE_HEXBRONZE = SPRITE_FOLDER + "bronzehex.png";
 
     public static final String TEXTURE_LEFT = SPRITE_FOLDER + "nextlevelleft.png";
-    public static final String TEXTURE_RIGHT = SPRITE_FOLDER + "nextleveright.png";
+    public static final String TEXTURE_RIGHT = SPRITE_FOLDER + "nextlevelright.png";
 }

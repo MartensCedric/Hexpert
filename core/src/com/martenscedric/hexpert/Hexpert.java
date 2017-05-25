@@ -20,6 +20,7 @@ import com.martenscedric.hexpert.tile.TileType;
 import java.util.HashMap;
 
 import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
@@ -75,7 +76,8 @@ public class Hexpert extends Game {
 		}else
 		{
 			config = new HexpertConfig();
-			config.save();
+			JSONSerializer jsonSerializer = new JSONSerializer();
+			Gdx.files.local("options.config").writeString(jsonSerializer.serialize(config), false);
 		}
 
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
