@@ -600,13 +600,14 @@ public class LevelSelectScreen extends StageScreen
 
     public void goToLevel()
     {
-        String mapLoc = Gdx.files.internal("maps/" + hexpert.levelIndex.get(levelSelect) + ".hexmap").readString();
+        String mapName = hexpert.levelIndex.get(levelSelect);
+        String mapLoc = Gdx.files.internal("maps/" + mapName + ".hexmap").readString();
         Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
-        String mapResLoc = Gdx.files.local(hexpert.levelIndex.get(levelSelect) + ".mapres").readString();
+        String mapResLoc = Gdx.files.local(mapName + ".mapres").readString();
         MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
 
-        hexpert.setScreen(new PlayScreen(hexpert, map, mapResult));
+        hexpert.setScreen(new PlayScreen(hexpert, map, mapResult, mapName));
     }
 
     public Rectangle getMapCollision() {

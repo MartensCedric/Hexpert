@@ -101,7 +101,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 
 	@Override
 	public void unlockAchievement(String id) {
-		Games.Achievements.unlock(gameHelper.getApiClient(), id);
+		try{
+			Games.Achievements.unlock(gameHelper.getApiClient(), id);
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -110,8 +115,15 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 	}
 
 	@Override
-	public void showAchievementsUI() {
-		Intent intent = Games.Achievements.getAchievementsIntent(gameHelper.getApiClient());
-		startActivityForResult(intent, 1);
+	public void showAchievementsUI()
+	{
+		try{
+			Intent intent = Games.Achievements.getAchievementsIntent(gameHelper.getApiClient());
+			startActivityForResult(intent, 1);
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 }

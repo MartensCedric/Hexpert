@@ -6,7 +6,6 @@ package com.martenscedric.hexpert.map;
 
 public class MapResult
 {
-    private int mapId;
     private int score;
     private boolean[] objectivePassed;
 
@@ -14,17 +13,8 @@ public class MapResult
     }
 
     public MapResult(int mapId, int score, boolean[] objectivePassed) {
-        this.mapId = mapId;
         this.score = score;
         this.objectivePassed = objectivePassed;
-    }
-
-    public int getMapId() {
-        return mapId;
-    }
-
-    public void setMapId(int mapId) {
-        this.mapId = mapId;
     }
 
     public int getScore() {

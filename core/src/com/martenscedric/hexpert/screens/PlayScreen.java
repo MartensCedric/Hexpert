@@ -1,7 +1,6 @@
 package com.martenscedric.hexpert.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -45,10 +44,10 @@ import java.util.Stack;
 
 import flexjson.JSONSerializer;
 
+import static com.martenscedric.hexpert.google.Achievement.GREAT_ESCAPE;
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.martenscedric.hexpert.misc.Const.WIDTH;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
@@ -95,12 +94,14 @@ public class PlayScreen  extends StageScreen
     private OptionDialog optionDialog;
     private TextButton objectivesButton;
     private ShaderProgram hintShader;
+    private String mapName;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
-    public PlayScreen(final Hexpert hexpert, final Map map, MapResult result) {
+    public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, String mapName) {
         super();
         this.hexpert = hexpert;
+        this.mapName = mapName;
         this.objectiveDialog = new ObjectiveDialog(hexpert.getSkin(), hexpert);
         this.map = map;
         this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
@@ -469,10 +470,9 @@ public class PlayScreen  extends StageScreen
     @Override
     public void render(float delta)
     {
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK))
-        {
-            hexpert.setScreen(hexpert.levelSelectScreen);
-        }
+        if(Math.abs(getCamera().position.x) > 5000
+                || Math.abs(getCamera().position.y) > 5000)
+            hexpert.playServices.unlockAchievement(GREAT_ESCAPE);
 
         batch.setProjectionMatrix(getCamera().combined);
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
@@ -630,7 +630,7 @@ public class PlayScreen  extends StageScreen
             if(score > mapResult.getScore())
             {
                 mapResult.setScore(score);
-                savemap();
+                saveResult();
             }
         }
     }
@@ -687,7 +687,7 @@ public class PlayScreen  extends StageScreen
         if(numObjectivesPassedCurrent() > numObjectivesPassedSave())
         {
             mapResult.setObjectivePassed(objectivePassed);
-            savemap();
+            saveResult();
         }
     }
 
@@ -726,10 +726,10 @@ public class PlayScreen  extends StageScreen
         return null;
     }
 
-    private void savemap()
+    private void saveResult()
     {
         JSONSerializer jsonSerializer = new JSONSerializer();
-        Gdx.files.local(mapResult.getMapId() + ".mapres").writeString(jsonSerializer.deepSerialize(mapResult), false);
+        Gdx.files.local(mapName + ".mapres").writeString(jsonSerializer.deepSerialize(mapResult), false);
     }
 
     public Map getMap() {

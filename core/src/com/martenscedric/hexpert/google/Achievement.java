@@ -10,4 +10,5 @@ public class Achievement
     public static final String TO_SPACE = "CgkIq5XDzvcOEAIQAQ";
     public static final String TOO_BIG_TO_FAIL = "CgkIq5XDzvcOEAIQAg";
     public static final String SPACE_RACE = "CgkIq5XDzvcOEAIQAw";
+    public static final String GREAT_ESCAPE = "CgkIq5XDzvcOEAIQCQ";
 }
