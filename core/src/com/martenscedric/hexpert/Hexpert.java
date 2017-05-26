@@ -58,6 +58,7 @@ public class Hexpert extends Game {
 	public I18NBundle i18NBundle;
 	public PlayServices playServices;
 	public HexpertConfig config;
+	public HashMap<Integer, String> levelIndex;
 	private BitmapFont font;
 	private Skin skin;
 
@@ -71,8 +72,7 @@ public class Hexpert extends Game {
 		FileHandle options = Gdx.files.local("options.config");
 		if(options.exists())
 		{
-
-           		 String content = options.readString();
+           	String content = options.readString();
            
 			config = new JSONDeserializer<HexpertConfig>().deserialize(content);
 		}else
@@ -80,6 +80,15 @@ public class Hexpert extends Game {
 			config = new HexpertConfig();
 			JSONSerializer jsonSerializer = new JSONSerializer();
 			Gdx.files.local("options.config").writeString(jsonSerializer.serialize(config), false);
+		}
+
+		levelIndex = new HashMap<>();
+
+		String[] lvlIndexes = Gdx.files.internal("maps.hexindex").readString().split("\n");
+
+		for(int i = 0; i < lvlIndexes.length; i++)
+		{
+			levelIndex.put(i + 1, lvlIndexes[i]);
 		}
 
 		assetManager.load(TEXTURE_CLOUD, Texture.class);
@@ -194,8 +203,6 @@ public class Hexpert extends Game {
 
 		return texture;
 	}
-
-
 
 	public BitmapFont getFont() {
 		if (font == null) {

@@ -3,8 +3,10 @@ package com.martenscedric.hexpert;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.backends.android.surfaceview.ResolutionStrategy;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.achievement.Achievements;

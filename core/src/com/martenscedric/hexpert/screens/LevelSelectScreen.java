@@ -62,7 +62,7 @@ public class LevelSelectScreen extends StageScreen
     private Table table;
     private Table objectiveTable;
     private int levelsToDisplay = 5;
-    private int totalLevels = 14;
+    private int totalLevels;
     private int currentWorld = 1;
     public final Hexpert hexpert;
     private int levelSelect = 1;
@@ -83,6 +83,7 @@ public class LevelSelectScreen extends StageScreen
     public LevelSelectScreen(final Hexpert hexpert)
     {
         super();
+        this.totalLevels = hexpert.levelIndex.size();
         this.hexpert = hexpert;
         this.batch = new SpriteBatch();
         this.uiBatch = new SpriteBatch();
@@ -347,11 +348,11 @@ public class LevelSelectScreen extends StageScreen
 
     private Map loadDisplayLevel()
     {
-        String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
+        String mapLoc = Gdx.files.internal("maps/" + hexpert.levelIndex.get(levelSelect) + ".hexmap").readString();
         Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
         grid = map.build();
 
-        String mapString = Integer.toString(levelSelect) + ".mapres";
+        String mapString = hexpert.levelIndex.get(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
             result = new MapResult(levelSelect, 0, new boolean[map.getObjectives().length]);
@@ -437,9 +438,9 @@ public class LevelSelectScreen extends StageScreen
         int total = 0;
         for(int i = 1; i <= totalLevels; i++)
         {
-            if(Gdx.files.local(i + ".mapres").exists())
+            if(Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").exists())
             {
-                String mapResLoc = Gdx.files.local(i + ".mapres").readString();
+                String mapResLoc = Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").readString();
                 MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
 
                 for(int j = 0; j < mapResult.getObjectivePassed().length; j++)
@@ -447,11 +448,11 @@ public class LevelSelectScreen extends StageScreen
                     total += mapResult.getObjectivePassed()[j] ? 1 : 0;
                 }
             }else{
-                String mapString = Gdx.files.internal("maps/" + i + ".hexmap").readString();
+                String mapString = Gdx.files.internal("maps/" + hexpert.levelIndex.get(i) + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapString);
                 MapResult res = new MapResult(i, 0, new boolean[map.getObjectives().length]);
                 JSONSerializer jsonSerializer = new JSONSerializer();
-                Gdx.files.local(i + ".mapres").writeString(jsonSerializer.deepSerialize(res), false);
+                Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").writeString(jsonSerializer.deepSerialize(res), false);
             }
         }
 
@@ -460,14 +461,14 @@ public class LevelSelectScreen extends StageScreen
 
     private boolean[] getObjectivePassed(int level)
     {
-        FileHandle mapresFile = Gdx.files.local(level + ".mapres");
+        FileHandle mapresFile = Gdx.files.local(hexpert.levelIndex.get(level) + ".mapres");
 
         if(mapresFile.exists())
         {
             MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapresFile.readString());
             return mapResult.getObjectivePassed();
         }else{
-            throw new MapLoadException(String.format("Can't find %d.mapres", level));
+            throw new MapLoadException(String.format("Can't find %s.mapres", hexpert.levelIndex.get(level)));
         }
     }
 
@@ -599,10 +600,10 @@ public class LevelSelectScreen extends StageScreen
 
     public void goToLevel()
     {
-        String mapLoc = Gdx.files.internal("maps/" + levelSelect + ".hexmap").readString();
+        String mapLoc = Gdx.files.internal("maps/" + hexpert.levelIndex.get(levelSelect) + ".hexmap").readString();
         Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
-        String mapResLoc = Gdx.files.local(levelSelect + ".mapres").readString();
+        String mapResLoc = Gdx.files.local(hexpert.levelIndex.get(levelSelect) + ".mapres").readString();
         MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
 
         hexpert.setScreen(new PlayScreen(hexpert, map, mapResult));
