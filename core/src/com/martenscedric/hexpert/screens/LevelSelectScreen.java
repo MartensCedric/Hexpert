@@ -62,7 +62,7 @@ public class LevelSelectScreen extends StageScreen
     private Table table;
     private Table objectiveTable;
     private int levelsToDisplay = 5;
-    private int totalLevels = 9;
+    private int totalLevels = 10;
     private int currentWorld = 1;
     public final Hexpert hexpert;
     private int levelSelect = 1;

@@ -187,7 +187,7 @@ public class Hexpert extends Game {
 			case SAND:
 				texture = assetManager.get(TEXTURE_SAND, Texture.class);
 				break;
-			case SNOW:
+			case FOREST:
 				texture = assetManager.get(TEXTURE_FOREST, Texture.class);
 				break;
 		}

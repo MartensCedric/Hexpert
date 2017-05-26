@@ -8,7 +8,7 @@ public enum TileType
     GRASS("Grass", "A normal tile", 1),
     WATER("Water", "You cannot build on water", 1),
     SAND("Sand", "Score on a sand tile is not calculated", 0),
-    SNOW("Forest", "Score on a forest tile is doubled",2);
+    FOREST("Forest", "Score on a forest tile is doubled",2);
 
 
     private String name;
