@@ -10,11 +10,15 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 		file: font-title-export.fnt
 	}
 	vcr: {
-		file: vcr.fnt
+		file: vcr45.fnt
 	}
 	vcr35: {
 		file: vcr35.fnt
 	}
+
+	vcr45:{
+		file: vcr45.fnt
+}
 	vcr70: {
 		file: vcr70.fnt
 	}

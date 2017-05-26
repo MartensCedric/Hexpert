@@ -1,5 +1,6 @@
 package com.martenscedric.hexpert.map;
 
+import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.tile.BuildingType;
@@ -67,14 +68,13 @@ public class Objective
         return score >= minScore;
     }
 
-    @Override
-    public String toString() {
+    public String toString(I18NBundle bundle) {
 
         String s = "";
 
         if(minScore != Integer.MIN_VALUE)
         {
-            s+= String.format("Have a score of atleast %d", minScore);
+            s+= bundle.format("objective_score", minScore);
         }
 
         for(int i = 0; i < BUILDING_COUNT; i++)
@@ -83,7 +83,10 @@ public class Objective
             {
                 if(!s.equals(""))
                     s+="\n";
-                s+= String.format("Have atleast %d %s", buildingRequirement[i], BuildingType.values()[i + 1].getName().toLowerCase());
+
+                s+= bundle.format("objective_building",
+                        buildingRequirement[i],
+                        bundle.format(BuildingType.values()[i + 1].getName().toLowerCase() + "_choice", buildingRequirement[i]));
             }
         }
 

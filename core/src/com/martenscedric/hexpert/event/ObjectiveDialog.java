@@ -69,7 +69,7 @@ public class ObjectiveDialog extends Dialog {
                             hexpert.assetManager.get(objectiveStatus[i] ? TEXTURE_CORRECT : TEXTURE_BAD
                     ))));
 
-            Label labelObjective = new Label(objectives[i].toString(), getSkin());
+            Label labelObjective = new Label(objectives[i].toString(hexpert.i18NBundle), getSkin());
 
             getContentTable().add(imgCheck).width(100).height(80);
             imgCheck.getImageCell().expand().fill();

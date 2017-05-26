@@ -141,7 +141,6 @@ public class LevelSelectScreen extends StageScreen
                 if(currentWorld > 1)
                 {
                     currentWorld--;
-                    updateLabels();
                     updateLevelSelectGrid();
 
                     hexpert.sounds.get("select").play();
@@ -163,7 +162,6 @@ public class LevelSelectScreen extends StageScreen
                 if(currentWorld * levelsToDisplay < totalLevels)
                 {
                     currentWorld++;
-                    updateLabels();
                     updateLevelSelectGrid();
 
                     hexpert.sounds.get("select").play();
@@ -419,7 +417,7 @@ public class LevelSelectScreen extends StageScreen
 
                 objectiveTable.add(result.getObjectivePassed()[i] ? imgCorrect : imgBad).width(100).height(100);
 
-                Label lblDesc = new Label(map.getObjectives()[i].toString(), hexpert.getSkin());
+                Label lblDesc = new Label(map.getObjectives()[i].toString(hexpert.i18NBundle), hexpert.getSkin());
                 lblDesc.setWidth(200);
                 lblDesc.setWrap(true);
 
@@ -470,14 +468,6 @@ public class LevelSelectScreen extends StageScreen
         }else{
             throw new MapLoadException(String.format("Can't find %s.mapres", hexpert.levelIndex.get(level)));
         }
-    }
-
-    private void updateLabels()
-    {
-        //for(int i = 0; i < labelList.size(); i++)
-        // {
-        //    labelList.get(i).setText(Integer.toString((currentWorld - 1) * levelsToDisplay + 1 + i));
-        //}
     }
 
     private void createLevelSelectGrid()
