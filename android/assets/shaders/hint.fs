@@ -17,7 +17,7 @@ void main() {
             gl_FragColor = vec4(tc.rgb, 1);
         }
         else{
-            gl_FragColor = vec4(tc.r + 0.2, tc.g + 0.2, tc.b, 1);
+            gl_FragColor = vec4(tc.r + 0.3, tc.g + 0.3, tc.b - 0.5, 1);
         }
 }
 
