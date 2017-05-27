@@ -615,7 +615,7 @@ public class LevelSelectScreen extends StageScreen
 
     private void checkGoalAchievements()
     {
-        if(goalCompleteCount >= 5)
+        if(goalCompleteCount >= 3)
         {
             hexpert.playServices.unlockAchievement(Achievement.NOVICE);
         }
