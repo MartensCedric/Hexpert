@@ -59,12 +59,11 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RIGHT;
 
 public class LevelSelectScreen extends StageScreen
 {
-    private Table levelTable;
     private Table objectiveTable;
     private Table statsTable;
     private int levelsToDisplay = 5;
     private int totalLevels;
-    private int currentWorld = 1;
+    public int currentWorld = 1;
     public final Hexpert hexpert;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
@@ -106,11 +105,6 @@ public class LevelSelectScreen extends StageScreen
         shdDark = new ShaderProgram(vertexShader, darkShader);
         if (!shdDark.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shdDark.getLog());
 
-        levelTable = new Table();
-        levelTable.defaults().width(150).height(150);
-        levelTable.setX(900);
-        levelTable.setY(100);
-        levelTable.defaults().pad(20);
         getCamera().translate(300, 350);
         getCamera().update();
 
@@ -134,10 +128,6 @@ public class LevelSelectScreen extends StageScreen
             }
         });
 
-        levelTable.add(btnLeft);
-        levelTable.add(new WidgetGroup()).width(800);
-
-
         btnRight.getImageCell().expand().fill();
         btnRight.addListener(new ClickListener()
         {
@@ -155,15 +145,14 @@ public class LevelSelectScreen extends StageScreen
                 }
             }
         });
-        levelTable.add(btnRight);
+
         createLevelSelectGrid();
-        getStage().addActor(levelTable);
 
         statsTable = new Table();
         statsTable.defaults().width(160).height(160);
 
         ImageButton btnGoldHex = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_HEXGOLD))));
+                new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_CORRECT))));
 
         ImageButton btnAchievements = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS))));
@@ -177,8 +166,8 @@ public class LevelSelectScreen extends StageScreen
         });
 
         lblHexCount = new Label(String.format("x%d", hexCount), hexpert.getSkin());
-        statsTable.add(btnGoldHex);
-        statsTable.add(lblHexCount);
+        statsTable.add(btnGoldHex).width(100).height(100);
+        statsTable.add(lblHexCount).width(80);
         statsTable.add(btnAchievements);
         statsTable.row();
         lblHighScore = new Label("", hexpert.getSkin());
@@ -207,9 +196,10 @@ public class LevelSelectScreen extends StageScreen
 
         for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
         {
-            if(i % 2 == 1) continue;
+            if(i == gridLvlSelect.getHexs().length - 1 && isLastWorld(currentWorld)) continue;
+            if(i % 2 == 0) continue;
 
-            batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i + 1 ? shdDark : null);
+            batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i ? shdDark : null);
 
             Hexagon<Texture> hex = gridLvlSelect.getHexs()[i];
             Point p = hex.getHexGeometry().getMiddlePoint();
@@ -219,15 +209,19 @@ public class LevelSelectScreen extends StageScreen
                     (float)gridLvlSelect.getStyle().getSize()*2,
                     (float)((float)gridLvlSelect.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
 
-            hexpert.getFont().draw(batch,
-                    Integer.toString((currentWorld - 1) * levelsToDisplay + i + 1),
-                    (int)p.x - 10, (int)p.y + 30);
+            if(i > 0 && i < gridLvlSelect.getHexs().length - 1)
+            {
+                hexpert.getFont().draw(batch,
+                        Integer.toString((currentWorld - 1) * levelsToDisplay + i),
+                        (int)p.x - 10, (int)p.y + 30);
+            }
         }
 
         for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
         {
-            if(i % 2 == 0) continue;
-            batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i + 1 ? shdDark : null);
+            if(i == 0 && currentWorld == 1)continue;
+            if(i % 2 == 1) continue;
+            batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i ? shdDark : null);
             Hexagon<Texture> hex = gridLvlSelect.getHexs()[i];
             Point p = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData(),
@@ -236,9 +230,12 @@ public class LevelSelectScreen extends StageScreen
                     (float)gridLvlSelect.getStyle().getSize()*2,
                     (float)((float)gridLvlSelect.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
 
-            hexpert.getFont().draw(batch,
-                    Integer.toString((currentWorld - 1) * levelsToDisplay + i + 1),
-                    (int)p.x - 10, (int)p.y + 30);
+            if(i > 0 && i < gridLvlSelect.getHexs().length - 1)
+            {
+                hexpert.getFont().draw(batch,
+                        Integer.toString((currentWorld - 1) * levelsToDisplay + i),
+                        (int)p.x - 10, (int)p.y + 30);
+            }
         }
         batch.setShader(null);
 
@@ -491,16 +488,20 @@ public class LevelSelectScreen extends StageScreen
         HexFreeShapeBuilder<Texture> builder = new HexFreeShapeBuilder<>();
         builder.setStyle(new HexStyle(100, HexagonOrientation.FLAT_TOP));
         builder.addHex(new Point(0, 0));
-        builder.addHexNextTo(0, 0);
-        builder.addHexNextTo(1, 1);
-        builder.addHexNextTo(2, 0);
-        builder.addHexNextTo(3, 1);
+        builder.addHexNextTo(0, 1);
+        builder.addHexNextTo(1, 0);
+        builder.addHexNextTo(2, 1);
+        builder.addHexNextTo(3, 0);
+        builder.addHexNextTo(4, 1);
+        builder.addHexNextTo(5, 0);
         gridLvlSelect = builder.build();
     }
 
     private void updateLevelSelectGrid()
     {
-        for(int i = 0; i < gridLvlSelect.getHexs().length; i++)
+        gridLvlSelect.getHexs()[0].setHexData(hexpert.assetManager.get(TEXTURE_LEFT));
+        gridLvlSelect.getHexs()[gridLvlSelect.getHexs().length - 1].setHexData(hexpert.assetManager.get(TEXTURE_RIGHT));
+        for(int i = 1; i < gridLvlSelect.getHexs().length - 1; i++)
         {
             try{
                 boolean[] objectiveStatus = getObjectivePassed((currentWorld - 1) * levelsToDisplay + i + 1);
@@ -558,9 +559,6 @@ public class LevelSelectScreen extends StageScreen
         return levelsToDisplay;
     }
 
-    public int getCurrentWorld() {
-        return currentWorld;
-    }
 
     private void setMapCollision()
     {
@@ -618,5 +616,14 @@ public class LevelSelectScreen extends StageScreen
 
     public Rectangle getMapCollision() {
         return mapCollision;
+    }
+
+    public boolean isLastWorld(int world)
+    {
+        return world == Math.ceil((float)getTotalLevels() / (float)getLevelsToDisplay());
+    }
+
+    public int getTotalLevels() {
+        return totalLevels;
     }
 }

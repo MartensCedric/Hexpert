@@ -10,17 +10,17 @@ Tile Multipliers
 
 ==PROGRESS==
 Locked worlds
-20 achievements
 30 levels
 
 ==SOCIAL==
 Sharing
+Complete English, French, Spanish, German translations
 
 +Fix all issues on GitHub
 
 NICE TO HAVE
-More translations
 Leaderboards
 Background pictures
 Building greyed out mechanic
 Building that can be placed on water
+More Achievements
