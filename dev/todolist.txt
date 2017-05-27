@@ -1,0 +1,23 @@
+MUST
+==ART==
+Redo in-game menu art
+Pay some guy on fiverr for clicking sounds
+
+==Tutorial==
+Requirements
+Scoring per building
+Tile Multipliers
+
+==PROGRESS==
+Locked worlds
+20 achievements
+30 levels
+
++Fix all issues on GitHub
+
+NICE TO HAVE
+More translations
+Leaderboards
+Background pictures
+Building greyed out mechanic
+Building that can be placed on water
