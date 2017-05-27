@@ -13,6 +13,9 @@ Locked worlds
 20 achievements
 30 levels
 
+==SOCIAL==
+Sharing
+
 +Fix all issues on GitHub
 
 NICE TO HAVE
