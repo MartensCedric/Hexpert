@@ -37,6 +37,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEFT;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LOCKED;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
@@ -126,6 +127,7 @@ public class Hexpert extends Game {
 
 		assetManager.load(TEXTURE_LEFT, Texture.class);
 		assetManager.load(TEXTURE_RIGHT, Texture.class);
+		assetManager.load(TEXTURE_LOCKED, Texture.class);
 
 		sounds.put("click", Gdx.audio.newSound(Gdx.files.internal("sounds/click.wav")));
 		sounds.put("bad", Gdx.audio.newSound(Gdx.files.internal("sounds/bad.wav")));

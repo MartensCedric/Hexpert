@@ -84,10 +84,8 @@ public class OptionDialog extends Dialog
 
         TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), skin);
 
-        textButtonOK.setX(400);
-        textButtonOK.setY(50);
-        getButtonTable().add(textButtonOK).width(200).height(120);
         setObject(textButtonOK, null);
+        getButtonTable().add(textButtonOK).width(200).height(120);
     }
 
     private void saveOptions()

@@ -16,9 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -29,6 +27,7 @@ import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
+import com.martenscedric.hexpert.event.LockedDialog;
 import com.martenscedric.hexpert.gestures.LevelSelectGesture;
 import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.map.Map;
@@ -51,6 +50,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEFT;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LOCKED;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RIGHT;
 
 /**
@@ -71,7 +71,7 @@ public class LevelSelectScreen extends StageScreen
     private SpriteBatch batch, displayBatch;
     private MapResult result;
     private OrthographicCamera displayLevelCamera;
-    private int hexCount = 0;
+    private int goalCompleteCount = 0;
     private boolean debug = false;
     private Rectangle mapCollision;
     private ShapeRenderer shapeRenderer;
@@ -96,7 +96,7 @@ public class LevelSelectScreen extends StageScreen
         objectiveTable.setY(850);
         objectiveTable.defaults().pad(20);
         getStage().addActor(objectiveTable);
-        hexCount = getHexCount();
+        goalCompleteCount = getGoalCompleteCount();
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String darkShader = Gdx.files.internal("shaders/darkness.fs").readString();
@@ -125,7 +125,7 @@ public class LevelSelectScreen extends StageScreen
             }
         });
 
-        lblHexCount = new Label(String.format("x%d", hexCount), hexpert.getSkin());
+        lblHexCount = new Label(String.format("x%d", goalCompleteCount), hexpert.getSkin());
         statsTable.add(btnGoldHex).width(100).height(100);
         statsTable.add(lblHexCount).width(80);
         statsTable.add(btnAchievements);
@@ -303,9 +303,9 @@ public class LevelSelectScreen extends StageScreen
     public void show() {
         super.show();
         selectLevel(levelSelect);
+        goalCompleteCount = getGoalCompleteCount();
         updateLevelSelectGrid();
-        hexCount = getHexCount();
-        lblHexCount.setText(String.format("x%d", hexCount));
+        lblHexCount.setText(String.format("x%d", goalCompleteCount));
         setMultiplexer();
     }
 
@@ -402,7 +402,7 @@ public class LevelSelectScreen extends StageScreen
         }
     }
 
-    private int getHexCount()
+    private int getGoalCompleteCount()
     {
         int total = 0;
         for(int i = 1; i <= totalLevels; i++)
@@ -458,7 +458,10 @@ public class LevelSelectScreen extends StageScreen
     public void updateLevelSelectGrid()
     {
         gridLvlSelect.getHexs()[0].setHexData(hexpert.assetManager.get(TEXTURE_LEFT));
-        gridLvlSelect.getHexs()[gridLvlSelect.getHexs().length - 1].setHexData(hexpert.assetManager.get(TEXTURE_RIGHT));
+        gridLvlSelect.getHexs()[gridLvlSelect.getHexs().length - 1]
+                .setHexData(hexpert.assetManager.get(
+                       goalCompleteCount >= lockedThereshold[currentWorld] ? TEXTURE_RIGHT : TEXTURE_LOCKED
+                ));
         for(int i = 1; i < gridLvlSelect.getHexs().length - 1; i++)
         {
             try{
@@ -596,10 +599,16 @@ public class LevelSelectScreen extends StageScreen
 
     public void nextWorld()
     {
-        currentWorld++;
-        selectLevel(
-                (currentWorld - 1) * getLevelsToDisplay() + 1);
-        updateLevelSelectGrid();
-        hexpert.sounds.get("select").play();
+        if(goalCompleteCount >= lockedThereshold[currentWorld])
+        {
+            currentWorld++;
+            selectLevel(
+                    (currentWorld - 1) * getLevelsToDisplay() + 1);
+            updateLevelSelectGrid();
+            hexpert.sounds.get("select").play();
+        }else{
+            new LockedDialog(goalCompleteCount, lockedThereshold[currentWorld],
+                    hexpert, hexpert.getSkin()).show(getStage());
+        }
     }
 }

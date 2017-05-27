@@ -32,10 +32,6 @@ public class ObjectiveDialog extends Dialog {
         getBackground().setMinWidth(1000);
 
         final TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), skin);
-        textButtonOK.setX(400);
-        textButtonOK.setY(50);
-        textButtonOK.setWidth(200);
-        textButtonOK.setHeight(120);
 
         textButtonOK.addListener(new ClickListener(){
 
@@ -45,7 +41,7 @@ public class ObjectiveDialog extends Dialog {
             }
         });
         setObject(textButtonOK, null);
-        getButtonTable().addActor(textButtonOK);
+        getButtonTable().add(textButtonOK).width(200).height(120);
 
         getContentTable().defaults().pad(5, 0, 5, 15);
         getContentTable().top();

@@ -65,11 +65,10 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 playScreen.updateObjectives();
                 hexpert.sounds.get("click").play();
 
-                if(playScreen.getSelection() == BuildingType.ROCKET)
-                    playScreen.getHexpert().playServices.unlockAchievement(Achievement.TO_SPACE);
-
                 if(!hexpert.config.isKeepSelection())
                     playScreen.setSelection(null);
+
+                playScreen.checkAchievements();
             }else{
                 playScreen.getMoveEventManager().getBadMoves().add(new PointTime(new Point(pos.x,pos.y), 0.35f));
                 hexpert.sounds.get("bad").play();

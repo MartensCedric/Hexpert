@@ -40,4 +40,5 @@ public class TextureData {
 
     public static final String TEXTURE_LEFT = SPRITE_FOLDER + "nextlevelleft.png";
     public static final String TEXTURE_RIGHT = SPRITE_FOLDER + "nextlevelright.png";
+    public static final String TEXTURE_LOCKED = SPRITE_FOLDER + "locked.png";
 }

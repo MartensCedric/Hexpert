@@ -31,6 +31,7 @@ import com.martenscedric.hexpert.env.MoveEventManager;
 import com.martenscedric.hexpert.event.ObjectiveDialog;
 import com.martenscedric.hexpert.event.OptionDialog;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
+import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
@@ -734,5 +735,37 @@ public class PlayScreen  extends StageScreen
 
     public Map getMap() {
         return map;
+    }
+
+    public void checkAchievements()
+    {
+        int numBanks = 0;
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            TileData data = hex.getHexData();
+
+            if(data.getBuildingType() == BuildingType.ROCKET)
+            {
+                hexpert.playServices.unlockAchievement(Achievement.TO_SPACE);
+
+                if(data.getTileType() == TileType.FOREST)
+                    hexpert.playServices.unlockAchievement(Achievement.EFFICIENT_ROCKET);
+
+                for(int j = 0; j < hex.getNeighbors().size(); j++)
+                {
+                    TileData neighborData = hex.getNeighbors().get(j).getHexData();
+                    if(neighborData.getBuildingType() == BuildingType.ROCKET)
+                        hexpert.playServices.unlockAchievement(Achievement.SPACE_RACE);
+                }
+            }
+
+            if(data.getBuildingType() == BuildingType.BANK)
+                numBanks++;
+        }
+
+        if(numBanks >= 3)
+            hexpert.playServices.unlockAchievement(Achievement.TOO_BIG_TO_FAIL);
     }
 }
