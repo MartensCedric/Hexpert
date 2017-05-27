@@ -68,11 +68,10 @@ public class LevelSelectScreen extends StageScreen
     private int levelSelect = 1;
     private HexMap<TileData> grid;
     private HexMap<Texture> gridLvlSelect;
-    private SpriteBatch batch, uiBatch, displayBatch;
+    private SpriteBatch batch, displayBatch;
     private MapResult result;
-    private OrthographicCamera uiCamera, displayLevelCamera;
+    private OrthographicCamera displayLevelCamera;
     private int hexCount = 0;
-    private ImageButton btnLeft, btnRight;
     private boolean debug = false;
     private Rectangle mapCollision;
     private ShapeRenderer shapeRenderer;
@@ -80,6 +79,7 @@ public class LevelSelectScreen extends StageScreen
     private GestureDetector detector;
     private ShaderProgram shdDark;
     private Label lblHexCount,lblHighScore;
+    private int[] lockedThereshold = new int[]{0, 5, 13, 22};
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -87,9 +87,7 @@ public class LevelSelectScreen extends StageScreen
         this.totalLevels = hexpert.levelIndex.size();
         this.hexpert = hexpert;
         this.batch = new SpriteBatch();
-        this.uiBatch = new SpriteBatch();
         this.displayBatch = new SpriteBatch();
-        this.uiCamera = new OrthographicCamera(WIDTH, HEIGHT);
         this.displayLevelCamera = new OrthographicCamera(WIDTH, HEIGHT);
         this.shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
@@ -105,46 +103,8 @@ public class LevelSelectScreen extends StageScreen
         shdDark = new ShaderProgram(vertexShader, darkShader);
         if (!shdDark.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shdDark.getLog());
 
-        getCamera().translate(300, 350);
+        getCamera().translate(450, 415);
         getCamera().update();
-
-        btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_LEFT))));
-        btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RIGHT))));
-        btnLeft.getImageCell().expand().fill();
-
-        btnLeft.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-                if(currentWorld > 1)
-                {
-                    currentWorld--;
-                    updateLevelSelectGrid();
-
-                    hexpert.sounds.get("select").play();
-                    selectLevel((currentWorld - 1) * levelsToDisplay + 1);
-                }
-            }
-        });
-
-        btnRight.getImageCell().expand().fill();
-        btnRight.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-                if(currentWorld * levelsToDisplay < totalLevels)
-                {
-                    currentWorld++;
-                    updateLevelSelectGrid();
-
-                    hexpert.sounds.get("select").play();
-                    selectLevel((currentWorld - 1) * levelsToDisplay + 1);
-
-                }
-            }
-        });
 
         createLevelSelectGrid();
 
@@ -185,8 +145,6 @@ public class LevelSelectScreen extends StageScreen
     @Override
     public void render(float delta) {
 
-        btnLeft.setVisible(currentWorld > 1);
-        btnRight.setVisible(currentWorld * levelsToDisplay < totalLevels);
 
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -196,7 +154,6 @@ public class LevelSelectScreen extends StageScreen
 
         for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
         {
-            if(i == gridLvlSelect.getHexs().length - 1 && isLastWorld(currentWorld)) continue;
             if(i % 2 == 0) continue;
 
             batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i ? shdDark : null);
@@ -220,6 +177,7 @@ public class LevelSelectScreen extends StageScreen
         for(int i = gridLvlSelect.getHexs().length - 1; i >= 0; i--)
         {
             if(i == 0 && currentWorld == 1)continue;
+            if(i == gridLvlSelect.getHexs().length - 1 && isLastWorld(currentWorld)) continue;
             if(i % 2 == 1) continue;
             batch.setShader(levelSelect == (currentWorld - 1) * levelsToDisplay + i ? shdDark : null);
             Hexagon<Texture> hex = gridLvlSelect.getHexs()[i];
@@ -497,14 +455,14 @@ public class LevelSelectScreen extends StageScreen
         gridLvlSelect = builder.build();
     }
 
-    private void updateLevelSelectGrid()
+    public void updateLevelSelectGrid()
     {
         gridLvlSelect.getHexs()[0].setHexData(hexpert.assetManager.get(TEXTURE_LEFT));
         gridLvlSelect.getHexs()[gridLvlSelect.getHexs().length - 1].setHexData(hexpert.assetManager.get(TEXTURE_RIGHT));
         for(int i = 1; i < gridLvlSelect.getHexs().length - 1; i++)
         {
             try{
-                boolean[] objectiveStatus = getObjectivePassed((currentWorld - 1) * levelsToDisplay + i + 1);
+                boolean[] objectiveStatus = getObjectivePassed((currentWorld - 1) * levelsToDisplay + i);
                 gridLvlSelect.getHexs()[i].setHexData(getTextureByObjectiveStatus(objectiveStatus));
             }catch (MapLoadException e)
             {
@@ -625,5 +583,23 @@ public class LevelSelectScreen extends StageScreen
 
     public int getTotalLevels() {
         return totalLevels;
+    }
+
+    public void previousWorld()
+    {
+        currentWorld--;
+        selectLevel(
+                (currentWorld - 1) * getLevelsToDisplay() + 1);
+        updateLevelSelectGrid();
+        hexpert.sounds.get("select").play();
+    }
+
+    public void nextWorld()
+    {
+        currentWorld++;
+        selectLevel(
+                (currentWorld - 1) * getLevelsToDisplay() + 1);
+        updateLevelSelectGrid();
+        hexpert.sounds.get("select").play();
     }
 }

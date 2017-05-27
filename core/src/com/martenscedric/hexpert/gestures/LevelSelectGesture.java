@@ -55,27 +55,22 @@ public class LevelSelectGesture  implements GestureDetector.GestureListener
             {
                 if(levelSelectScreen.currentWorld > 1)
                 {
-                    levelSelectScreen.currentWorld--;
-                    levelSelectScreen.selectLevel(
-                            (levelSelectScreen.currentWorld - 1) * levelSelectScreen.getLevelsToDisplay() + 1);
+                    levelSelectScreen.previousWorld();
                 }
 
             }else if(index == levelSelectScreen.getLevelsToDisplay() + 1)
             {
                 if(!levelSelectScreen.isLastWorld(levelSelectScreen.currentWorld))
                 {
-                    levelSelectScreen.currentWorld++;
-                    levelSelectScreen.selectLevel(
-                            (levelSelectScreen.currentWorld - 1) * levelSelectScreen.getLevelsToDisplay() + 1);
+                    levelSelectScreen.nextWorld();
                 }
 
             }else{
                 levelSelectScreen.selectLevel(
                         (levelSelectScreen.currentWorld - 1) * levelSelectScreen.getLevelsToDisplay()
                                 + hex.getCoordinateSystem().toIndexed().getIndex());
+                levelSelectScreen.hexpert.sounds.get("select").play();
             }
-
-            levelSelectScreen.hexpert.sounds.get("select").play();
         }else{
             pos = displayLevelCam.unproject(new Vector3(x, y, 0),
                         viewPort.getScreenX(), viewPort.getScreenY(),
