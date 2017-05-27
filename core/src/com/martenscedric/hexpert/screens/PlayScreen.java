@@ -763,6 +763,19 @@ public class PlayScreen  extends StageScreen
 
             if(data.getBuildingType() == BuildingType.BANK)
                 numBanks++;
+
+            if(data.getBuildingType().getScore() < 0
+                    && data.getTileType() == TileType.FOREST)
+            {
+                hexpert.playServices.unlockAchievement(Achievement.DOUBLE_THE_NEGATIVE);
+            }
+
+            if(data.getBuildingType().getScore() > 0
+                    && data.getTileType() == TileType.SAND)
+            {
+                hexpert.playServices.unlockAchievement(Achievement.USELESS_PROPERTY);
+            }
+
         }
 
         if(numBanks >= 3)

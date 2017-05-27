@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.martenscedric.hexpert.Hexpert;
+import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.misc.HexpertConfig;
 
 import flexjson.JSONSerializer;
@@ -29,7 +30,7 @@ public class OptionDialog extends Dialog
 {
     private Hexpert hexpert;
     private HexpertConfig config;
-    public OptionDialog(Hexpert hexpert, Skin skin) {
+    public OptionDialog(final Hexpert hexpert, Skin skin) {
         super("", skin);
         this.hexpert = hexpert;
         this.config = hexpert.config;
@@ -53,6 +54,9 @@ public class OptionDialog extends Dialog
             public void clicked(InputEvent event, float x, float y) {
                 config.setBuildHelp(!config.isBuildHelp());
                 chkTileHelp.setChecked(config.isBuildHelp());
+
+                if(!config.isBuildHelp())
+                    hexpert.playServices.unlockAchievement(Achievement.HARDCORE_PLAYER);
                 saveOptions();
             }
         });

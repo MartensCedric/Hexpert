@@ -306,6 +306,7 @@ public class LevelSelectScreen extends StageScreen
         goalCompleteCount = getGoalCompleteCount();
         updateLevelSelectGrid();
         lblHexCount.setText(String.format("x%d", goalCompleteCount));
+        checkGoalAchievements();
         setMultiplexer();
     }
 
@@ -609,6 +610,29 @@ public class LevelSelectScreen extends StageScreen
         }else{
             new LockedDialog(goalCompleteCount, lockedThereshold[currentWorld],
                     hexpert, hexpert.getSkin()).show(getStage());
+        }
+    }
+
+    private void checkGoalAchievements()
+    {
+        if(goalCompleteCount >= 5)
+        {
+            hexpert.playServices.unlockAchievement(Achievement.NOVICE);
+        }
+
+        if(goalCompleteCount >= 15)
+        {
+            hexpert.playServices.unlockAchievement(Achievement.AMATEUR);
+        }
+
+        if(goalCompleteCount >= 25)
+        {
+            hexpert.playServices.unlockAchievement(Achievement.PROFESSIONAL);
+        }
+
+        if(goalCompleteCount >= 50)
+        {
+            hexpert.playServices.unlockAchievement(Achievement.HEXPERT);
         }
     }
 }
