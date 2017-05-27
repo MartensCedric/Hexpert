@@ -80,7 +80,7 @@ public class LevelSelectScreen extends StageScreen
     private LevelSelectGesture behavior;
     private GestureDetector detector;
     private ShaderProgram shdDark;
-    private Label lblHexCount;
+    private Label lblHexCount,lblHighScore;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -111,7 +111,7 @@ public class LevelSelectScreen extends StageScreen
         levelTable.setX(900);
         levelTable.setY(100);
         levelTable.defaults().pad(20);
-        getCamera().translate(390, 350);
+        getCamera().translate(300, 350);
         getCamera().update();
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_LEFT))));
@@ -180,12 +180,15 @@ public class LevelSelectScreen extends StageScreen
         statsTable.add(btnGoldHex);
         statsTable.add(lblHexCount);
         statsTable.add(btnAchievements);
+        statsTable.row();
+        lblHighScore = new Label("", hexpert.getSkin());
+        statsTable.add(lblHighScore).colspan(3);
+
         btnGoldHex.getImageCell().expand().fill();
         btnAchievements.getImageCell().expand().fill();
 
         statsTable.setX(1650);
-        statsTable.setY(980);
-        statsTable.setDebug(false);
+        statsTable.setY(885);
 
         getStage().addActor(statsTable);
     }
@@ -270,14 +273,6 @@ public class LevelSelectScreen extends StageScreen
         }
 
         displayBatch.end();
-        uiBatch.begin();
-
-        uiBatch.setProjectionMatrix(uiCamera.combined);
-
-        if(result.getScore() > 0)
-            hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 300);
-
-        uiBatch.end();
 
         if(debug)
         {
@@ -385,6 +380,8 @@ public class LevelSelectScreen extends StageScreen
 
         displayLevelCamera.position.setZero();
         MapUtils.adjustCamera(displayLevelCamera, grid);
+        displayLevelCamera.translate(0, -75);
+        displayLevelCamera.update();
         setMapCollision();
 
         return map;
@@ -400,6 +397,10 @@ public class LevelSelectScreen extends StageScreen
 
             TextureRegionDrawable textureCorrect = new TextureRegionDrawable(
                     new TextureRegion(hexpert.assetManager.get(TEXTURE_CORRECT, Texture.class)));
+
+            if(result.getScore() > 0)
+                lblHighScore.setText(hexpert.i18NBundle.format("best", result.getScore()));
+            else lblHighScore.setText("");
 
             float y = 750;
 
