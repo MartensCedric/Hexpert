@@ -16,8 +16,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -59,8 +59,9 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RIGHT;
 
 public class LevelSelectScreen extends StageScreen
 {
-    private Table table;
+    private Table levelTable;
     private Table objectiveTable;
+    private Table statsTable;
     private int levelsToDisplay = 5;
     private int totalLevels;
     private int currentWorld = 1;
@@ -72,13 +73,14 @@ public class LevelSelectScreen extends StageScreen
     private MapResult result;
     private OrthographicCamera uiCamera, displayLevelCamera;
     private int hexCount = 0;
-    private ImageButton btnLeft, btnRight, btnAchievements;
+    private ImageButton btnLeft, btnRight;
     private boolean debug = false;
     private Rectangle mapCollision;
     private ShapeRenderer shapeRenderer;
     private LevelSelectGesture behavior;
     private GestureDetector detector;
     private ShaderProgram shdDark;
+    private Label lblHexCount;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -104,30 +106,13 @@ public class LevelSelectScreen extends StageScreen
         shdDark = new ShaderProgram(vertexShader, darkShader);
         if (!shdDark.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shdDark.getLog());
 
-        table = new Table();
-        table.defaults().width(150).height(150);
-        table.setX(900);
-        table.setY(100);
-        table.defaults().pad(20);
+        levelTable = new Table();
+        levelTable.defaults().width(150).height(150);
+        levelTable.setX(900);
+        levelTable.setY(100);
+        levelTable.defaults().pad(20);
         getCamera().translate(390, 350);
         getCamera().update();
-
-        btnAchievements = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS))));
-
-        btnAchievements.setX(1700);
-        btnAchievements.setY(900);
-        btnAchievements.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                hexpert.playServices.showAchievementsUI();
-            }
-        });
-
-        btnAchievements.setWidth(160);
-        btnAchievements.setHeight(160);
-        btnAchievements.getImageCell().expand().fill();
-        getStage().addActor(btnAchievements);
 
         btnLeft = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_LEFT))));
         btnRight = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RIGHT))));
@@ -149,8 +134,8 @@ public class LevelSelectScreen extends StageScreen
             }
         });
 
-        table.add(btnLeft);
-        table.add(new WidgetGroup()).width(800);
+        levelTable.add(btnLeft);
+        levelTable.add(new WidgetGroup()).width(800);
 
 
         btnRight.getImageCell().expand().fill();
@@ -170,9 +155,39 @@ public class LevelSelectScreen extends StageScreen
                 }
             }
         });
-        table.add(btnRight);
+        levelTable.add(btnRight);
         createLevelSelectGrid();
-        getStage().addActor(table);
+        getStage().addActor(levelTable);
+
+        statsTable = new Table();
+        statsTable.defaults().width(160).height(160);
+
+        ImageButton btnGoldHex = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_HEXGOLD))));
+
+        ImageButton btnAchievements = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS))));
+
+        btnAchievements.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                hexpert.playServices.showAchievementsUI();
+            }
+        });
+
+        lblHexCount = new Label(String.format("x%d", hexCount), hexpert.getSkin());
+        statsTable.add(btnGoldHex);
+        statsTable.add(lblHexCount);
+        statsTable.add(btnAchievements);
+        btnGoldHex.getImageCell().expand().fill();
+        btnAchievements.getImageCell().expand().fill();
+
+        statsTable.setX(1650);
+        statsTable.setY(980);
+        statsTable.setDebug(false);
+
+        getStage().addActor(statsTable);
     }
 
     @Override
@@ -262,7 +277,6 @@ public class LevelSelectScreen extends StageScreen
         if(result.getScore() > 0)
             hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("best", result.getScore()), 700, 300);
 
-        hexpert.getFont().draw(uiBatch, hexpert.i18NBundle.format("hexCount", hexCount), -900, -300);
         uiBatch.end();
 
         if(debug)
@@ -341,6 +355,7 @@ public class LevelSelectScreen extends StageScreen
         selectLevel(levelSelect);
         updateLevelSelectGrid();
         hexCount = getHexCount();
+        lblHexCount.setText(String.format("x%d", hexCount));
         setMultiplexer();
     }
 
