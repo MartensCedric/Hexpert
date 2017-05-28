@@ -233,6 +233,7 @@ public abstract class PlayStage extends StageScreen {
                     break;
                 case FARM:
                     tableRequirements.add(imgNotFarm).width(100);
+                    break;
                 case HOUSE:
                     tableRequirements.add(imgFarm).width(100);
                     break;

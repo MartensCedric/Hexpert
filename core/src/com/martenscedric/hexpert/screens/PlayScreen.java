@@ -81,9 +81,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    selection = BuildingType.FARM;
-                                    selectedButton = btnFarm;
-                                    setBuilding(BuildingType.FARM);
+                                    setSelection(BuildingType.FARM);
                                 }
                             }
         );
@@ -92,9 +90,7 @@ public class PlayScreen extends PlayStage
                              {
                                  @Override
                                  public void clicked(InputEvent event, float x, float y) {
-                                     selection = BuildingType.HOUSE;
-                                     selectedButton = btnHouse;
-                                     setBuilding(BuildingType.HOUSE);
+                                     setSelection(BuildingType.HOUSE);
                                  }
                              }
         );
@@ -103,9 +99,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    selection = BuildingType.MINE;
-                                    selectedButton = btnMine;
-                                    setBuilding(BuildingType.MINE);
+                                    setSelection(BuildingType.MINE);
                                 }
                             }
         );
@@ -114,9 +108,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    selection = BuildingType.WIND;
-                                    selectedButton = btnWind;
-                                    setBuilding(BuildingType.WIND);
+                                    setSelection(BuildingType.WIND);
                                 }
                             }
         );
@@ -125,9 +117,7 @@ public class PlayScreen extends PlayStage
                                {
                                    @Override
                                    public void clicked(InputEvent event, float x, float y) {
-                                       selection = BuildingType.FACTORY;
-                                       selectedButton = btnFactory;
-                                       setBuilding(BuildingType.FACTORY);
+                                       setSelection(BuildingType.FACTORY);
                                    }
                                }
         );
@@ -136,9 +126,7 @@ public class PlayScreen extends PlayStage
                               {
                                   @Override
                                   public void clicked(InputEvent event, float x, float y) {
-                                      selection = BuildingType.MARKET;
-                                      selectedButton = btnMarket;
-                                      setBuilding(BuildingType.MARKET);
+                                      setSelection(BuildingType.MARKET);
                                   }
                               }
         );
@@ -147,9 +135,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    selection = BuildingType.BANK;
-                                    selectedButton = btnBank;
-                                    setBuilding(BuildingType.BANK);
+                                    setSelection(BuildingType.BANK);
                                 }
                             }
         );
@@ -158,9 +144,7 @@ public class PlayScreen extends PlayStage
                               {
                                   @Override
                                   public void clicked(InputEvent event, float x, float y) {
-                                      selection = BuildingType.ROCKET;
-                                      selectedButton = btnRocket;
-                                      setBuilding(BuildingType.ROCKET);
+                                      setSelection(BuildingType.ROCKETg);
                                   }
                               }
         );
@@ -357,6 +341,8 @@ public class PlayScreen extends PlayStage
         this.selection = selection;
         if(selection == null)
             selectedButton = null;
+
+        setBuilding(selection);
     }
 
     public SpriteBatch getBatch() {
