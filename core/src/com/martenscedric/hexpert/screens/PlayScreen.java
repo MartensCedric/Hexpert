@@ -68,7 +68,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
  * Created by 1544256 on 2017-04-26.
  */
 
-public class PlayScreen  extends StageScreen
+public class PlayScreen extends PlayStage
 {
     private Hexpert hexpert;
     private HexMap<TileData> grid;
@@ -78,34 +78,130 @@ public class PlayScreen  extends StageScreen
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private PlayScreenGestureBehavior behavior;
-    private Table table, tableBtn;
-    private Image menuImage;
-    private ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-                btnReset, btnUndo, btnBack, btnHelp, btnOptions;
     private int score = 0;
-    private BuildingType selection;
-    private ImageButton selectedButton;
     private MoveEventManager moveEventManager;
     private boolean debug = false;
     private MapResult mapResult;
-    private boolean drawerOpen = false;
+    private BuildingType selection;
+    private ImageButton selectedButton;
     private boolean[] objectivePassed;
-    private LevelComplete exitDialog;
-    private ObjectiveDialog objectiveDialog;
-    private OptionDialog optionDialog;
-    private TextButton objectivesButton;
     private ShaderProgram hintShader;
     private String mapName;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, String mapName) {
-        super();
+        super(hexpert);
+
+        btnFarm.addListener(new ClickListener()
+                            {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    selection = BuildingType.FARM;
+                                    selectedButton = btnFarm;
+                                }
+                            }
+        );
+
+        btnHouse.addListener(new ClickListener()
+                             {
+                                 @Override
+                                 public void clicked(InputEvent event, float x, float y) {
+                                     selection = BuildingType.HOUSE;
+                                     selectedButton = btnHouse;
+                                 }
+                             }
+        );
+
+        btnMine.addListener(new ClickListener()
+                            {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    selection = BuildingType.MINE;
+                                    selectedButton = btnMine;
+                                }
+                            }
+        );
+
+        btnWind.addListener(new ClickListener()
+                            {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    selection = BuildingType.WIND;
+                                    selectedButton = btnWind;
+                                }
+                            }
+        );
+
+        btnFactory.addListener(new ClickListener()
+                               {
+                                   @Override
+                                   public void clicked(InputEvent event, float x, float y) {
+                                       selection = BuildingType.FACTORY;
+                                       selectedButton = btnFactory;
+                                   }
+                               }
+        );
+
+        btnMarket.addListener(new ClickListener()
+                              {
+                                  @Override
+                                  public void clicked(InputEvent event, float x, float y) {
+                                      selection = BuildingType.MARKET;
+                                      selectedButton = btnMarket;
+                                  }
+                              }
+        );
+
+        btnBank.addListener(new ClickListener()
+                            {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    selection = BuildingType.BANK;
+                                    selectedButton = btnBank;
+                                }
+                            }
+        );
+
+        btnRocket.addListener(new ClickListener()
+                              {
+                                  @Override
+                                  public void clicked(InputEvent event, float x, float y) {
+                                      selection = BuildingType.ROCKET;
+                                      selectedButton = btnRocket;
+                                  }
+                              }
+        );
+
+        btnUndo.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                undo();
+            }
+        });
+
+        btnReset.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                resetGrid();
+            }
+        });
+
+        objectivesButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                objectivesButton.setChecked(false);
+                objectiveDialog.setObjectives(map.getObjectives(), mapResult.getObjectivePassed());
+                objectiveDialog.show(getStage());
+            }
+        });
+
         this.hexpert = hexpert;
         this.mapName = mapName;
-        this.objectiveDialog = new ObjectiveDialog(hexpert.getSkin(), hexpert);
         this.map = map;
-        this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
         mapResult = result;
         this.batch = new SpriteBatch();
         this.absBatch = new SpriteBatch();
@@ -129,324 +225,7 @@ public class PlayScreen  extends StageScreen
             hex.setHexData(data);
         }
 
-        getCamera().update();
         setMultiplexer();
-
-        menuImage = new Image((Texture) hexpert.assetManager.get(TEXTURE_MENUUI));
-        menuImage.setX(WIDTH - menuImage.getWidth());
-        menuImage.setY(0);
-        getStage().addActor(menuImage);
-
-        TextureRegionDrawable drawableFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
-        TextureRegionDrawable drawableHouse = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HOUSE)));
-        TextureRegionDrawable drawableMine = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MINE)));
-        TextureRegionDrawable drawableWind = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_WIND)));
-        TextureRegionDrawable drawableFactory = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FACTORY)));
-        TextureRegionDrawable drawableMarket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MARKET)));
-        TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK)));
-        TextureRegionDrawable drawableRocket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET)));
-
-        btnFarm = new ImageButton(drawableFarm);
-        btnFarm.getImageCell().expand().fill();
-        btnFarm.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    selection = BuildingType.FARM;
-                    selectedButton = btnFarm;
-                }
-            }
-        );
-
-        btnHouse = new ImageButton(drawableHouse);
-        btnHouse.getImageCell().expand().fill();
-
-        btnHouse.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    selection = BuildingType.HOUSE;
-                    selectedButton = btnHouse;
-                }
-            }
-        );
-
-        btnMine = new ImageButton(drawableMine);
-        btnMine.getImageCell().expand().fill();
-
-        btnMine.addListener(new ClickListener()
-             {
-                 @Override
-                 public void clicked(InputEvent event, float x, float y) {
-                     selection = BuildingType.MINE;
-                     selectedButton = btnMine;
-                 }
-             }
-        );
-
-
-        btnWind = new ImageButton(drawableWind);
-        btnWind.getImageCell().expand().fill();
-
-        btnWind.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    selection = BuildingType.WIND;
-                    selectedButton = btnWind;
-                }
-            }
-        );
-
-        btnFactory = new ImageButton(drawableFactory);
-        btnFactory.getImageCell().expand().fill();
-        btnFactory.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    selection = BuildingType.FACTORY;
-                    selectedButton = btnFactory;
-                }
-            }
-        );
-
-        btnMarket = new ImageButton(drawableMarket);
-        btnMarket.getImageCell().expand().fill();
-
-        btnMarket.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    selection = BuildingType.MARKET;
-                    selectedButton = btnMarket;
-                }
-            }
-        );
-
-        btnBank = new ImageButton(drawableBank);
-        btnBank.getImageCell().expand().fill();
-
-        btnBank.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    selection = BuildingType.BANK;
-                    selectedButton = btnBank;
-                }
-            }
-        );
-
-        btnRocket = new ImageButton(drawableRocket);
-        btnRocket.getImageCell().expand().fill();
-
-        btnRocket.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    selection = BuildingType.ROCKET;
-                    selectedButton = btnRocket;
-                }
-            }
-        );
-
-        table = new Table();
-        table.defaults().width(menuImage.getPrefWidth()).height(menuImage.getPrefHeight()/9).pad(5);
-
-        table.add(btnFarm);
-        ImageButton imbNotFarm = new ImageButton(drawableFarm);
-        imbNotFarm.getImageCell().expand().fill();
-        table.add(imbNotFarm);
-
-        table.row();
-        table.add(btnHouse);
-        ImageButton imbFarm = new ImageButton(drawableFarm);
-        imbFarm.getImageCell().expand().fill();
-        table.add(imbFarm);
-
-        table.row();
-        table.add(btnMine);
-
-        ImageButton imbHouse1 = new ImageButton(drawableHouse);
-        imbHouse1.getImageCell().expand().fill();
-        table.add(imbHouse1);
-
-        table.row();
-        table.add(btnWind);
-
-        ImageButton imbHouse2 = new ImageButton(drawableHouse);
-        imbHouse2.getImageCell().expand().fill();
-        table.add(imbHouse2);
-
-        table.row();
-        table.add(btnFactory);
-
-        ImageButton imbHouse3 = new ImageButton(drawableHouse);
-        imbHouse3.getImageCell().expand().fill();
-        table.add(imbHouse3);
-
-        ImageButton imbMine1 = new ImageButton(drawableMine);
-        imbMine1.getImageCell().expand().fill();
-        table.add(imbMine1);
-
-        ImageButton imbWind1 = new ImageButton(drawableWind);
-        imbWind1.getImageCell().expand().fill();
-        table.add(imbWind1);
-
-        table.row();
-        table.add(btnMarket);
-
-        ImageButton imbHouse4 = new ImageButton(drawableHouse);
-        imbHouse4.getImageCell().expand().fill();
-        table.add(imbHouse4);
-
-        ImageButton imbWind2 = new ImageButton(drawableWind);
-        imbWind2.getImageCell().expand().fill();
-        table.add(imbWind2);
-
-        ImageButton imbFactory1 = new ImageButton(drawableFactory);
-        imbFactory1.getImageCell().expand().fill();
-        table.add(imbFactory1);
-
-
-        table.row();
-        table.add(btnBank);
-
-        ImageButton imbHouse5 = new ImageButton(drawableHouse);
-        imbHouse5.getImageCell().expand().fill();
-        table.add(imbHouse5);
-
-        ImageButton imbMine2 = new ImageButton(drawableMine);
-        imbMine2.getImageCell().expand().fill();
-        table.add(imbMine2);
-
-        ImageButton imbWind3 = new ImageButton(drawableWind);
-        imbWind3.getImageCell().expand().fill();
-        table.add(imbWind3);
-
-        ImageButton imbMarket1 = new ImageButton(drawableMarket);
-        imbMarket1.getImageCell().expand().fill();
-        table.add(imbMarket1);
-
-        table.row();
-        table.add(btnRocket);
-
-        ImageButton imbHouse6 = new ImageButton(drawableHouse);
-        imbHouse6.getImageCell().expand().fill();
-        table.add(imbHouse6);
-
-        ImageButton imbWind4 = new ImageButton(drawableWind);
-        imbWind4.getImageCell().expand().fill();
-        table.add(imbWind4);
-
-        ImageButton imbFactory2 = new ImageButton(drawableFactory);
-        imbFactory2.getImageCell().expand().fill();
-        table.add(imbFactory2);
-
-        ImageButton imbBank1 = new ImageButton(drawableBank);
-        imbBank1.getImageCell().expand().fill();
-        table.add(imbBank1);
-
-        menuImage.setVisible(false);
-
-        table.setX(WIDTH + menuImage.getWidth()/2 + table.getPrefWidth()/5);
-        table.setY(HEIGHT - table.getPrefHeight()/2);
-
-        table.setDebug(false);
-
-        btnBack = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BACK))));
-        btnBack.setX(5);
-        btnBack.setY(HEIGHT - btnBack.getPrefHeight());
-        btnBack.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-
-                    Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
-                    ActionDialog actionDialog = new ActionDialog(text, new Action() {
-                        @Override
-                        public void doAction() {
-                            hexpert.setScreen(hexpert.levelSelectScreen);
-                        }
-                    }, hexpert.i18NBundle, hexpert.getSkin());
-
-                    actionDialog.show(getStage());
-                }
-            }
-        );
-
-        btnReset = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RESET))));
-        btnReset.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                resetGrid();
-            }
-        });
-
-        btnUndo = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_UNDO))));
-        btnUndo.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                undo();
-            }
-        });
-
-        btnHelp = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HELP))));
-        btnHelp.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                table.setX(table.getX() + (drawerOpen ? 900 : -900));
-                drawerOpen = !drawerOpen;
-            }
-        });
-
-        btnOptions = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_OPTIONS))));
-        btnOptions.addListener(new ClickListener()
-           {
-               @Override
-               public void clicked(InputEvent event, float x, float y) {
-                   optionDialog = new OptionDialog(hexpert, hexpert.getSkin());
-                   optionDialog.show(getStage());
-               }
-           }
-        );
-
-        tableBtn = new Table();
-        tableBtn.setY(HEIGHT - 150);
-        tableBtn.setX(375);
-        tableBtn.defaults().width(125).height(125).pad(15);
-
-        btnBack.getImageCell().expand().fill();
-        btnReset.getImageCell().expand().fill();
-        btnUndo.getImageCell().expand().fill();
-        btnHelp.getImageCell().expand().fill();
-        btnOptions.getImageCell().expand().fill();
-
-        objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), hexpert.getSkin());
-
-        objectivesButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                objectivesButton.setChecked(false);
-                objectiveDialog.setObjectives(map.getObjectives(), mapResult.getObjectivePassed());
-                objectiveDialog.show(getStage());
-            }
-        });
-
-        tableBtn.add(btnBack);
-        tableBtn.add(btnReset);
-        tableBtn.add(btnUndo);
-        tableBtn.add(btnHelp);
-        tableBtn.add(btnOptions);
-        tableBtn.row();
-        tableBtn.add(objectivesButton).colspan(4).width(500);
-
-        getStage().addActor(table);
-        getStage().addActor(tableBtn);
-
         MapUtils.adjustCamera(getCamera(), grid);
         getCamera().zoom *= 0.6;
         getCamera().translate(0, 25);
@@ -775,7 +554,6 @@ public class PlayScreen  extends StageScreen
             {
                 hexpert.playServices.unlockAchievement(Achievement.USELESS_PROPERTY);
             }
-
         }
 
         if(numBanks >= 3)
