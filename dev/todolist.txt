@@ -9,7 +9,7 @@ Scoring per building
 Tile Multipliers
 
 ==PROGRESS==
-Locked worlds
+Take back where you were last time
 30 levels
 
 ==SOCIAL==
@@ -20,7 +20,6 @@ Complete English, French, Spanish, German translations
 
 NICE TO HAVE
 Leaderboards
-Take back where you were last time
 Background pictures
 Building greyed out mechanic
 Building that can be placed on water
