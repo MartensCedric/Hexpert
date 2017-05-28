@@ -57,7 +57,6 @@ public class PlayScreen extends PlayStage
     private HexMap<TileData> grid;
     private Map map;
     private SpriteBatch batch;
-    private SpriteBatch absBatch;
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
     private PlayScreenGestureBehavior behavior;
@@ -179,7 +178,6 @@ public class PlayScreen extends PlayStage
         this.map = map;
         mapResult = result;
         this.batch = new SpriteBatch();
-        this.absBatch = new SpriteBatch();
         this.shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         moveEventManager = new MoveEventManager(this);
@@ -271,10 +269,10 @@ public class PlayScreen extends PlayStage
 
         if(map.scoreIsCalculated())
         {
-            absBatch.begin();
-            hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("score", score), 5, 25);
-            hexpert.getFont().draw(absBatch, hexpert.i18NBundle.format("best", mapResult.getScore()), 5, 55);
-            absBatch.end();
+            Label lblScore = (Label) tableScore.getChildren().get(0);
+            Label lblBest = (Label) tableScore.getChildren().get(1);
+            lblScore.setText(hexpert.i18NBundle.format("score", score));
+            lblBest.setText(hexpert.i18NBundle.format("best", mapResult.getScore()));
         }
 
         if(debug)

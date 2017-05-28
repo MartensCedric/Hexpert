@@ -41,7 +41,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 
 public abstract class PlayStage extends StageScreen {
 
-    protected Table table, tableBtn, tableRequirements;
+    protected Table table, tableBtn, tableRequirements, tableScore;
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
             btnReset, btnUndo, btnBack, btnHelp, btnOptions;
 
@@ -207,9 +207,20 @@ public abstract class PlayStage extends StageScreen {
         tableRequirements.setX(WIDTH/2);
         setBuilding(null);
 
+        tableScore = new Table();
+        tableScore.setX(180);
+        tableScore.setY(125);
+        tableScore.defaults().width(350).height(100);
+       
+        Label.LabelStyle lblStyle = hexpert.getSkin().get("bigger", Label.LabelStyle.class);
+        tableScore.add(new Label("", lblStyle));
+        tableScore.row();
+        tableScore.add(new Label("", lblStyle));
+
         getStage().addActor(table);
         getStage().addActor(tableBtn);
         getStage().addActor(tableRequirements);
+        getStage().addActor(tableScore);
     }
 
     @Override

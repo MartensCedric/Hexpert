@@ -332,6 +332,12 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: vcr
 		fontColor: black
 	}
+
+	bigger:{
+		font: vcr70
+		fontColor: black
+	}
+
 	button: {
 		font: button
 		fontColor: color
