@@ -46,12 +46,11 @@ public abstract class PlayStage extends StageScreen {
             btnReset, btnUndo, btnBack, btnHelp, btnOptions;
 
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
-    private Hexpert hexpert;
     protected LevelComplete exitDialog;
     protected ObjectiveDialog objectiveDialog;
     private OptionDialog optionDialog;
     protected TextButton objectivesButton;
-    private boolean drawerOpen = false;
+    protected Hexpert hexpert;
 
     public PlayStage(final Hexpert hexpert) {
         super();
@@ -166,8 +165,7 @@ public abstract class PlayStage extends StageScreen {
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                table.setX(table.getX() + (drawerOpen ? 900 : -900));
-                drawerOpen = !drawerOpen;
+
             }
         });
 
@@ -176,7 +174,7 @@ public abstract class PlayStage extends StageScreen {
                                {
                                    @Override
                                    public void clicked(InputEvent event, float x, float y) {
-                                       optionDialog = new OptionDialog(hexpert, hexpert.getSkin());
+                                       optionDialog = new OptionDialog(PlayStage.this, hexpert.getSkin());
                                        optionDialog.show(getStage());
                                    }
                                }
@@ -219,7 +217,7 @@ public abstract class PlayStage extends StageScreen {
         super.render(delta);
     }
 
-    protected void setBuilding(BuildingType selection)
+    public void setBuilding(BuildingType selection)
     {
         tableRequirements.clearChildren();
 
@@ -302,5 +300,9 @@ public abstract class PlayStage extends StageScreen {
                 return imgRocket;
         }
         return null;
+    }
+
+    public Hexpert getHexpert() {
+        return hexpert;
     }
 }

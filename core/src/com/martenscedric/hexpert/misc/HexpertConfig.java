@@ -13,11 +13,21 @@ public class HexpertConfig
 {
     private boolean buildHelp;
     private boolean keepSelection;
+    private boolean showRequirements;
 
     public HexpertConfig()
     {
         buildHelp = true;
         keepSelection = false;
+        showRequirements = true;
+    }
+
+    public boolean isShowRequirements() {
+        return showRequirements;
+    }
+
+    public void setShowRequirements(boolean showRequirements) {
+        this.showRequirements = showRequirements;
     }
 
     public boolean isBuildHelp() {

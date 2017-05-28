@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.misc.HexpertConfig;
+import com.martenscedric.hexpert.screens.PlayScreen;
+import com.martenscedric.hexpert.screens.PlayStage;
 
 import flexjson.JSONSerializer;
 
@@ -30,9 +32,9 @@ public class OptionDialog extends Dialog
 {
     private Hexpert hexpert;
     private HexpertConfig config;
-    public OptionDialog(final Hexpert hexpert, Skin skin) {
+    public OptionDialog(final PlayStage playStage, Skin skin) {
         super("", skin);
-        this.hexpert = hexpert;
+        this.hexpert = playStage.getHexpert();
         this.config = hexpert.config;
 
         final TextureRegionDrawable txtRgCorrect = new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_CORRECT)));
@@ -44,6 +46,7 @@ public class OptionDialog extends Dialog
 
         I18NBundle i18n = hexpert.i18NBundle;
 
+        getContentTable().pad(10);
         Label lblTileHelp = new Label(i18n.get("option_build_help"), hexpert.getSkin());
         final ImageButton chkTileHelp = new ImageButton(imgStyle);
         chkTileHelp.setChecked(config.isBuildHelp());
@@ -54,9 +57,7 @@ public class OptionDialog extends Dialog
             public void clicked(InputEvent event, float x, float y) {
                 config.setBuildHelp(!config.isBuildHelp());
                 chkTileHelp.setChecked(config.isBuildHelp());
-
-                if(!config.isBuildHelp())
-                    hexpert.playServices.unlockAchievement(Achievement.HARDCORE_PLAYER);
+                checkAchievements();
                 saveOptions();
             }
         });
@@ -65,7 +66,6 @@ public class OptionDialog extends Dialog
         chkTileHelp.getImageCell().expand().fill();
         getContentTable().add(lblTileHelp);
         getContentTable().row();
-        getContentTable().pad(10);
         Label lblDeactivateSelection = new Label(i18n.get("option_keep_selection"), hexpert.getSkin());
         final ImageButton chkDeactivateSelection = new ImageButton(imgStyle);
         chkDeactivateSelection.setChecked(config.isKeepSelection());
@@ -86,6 +86,31 @@ public class OptionDialog extends Dialog
         getContentTable().add(lblDeactivateSelection);
         getContentTable().row();
 
+        Label lblShowReq = new Label(i18n.get("option_show_req"), hexpert.getSkin());
+        final ImageButton chkShowReq = new ImageButton(imgStyle);
+        chkShowReq.setChecked(config.isShowRequirements());
+
+        chkShowReq.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                config.setShowRequirements(!config.isShowRequirements());
+                chkShowReq.setChecked(config.isShowRequirements());
+
+                if(!hexpert.config.isShowRequirements())
+                {
+                    playStage.setBuilding(null);
+                }
+
+                checkAchievements();
+                saveOptions();
+            }
+        });
+
+        getContentTable().add(chkShowReq).width(100).height(100);
+        chkShowReq.getImageCell().expand().fill();
+        getContentTable().add(lblShowReq);
+
         TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), skin);
 
         setObject(textButtonOK, null);
@@ -96,5 +121,11 @@ public class OptionDialog extends Dialog
     {
         JSONSerializer jsonSerializer = new JSONSerializer();
         Gdx.files.local("options.config").writeString(jsonSerializer.serialize(config), false);
+    }
+
+    private void checkAchievements()
+    {
+        if(!config.isShowRequirements() && !config.isBuildHelp())
+            hexpert.playServices.unlockAchievement(Achievement.HARDCORE_PLAYER);
     }
 }

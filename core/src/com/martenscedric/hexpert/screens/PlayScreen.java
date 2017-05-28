@@ -54,7 +54,6 @@ import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 
 public class PlayScreen extends PlayStage
 {
-    private Hexpert hexpert;
     private HexMap<TileData> grid;
     private Map map;
     private SpriteBatch batch;
@@ -144,7 +143,7 @@ public class PlayScreen extends PlayStage
                               {
                                   @Override
                                   public void clicked(InputEvent event, float x, float y) {
-                                      setSelection(BuildingType.ROCKETg);
+                                      setSelection(BuildingType.ROCKET);
                                   }
                               }
         );
@@ -322,7 +321,7 @@ public class PlayScreen extends PlayStage
     }
 
     public Hexpert getHexpert() {
-        return hexpert;
+        return super.getHexpert();
     }
 
     public HexMap<TileData> getGrid() {
@@ -342,7 +341,8 @@ public class PlayScreen extends PlayStage
         if(selection == null)
             selectedButton = null;
 
-        setBuilding(selection);
+        if(hexpert.config.isShowRequirements())
+            setBuilding(selection);
     }
 
     public SpriteBatch getBatch() {
