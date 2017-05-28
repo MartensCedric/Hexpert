@@ -56,7 +56,6 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;

@@ -28,7 +28,6 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MENUUI;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
@@ -43,7 +42,6 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 public abstract class PlayStage extends StageScreen {
 
     private Table table, tableBtn;
-    private Image menuImage;
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
             btnReset, btnUndo, btnBack, btnHelp, btnOptions;
 
@@ -57,10 +55,6 @@ public abstract class PlayStage extends StageScreen {
         super();
         this.objectiveDialog = new ObjectiveDialog(hexpert.getSkin(), hexpert);
         this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
-        menuImage = new Image((Texture) hexpert.assetManager.get(TEXTURE_MENUUI));
-        menuImage.setX(WIDTH - menuImage.getWidth());
-        menuImage.setY(0);
-        getStage().addActor(menuImage);
 
         TextureRegionDrawable drawableFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
         TextureRegionDrawable drawableHouse = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HOUSE)));
@@ -103,7 +97,7 @@ public abstract class PlayStage extends StageScreen {
 
 
         table = new Table();
-        table.defaults().width(menuImage.getPrefWidth()).height(menuImage.getPrefHeight()/9).pad(5);
+        table.defaults().width(200).height(HEIGHT/9).pad(5);
 
         table.add(btnFarm);
         ImageButton imbNotFarm = new ImageButton(drawableFarm);
@@ -199,9 +193,7 @@ public abstract class PlayStage extends StageScreen {
         imbBank1.getImageCell().expand().fill();
         table.add(imbBank1);
 
-        menuImage.setVisible(false);
-
-        table.setX(WIDTH + menuImage.getWidth()/2 + table.getPrefWidth()/5);
+        table.setX(WIDTH + 100 + table.getPrefWidth()/5);
         table.setY(HEIGHT - table.getPrefHeight()/2);
 
         table.setDebug(false);
