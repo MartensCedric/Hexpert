@@ -16,7 +16,6 @@ import com.martenscedric.hexpert.event.ActionDialog;
 import com.martenscedric.hexpert.event.LevelComplete;
 import com.martenscedric.hexpert.event.ObjectiveDialog;
 import com.martenscedric.hexpert.event.OptionDialog;
-import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.tile.BuildingType;
 
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
@@ -29,6 +28,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
@@ -41,10 +41,12 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 
 public abstract class PlayStage extends StageScreen {
 
-    private Table table, tableBtn;
+    protected Table table, tableBtn, tableRequirements;
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
             btnReset, btnUndo, btnBack, btnHelp, btnOptions;
 
+    private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
+    private Hexpert hexpert;
     protected LevelComplete exitDialog;
     protected ObjectiveDialog objectiveDialog;
     private OptionDialog optionDialog;
@@ -53,6 +55,7 @@ public abstract class PlayStage extends StageScreen {
 
     public PlayStage(final Hexpert hexpert) {
         super();
+        this.hexpert = hexpert;
         this.objectiveDialog = new ObjectiveDialog(hexpert.getSkin(), hexpert);
         this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
 
@@ -65,6 +68,18 @@ public abstract class PlayStage extends StageScreen {
         TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK)));
         TextureRegionDrawable drawableRocket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET)));
 
+        TextureRegionDrawable drawableNotFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
+
+        imgFarm = new Image(drawableFarm);
+        imgHouse = new Image(drawableHouse);
+        imgMine = new Image(drawableMine);
+        imgWind = new Image(drawableWind);
+        imgFactory = new Image(drawableFactory);
+        imgMarket = new Image(drawableMarket);
+        imgBank = new Image(drawableBank);
+        imgRocket = new Image(drawableRocket);
+        imgNotFarm = new Image(drawableNotFarm);
+
         btnFarm = new ImageButton(drawableFarm);
         btnFarm.getImageCell().expand().fill();
 
@@ -74,127 +89,49 @@ public abstract class PlayStage extends StageScreen {
         btnMine = new ImageButton(drawableMine);
         btnMine.getImageCell().expand().fill();
 
-
         btnWind = new ImageButton(drawableWind);
         btnWind.getImageCell().expand().fill();
 
         btnFactory = new ImageButton(drawableFactory);
         btnFactory.getImageCell().expand().fill();
 
-
         btnMarket = new ImageButton(drawableMarket);
         btnMarket.getImageCell().expand().fill();
-
 
         btnBank = new ImageButton(drawableBank);
         btnBank.getImageCell().expand().fill();
 
-
-
         btnRocket = new ImageButton(drawableRocket);
         btnRocket.getImageCell().expand().fill();
-
-
 
         table = new Table();
         table.defaults().width(200).height(HEIGHT/9).pad(5);
 
         table.add(btnFarm);
-        ImageButton imbNotFarm = new ImageButton(drawableFarm);
-        imbNotFarm.getImageCell().expand().fill();
-        table.add(imbNotFarm);
-
         table.row();
+
         table.add(btnHouse);
-        ImageButton imbFarm = new ImageButton(drawableFarm);
-        imbFarm.getImageCell().expand().fill();
-        table.add(imbFarm);
-
         table.row();
+
         table.add(btnMine);
-
-        ImageButton imbHouse1 = new ImageButton(drawableHouse);
-        imbHouse1.getImageCell().expand().fill();
-        table.add(imbHouse1);
-
         table.row();
+
         table.add(btnWind);
-
-        ImageButton imbHouse2 = new ImageButton(drawableHouse);
-        imbHouse2.getImageCell().expand().fill();
-        table.add(imbHouse2);
-
         table.row();
+
         table.add(btnFactory);
-
-        ImageButton imbHouse3 = new ImageButton(drawableHouse);
-        imbHouse3.getImageCell().expand().fill();
-        table.add(imbHouse3);
-
-        ImageButton imbMine1 = new ImageButton(drawableMine);
-        imbMine1.getImageCell().expand().fill();
-        table.add(imbMine1);
-
-        ImageButton imbWind1 = new ImageButton(drawableWind);
-        imbWind1.getImageCell().expand().fill();
-        table.add(imbWind1);
-
         table.row();
+
         table.add(btnMarket);
-
-        ImageButton imbHouse4 = new ImageButton(drawableHouse);
-        imbHouse4.getImageCell().expand().fill();
-        table.add(imbHouse4);
-
-        ImageButton imbWind2 = new ImageButton(drawableWind);
-        imbWind2.getImageCell().expand().fill();
-        table.add(imbWind2);
-
-        ImageButton imbFactory1 = new ImageButton(drawableFactory);
-        imbFactory1.getImageCell().expand().fill();
-        table.add(imbFactory1);
-
-
         table.row();
+
         table.add(btnBank);
-
-        ImageButton imbHouse5 = new ImageButton(drawableHouse);
-        imbHouse5.getImageCell().expand().fill();
-        table.add(imbHouse5);
-
-        ImageButton imbMine2 = new ImageButton(drawableMine);
-        imbMine2.getImageCell().expand().fill();
-        table.add(imbMine2);
-
-        ImageButton imbWind3 = new ImageButton(drawableWind);
-        imbWind3.getImageCell().expand().fill();
-        table.add(imbWind3);
-
-        ImageButton imbMarket1 = new ImageButton(drawableMarket);
-        imbMarket1.getImageCell().expand().fill();
-        table.add(imbMarket1);
-
         table.row();
+
         table.add(btnRocket);
 
-        ImageButton imbHouse6 = new ImageButton(drawableHouse);
-        imbHouse6.getImageCell().expand().fill();
-        table.add(imbHouse6);
-
-        ImageButton imbWind4 = new ImageButton(drawableWind);
-        imbWind4.getImageCell().expand().fill();
-        table.add(imbWind4);
-
-        ImageButton imbFactory2 = new ImageButton(drawableFactory);
-        imbFactory2.getImageCell().expand().fill();
-        table.add(imbFactory2);
-
-        ImageButton imbBank1 = new ImageButton(drawableBank);
-        imbBank1.getImageCell().expand().fill();
-        table.add(imbBank1);
-
-        table.setX(WIDTH + 100 + table.getPrefWidth()/5);
-        table.setY(HEIGHT - table.getPrefHeight()/2);
+        table.setX(WIDTH - 100);
+        table.setY(HEIGHT - table.getPrefHeight()/2 - 5);
 
         table.setDebug(false);
 
@@ -266,12 +203,103 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.row();
         tableBtn.add(objectivesButton).colspan(4).width(500);
 
+        tableRequirements = new Table();
+        tableRequirements.defaults().height(100).pad(0, 5, 0, 5);
+        tableRequirements.setHeight(105);
+        tableRequirements.setX(WIDTH/2);
+        setBuilding(null);
+
         getStage().addActor(table);
         getStage().addActor(tableBtn);
+        getStage().addActor(tableRequirements);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+    }
+
+    protected void setBuilding(BuildingType selection)
+    {
+        tableRequirements.clearChildren();
+
+        if(selection != null)
+        {
+            tableRequirements.add(getImgBySelection(selection)).width(100);
+            tableRequirements.add(new Label("=", hexpert.getSkin()));
+
+            switch (selection) {
+                case NONE:
+                    break;
+                case FARM:
+                    tableRequirements.add(imgNotFarm).width(100);
+                case HOUSE:
+                    tableRequirements.add(imgFarm).width(100);
+                    break;
+                case MINE:
+                    tableRequirements.add(imgHouse).width(100);
+                    break;
+                case WIND:
+                    tableRequirements.add(imgHouse).width(100);
+                    break;
+                case FACTORY:
+                    tableRequirements.add(imgHouse).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgMine).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgWind).width(100);
+                    break;
+                case MARKET:
+                    tableRequirements.add(imgHouse).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgWind).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgFactory).width(100);
+                    break;
+                case BANK:
+                    tableRequirements.add(imgHouse).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgMine).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgWind).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgMarket).width(100);
+                    break;
+                case ROCKET:
+                    tableRequirements.add(imgHouse).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgWind).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgFactory).width(100);
+                    tableRequirements.add(new Label("+", hexpert.getSkin()));
+                    tableRequirements.add(imgBank).width(100);
+                    break;
+            }
+        }
+    }
+
+    private Image getImgBySelection(BuildingType selection)
+    {
+        switch (selection) {
+            case NONE:
+                break;
+            case FARM:
+                return imgFarm;
+            case HOUSE:
+                return imgHouse;
+            case MINE:
+                return imgMine;
+            case WIND:
+                return imgWind;
+            case FACTORY:
+                return imgFactory;
+            case MARKET:
+                return imgMarket;
+            case BANK:
+                return imgBank;
+            case ROCKET:
+                return imgRocket;
+        }
+        return null;
     }
 }

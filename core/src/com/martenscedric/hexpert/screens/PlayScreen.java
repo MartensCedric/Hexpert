@@ -46,22 +46,7 @@ import java.util.Stack;
 import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexpert.google.Achievement.GREAT_ESCAPE;
-import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
-import static com.martenscedric.hexpert.misc.Const.WIDTH;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BANK;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_UNDO;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 
 /**
  * Created by 1544256 on 2017-04-26.
@@ -98,6 +83,7 @@ public class PlayScreen extends PlayStage
                                 public void clicked(InputEvent event, float x, float y) {
                                     selection = BuildingType.FARM;
                                     selectedButton = btnFarm;
+                                    setBuilding(BuildingType.FARM);
                                 }
                             }
         );
@@ -108,6 +94,7 @@ public class PlayScreen extends PlayStage
                                  public void clicked(InputEvent event, float x, float y) {
                                      selection = BuildingType.HOUSE;
                                      selectedButton = btnHouse;
+                                     setBuilding(BuildingType.HOUSE);
                                  }
                              }
         );
@@ -118,6 +105,7 @@ public class PlayScreen extends PlayStage
                                 public void clicked(InputEvent event, float x, float y) {
                                     selection = BuildingType.MINE;
                                     selectedButton = btnMine;
+                                    setBuilding(BuildingType.MINE);
                                 }
                             }
         );
@@ -128,6 +116,7 @@ public class PlayScreen extends PlayStage
                                 public void clicked(InputEvent event, float x, float y) {
                                     selection = BuildingType.WIND;
                                     selectedButton = btnWind;
+                                    setBuilding(BuildingType.WIND);
                                 }
                             }
         );
@@ -138,6 +127,7 @@ public class PlayScreen extends PlayStage
                                    public void clicked(InputEvent event, float x, float y) {
                                        selection = BuildingType.FACTORY;
                                        selectedButton = btnFactory;
+                                       setBuilding(BuildingType.FACTORY);
                                    }
                                }
         );
@@ -148,6 +138,7 @@ public class PlayScreen extends PlayStage
                                   public void clicked(InputEvent event, float x, float y) {
                                       selection = BuildingType.MARKET;
                                       selectedButton = btnMarket;
+                                      setBuilding(BuildingType.MARKET);
                                   }
                               }
         );
@@ -158,6 +149,7 @@ public class PlayScreen extends PlayStage
                                 public void clicked(InputEvent event, float x, float y) {
                                     selection = BuildingType.BANK;
                                     selectedButton = btnBank;
+                                    setBuilding(BuildingType.BANK);
                                 }
                             }
         );
@@ -168,6 +160,7 @@ public class PlayScreen extends PlayStage
                                   public void clicked(InputEvent event, float x, float y) {
                                       selection = BuildingType.ROCKET;
                                       selectedButton = btnRocket;
+                                      setBuilding(BuildingType.ROCKET);
                                   }
                               }
         );
