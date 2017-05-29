@@ -210,7 +210,6 @@ public class LevelSelectScreen extends StageScreen
                     (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO) - 24,
                     (float)grid.getStyle().getSize()*2,
                     (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
-
         }
 
         for(int i = 0; i < grid.getHexs().length; i++)
@@ -359,7 +358,6 @@ public class LevelSelectScreen extends StageScreen
             else lblHighScore.setText("");
 
             float y = 750;
-
             switch (result.getObjectivePassed().length)
             {
                 case 1 :
@@ -374,10 +372,7 @@ public class LevelSelectScreen extends StageScreen
             }
 
             objectiveTable.setY(y);
-
-
             objectiveTable.clearChildren();
-
 
             for(int i = 0; i < map.getObjectives().length; i++)
             {

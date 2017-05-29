@@ -21,5 +21,4 @@ Leaderboards
 Take back where you were last time
 Background pictures
 Building greyed out mechanic
-Building that can be placed on water
 More Achievements
