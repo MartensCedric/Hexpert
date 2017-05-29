@@ -1,0 +1,13 @@
+Hexpert is a puzzle game based on optimization and thinking multiple moved in advance.
+
+Hexpert is a hard challenging puzzle game that will work your brain in and out, twist it and stretch it.
+Chess fans will adore Hexpert as it revolves thinking multiple steps in advance, thinking ahead
+and planning to pull out really optimized placements.
+
+In Hexpert you are required to place buildings on a hex-tiled map in order to complete the 30+ level it has to offer.
+The difficulty comes as each building requires specific conditions to be met in order to be placed. An example of this
+is that a house requires an adjacent farm. It gets a bit more complex when a Market requires a house, a wind turbine and a factory,
+but the factory requires a house, a mine and a wind turbine.
+
+
+
