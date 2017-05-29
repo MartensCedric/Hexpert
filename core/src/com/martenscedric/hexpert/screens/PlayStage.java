@@ -211,7 +211,7 @@ public abstract class PlayStage extends StageScreen {
         tableScore.setX(180);
         tableScore.setY(125);
         tableScore.defaults().width(350).height(100);
-       
+
         Label.LabelStyle lblStyle = hexpert.getSkin().get("bigger", Label.LabelStyle.class);
         tableScore.add(new Label("", lblStyle));
         tableScore.row();
