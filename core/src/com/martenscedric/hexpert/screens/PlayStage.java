@@ -332,7 +332,7 @@ public abstract class PlayStage extends StageScreen {
     }
 
     public void setSelection(BuildingType selection) {
-        if(!removeMode)
+        if(!removeMode || selection == null)
         {
             this.selection = selection;
             if(selection == null)

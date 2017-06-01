@@ -43,6 +43,8 @@ import com.martenscedric.hexpert.tile.TileType;
 
 import java.util.Stack;
 
+import javax.rmi.CORBA.Tie;
+
 import flexjson.JSONSerializer;
 
 import static com.martenscedric.hexpert.google.Achievement.GREAT_ESCAPE;
@@ -241,8 +243,7 @@ public class PlayScreen extends PlayStage
 
             if(removeMode && Rules.isIndepedent(hex.getHexData()))
             {
-
-             batch.setShader(removeShader);
+                batch.setShader(removeShader);
             }
             else if(hexpert.config.isBuildHelp() && getSelection() != null
                     && hex.getHexData().getTileType() != TileType.WATER && Rules.isValid(hex.getHexData(), getSelection()))
@@ -342,8 +343,6 @@ public class PlayScreen extends PlayStage
         return placementHistory;
     }
 
-
-
     public SpriteBatch getBatch() {
         return batch;
     }
@@ -394,7 +393,9 @@ public class PlayScreen extends PlayStage
 
     private void resetGrid()
     {
-        if(placementHistory.size() > 0) {
+        verifyStackIntegrity();
+
+        if(!placementHistory.isEmpty()) {
 
             Label label = new Label(hexpert.i18NBundle.get("confirm_reset"), hexpert.getSkin());
             ActionDialog actionDialog = new ActionDialog(label, new Action(){
@@ -418,13 +419,39 @@ public class PlayScreen extends PlayStage
         }
     }
 
+    private void verifyStackIntegrity()
+    {
+        if(!placementHistory.isEmpty())
+        {
+            boolean gridIsEmpty = true;
+            for(int i = 0; i < grid.getHexs().length; i++)
+            {
+                Hexagon<TileData> hex = grid.getHexs()[i];
+                if(hex.getHexData().getBuildingType() != BuildingType.NONE)
+                {
+                    gridIsEmpty = false;
+                    break;
+                }
+            }
+
+            if(gridIsEmpty)
+                placementHistory.clear();
+        }
+
+    }
+
     private void undo()
     {
         if(placementHistory.size() > 0)
         {
-            TileData data = placementHistory.pop();
-            data.setBuildingTexture(null);
-            data.setBuildingType(BuildingType.NONE);
+            BuildingType buildingType;
+            do{
+                TileData data = placementHistory.pop();
+                data.setBuildingTexture(null);
+                buildingType = data.getBuildingType();
+                data.setBuildingType(BuildingType.NONE);
+            }while(buildingType == BuildingType.NONE);
+
             setSelection(null);
             updateScore();
         }
