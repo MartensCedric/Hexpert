@@ -64,10 +64,8 @@ public class PlayScreen extends PlayStage
     private MoveEventManager moveEventManager;
     private boolean debug = false;
     private MapResult mapResult;
-    private BuildingType selection;
-    private ImageButton selectedButton;
     private boolean[] objectivePassed;
-    private ShaderProgram hintShader;
+    private ShaderProgram hintShader, removeShader;
     private String mapName;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
@@ -186,8 +184,13 @@ public class PlayScreen extends PlayStage
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String hint = Gdx.files.internal("shaders/hint.fs").readString();
+        String rmv = Gdx.files.internal("shaders/remove.fs").readString();
+
         hintShader = new ShaderProgram(vertexShader, hint);
         if (!hintShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + hintShader.getLog());
+
+        removeShader = new ShaderProgram(vertexShader, rmv);
+        if(!removeShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + removeShader.getLog());
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -236,7 +239,12 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(hexpert.config.isBuildHelp() && getSelection() != null
+            if(removeMode && Rules.isIndepedent(hex.getHexData()))
+            {
+
+             batch.setShader(removeShader);
+            }
+            else if(hexpert.config.isBuildHelp() && getSelection() != null
                     && hex.getHexData().getTileType() != TileType.WATER && Rules.isValid(hex.getHexData(), getSelection()))
             {
                 batch.setShader(hintShader);
@@ -334,14 +342,7 @@ public class PlayScreen extends PlayStage
         return placementHistory;
     }
 
-    public void setSelection(BuildingType selection) {
-        this.selection = selection;
-        if(selection == null)
-            selectedButton = null;
 
-        if(hexpert.config.isShowRequirements())
-            setBuilding(selection);
-    }
 
     public SpriteBatch getBatch() {
         return batch;

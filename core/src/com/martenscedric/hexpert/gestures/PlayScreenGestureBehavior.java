@@ -7,11 +7,11 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
-import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.misc.IntPointTime;
 import com.martenscedric.hexpert.misc.PointTime;
 import com.martenscedric.hexpert.misc.Rules;
 import com.martenscedric.hexpert.screens.PlayScreen;
+import com.martenscedric.hexpert.screens.PlayStage;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 import com.martenscedric.hexpert.tile.TileType;
@@ -25,18 +25,19 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
     private Stage stage;
     private HexMap<TileData> grid;
     private Hexpert hexpert;
-    private PlayScreen playScreen;
+    private PlayStage playStage;
 
-    public PlayScreenGestureBehavior(PlayScreen playScreen) {
-        super(playScreen.getCamera());
-        this.stage = playScreen.getStage();
-        this.grid = playScreen.getGrid();
-        this.hexpert = playScreen.getHexpert();
-        this.playScreen = playScreen;
+    public PlayScreenGestureBehavior(PlayScreen playStage) {
+        super(playStage.getCamera());
+        this.stage = playStage.getStage();
+        this.grid = playStage.getGrid();
+        this.hexpert = playStage.getHexpert();
+        this.playStage = playStage;
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        PlayScreen playScreen = (PlayScreen)playStage;
         Viewport viewPort = stage.getViewport();
         Vector3 pos = getCamera().unproject(new Vector3(x,y,0),
                 viewPort.getScreenX(), viewPort.getScreenY(),
@@ -66,7 +67,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 hexpert.sounds.get("click").play();
 
                 if(!hexpert.config.isKeepSelection())
-                    playScreen.setSelection(null);
+                    playStage.setSelection(null);
 
                 playScreen.checkAchievements();
             }else{

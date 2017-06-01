@@ -46,6 +46,8 @@ public abstract class PlayStage extends StageScreen {
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
             btnReset, btnUndo, btnBack, btnRemove, btnHelp, btnOptions;
 
+    protected BuildingType selection;
+    protected ImageButton selectedButton;
     public boolean removeMode = false;
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
     protected LevelComplete exitDialog;
@@ -169,6 +171,7 @@ public abstract class PlayStage extends StageScreen {
               @Override
               public void clicked(InputEvent event, float x, float y) {
                   removeMode = !removeMode;
+                  setSelection(null);
               }
           }
         );
@@ -195,12 +198,13 @@ public abstract class PlayStage extends StageScreen {
 
         tableBtn = new Table();
         tableBtn.setY(HEIGHT - 150);
-        tableBtn.setX(375);
+        tableBtn.setX(500);
         tableBtn.defaults().width(125).height(125).pad(15);
 
         btnBack.getImageCell().expand().fill();
         btnReset.getImageCell().expand().fill();
         btnUndo.getImageCell().expand().fill();
+        btnRemove.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
         btnOptions.getImageCell().expand().fill();
 
@@ -209,10 +213,11 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.add(btnBack);
         tableBtn.add(btnReset);
         tableBtn.add(btnUndo);
+        tableBtn.add(btnRemove);
         tableBtn.add(btnHelp);
         tableBtn.add(btnOptions);
         tableBtn.row();
-        tableBtn.add(objectivesButton).colspan(4).width(500);
+        tableBtn.add(objectivesButton).colspan(5).width(625);
 
         tableRequirements = new Table();
         tableRequirements.defaults().height(100).pad(0, 5, 0, 5);
@@ -324,6 +329,18 @@ public abstract class PlayStage extends StageScreen {
                 return imgRocket;
         }
         return null;
+    }
+
+    public void setSelection(BuildingType selection) {
+        if(!removeMode)
+        {
+            this.selection = selection;
+            if(selection == null)
+                selectedButton = null;
+
+            if(hexpert.config.isShowRequirements())
+                setBuilding(selection);
+        }
     }
 
     public Hexpert getHexpert() {
