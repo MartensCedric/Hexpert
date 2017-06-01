@@ -8,11 +8,16 @@ uniform sampler2D u_texture;
 uniform mat4 u_projTrans;
 
 void main() {
-        vec3 color = texture2D(u_texture, v_texCoords).rgb;
+        vec4 tc = texture2D(u_texture, v_texCoords).rgba;
         if(texture2D(u_texture, v_texCoords).a < 0.4)
         {
             discard;
-        }else{
-            gl_FragColor = vec4(color, 0.5);
+        }
+        else if((tc.r + tc.g + tc.b) < 0.35){
+            gl_FragColor = vec4(tc.rgb, 1);
+        }
+        else{
+            gl_FragColor = vec4(tc.r + 0.3, tc.g - 0.5, tc.b - 0.5, 1);
         }
 }
+

@@ -30,6 +30,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_REMOVE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_UNDO;
@@ -43,8 +44,9 @@ public abstract class PlayStage extends StageScreen {
 
     protected Table table, tableBtn, tableRequirements, tableScore;
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-            btnReset, btnUndo, btnBack, btnHelp, btnOptions;
+            btnReset, btnUndo, btnBack, btnRemove, btnHelp, btnOptions;
 
+    public boolean removeMode = false;
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
     protected LevelComplete exitDialog;
     protected ObjectiveDialog objectiveDialog;
@@ -159,6 +161,17 @@ public abstract class PlayStage extends StageScreen {
 
 
         btnUndo = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_UNDO))));
+
+        btnRemove = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_REMOVE))));
+
+        btnRemove.addListener(new ClickListener()
+          {
+              @Override
+              public void clicked(InputEvent event, float x, float y) {
+                  removeMode = !removeMode;
+              }
+          }
+        );
 
         btnHelp = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HELP))));
         btnHelp.addListener(new ClickListener()
