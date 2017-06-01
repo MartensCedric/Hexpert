@@ -14,13 +14,12 @@ import static com.martenscedric.hexpert.tile.BuildingType.ROCKET;
 
 public class Rules
 {
-    public static boolean isIndepedent(TileData data)
-    {
-        if(data.getBuildingType() == BuildingType.NONE)
-            return false;
+    public static final int DEPENDENT = 0;
+    public static final int INDEPENDENT = 1;
+    public static final int PARTIALLY_INDEPENDENT = 2;
 
-        if(data.getBuildingType() == ROCKET)
-            return true;
+    public static boolean isIndependent(TileData data)
+    {
 
         List<Hexagon<TileData>> neighbors = data.getParent().getNeighbors();
 
@@ -84,6 +83,12 @@ public class Rules
             case BANK:
                 return !rocket;
         }
+
+        return false;
+    }
+
+    public static boolean isPartiallyIndependant()
+    {
 
         return false;
     }
@@ -159,5 +164,18 @@ public class Rules
         }
 
         return false;
+    }
+
+    private static int neighborCountOf(BuildingType buildingType, TileData data)
+    {
+        int n = 0;
+        for(int i = 0; i < data.getParent().getNeighbors().size(); i++)
+        {
+            BuildingType neighborType = data.getParent().getNeighbors().get(i).getHexData().getBuildingType();
+            if(buildingType == neighborType)
+                n++;
+        }
+
+        return n;
     }
 }

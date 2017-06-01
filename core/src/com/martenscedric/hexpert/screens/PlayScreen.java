@@ -185,8 +185,8 @@ public class PlayScreen extends PlayStage
         objectivePassed = new boolean[map.getObjectives().length];
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
-        String hint = Gdx.files.internal("shaders/hint.fs").readString();
-        String rmv = Gdx.files.internal("shaders/remove.fs").readString();
+        String hint = Gdx.files.internal("shaders/yellowTint.fs").readString();
+        String rmv = Gdx.files.internal("shaders/redTint.fs").readString();
 
         hintShader = new ShaderProgram(vertexShader, hint);
         if (!hintShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + hintShader.getLog());
@@ -241,7 +241,7 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(removeMode && Rules.isIndepedent(hex.getHexData()))
+            if(removeMode && Rules.isIndependent(hex.getHexData()))
             {
                 batch.setShader(removeShader);
             }
