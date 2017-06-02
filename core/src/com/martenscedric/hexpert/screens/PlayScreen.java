@@ -4,20 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
@@ -28,22 +21,19 @@ import com.martenscedric.hexpert.event.Action;
 import com.martenscedric.hexpert.event.ActionDialog;
 import com.martenscedric.hexpert.event.LevelComplete;
 import com.martenscedric.hexpert.env.MoveEventManager;
-import com.martenscedric.hexpert.event.ObjectiveDialog;
-import com.martenscedric.hexpert.event.OptionDialog;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
 import com.martenscedric.hexpert.google.Achievement;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
 import com.martenscedric.hexpert.map.Objective;
-import com.martenscedric.hexpert.misc.Rules;
+import com.martenscedric.hexpert.tile.Dependency;
+import com.martenscedric.hexpert.tile.Rules;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 import com.martenscedric.hexpert.tile.TileType;
 
 import java.util.Stack;
-
-import javax.rmi.CORBA.Tie;
 
 import flexjson.JSONSerializer;
 
@@ -241,7 +231,7 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(removeMode && Rules.isIndependent(hex.getHexData()))
+            if(removeMode && Rules.isIndependent(hex.getHexData()) == Dependency.INDEPENDENT)
             {
                 batch.setShader(removeShader);
             }

@@ -9,7 +9,7 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.misc.IntPointTime;
 import com.martenscedric.hexpert.misc.PointTime;
-import com.martenscedric.hexpert.misc.Rules;
+import com.martenscedric.hexpert.tile.Rules;
 import com.martenscedric.hexpert.screens.PlayScreen;
 import com.martenscedric.hexpert.screens.PlayStage;
 import com.martenscedric.hexpert.tile.BuildingType;
