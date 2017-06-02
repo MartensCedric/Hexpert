@@ -121,6 +121,8 @@ public class LevelSelectScreen extends StageScreen
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(!hexpert.playServices.isSignedIn())
+                    hexpert.playServices.signIn();
                 hexpert.playServices.showAchievementsUI();
             }
         });
