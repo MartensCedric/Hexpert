@@ -17,10 +17,9 @@ import static com.martenscedric.hexpert.tile.BuildingType.ROCKET;
 public class Rules
 {
     public static Dependency getDependencyLevel(TileData data) {
-        Dependency status = Dependency.DEPENDENT;
 
         if (data.getBuildingType() == BuildingType.NONE)
-            return status;
+            return Dependency.DEPENDENT;
 
 
         int[] neighborStats = getNeighborStats(data);
@@ -35,8 +34,7 @@ public class Rules
             }
         }
 
-        status = Dependency.INDEPENDENT;
-        return status;
+        return Dependency.INDEPENDENT;
     }
 
     public static boolean isValid(TileData data, BuildingType selection)
