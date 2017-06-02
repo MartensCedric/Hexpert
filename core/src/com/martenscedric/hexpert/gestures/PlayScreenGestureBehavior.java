@@ -9,6 +9,7 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.misc.IntPointTime;
 import com.martenscedric.hexpert.misc.PointTime;
+import com.martenscedric.hexpert.tile.Dependency;
 import com.martenscedric.hexpert.tile.Rules;
 import com.martenscedric.hexpert.screens.PlayScreen;
 import com.martenscedric.hexpert.screens.PlayStage;
@@ -45,7 +46,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null && playStage.removeMode)
+        if(data != null && playStage.removeMode && Rules.getDependencyLevel(data.getHexData()) != Dependency.DEPENDENT)
         {
             data.getHexData().setBuildingTexture(null);
             data.getHexData().setBuildingType(BuildingType.NONE);

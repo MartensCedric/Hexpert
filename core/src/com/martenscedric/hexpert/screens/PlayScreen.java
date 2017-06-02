@@ -231,7 +231,7 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(removeMode && Rules.isIndependent(hex.getHexData()) == Dependency.INDEPENDENT)
+            if(removeMode && Rules.getDependencyLevel(hex.getHexData()) == Dependency.INDEPENDENT)
             {
                 batch.setShader(removeShader);
             }

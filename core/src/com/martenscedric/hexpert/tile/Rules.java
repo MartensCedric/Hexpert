@@ -16,24 +16,20 @@ import static com.martenscedric.hexpert.tile.BuildingType.ROCKET;
 
 public class Rules
 {
-    public static Dependency isIndependent(TileData data)
-    {
+    public static Dependency getDependencyLevel(TileData data) {
         Dependency status = Dependency.DEPENDENT;
 
-        if(data.getBuildingType() == BuildingType.NONE)
+        if (data.getBuildingType() == BuildingType.NONE)
             return status;
 
 
         int[] neighborStats = getNeighborStats(data);
-        for(int i = 1; i < BuildingType.values().length; i++)
-        {
+        for (int i = 1; i < BuildingType.values().length; i++) {
             BuildingType buildingType = BuildingType.values()[i];
-            if(buildingType.getRequired().length == Const.BUILDING_COUNT)
-            {
-                int requiredAmount = buildingType.getRequired()[i - 1];
-                if(requiredAmount > 0)
-                {
-                    if(neighborStats[i - 1] > 0)
+            if (buildingType.getRequired().length == Const.BUILDING_COUNT) {
+                int requiredAmount = buildingType.getRequired()[data.getBuildingType().ordinal() - 1];
+                if (requiredAmount > 0) {
+                    if (neighborStats[i - 1] > 0)
                         return Dependency.DEPENDENT;
                 }
             }
@@ -41,12 +37,6 @@ public class Rules
 
         status = Dependency.INDEPENDENT;
         return status;
-    }
-
-    public static boolean isPartiallyIndependant()
-    {
-
-        return false;
     }
 
     public static boolean isValid(TileData data, BuildingType selection)
