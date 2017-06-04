@@ -272,12 +272,16 @@ public class PlayScreen extends PlayStage
             Hexagon<TileData> hex = grid.getHexs()[i];
             if(hex.getHexData().getBuildingTexture() != null)
             {
+                if(!validBuildings.contains(hex.getHexData()))
+                    batch.setShader(lockedShader);
+
                 Point middlePoint = hex.getHexGeometry().getMiddlePoint();
                 batch.draw(hex.getHexData().getBuildingTexture(),
                         (float)(middlePoint.x - grid.getStyle().getSize()/2),
                         (float)(middlePoint.y - grid.getStyle().getSize()/2),
                         (float)grid.getStyle().getSize(),
                         (float)grid.getStyle().getSize());
+                batch.setShader(null);
             }
         }
         batch.end();

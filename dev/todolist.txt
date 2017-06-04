@@ -20,5 +20,4 @@ NICE TO HAVE
 Leaderboards
 Take back where you were last time
 Background pictures
-Building greyed out mechanic
 More Achievements
