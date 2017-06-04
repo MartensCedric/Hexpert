@@ -34,7 +34,10 @@ import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapLoadException;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
+import com.martenscedric.hexpert.tile.Rules;
 import com.martenscedric.hexpert.tile.TileData;
+
+import java.util.List;
 
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
@@ -77,9 +80,10 @@ public class LevelSelectScreen extends StageScreen
     private ShapeRenderer shapeRenderer;
     private LevelSelectGesture behavior;
     private GestureDetector detector;
-    private ShaderProgram shdDark;
+    private ShaderProgram shdDark, shdLckd;
     private Label lblHexCount,lblHighScore;
     private int[] lockedThereshold = new int[]{0, 5, 12, 21, 33, 45};
+    private List<TileData> validBuildings;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
@@ -100,8 +104,13 @@ public class LevelSelectScreen extends StageScreen
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String darkShader = Gdx.files.internal("shaders/darkness.fs").readString();
+        String lockedShader = Gdx.files.internal("shaders/locked.fs").readString();
+
         shdDark = new ShaderProgram(vertexShader, darkShader);
+        shdLckd = new ShaderProgram(vertexShader, lockedShader);
+
         if (!shdDark.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shdDark.getLog());
+        if (!shdLckd.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shdLckd.getLog());
 
         getCamera().translate(450, 415);
         getCamera().update();
@@ -212,11 +221,15 @@ public class LevelSelectScreen extends StageScreen
                     (float)(middlePoint.y - grid.getStyle().getSize()*HEX_HEIGHT_RATIO) - 24,
                     (float)grid.getStyle().getSize()*2,
                     (float) ((float)grid.getStyle().getSize()*2 * HEX_HEIGHT_RATIO) + 24);
+
         }
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
+            if(!validBuildings.contains(hex.getHexData()))
+                displayBatch.setShader(shdLckd);
+
             if(hex.getHexData().getBuildingTexture() != null)
             {
                 Point middlePoint = hex.getHexGeometry().getMiddlePoint();
@@ -226,6 +239,7 @@ public class LevelSelectScreen extends StageScreen
                         (float)grid.getStyle().getSize(),
                         (float)grid.getStyle().getSize());
             }
+            displayBatch.setShader(null);
         }
 
         displayBatch.end();
@@ -341,6 +355,7 @@ public class LevelSelectScreen extends StageScreen
         displayLevelCamera.update();
         setMapCollision();
 
+        validBuildings = Rules.getValidBuildings(grid);
         return map;
     }
 
@@ -548,10 +563,7 @@ public class LevelSelectScreen extends StageScreen
         }
 
         double deltaX = maxWidth - minWidth;
-        double middleX = minWidth + deltaX/2;
-
         double deltaY = maxHeight - minHeight;
-        double middleY = minHeight + deltaY/2;
 
         shapeRenderer.setProjectionMatrix(displayLevelCamera.combined);
         mapCollision = new Rectangle((float)minWidth, (float)minHeight, (float)deltaX, (float)deltaY);
