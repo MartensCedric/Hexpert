@@ -9,16 +9,12 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.misc.IntPointTime;
 import com.martenscedric.hexpert.misc.PointTime;
-import com.martenscedric.hexpert.tile.Dependency;
 import com.martenscedric.hexpert.tile.Rules;
 import com.martenscedric.hexpert.screens.PlayScreen;
 import com.martenscedric.hexpert.screens.PlayStage;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 import com.martenscedric.hexpert.tile.TileType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 1544256 on 2017-05-02.
@@ -59,7 +55,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
         {
 
             if(data.getHexData().getTileType()
-                    != TileType.WATER && Rules.isValid(data.getHexData(), playScreen.getSelection()))
+                    != TileType.WATER && Rules.isValidPlacement(data.getHexData(), playScreen.getSelection()))
             {
                 data.getHexData().setBuildingType(playScreen.getSelection());
                 data.getHexData().setBuildingTexture(hexpert.getTextureByBuilding(playScreen.getSelection()));

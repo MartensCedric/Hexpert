@@ -1,14 +1,11 @@
 package com.martenscedric.hexpert.tile;
 
 import com.cedricmartens.hexmap.hexagon.Hexagon;
+import com.cedricmartens.hexmap.map.HexMap;
 import com.martenscedric.hexpert.misc.Const;
-import com.martenscedric.hexpert.tile.BuildingType;
-import com.martenscedric.hexpert.tile.TileData;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.martenscedric.hexpert.tile.BuildingType.ROCKET;
 
 /**
  * Created by martens on 5/7/17.
@@ -20,7 +17,6 @@ public class Rules
 
         if (data.getBuildingType() == BuildingType.NONE)
             return Dependency.DEPENDENT;
-
 
         int[] neighborStats = getNeighborStats(data);
         for (int i = 1; i < BuildingType.values().length; i++) {
@@ -37,11 +33,23 @@ public class Rules
         return Dependency.INDEPENDENT;
     }
 
+    public static List<TileData> getValidBuildings(HexMap<TileData> grid)
+    {
+        List<TileData> vBuildings = new ArrayList<>();
+
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            TileData data = (TileData) grid.getHexs()[i].getHexData();
+
+            if(isValid(data, data.getBuildingType()))
+                vBuildings.add(data);
+        }
+
+        return vBuildings;
+    }
+
     public static boolean isValid(TileData data, BuildingType selection)
     {
-        if(data.getBuildingType() != BuildingType.NONE)
-            return false;
-
         int[] neighborStats = getNeighborStats(data);
 
         for(int i = 0; i < selection.getDenied().length; i++)
@@ -60,6 +68,14 @@ public class Rules
         }
 
         return true;
+    }
+
+    public static boolean isValidPlacement(TileData data, BuildingType selection)
+    {
+        if(data.getBuildingType() != BuildingType.NONE)
+            return false;
+
+        return isValid(data, selection);
     }
 
     private static int neighborCountOf(BuildingType buildingType, TileData data)

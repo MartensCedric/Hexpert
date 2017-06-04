@@ -59,9 +59,10 @@ public class PlayScreen extends PlayStage
     private boolean debug = false;
     private MapResult mapResult;
     private boolean[] objectivePassed;
-    private ShaderProgram hintShader, removeShader;
+    private ShaderProgram hintShader, removeShader, lockedShader;
     private String mapName;
     private List<TileData> defaultBuildings;
+    private List<TileData> validBuildings;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
@@ -179,12 +180,16 @@ public class PlayScreen extends PlayStage
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String hint = Gdx.files.internal("shaders/yellowTint.fs").readString();
         String rmv = Gdx.files.internal("shaders/redTint.fs").readString();
+        String lckd = Gdx.files.internal("shaders/locked.fs").readString();
 
         hintShader = new ShaderProgram(vertexShader, hint);
         if (!hintShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + hintShader.getLog());
 
         removeShader = new ShaderProgram(vertexShader, rmv);
         if(!removeShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + removeShader.getLog());
+
+        lockedShader = new ShaderProgram(vertexShader, lckd);
+        if(!lockedShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + lockedShader.getLog());
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -195,15 +200,14 @@ public class PlayScreen extends PlayStage
             hex.setHexData(data);
         }
 
-
         this.defaultBuildings = new ArrayList<>();
+        this.validBuildings = new ArrayList<>();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             if(((TileData)grid.getHexs()[i].getHexData()).getBuildingType() != BuildingType.NONE)
                 defaultBuildings.add((TileData) grid.getHexs()[i].getHexData());
         }
-
 
         setMultiplexer();
         MapUtils.adjustCamera(getCamera(), grid);
@@ -248,7 +252,7 @@ public class PlayScreen extends PlayStage
                 batch.setShader(removeShader);
             }
             else if(hexpert.config.isBuildHelp() && getSelection() != null
-                    && hex.getHexData().getTileType() != TileType.WATER && Rules.isValid(hex.getHexData(), getSelection()))
+                    && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection()))
             {
                 batch.setShader(hintShader);
             }
@@ -374,14 +378,20 @@ public class PlayScreen extends PlayStage
 
     }
 
+    private void updateValidBuildings()
+    {
+        validBuildings = Rules.getValidBuildings(grid);
+    }
+
     private void updateScore()
     {
+        updateValidBuildings();
         if(map.scoreIsCalculated())
         {
             score = 0;
-            for(int i = 0; i < grid.getHexs().length; i++)
+            for(int i = 0; i < validBuildings.size(); i++)
             {
-                TileData data = (TileData) grid.getHexs()[i].getHexData();
+                TileData data = validBuildings.get(i);
                 score+=data.getBuildingType().getScore() * data.getTileType().getMultiplier();
             }
 
