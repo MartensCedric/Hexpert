@@ -33,6 +33,8 @@ import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 import com.martenscedric.hexpert.tile.TileType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import flexjson.JSONSerializer;
@@ -59,12 +61,12 @@ public class PlayScreen extends PlayStage
     private boolean[] objectivePassed;
     private ShaderProgram hintShader, removeShader;
     private String mapName;
+    private List<TileData> defaultBuildings;
 
     private Stack<TileData> placementHistory = new Stack<TileData>();
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, String mapName) {
         super(hexpert);
-
         btnFarm.addListener(new ClickListener()
                             {
                                 @Override
@@ -193,6 +195,16 @@ public class PlayScreen extends PlayStage
             hex.setHexData(data);
         }
 
+
+        this.defaultBuildings = new ArrayList<>();
+
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            if(((TileData)grid.getHexs()[i].getHexData()).getBuildingType() != BuildingType.NONE)
+                defaultBuildings.add((TileData) grid.getHexs()[i].getHexData());
+        }
+
+
         setMultiplexer();
         MapUtils.adjustCamera(getCamera(), grid);
         getCamera().zoom *= 0.6;
@@ -231,7 +243,7 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(removeMode && Rules.getDependencyLevel(hex.getHexData()) == Dependency.INDEPENDENT)
+            if(removeMode && isRemovable(hex.getHexData()))
             {
                 batch.setShader(removeShader);
             }
@@ -432,7 +444,7 @@ public class PlayScreen extends PlayStage
 
     private void undo()
     {
-        if(placementHistory.size() > 0)
+        if(!placementHistory.isEmpty())
         {
             BuildingType buildingType;
             do{
@@ -440,7 +452,7 @@ public class PlayScreen extends PlayStage
                 data.setBuildingTexture(null);
                 buildingType = data.getBuildingType();
                 data.setBuildingType(BuildingType.NONE);
-            }while(buildingType == BuildingType.NONE);
+            }while(buildingType == BuildingType.NONE && !placementHistory.isEmpty());
 
             setSelection(null);
             updateScore();
@@ -552,5 +564,13 @@ public class PlayScreen extends PlayStage
 
         if(numBanks >= 3)
             hexpert.playServices.unlockAchievement(Achievement.TOO_BIG_TO_FAIL);
+    }
+
+    public boolean isRemovable(TileData data)
+    {
+        if(defaultBuildings.contains(data))
+            return false;
+
+        return Rules.getDependencyLevel(data) != Dependency.DEPENDENT;
     }
 }

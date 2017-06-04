@@ -333,9 +333,11 @@ public abstract class PlayStage extends StageScreen {
 
     public void setSelection(BuildingType selection) {
 
+
         this.selection = selection;
         if(selection == null)
             selectedButton = null;
+        else removeMode = false;
 
         if(hexpert.config.isShowRequirements())
             setBuilding(selection);

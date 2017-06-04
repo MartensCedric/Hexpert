@@ -17,6 +17,9 @@ import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileData;
 import com.martenscedric.hexpert.tile.TileType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 1544256 on 2017-05-02.
  */
@@ -46,7 +49,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null && playStage.removeMode && Rules.getDependencyLevel(data.getHexData()) != Dependency.DEPENDENT)
+        if(data != null && playStage.removeMode && playScreen.isRemovable(data.getHexData()))
         {
             data.getHexData().setBuildingTexture(null);
             data.getHexData().setBuildingType(BuildingType.NONE);

@@ -12,7 +12,7 @@ public class MapResult
     public MapResult() {
     }
 
-    public MapResult(int mapId, int score, boolean[] objectivePassed) {
+    public MapResult(int score, boolean[] objectivePassed) {
         this.score = score;
         this.objectivePassed = objectivePassed;
     }
