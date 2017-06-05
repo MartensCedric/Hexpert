@@ -29,7 +29,7 @@ import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.event.LockedDialog;
 import com.martenscedric.hexpert.gestures.LevelSelectGesture;
-import com.martenscedric.hexpert.google.Achievement;
+import com.martenscedric.hexpert.social.Achievement;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapLoadException;
 import com.martenscedric.hexpert.map.MapResult;

@@ -11,9 +11,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.martenscedric.hexpert.google.PlayServices;
+import com.martenscedric.hexpert.social.PlayServices;
 import com.martenscedric.hexpert.misc.HexpertConfig;
 import com.martenscedric.hexpert.screens.LevelSelectScreen;
+import com.martenscedric.hexpert.social.Sharing;
 import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.TileType;
 
@@ -59,13 +60,15 @@ public class Hexpert extends Game {
 	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	public I18NBundle i18NBundle;
 	public PlayServices playServices;
+	public Sharing sharing;
 	public HexpertConfig config;
 	public HashMap<Integer, String> levelIndex;
 	private BitmapFont font;
 	private Skin skin;
 
-	public Hexpert(PlayServices playServices) {
+	public Hexpert(PlayServices playServices, Sharing sharing) {
 		this.playServices = playServices;
+		this.sharing = sharing;
 	}
 
 	@Override

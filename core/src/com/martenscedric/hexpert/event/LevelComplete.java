@@ -33,29 +33,35 @@ public class LevelComplete extends Dialog {
 
         getContentTable().addActor(content);
 
+        getButtonTable().defaults().width(200).height(120);
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
-        textButtonYes.setX(250);
-        textButtonYes.setY(50);
-        textButtonYes.setWidth(200);
-        textButtonYes.setHeight(120);
         setObject(textButtonYes, 1);
-        getButtonTable().addActor(textButtonYes);
+        getButtonTable().add(textButtonYes);
 
         TextButton textButtonNo = new TextButton(bundle.get("no"), skin);
-        textButtonNo.setX(600);
-        textButtonNo.setY(50);
-        textButtonNo.setWidth(200);
-        textButtonNo.setHeight(120);
         setObject(textButtonNo, null);
-        getButtonTable().addActor(textButtonNo);
+        getButtonTable().add(textButtonNo);
+
+        TextButton textButtonShare = new TextButton(bundle.get("share"), skin);
+        setObject(textButtonShare, 2);
+        getButtonTable().add(textButtonShare);
     }
 
     @Override
     protected void result(Object object) {
 
-        if(object != null && (int)object == 1)
+        if(object != null)
         {
-            hexpert.setScreen(hexpert.levelSelectScreen);
+            int res = (int)object;
+            switch (res)
+            {
+                case 1 :
+                    hexpert.setScreen(hexpert.levelSelectScreen);
+                    break;
+                case 2:
+                    hexpert.sharing.shareText("This is a test message for sharing hexpert");
+                    break;
+            }
         }
 
         super.result(object);

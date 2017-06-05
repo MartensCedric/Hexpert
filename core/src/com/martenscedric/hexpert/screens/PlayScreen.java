@@ -20,9 +20,9 @@ import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.event.Action;
 import com.martenscedric.hexpert.event.ActionDialog;
 import com.martenscedric.hexpert.event.LevelComplete;
-import com.martenscedric.hexpert.env.MoveEventManager;
+import com.martenscedric.hexpert.effect.MoveEventManager;
 import com.martenscedric.hexpert.gestures.PlayScreenGestureBehavior;
-import com.martenscedric.hexpert.google.Achievement;
+import com.martenscedric.hexpert.social.Achievement;
 import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
@@ -39,7 +39,7 @@ import java.util.Stack;
 
 import flexjson.JSONSerializer;
 
-import static com.martenscedric.hexpert.google.Achievement.GREAT_ESCAPE;
+import static com.martenscedric.hexpert.social.Achievement.GREAT_ESCAPE;
 import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 
 /**

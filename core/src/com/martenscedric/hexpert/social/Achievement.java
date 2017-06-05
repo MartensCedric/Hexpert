@@ -1,4 +1,4 @@
-package com.martenscedric.hexpert.google;
+package com.martenscedric.hexpert.social;
 
 /**
  * Created by martens on 5/24/17.

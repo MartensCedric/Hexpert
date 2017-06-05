@@ -3,19 +3,14 @@ package com.martenscedric.hexpert;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.badlogic.gdx.backends.android.surfaceview.ResolutionStrategy;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.games.achievement.Achievements;
-import com.google.android.gms.games.internal.api.AchievementsImpl;
-import com.google.android.gms.games.internal.constants.AchievementState;
 import com.google.example.games.basegameutils.GameHelper;
-import com.martenscedric.hexpert.google.PlayServices;
+import com.martenscedric.hexpert.social.PlayServices;
+import com.martenscedric.hexpert.social.Sharing;
 
-public class AndroidLauncher extends AndroidApplication implements PlayServices {
+public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing {
 
 	private GameHelper gameHelper;
 	@Override
@@ -40,7 +35,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 		gameHelper.setup(gameHelperListener);
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Hexpert(this), config);
+		initialize(new Hexpert(this, this), config);
 	}
 
 
@@ -125,5 +120,14 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices 
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void shareText(String message) {
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND);
+		sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+		sendIntent.setType("text/plain");
+		startActivity(sendIntent);
 	}
 }

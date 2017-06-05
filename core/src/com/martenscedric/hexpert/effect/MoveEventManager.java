@@ -1,4 +1,4 @@
-package com.martenscedric.hexpert.env;
+package com.martenscedric.hexpert.effect;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
