@@ -22,18 +22,14 @@ public class LevelComplete extends Dialog {
         this.hexpert = hexpert;
         I18NBundle bundle = hexpert.i18NBundle;
         Label content = new Label(bundle.get("all_objectives_finished"), skin);
-        content.setWidth(900);
+
         content.setAlignment(Align.center);
         getBackground().setMinWidth(1000);
         getBackground().setMinHeight(600);
         content.setWrap(true);
+        getContentTable().add(content).width(900);
 
-        content.setX(50);
-        content.setY(375);
-
-        getContentTable().addActor(content);
-
-        getButtonTable().defaults().width(200).height(120);
+        getButtonTable().defaults().width(200).height(120).pad(5);
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
         setObject(textButtonYes, 1);
         getButtonTable().add(textButtonYes);

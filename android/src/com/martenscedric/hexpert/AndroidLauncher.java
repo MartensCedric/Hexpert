@@ -128,6 +128,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		sendIntent.setAction(Intent.ACTION_SEND);
 		sendIntent.putExtra(Intent.EXTRA_TEXT, message);
 		sendIntent.setType("text/plain");
-		startActivity(sendIntent);
+		startActivity(Intent.createChooser(sendIntent, "Share via ..."));
 	}
 }
