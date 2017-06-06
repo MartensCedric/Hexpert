@@ -1,6 +1,8 @@
 package com.martenscedric.hexpert.event;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -29,7 +31,8 @@ public class LevelComplete extends Dialog {
         content.setWrap(true);
         getContentTable().add(content).width(900);
 
-        getButtonTable().defaults().width(200).height(120).pad(5);
+        getButtonTable().defaults().width(200).height(120).pad(15);
+        
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
         setObject(textButtonYes, 1);
         getButtonTable().add(textButtonYes);
@@ -40,7 +43,9 @@ public class LevelComplete extends Dialog {
 
         TextButton textButtonShare = new TextButton(bundle.get("share"), skin);
         setObject(textButtonShare, 2);
-        getButtonTable().add(textButtonShare);
+
+        Cell cellShare = getButtonTable().add(textButtonShare);
+        cellShare.width(cellShare.getPrefWidth() + 30);
     }
 
     @Override

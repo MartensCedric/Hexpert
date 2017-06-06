@@ -119,7 +119,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
