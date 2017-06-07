@@ -152,7 +152,7 @@ public abstract class PlayStage extends StageScreen {
                                         public void doAction() {
                                             hexpert.setScreen(hexpert.levelSelectScreen);
                                         }
-                                    }, hexpert.i18NBundle, hexpert.getSkin());
+                                    }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
 
                                     actionDialog.show(getStage());
                                 }

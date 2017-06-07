@@ -12,9 +12,9 @@ import com.martenscedric.hexpert.Hexpert;
  * Created by martens on 5/27/17.
  */
 
-public class LockedDialog extends Dialog {
+public class LockedDialog extends StandardDialog {
     public LockedDialog(int currentGoals, int goalsNeeded, Hexpert hexpert, Skin skin) {
-        super("", skin);
+        super(hexpert, skin);
         getBackground().setMinWidth(1000);
         getBackground().setMinHeight(350);
 

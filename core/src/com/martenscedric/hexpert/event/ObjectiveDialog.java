@@ -20,15 +20,13 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
  * Created by martens on 5/20/17.
  */
 
-public class ObjectiveDialog extends Dialog {
+public class ObjectiveDialog extends StandardDialog {
 
-    private Hexpert hexpert;
     private Objective[] objectives;
     private boolean[] objectiveStatus;
 
     public ObjectiveDialog(Skin skin, Hexpert hexpert) {
-        super("", skin);
-        this.hexpert = hexpert;;
+        super(hexpert, skin);
         getBackground().setMinWidth(1000);
 
         final TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), skin);

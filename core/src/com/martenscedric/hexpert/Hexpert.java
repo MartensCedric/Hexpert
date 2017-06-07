@@ -136,6 +136,7 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_LOCKED, Texture.class);
 
 		sounds.put("click", Gdx.audio.newSound(Gdx.files.internal("sounds/click.wav")));
+		sounds.put("win", Gdx.audio.newSound(Gdx.files.internal("sounds/win.wav")));
 		sounds.put("bad", Gdx.audio.newSound(Gdx.files.internal("sounds/bad.wav")));
 		sounds.put("select", Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav")));
 		assetManager.finishLoading();

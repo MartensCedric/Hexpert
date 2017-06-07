@@ -73,6 +73,7 @@ public class PlayScreen extends PlayStage
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
                                     setSelection(BuildingType.FARM);
+                                    hexpert.sounds.get("select").play();
                                 }
                             }
         );
@@ -82,6 +83,7 @@ public class PlayScreen extends PlayStage
                                  @Override
                                  public void clicked(InputEvent event, float x, float y) {
                                      setSelection(BuildingType.HOUSE);
+                                     hexpert.sounds.get("select").play();
                                  }
                              }
         );
@@ -91,6 +93,7 @@ public class PlayScreen extends PlayStage
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
                                     setSelection(BuildingType.MINE);
+                                    hexpert.sounds.get("select").play();
                                 }
                             }
         );
@@ -100,6 +103,7 @@ public class PlayScreen extends PlayStage
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
                                     setSelection(BuildingType.WIND);
+                                    hexpert.sounds.get("select").play();
                                 }
                             }
         );
@@ -109,6 +113,7 @@ public class PlayScreen extends PlayStage
                                    @Override
                                    public void clicked(InputEvent event, float x, float y) {
                                        setSelection(BuildingType.FACTORY);
+                                       hexpert.sounds.get("select").play();
                                    }
                                }
         );
@@ -118,6 +123,7 @@ public class PlayScreen extends PlayStage
                                   @Override
                                   public void clicked(InputEvent event, float x, float y) {
                                       setSelection(BuildingType.MARKET);
+                                      hexpert.sounds.get("select").play();
                                   }
                               }
         );
@@ -127,6 +133,7 @@ public class PlayScreen extends PlayStage
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
                                     setSelection(BuildingType.BANK);
+                                    hexpert.sounds.get("select").play();
                                 }
                             }
         );
@@ -136,6 +143,7 @@ public class PlayScreen extends PlayStage
                                   @Override
                                   public void clicked(InputEvent event, float x, float y) {
                                       setSelection(BuildingType.ROCKET);
+                                      hexpert.sounds.get("select").play();
                                   }
                               }
         );
@@ -429,7 +437,7 @@ public class PlayScreen extends PlayStage
                     placementHistory.clear();
                     updateScore();
                 }
-            }, hexpert.i18NBundle, hexpert.getSkin());
+            }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
 
             actionDialog.show(getStage());
         }

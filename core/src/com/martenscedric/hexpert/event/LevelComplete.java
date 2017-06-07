@@ -1,7 +1,7 @@
 package com.martenscedric.hexpert.event;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,13 +15,13 @@ import com.martenscedric.hexpert.Hexpert;
  * Created by Shawn Martens on 2017-05-17.
  */
 
-public class LevelComplete extends Dialog {
+public class LevelComplete extends StandardDialog {
 
     private boolean shown = false;
-    private Hexpert hexpert;
+
     public LevelComplete(Skin skin, Hexpert hexpert) {
-        super("", skin);
-        this.hexpert = hexpert;
+        super(hexpert, skin);
+
         I18NBundle bundle = hexpert.i18NBundle;
         Label content = new Label(bundle.get("all_objectives_finished"), skin);
 
@@ -75,5 +75,11 @@ public class LevelComplete extends Dialog {
 
     public boolean hasBeenShown() {
         return shown;
+    }
+
+    @Override
+    public Dialog show(Stage stage, Action action) {
+        hexpert.sounds.get("win").play();
+        return super.show(stage, action);
     }
 }

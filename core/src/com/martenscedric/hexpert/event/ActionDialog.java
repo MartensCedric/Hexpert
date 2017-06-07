@@ -12,11 +12,12 @@ import com.martenscedric.hexpert.Hexpert;
  * Created by martens on 5/22/17.
  */
 
-public class ActionDialog extends Dialog {
+public class ActionDialog extends StandardDialog {
 
     private Action action;
-    public ActionDialog(Label text, Action action, I18NBundle bundle, Skin skin) {
-        super("", skin);
+
+    public ActionDialog(Label text, Action action, I18NBundle bundle, Skin skin, Hexpert hexpert) {
+        super(hexpert, skin);
         this.action = action;
 
         getBackground().setMinWidth(1000);

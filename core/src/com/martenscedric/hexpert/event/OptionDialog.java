@@ -26,13 +26,11 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
  * Created by 1544256 on 2017-05-24.
  */
 
-public class OptionDialog extends Dialog
+public class OptionDialog extends StandardDialog
 {
-    private Hexpert hexpert;
     private HexpertConfig config;
     public OptionDialog(final PlayStage playStage, Skin skin) {
-        super("", skin);
-        this.hexpert = playStage.getHexpert();
+        super(playStage.getHexpert(), skin);
         this.config = hexpert.config;
 
         final TextureRegionDrawable txtRgCorrect = new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_CORRECT)));
