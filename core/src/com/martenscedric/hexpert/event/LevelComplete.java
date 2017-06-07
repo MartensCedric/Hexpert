@@ -32,7 +32,7 @@ public class LevelComplete extends Dialog {
         getContentTable().add(content).width(900);
 
         getButtonTable().defaults().width(200).height(120).pad(15);
-        
+
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
         setObject(textButtonYes, 1);
         getButtonTable().add(textButtonYes);
