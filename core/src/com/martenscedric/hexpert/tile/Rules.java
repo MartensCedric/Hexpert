@@ -18,7 +18,7 @@ public class Rules
         if (data.getBuildingType() == BuildingType.NONE)
             return Dependency.DEPENDENT;
 
-        boolean inPartialDependance = false;
+        Dependency defaultDep = Dependency.INDEPENDENT;
         int[] neighborStats = getNeighborStats(data);
         for (int i = 1; i < BuildingType.values().length; i++) {
             BuildingType buildingType = BuildingType.values()[i];
@@ -27,20 +27,33 @@ public class Rules
                 if (requiredAmount > 0) {
                     if (neighborStats[i - 1] > 0)
                     {
-                        return Dependency.DEPENDENT;
+                        for(int j = 0; j < data.getParent().getNeighbors().size(); j++) {
+                            TileData neighbor = data.getParent().getNeighbors().get(j).getHexData();
+                            BuildingType neighborBuildingType = neighbor.getBuildingType();
+
+                            if (buildingType == neighborBuildingType) {
+                                Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType());
+
+                                if (logistic == Logistic.INSUFFICIENT)
+                                    throw new IllegalStateException();
+                                else if (logistic == Logistic.SURPLUS)
+                                    defaultDep = Dependency.PARTIALLY;
+                                else return Dependency.DEPENDENT;
+                            }
+                        }
                     }
                 }
             }
         }
 
-        return Dependency.INDEPENDENT;
+        return defaultDep;
     }
 
     public static Logistic getLogisticalLevel(TileData data, BuildingType buildingType)
     {
         int[] neighborData = getNeighborStats(data);
-        int requiredAmount = buildingType.getRequired()[data.getBuildingType().ordinal() - 1];
-        int neighborAmount = neighborData[data.getBuildingType().ordinal() - 1];
+        int requiredAmount = data.getBuildingType().getRequired()[buildingType.ordinal() - 1];
+        int neighborAmount = neighborData[buildingType.ordinal() - 1];
 
         if(neighborAmount < requiredAmount)
             return Logistic.INSUFFICIENT;

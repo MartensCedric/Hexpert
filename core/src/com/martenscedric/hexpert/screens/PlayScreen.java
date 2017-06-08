@@ -255,9 +255,15 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(removeMode && isRemovable(hex.getHexData()))
+            if(removeMode)
             {
-                batch.setShader(removeShader);
+                Dependency dependency = Rules.getDependencyLevel(hex.getHexData());
+
+                if(dependency == Dependency.INDEPENDENT)
+                    batch.setShader(removeShader);
+                else if (dependency == Dependency.PARTIALLY)
+                    batch.setShader(hintShader);
+
             }
             else if(hexpert.config.isBuildHelp() && getSelection() != null
                     && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection()))
