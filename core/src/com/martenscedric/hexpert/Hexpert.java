@@ -49,7 +49,6 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RIGHT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_SAND;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FOREST;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_UNDO;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WATER;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 
@@ -109,12 +108,11 @@ public class Hexpert extends Game {
 
 		assetManager.load(TEXTURE_NOT_FARM, Texture.class);
 
-		assetManager.load(TEXTURE_UNDO, Texture.class);
 		assetManager.load(TEXTURE_RESET, Texture.class);
 		assetManager.load(TEXTURE_BACK, Texture.class);
 		assetManager.load(TEXTURE_HELP, Texture.class);
+		assetManager.load(TEXTURE_OPTIONS, Texture.classgit );
 		assetManager.load(TEXTURE_REMOVE, Texture.class);
-		assetManager.load(TEXTURE_OPTIONS, Texture.class);
 		assetManager.load(TEXTURE_ACHIEVEMENTS, Texture.class);
 
 		assetManager.load(TEXTURE_GRASS, Texture.class);
@@ -155,7 +153,6 @@ public class Hexpert extends Game {
 	{
 		super.resize(width, height);
 	}
-
 
 	public Texture getTextureByBuilding(BuildingType buildingType)
 	{

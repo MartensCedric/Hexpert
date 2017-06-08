@@ -64,8 +64,6 @@ public class PlayScreen extends PlayStage
     private List<TileData> defaultBuildings;
     private List<TileData> validBuildings;
 
-    private Stack<TileData> placementHistory = new Stack<TileData>();
-
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, String mapName) {
         super(hexpert);
         btnFarm.addListener(new ClickListener()
@@ -147,14 +145,6 @@ public class PlayScreen extends PlayStage
                                   }
                               }
         );
-
-        btnUndo.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                undo();
-            }
-        });
 
         btnReset.addListener(new ClickListener()
         {
@@ -363,10 +353,6 @@ public class PlayScreen extends PlayStage
         return selection;
     }
 
-    public Stack<TileData> getPlacementHistory() {
-        return placementHistory;
-    }
-
     public SpriteBatch getBatch() {
         return batch;
     }
@@ -423,68 +409,24 @@ public class PlayScreen extends PlayStage
 
     private void resetGrid()
     {
-        verifyStackIntegrity();
+        Label label = new Label(hexpert.i18NBundle.get("confirm_reset"), hexpert.getSkin());
+        ActionDialog actionDialog = new ActionDialog(label, new Action(){
 
-        if(!placementHistory.isEmpty()) {
-
-            Label label = new Label(hexpert.i18NBundle.get("confirm_reset"), hexpert.getSkin());
-            ActionDialog actionDialog = new ActionDialog(label, new Action(){
-
-                @Override
-                public void doAction()
-                {
-                    for (int i = 0; i < grid.getHexs().length; i++) {
-                        TileData data = (TileData) grid.getHexs()[i].getHexData();
-                        data.setBuildingType(map.getBuildingTypes()[i]);
-                        data.setBuildingTexture(hexpert.getTextureByBuilding(map.getBuildingTypes()[i]));
-                    }
-
-                    setSelection(null);
-                    placementHistory.clear();
-                    updateScore();
+            @Override
+            public void doAction()
+            {
+                for (int i = 0; i < grid.getHexs().length; i++) {
+                    TileData data = (TileData) grid.getHexs()[i].getHexData();
+                    data.setBuildingType(map.getBuildingTypes()[i]);
+                    data.setBuildingTexture(hexpert.getTextureByBuilding(map.getBuildingTypes()[i]));
                 }
-            }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
+
+                setSelection(null);
+                updateScore();
+            }
+        }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
 
             actionDialog.show(getStage());
-        }
-    }
-
-    private void verifyStackIntegrity()
-    {
-        if(!placementHistory.isEmpty())
-        {
-            boolean gridIsEmpty = true;
-            for(int i = 0; i < grid.getHexs().length; i++)
-            {
-                Hexagon<TileData> hex = grid.getHexs()[i];
-                if(hex.getHexData().getBuildingType() != BuildingType.NONE)
-                {
-                    gridIsEmpty = false;
-                    break;
-                }
-            }
-
-            if(gridIsEmpty)
-                placementHistory.clear();
-        }
-
-    }
-
-    private void undo()
-    {
-        if(!placementHistory.isEmpty())
-        {
-            BuildingType buildingType;
-            do{
-                TileData data = placementHistory.pop();
-                data.setBuildingTexture(null);
-                buildingType = data.getBuildingType();
-                data.setBuildingType(BuildingType.NONE);
-            }while(buildingType == BuildingType.NONE && !placementHistory.isEmpty());
-
-            setSelection(null);
-            updateScore();
-        }
     }
 
     public MoveEventManager getMoveEventManager() {

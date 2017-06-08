@@ -33,7 +33,6 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_REMOVE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_ROCKET;
-import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_UNDO;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_WIND;
 
 /**
@@ -44,7 +43,7 @@ public abstract class PlayStage extends StageScreen {
 
     protected Table table, tableBtn, tableRequirements, tableScore;
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-            btnReset, btnUndo, btnBack, btnRemove, btnHelp, btnOptions;
+            btnReset, btnBack, btnRemove, btnHelp, btnOptions;
 
     protected BuildingType selection;
     protected ImageButton selectedButton;
@@ -161,9 +160,6 @@ public abstract class PlayStage extends StageScreen {
 
         btnReset = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RESET))));
 
-
-        btnUndo = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_UNDO))));
-
         btnRemove = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_REMOVE))));
 
         btnRemove.addListener(new ClickListener()
@@ -203,7 +199,6 @@ public abstract class PlayStage extends StageScreen {
 
         btnBack.getImageCell().expand().fill();
         btnReset.getImageCell().expand().fill();
-        btnUndo.getImageCell().expand().fill();
         btnRemove.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
         btnOptions.getImageCell().expand().fill();
@@ -212,7 +207,6 @@ public abstract class PlayStage extends StageScreen {
 
         tableBtn.add(btnBack);
         tableBtn.add(btnReset);
-        tableBtn.add(btnUndo);
         tableBtn.add(btnRemove);
         tableBtn.add(btnHelp);
         tableBtn.add(btnOptions);
