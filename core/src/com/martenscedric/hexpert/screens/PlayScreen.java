@@ -403,6 +403,11 @@ public class PlayScreen extends PlayStage
             {
                 mapResult.setScore(score);
                 saveResult();
+                try{
+                    hexpert.playServices.submitScore(score, mapName);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

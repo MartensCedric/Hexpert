@@ -10,9 +10,28 @@ import com.google.example.games.basegameutils.GameHelper;
 import com.martenscedric.hexpert.social.PlayServices;
 import com.martenscedric.hexpert.social.Sharing;
 
+import java.util.HashMap;
+
 public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing {
 
 	private GameHelper gameHelper;
+	private HashMap<String, String> leaderboardsMap;
+
+	{
+		leaderboardsMap = new HashMap<>();
+		leaderboardsMap.put("handball", "CgkIq5XDzvcOEAIQDg");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+		leaderboardsMap.put("", "");
+	}
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,6 +112,20 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	public void rateGame() {
 
 	}
+
+	@Override
+	public void submitScore(int score, String leaderboard) {
+		Games.Leaderboards.submitScore(gameHelper.getApiClient(), leaderboardsMap.get(leaderboard), score);
+	}
+
+	@Override
+	public void showLeaderboardUI(String leaderboard) {
+		startActivityForResult(
+				Games.Leaderboards.getLeaderboardIntent(
+						gameHelper.getApiClient(), leaderboardsMap.get(leaderboard)), 0);
+
+	}
+
 
 	@Override
 	public void unlockAchievement(String id) {
