@@ -18,6 +18,7 @@ public class Rules
         if (data.getBuildingType() == BuildingType.NONE)
             return Dependency.DEPENDENT;
 
+        boolean inPartialDependance = false;
         int[] neighborStats = getNeighborStats(data);
         for (int i = 1; i < BuildingType.values().length; i++) {
             BuildingType buildingType = BuildingType.values()[i];
@@ -25,12 +26,27 @@ public class Rules
                 int requiredAmount = buildingType.getRequired()[data.getBuildingType().ordinal() - 1];
                 if (requiredAmount > 0) {
                     if (neighborStats[i - 1] > 0)
+                    {
                         return Dependency.DEPENDENT;
+                    }
                 }
             }
         }
 
         return Dependency.INDEPENDENT;
+    }
+
+    public static Logistic getLogisticalLevel(TileData data, BuildingType buildingType)
+    {
+        int[] neighborData = getNeighborStats(data);
+        int requiredAmount = buildingType.getRequired()[data.getBuildingType().ordinal() - 1];
+        int neighborAmount = neighborData[data.getBuildingType().ordinal() - 1];
+
+        if(neighborAmount < requiredAmount)
+            return Logistic.INSUFFICIENT;
+        else if(neighborAmount > requiredAmount)
+            return Logistic.SURPLUS;
+        else return Logistic.NECESSARY;
     }
 
     public static List<TileData> getValidBuildings(HexMap<TileData> grid)
