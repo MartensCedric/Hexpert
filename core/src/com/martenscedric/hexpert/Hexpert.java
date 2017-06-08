@@ -111,7 +111,7 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_RESET, Texture.class);
 		assetManager.load(TEXTURE_BACK, Texture.class);
 		assetManager.load(TEXTURE_HELP, Texture.class);
-		assetManager.load(TEXTURE_OPTIONS, Texture.classgit );
+		assetManager.load(TEXTURE_OPTIONS, Texture.class);
 		assetManager.load(TEXTURE_REMOVE, Texture.class);
 		assetManager.load(TEXTURE_ACHIEVEMENTS, Texture.class);
 

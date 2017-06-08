@@ -245,7 +245,7 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(removeMode)
+            if(removeMode && !defaultBuildings.contains(hex.getHexData()))
             {
                 Dependency dependency = Rules.getDependencyLevel(hex.getHexData());
 
