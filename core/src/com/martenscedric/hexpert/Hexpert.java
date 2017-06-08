@@ -37,6 +37,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEADERBOARD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEFT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LOCKED;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
@@ -114,6 +115,7 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_OPTIONS, Texture.class);
 		assetManager.load(TEXTURE_REMOVE, Texture.class);
 		assetManager.load(TEXTURE_ACHIEVEMENTS, Texture.class);
+		assetManager.load(TEXTURE_LEADERBOARD, Texture.class);
 
 		assetManager.load(TEXTURE_GRASS, Texture.class);
 		assetManager.load(TEXTURE_SAND, Texture.class);

@@ -26,6 +26,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_FARM;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HELP;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEADERBOARD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
@@ -43,7 +44,7 @@ public abstract class PlayStage extends StageScreen {
 
     protected Table table, tableBtn, tableRequirements, tableScore;
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-            btnReset, btnBack, btnRemove, btnHelp, btnOptions;
+            btnReset, btnBack, btnRemove, btnHelp, btnOptions, btnLeaderboard;
 
     protected BuildingType selection;
     protected ImageButton selectedButton;
@@ -192,9 +193,11 @@ public abstract class PlayStage extends StageScreen {
                                }
         );
 
+        btnLeaderboard = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_LEADERBOARD))));
+
         tableBtn = new Table();
         tableBtn.setY(HEIGHT - 155);
-        tableBtn.setX(425);
+        tableBtn.setX(500);
         tableBtn.defaults().width(125).height(125).pad(15);
 
         btnBack.getImageCell().expand().fill();
@@ -202,6 +205,7 @@ public abstract class PlayStage extends StageScreen {
         btnRemove.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
         btnOptions.getImageCell().expand().fill();
+        btnLeaderboard.getImageCell().expand().fill();
 
         objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), hexpert.getSkin());
 
@@ -210,6 +214,7 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.add(btnRemove);
         tableBtn.add(btnHelp);
         tableBtn.add(btnOptions);
+        tableBtn.add(btnLeaderboard);
         tableBtn.row();
         tableBtn.add(objectivesButton).colspan(5).width(625);
 

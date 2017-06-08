@@ -64,7 +64,7 @@ public class PlayScreen extends PlayStage
     private List<TileData> defaultBuildings;
     private List<TileData> validBuildings;
 
-    public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, String mapName) {
+    public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
         btnFarm.addListener(new ClickListener()
                             {
@@ -161,6 +161,19 @@ public class PlayScreen extends PlayStage
                 objectivesButton.setChecked(false);
                 objectiveDialog.setObjectives(map.getObjectives(), mapResult.getObjectivePassed());
                 objectiveDialog.show(getStage());
+            }
+        });
+
+        btnLeaderboard.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                try{
+                    hexpert.playServices.showLeaderboardUI(mapName);
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
 
