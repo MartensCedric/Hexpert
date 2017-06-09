@@ -1,5 +1,7 @@
 package com.martenscedric.hexpert.map;
 
+import com.martenscedric.hexpert.tile.BuildingType;
+
 /**
  * Created by 1544256 on 2017-05-09.
  */
@@ -8,6 +10,7 @@ public class MapResult
 {
     private int score;
     private boolean[] objectivePassed;
+    private BuildingType[] buildings;
 
     public MapResult() {
     }
@@ -31,5 +34,13 @@ public class MapResult
 
     public void setObjectivePassed(boolean[] objectivePassed) {
         this.objectivePassed = objectivePassed;
+    }
+
+    public BuildingType[] getBuildings() {
+        return buildings;
+    }
+
+    public void setBuildings(BuildingType[] buildings) {
+        this.buildings = buildings;
     }
 }

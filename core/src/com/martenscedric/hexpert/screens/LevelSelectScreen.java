@@ -34,6 +34,7 @@ import com.martenscedric.hexpert.map.Map;
 import com.martenscedric.hexpert.map.MapLoadException;
 import com.martenscedric.hexpert.map.MapResult;
 import com.martenscedric.hexpert.map.MapUtils;
+import com.martenscedric.hexpert.tile.BuildingType;
 import com.martenscedric.hexpert.tile.Rules;
 import com.martenscedric.hexpert.tile.TileData;
 
@@ -347,6 +348,18 @@ public class LevelSelectScreen extends StageScreen
             TileData data = (TileData) grid.getHexs()[i].getHexData();
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
             data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
+        }
+
+
+        BuildingType[] buildingTypes = result.getBuildings();
+
+        if(buildingTypes != null)
+        {
+            for(int i = 0; i < grid.getHexs().length; i++)
+            {
+                TileData data = (TileData) grid.getHexs()[i].getHexData();
+                data.setBuildingType(buildingTypes[i]);
+            }
         }
 
         displayLevelCamera.position.setZero();

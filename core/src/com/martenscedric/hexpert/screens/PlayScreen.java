@@ -202,6 +202,17 @@ public class PlayScreen extends PlayStage
         lockedShader = new ShaderProgram(vertexShader, lckd);
         if(!lockedShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + lockedShader.getLog());
 
+        BuildingType[] buildingTypes = mapResult.getBuildings();
+
+        if(buildingTypes != null)
+        {
+            for(int i = 0; i < grid.getHexs().length; i++)
+            {
+                TileData data = (TileData) grid.getHexs()[i].getHexData();
+                data.setBuildingType(buildingTypes[i]);
+            }
+        }
+
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
@@ -415,6 +426,13 @@ public class PlayScreen extends PlayStage
             if(score > mapResult.getScore())
             {
                 mapResult.setScore(score);
+                BuildingType[] buildingTypes = new BuildingType[grid.getHexs().length];
+                for(int i = 0; i < grid.getHexs().length; i++)
+                {
+                    buildingTypes[i] = ((TileData) grid.getHexs()[i].getHexData()).getBuildingType();
+                }
+                mapResult.setBuildings(buildingTypes);
+
                 saveResult();
                 try{
                     hexpert.playServices.submitScore(score, mapName);
