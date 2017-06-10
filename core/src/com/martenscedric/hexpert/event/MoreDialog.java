@@ -32,6 +32,7 @@ public class MoreDialog extends StandardDialog {
     public MoreDialog(final Hexpert hexpert, final PlayStage playStage, Skin skin) {
         super(hexpert, skin);
 
+        this.playStage = playStage;
         this.hexpert = hexpert;
         getContentTable().defaults().width(125).height(125).pad(15);
         btnBack = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BACK))));
@@ -136,11 +137,6 @@ public class MoreDialog extends StandardDialog {
                 .width(textButtonClose.getLabel().getPrefWidth() + 50)
                 .height(textButtonClose.getLabel().getPrefHeight() + 50).pad(25);
 
-        setObject(btnBack, null);
-        setObject(btnReset, null);
-        setObject(btnOptions, null);
-        setObject(btnLeaderboard, null);
-
         setObject(textButtonClose, null);
     }
 
@@ -160,16 +156,19 @@ public class MoreDialog extends StandardDialog {
         }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
 
         actionDialog.show(getStage());
+        hide();
     }
 
     private void resetLevel()
     {
         ((PlayScreen)playStage).resetGrid();
+        hide();
     }
 
     private void options()
     {
         new OptionDialog(playStage, hexpert.getSkin()).show(getStage());
+        hide();
     }
 
     private void leaderboard()
@@ -180,5 +179,6 @@ public class MoreDialog extends StandardDialog {
         {
             e.printStackTrace();
         }
+        hide();
     }
 }
