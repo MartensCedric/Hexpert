@@ -202,6 +202,15 @@ public class PlayScreen extends PlayStage
         lockedShader = new ShaderProgram(vertexShader, lckd);
         if(!lockedShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + lockedShader.getLog());
 
+        this.defaultBuildings = new ArrayList<>();
+        this.validBuildings = new ArrayList<>();
+
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            if(((TileData)grid.getHexs()[i].getHexData()).getBuildingType() != BuildingType.NONE)
+                defaultBuildings.add((TileData) grid.getHexs()[i].getHexData());
+        }
+
         BuildingType[] buildingTypes = mapResult.getBuildings();
 
         if(buildingTypes != null)
@@ -220,15 +229,6 @@ public class PlayScreen extends PlayStage
             data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
             hex.setHexData(data);
-        }
-
-        this.defaultBuildings = new ArrayList<>();
-        this.validBuildings = new ArrayList<>();
-
-        for(int i = 0; i < grid.getHexs().length; i++)
-        {
-            if(((TileData)grid.getHexs()[i].getHexData()).getBuildingType() != BuildingType.NONE)
-                defaultBuildings.add((TileData) grid.getHexs()[i].getHexData());
         }
 
         setMultiplexer();
