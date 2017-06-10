@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -39,15 +40,7 @@ public class MoreDialog extends StandardDialog {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
 
-                    Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
-                    ActionDialog actionDialog = new ActionDialog(text, new Action() {
-                        @Override
-                        public void doAction() {
-                            hexpert.setScreen(hexpert.levelSelectScreen);
-                        }
-                    }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
-
-                    actionDialog.show(getStage());
+                 backToMenu();
                 }
             }
         );
@@ -61,7 +54,7 @@ public class MoreDialog extends StandardDialog {
                                {
                                    @Override
                                    public void clicked(InputEvent event, float x, float y) {
-                                       new OptionDialog(playStage, hexpert.getSkin()).show(getStage());
+                                       options();
                                    }
                                }
         );
@@ -73,12 +66,7 @@ public class MoreDialog extends StandardDialog {
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                try{
-                    hexpert.playServices.showLeaderboardUI(((PlayScreen)playStage).mapName);
-                }catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                leaderboard();
             }
         });
 
@@ -86,7 +74,7 @@ public class MoreDialog extends StandardDialog {
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((PlayScreen)playStage).resetGrid();
+                resetLevel();
             }
         });
 
@@ -102,28 +90,95 @@ public class MoreDialog extends StandardDialog {
         Label lblOptions = new Label(i18N.get("options"), hexpert.getSkin());
         Label lblLeaderboard = new Label(i18N.get("leaderboard"), hexpert.getSkin());
 
+        lblBack.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                backToMenu();
+            }
+        });
+
+        lblReset.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                resetLevel();
+            }
+        });
+
+        lblOptions.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                options();
+            }
+        });
+
+        lblLeaderboard.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                leaderboard();
+            }
+        });
+
+
         getContentTable().add(btnBack);
-        getContentTable().add(lblBack).width(lblBack.getPrefWidth());;
+        getContentTable().add(lblBack).width(lblBack.getPrefWidth());
         getContentTable().row();
         getContentTable().add(btnReset);
-        getContentTable().add(lblReset).width(lblReset.getPrefWidth());;
+        getContentTable().add(lblReset).width(lblReset.getPrefWidth());
         getContentTable().row();
         getContentTable().add(btnOptions);
-        getContentTable().add(lblOptions).width(lblOptions.getPrefWidth());;
+        getContentTable().add(lblOptions).width(lblOptions.getPrefWidth());
         getContentTable().row();
         getContentTable().add(btnLeaderboard);
-        getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth());;
-        
+        getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth());
+
+        TextButton textButtonClose = new TextButton(i18N.get("close"), hexpert.getSkin());
+        getButtonTable().add(textButtonClose)
+                .width(textButtonClose.getLabel().getPrefWidth() + 50)
+                .height(textButtonClose.getLabel().getPrefHeight() + 50).pad(25);
+
         setObject(btnBack, null);
         setObject(btnReset, null);
         setObject(btnOptions, null);
         setObject(btnLeaderboard, null);
+
+        setObject(textButtonClose, null);
     }
 
     @Override
     protected void result(Object object) {
-        if(object == null)
-            return;
         super.result(object);
+    }
+
+    private void backToMenu()
+    {
+        Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
+        ActionDialog actionDialog = new ActionDialog(text, new Action() {
+            @Override
+            public void doAction() {
+                hexpert.setScreen(hexpert.levelSelectScreen);
+            }
+        }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
+
+        actionDialog.show(getStage());
+    }
+
+    private void resetLevel()
+    {
+        ((PlayScreen)playStage).resetGrid();
+    }
+
+    private void options()
+    {
+        new OptionDialog(playStage, hexpert.getSkin()).show(getStage());
+    }
+
+    private void leaderboard()
+    {
+        try{
+            hexpert.playServices.showLeaderboardUI(((PlayScreen)playStage).mapName);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
