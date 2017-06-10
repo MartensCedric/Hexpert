@@ -14,6 +14,7 @@ import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.event.Action;
 import com.martenscedric.hexpert.event.ActionDialog;
 import com.martenscedric.hexpert.event.LevelComplete;
+import com.martenscedric.hexpert.event.MoreDialog;
 import com.martenscedric.hexpert.event.ObjectiveDialog;
 import com.martenscedric.hexpert.event.OptionDialog;
 import com.martenscedric.hexpert.tile.BuildingType;
@@ -29,6 +30,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEADERBOARD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MINE;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_MORE;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_REMOVE;
@@ -44,7 +46,7 @@ public abstract class PlayStage extends StageScreen {
 
     protected Table table, tableBtn, tableRequirements, tableScore;
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-            btnReset, btnBack, btnRemove, btnHelp, btnOptions, btnLeaderboard;
+            btnMore, btnRemove, btnHelp;
 
     protected BuildingType selection;
     protected ImageButton selectedButton;
@@ -138,28 +140,16 @@ public abstract class PlayStage extends StageScreen {
 
         table.setDebug(false);
 
-        btnBack = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BACK))));
-        btnBack.setX(5);
-        btnBack.setY(HEIGHT - btnBack.getPrefHeight());
-        btnBack.addListener(new ClickListener()
-                            {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
+        btnMore = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MORE))));
 
-                                    Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
-                                    ActionDialog actionDialog = new ActionDialog(text, new Action() {
-                                        @Override
-                                        public void doAction() {
-                                            hexpert.setScreen(hexpert.levelSelectScreen);
-                                        }
-                                    }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
+        btnMore.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                new MoreDialog(hexpert, PlayStage.this, hexpert.getSkin()).show(getStage());
+            }
+        });
 
-                                    actionDialog.show(getStage());
-                                }
-                            }
-        );
-
-        btnReset = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RESET))));
 
         btnRemove = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_REMOVE))));
 
@@ -182,41 +172,20 @@ public abstract class PlayStage extends StageScreen {
             }
         });
 
-        btnOptions = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_OPTIONS))));
-        btnOptions.addListener(new ClickListener()
-                               {
-                                   @Override
-                                   public void clicked(InputEvent event, float x, float y) {
-                                       optionDialog = new OptionDialog(PlayStage.this, hexpert.getSkin());
-                                       optionDialog.show(getStage());
-                                   }
-                               }
-        );
-
-        btnLeaderboard = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_LEADERBOARD))));
-
         tableBtn = new Table();
-        tableBtn.setY(HEIGHT - 155);
-        tableBtn.setX(500);
+        tableBtn.setY(HEIGHT - 85);
+        tableBtn.setX(225);
         tableBtn.defaults().width(125).height(125).pad(15);
 
-        btnBack.getImageCell().expand().fill();
-        btnReset.getImageCell().expand().fill();
+        btnMore.getImageCell().expand().fill();
         btnRemove.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
-        btnOptions.getImageCell().expand().fill();
-        btnLeaderboard.getImageCell().expand().fill();
 
         objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), hexpert.getSkin());
 
-        tableBtn.add(btnBack);
-        tableBtn.add(btnReset);
+        tableBtn.add(btnMore);
         tableBtn.add(btnRemove);
         tableBtn.add(btnHelp);
-        tableBtn.add(btnOptions);
-        tableBtn.add(btnLeaderboard);
-        tableBtn.row();
-        tableBtn.add(objectivesButton).colspan(5).width(625);
 
         tableRequirements = new Table();
         tableRequirements.defaults().height(100).pad(0, 5, 0, 5);

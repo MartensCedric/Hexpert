@@ -60,7 +60,7 @@ public class PlayScreen extends PlayStage
     private MapResult mapResult;
     private boolean[] objectivePassed;
     private ShaderProgram hintShader, removeShader, lockedShader;
-    private String mapName;
+    public String mapName;
     private List<TileData> defaultBuildings;
     private List<TileData> validBuildings;
 
@@ -146,14 +146,6 @@ public class PlayScreen extends PlayStage
                               }
         );
 
-        btnReset.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                resetGrid();
-            }
-        });
-
         objectivesButton.addListener(new ClickListener()
         {
             @Override
@@ -164,18 +156,6 @@ public class PlayScreen extends PlayStage
             }
         });
 
-        btnLeaderboard.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                try{
-                    hexpert.playServices.showLeaderboardUI(mapName);
-                }catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         this.hexpert = hexpert;
         this.mapName = mapName;
@@ -443,7 +423,7 @@ public class PlayScreen extends PlayStage
         }
     }
 
-    private void resetGrid()
+    public void resetGrid()
     {
         Label label = new Label(hexpert.i18NBundle.get("confirm_reset"), hexpert.getSkin());
         ActionDialog actionDialog = new ActionDialog(label, new Action(){
