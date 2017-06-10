@@ -1,7 +1,6 @@
 MUST
 ==ART==
 Redo in-game menu art
-Pay some guy on fiverr for clicking sounds
 
 ==Tutorial==
 Scoring per building
@@ -18,6 +17,5 @@ Complete English, French, Spanish, German translations
 
 NICE TO HAVE
 Leaderboards
-Take back where you were last time
 Background pictures
 More Achievements
