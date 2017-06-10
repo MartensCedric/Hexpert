@@ -21,9 +21,4 @@ public class StandardDialog extends Dialog
         super.result(object);
         hexpert.sounds.get("click").play();
     }
-
-    protected void close()
-    {
-        this.result(null);
-    }
 }

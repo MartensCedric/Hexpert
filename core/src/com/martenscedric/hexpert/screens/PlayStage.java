@@ -174,7 +174,7 @@ public abstract class PlayStage extends StageScreen {
 
         tableBtn = new Table();
         tableBtn.setY(HEIGHT - 85);
-        tableBtn.setX(225);
+        tableBtn.setX(235);
         tableBtn.defaults().width(125).height(125).pad(15);
 
         btnMore.getImageCell().expand().fill();

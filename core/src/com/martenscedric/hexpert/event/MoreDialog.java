@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.martenscedric.hexpert.Hexpert;
 import com.martenscedric.hexpert.screens.PlayScreen;
 import com.martenscedric.hexpert.screens.PlayStage;
@@ -47,7 +48,6 @@ public class MoreDialog extends StandardDialog {
                     }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
 
                     actionDialog.show(getStage());
-                    close();
                 }
             }
         );
@@ -62,7 +62,6 @@ public class MoreDialog extends StandardDialog {
                                    @Override
                                    public void clicked(InputEvent event, float x, float y) {
                                        new OptionDialog(playStage, hexpert.getSkin()).show(getStage());
-                                       close();
                                    }
                                }
         );
@@ -80,7 +79,6 @@ public class MoreDialog extends StandardDialog {
                 {
                     e.printStackTrace();
                 }
-                close();
             }
         });
 
@@ -89,7 +87,6 @@ public class MoreDialog extends StandardDialog {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ((PlayScreen)playStage).resetGrid();
-                close();
             }
         });
 
@@ -99,18 +96,34 @@ public class MoreDialog extends StandardDialog {
         btnOptions.getImageCell().expand().fill();
         btnLeaderboard.getImageCell().expand().fill();
 
+        I18NBundle i18N = hexpert.i18NBundle;
+        Label lblBack = new Label(i18N.get("backtolvlslct"), hexpert.getSkin());
+        Label lblReset = new Label(i18N.get("resetlvl"), hexpert.getSkin());
+        Label lblOptions = new Label(i18N.get("options"), hexpert.getSkin());
+        Label lblLeaderboard = new Label(i18N.get("leaderboard"), hexpert.getSkin());
+
         getContentTable().add(btnBack);
+        getContentTable().add(lblBack).width(lblBack.getPrefWidth());;
         getContentTable().row();
         getContentTable().add(btnReset);
+        getContentTable().add(lblReset).width(lblReset.getPrefWidth());;
         getContentTable().row();
         getContentTable().add(btnOptions);
+        getContentTable().add(lblOptions).width(lblOptions.getPrefWidth());;
         getContentTable().row();
         getContentTable().add(btnLeaderboard);
-        getContentTable().row();
+        getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth());;
+        
+        setObject(btnBack, null);
+        setObject(btnReset, null);
+        setObject(btnOptions, null);
+        setObject(btnLeaderboard, null);
     }
 
     @Override
     protected void result(Object object) {
+        if(object == null)
+            return;
         super.result(object);
     }
 }
