@@ -1,4 +1,4 @@
-package com.cedricmartens.hexpert.event;
+package com.cedricmartens.hexpert.event.misc;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
+import com.cedricmartens.hexpert.event.StandardDialog;
 
 /**
  * Created by martens on 5/22/17.
@@ -13,9 +14,9 @@ import com.cedricmartens.hexpert.Hexpert;
 
 public class ActionDialog extends StandardDialog {
 
-    private com.cedricmartens.hexpert.event.Action action;
+    private Action action;
 
-    public ActionDialog(Label text, com.cedricmartens.hexpert.event.Action action, I18NBundle bundle, Skin skin, Hexpert hexpert) {
+    public ActionDialog(Label text, Action action, I18NBundle bundle, Skin skin, Hexpert hexpert) {
         super(hexpert, skin);
         this.action = action;
 

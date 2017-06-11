@@ -1,16 +1,19 @@
 package com.cedricmartens.hexpert.event;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
+import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
 
 /**
  * Created by martens on 6/11/17.
  */
 
 public class HelpDialog extends StandardDialog {
-    public HelpDialog(Hexpert hexpert, Skin skin) {
+    public HelpDialog(final Hexpert hexpert, Skin skin) {
         super(hexpert, skin);
 
         I18NBundle bundle = hexpert.i18NBundle;
@@ -20,6 +23,15 @@ public class HelpDialog extends StandardDialog {
         TextButton txtBtnScore = new TextButton(bundle.get("building_score"), skin);
         TextButton txtBtnSpec = new TextButton(bundle.get("tile_spec"), skin);
         TextButton txtBtnLck = new TextButton(bundle.get("building_lck"), skin);
+
+        txtBtnReqs.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                new BuildingReqDialog(hexpert, hexpert.getSkin()).show(getStage());
+                hide();
+            }
+        });
+
 
         getContentTable().add(txtBtnReqs);
         getContentTable().row();

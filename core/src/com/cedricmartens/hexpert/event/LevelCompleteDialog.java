@@ -14,11 +14,11 @@ import com.badlogic.gdx.utils.I18NBundle;
  * Created by Shawn Martens on 2017-05-17.
  */
 
-public class LevelComplete extends StandardDialog {
+public class LevelCompleteDialog extends StandardDialog {
 
     private boolean shown = false;
 
-    public LevelComplete(Skin skin, com.cedricmartens.hexpert.Hexpert hexpert) {
+    public LevelCompleteDialog(Skin skin, com.cedricmartens.hexpert.Hexpert hexpert) {
         super(hexpert, skin);
 
         I18NBundle bundle = hexpert.i18NBundle;

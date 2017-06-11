@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.cedricmartens.hexpert.event.misc.ActionDialog;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_CORRECT;
@@ -164,7 +165,7 @@ public class MoreDialog extends StandardDialog {
     private void backToMenu()
     {
         Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
-        ActionDialog actionDialog = new ActionDialog(text, new com.cedricmartens.hexpert.event.Action() {
+        com.cedricmartens.hexpert.event.misc.ActionDialog actionDialog = new ActionDialog(text, new com.cedricmartens.hexpert.event.misc.Action() {
             @Override
             public void doAction() {
                 hexpert.setScreen(hexpert.levelSelectScreen);

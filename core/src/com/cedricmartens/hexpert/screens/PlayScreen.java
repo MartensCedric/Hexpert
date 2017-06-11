@@ -18,9 +18,9 @@ import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
-import com.cedricmartens.hexpert.event.Action;
-import com.cedricmartens.hexpert.event.ActionDialog;
-import com.cedricmartens.hexpert.event.LevelComplete;
+import com.cedricmartens.hexpert.event.misc.Action;
+import com.cedricmartens.hexpert.event.misc.ActionDialog;
+import com.cedricmartens.hexpert.event.LevelCompleteDialog;
 import com.cedricmartens.hexpert.effect.MoveEventManager;
 import com.cedricmartens.hexpert.gestures.PlayScreenGestureBehavior;
 import com.cedricmartens.hexpert.social.Achievement;
@@ -61,7 +61,7 @@ public class PlayScreen extends PlayStage
     public String mapName;
     private List<TileData> defaultBuildings;
     private List<TileData> validBuildings;
-    private LevelComplete exitDialog;
+    private LevelCompleteDialog exitDialog;
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
@@ -155,7 +155,7 @@ public class PlayScreen extends PlayStage
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
         objectivePassed = new boolean[map.getObjectives().length];
-        exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
+        exitDialog = new LevelCompleteDialog(hexpert.getSkin(), hexpert);
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String hint = Gdx.files.internal("shaders/yellowTint.fs").readString();
@@ -328,7 +328,7 @@ public class PlayScreen extends PlayStage
 
         if(!exitDialog.hasBeenShown() && numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length)
         {
-            this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
+            this.exitDialog = new LevelCompleteDialog(hexpert.getSkin(), hexpert);
             exitDialog.setShown(true);
             exitDialog.show(getStage());
         }

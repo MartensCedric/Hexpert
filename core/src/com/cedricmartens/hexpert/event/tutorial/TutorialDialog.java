@@ -1,4 +1,4 @@
-package com.cedricmartens.hexpert.event;
+package com.cedricmartens.hexpert.event.tutorial;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
+import com.cedricmartens.hexpert.event.StandardDialog;
 
 /**
  * Created by martens on 6/11/17.
@@ -20,7 +21,6 @@ public abstract class TutorialDialog extends StandardDialog {
         ScrollPane scrollPane = new ScrollPane(scrollContent, skin);
         getContentTable().add(scrollPane);
 
-
         getButtonTable().defaults().pad(15);
         I18NBundle i18N = hexpert.i18NBundle;
 
@@ -28,5 +28,7 @@ public abstract class TutorialDialog extends StandardDialog {
         getButtonTable().add(textButtonOk)
                     .width(textButtonOk.getLabel().getPrefWidth() + 25)
                     .height(textButtonOk.getLabel().getPrefHeight() + 25);
+
+        setObject(textButtonOk, null);
     }
 }
