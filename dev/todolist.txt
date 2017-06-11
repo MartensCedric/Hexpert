@@ -1,21 +1,19 @@
 MUST
-==ART==
-Redo in-game menu art
-
 ==Tutorial==
 Scoring per building
 Tile Multipliers
+LIKE ACTUAL FUCKING TUTORIAL CUZ NO ONE UNDERSTAND THIS FUCKING GAME
 
 ==PROGRESS==
-30 levels
+min 30 levels
 
 ==SOCIAL==
 Sharing
+Leaderboards
 Complete English, French, Spanish, German translations
 
 +Fix all issues on GitHub
 
 NICE TO HAVE
-Leaderboards
 Background pictures
 More Achievements
