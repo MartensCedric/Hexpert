@@ -16,6 +16,7 @@ import com.martenscedric.hexpert.screens.PlayStage;
 
 import static com.martenscedric.hexpert.misc.Const.HEIGHT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_BACK;
+import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_CORRECT;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_LEADERBOARD;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_OPTIONS;
 import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
@@ -25,7 +26,7 @@ import static com.martenscedric.hexpert.misc.TextureData.TEXTURE_RESET;
  */
 
 public class MoreDialog extends StandardDialog {
-    private ImageButton btnBack, btnReset, btnOptions, btnLeaderboard;
+    private ImageButton btnBack, btnReset, btnOptions, btnLeaderboard, btnGoals;
     private Hexpert hexpert;
     private PlayStage playStage;
 
@@ -46,7 +47,14 @@ public class MoreDialog extends StandardDialog {
             }
         );
 
+        btnGoals = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_CORRECT))));
 
+        btnGoals.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                showGoals();
+            }
+        });
 
         btnReset = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_RESET))));
 
@@ -81,12 +89,14 @@ public class MoreDialog extends StandardDialog {
 
 
         btnBack.getImageCell().expand().fill();
+        btnGoals.getImageCell().expand().fill();
         btnReset.getImageCell().expand().fill();
         btnOptions.getImageCell().expand().fill();
         btnLeaderboard.getImageCell().expand().fill();
 
         I18NBundle i18N = hexpert.i18NBundle;
         Label lblBack = new Label(i18N.get("backtolvlslct"), hexpert.getSkin());
+        Label lblGoals = new Label(i18N.get("show_goals"), hexpert.getSkin());
         Label lblReset = new Label(i18N.get("resetlvl"), hexpert.getSkin());
         Label lblOptions = new Label(i18N.get("options"), hexpert.getSkin());
         Label lblLeaderboard = new Label(i18N.get("leaderboard"), hexpert.getSkin());
@@ -95,6 +105,13 @@ public class MoreDialog extends StandardDialog {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 backToMenu();
+            }
+        });
+
+        lblGoals.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                showGoals();
             }
         });
 
@@ -122,6 +139,9 @@ public class MoreDialog extends StandardDialog {
 
         getContentTable().add(btnBack);
         getContentTable().add(lblBack).width(lblBack.getPrefWidth());
+        getContentTable().row();
+        getContentTable().add(btnGoals);
+        getContentTable().add(lblGoals).width(lblGoals.getPrefWidth());
         getContentTable().row();
         getContentTable().add(btnReset);
         getContentTable().add(lblReset).width(lblReset.getPrefWidth());
@@ -156,6 +176,15 @@ public class MoreDialog extends StandardDialog {
         }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
 
         actionDialog.show(getStage());
+        hide();
+    }
+
+
+    private void showGoals() {
+        ObjectiveDialog objectiveDiag = new ObjectiveDialog(hexpert.getSkin(), hexpert);
+        PlayScreen playScreen = (PlayScreen)playStage;
+        objectiveDiag.setObjectives(playScreen.map.getObjectives(), playScreen.mapResult.getObjectivePassed());
+        objectiveDiag.show(getStage());
         hide();
     }
 

@@ -52,17 +52,11 @@ public abstract class PlayStage extends StageScreen {
     protected ImageButton selectedButton;
     public boolean removeMode = false;
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
-    protected LevelComplete exitDialog;
-    protected ObjectiveDialog objectiveDialog;
-    private OptionDialog optionDialog;
-    protected TextButton objectivesButton;
     protected Hexpert hexpert;
 
     public PlayStage(final Hexpert hexpert) {
         super();
         this.hexpert = hexpert;
-        this.objectiveDialog = new ObjectiveDialog(hexpert.getSkin(), hexpert);
-        this.exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
 
         TextureRegionDrawable drawableFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
         TextureRegionDrawable drawableHouse = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HOUSE)));
@@ -180,8 +174,6 @@ public abstract class PlayStage extends StageScreen {
         btnMore.getImageCell().expand().fill();
         btnRemove.getImageCell().expand().fill();
         btnHelp.getImageCell().expand().fill();
-
-        objectivesButton = new TextButton(hexpert.i18NBundle.get("goals"), hexpert.getSkin());
 
         tableBtn.add(btnMore);
         tableBtn.add(btnRemove);

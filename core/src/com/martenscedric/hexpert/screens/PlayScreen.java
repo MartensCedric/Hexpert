@@ -49,7 +49,7 @@ import static com.martenscedric.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 public class PlayScreen extends PlayStage
 {
     private HexMap<TileData> grid;
-    private Map map;
+    public Map map;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private GestureDetector detector;
@@ -57,12 +57,13 @@ public class PlayScreen extends PlayStage
     private int score = 0;
     private MoveEventManager moveEventManager;
     private boolean debug = false;
-    private MapResult mapResult;
+    public MapResult mapResult;
     private boolean[] objectivePassed;
     private ShaderProgram hintShader, removeShader, lockedShader;
     public String mapName;
     private List<TileData> defaultBuildings;
     private List<TileData> validBuildings;
+    private LevelComplete exitDialog;
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
@@ -146,17 +147,6 @@ public class PlayScreen extends PlayStage
                               }
         );
 
-        objectivesButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                objectivesButton.setChecked(false);
-                objectiveDialog.setObjectives(map.getObjectives(), mapResult.getObjectivePassed());
-                objectiveDialog.show(getStage());
-            }
-        });
-
-
         this.hexpert = hexpert;
         this.mapName = mapName;
         this.map = map;
@@ -167,6 +157,7 @@ public class PlayScreen extends PlayStage
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
         objectivePassed = new boolean[map.getObjectives().length];
+        exitDialog = new LevelComplete(hexpert.getSkin(), hexpert);
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String hint = Gdx.files.internal("shaders/yellowTint.fs").readString();
