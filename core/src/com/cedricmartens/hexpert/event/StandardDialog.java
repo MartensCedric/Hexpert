@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * Created by martens on 6/7/17.
  */
 
-public class StandardDialog extends Dialog
+public abstract class StandardDialog extends Dialog
 {
     protected com.cedricmartens.hexpert.Hexpert hexpert;
     public StandardDialog(com.cedricmartens.hexpert.Hexpert hexpert, Skin skin) {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.cedricmartens.hexpert.event.HelpDialog;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.MoreDialog;
@@ -150,7 +151,7 @@ public abstract class PlayStage extends StageScreen {
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                new HelpDialog(hexpert, hexpert.getSkin()).show(getStage());
             }
         });
 
