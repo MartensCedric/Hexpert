@@ -433,16 +433,25 @@ public class LevelSelectScreen extends StageScreen
         int total = 0;
         for(int i = 1; i <= totalLevels; i++)
         {
+            boolean shouldCreate = false;
             if(Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").exists())
             {
-                String mapResLoc = Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").readString();
-                MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
+                try {
+                    String mapResLoc = Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").readString();
+                    MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
 
-                for(int j = 0; j < mapResult.getObjectivePassed().length; j++)
+                    for (int j = 0; j < mapResult.getObjectivePassed().length; j++) {
+                        total += mapResult.getObjectivePassed()[j] ? 1 : 0;
+                    }
+                }catch (Exception e)
                 {
-                    total += mapResult.getObjectivePassed()[j] ? 1 : 0;
+                    shouldCreate = true;
                 }
             }else{
+                shouldCreate = true;
+            }
+
+            if(shouldCreate){
                 String mapString = Gdx.files.internal("maps/" + hexpert.levelIndex.get(i) + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapString);
                 MapResult res = new MapResult(0, new boolean[map.getObjectives().length]);

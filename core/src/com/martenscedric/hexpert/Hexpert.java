@@ -75,13 +75,25 @@ public class Hexpert extends Game {
 	@Override
 	public void create ()
 	{
+		boolean shouldCreateOptions = false;
 		FileHandle options = Gdx.files.local("options.config");
 		if(options.exists())
 		{
-           	String content = options.readString();
-           
-			config = new JSONDeserializer<HexpertConfig>().deserialize(content);
+			try {
+				String content = options.readString();
+
+				config = new JSONDeserializer<HexpertConfig>().deserialize(content);
+			}catch (Exception e)
+			{
+				e.printStackTrace();
+				shouldCreateOptions = true;
+			}
 		}else
+		{
+			shouldCreateOptions = true;
+		}
+
+		if(shouldCreateOptions)
 		{
 			config = new HexpertConfig();
 			JSONSerializer jsonSerializer = new JSONSerializer();
