@@ -1,6 +1,6 @@
 package com.cedricmartens.hexpert;
 
-import com.martenscedric.hexpert.map.Objective;
+import com.cedricmartens.hexpert.map.Objective;
 
 import org.junit.Test;
 
