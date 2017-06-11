@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
@@ -24,10 +25,13 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND;
  */
 
 public class BuildingReqDialog extends TutorialDialog {
+
+    private final int PADDING = 15;
+    private final int CELL_W = 100;
+    private final int CELL_H = 100;
+
     public BuildingReqDialog(Hexpert hexpert, Skin skin) {
         super(hexpert, skin);
-
-        scrollContent.setDebug(true);
 
         Image imgFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
         Image imgFarm2 = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
@@ -64,113 +68,134 @@ public class BuildingReqDialog extends TutorialDialog {
 
         Image imgRocket = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET)));
 
-        scrollContent.defaults().pad(15);
+        scrollContent.defaults().pad(PADDING);
+        I18NBundle i18n = hexpert.i18NBundle;
 
         Table tableFarm = new Table();
-        tableFarm.defaults().width(100).height(100).pad(15);
+        tableFarm.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
         tableFarm.add(imgFarm);
-        tableFarm.add(new Label("=", skin));
+        Label lblEqFarm = new Label("=", skin);
+        tableFarm.add(lblEqFarm).width(lblEqFarm.getPrefWidth());
         tableFarm.add(imgNotFarm);
         scrollContent.add(tableFarm);
         scrollContent.row();
-        scrollContent.add(new Label("A farm can't be placed next to another farm", skin));
+        scrollContent.add(new Label(i18n.get("farm_needs"), skin));
         scrollContent.row();
 
         Table tableHouse = new Table();
-        tableHouse.defaults().width(100).height(100).pad(15);
+        tableHouse.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
         tableHouse.add(imgHouse);
-        tableHouse.add(new Label("=", skin));
+        Label lblEqHouse = new Label("=", skin);
+        tableHouse.add(lblEqHouse).width(lblEqHouse.getPrefWidth());
         tableHouse.add(imgFarm2);
         scrollContent.add(tableHouse);
         scrollContent.row();
-        scrollContent.add(new Label("A house needs a farm", skin));
+        scrollContent.add(new Label(i18n.get("house_needs"), skin));
         scrollContent.row();
 
         Table tableMine = new Table();
-        tableMine.defaults().width(100).height(100).pad(15);
+        tableMine.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
         tableMine.add(imgMine);
-        tableMine.add(new Label("=", skin));
+        Label lblEqMine = new Label("=", skin);
+        tableMine.add(lblEqMine).width(lblEqMine.getPrefWidth());
         tableMine.add(imgHouse2);
         scrollContent.add(tableMine);
         scrollContent.row();
-        scrollContent.add(new Label("A mine needs a house", skin));
+        scrollContent.add(new Label(i18n.get("mine_needs"), skin));
         scrollContent.row();
 
         Table tableWind = new Table();
-        tableWind.defaults().width(100).height(100).pad(15);
+        tableWind.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
         tableWind.add(imgWind);
-        tableWind.add(new Label("=", skin));
+        Label lblEqWind = new Label("=", skin);
+        tableWind.add(lblEqWind).width(lblEqWind.getPrefWidth());
         tableWind.add(imgHouse3);
         scrollContent.add(tableWind);
         scrollContent.row();
-        scrollContent.add(new Label("A wind turbine needs a house", skin));
+        scrollContent.add(new Label(i18n.get("wind_needs"), skin));
         scrollContent.row();
 
         Table tableFact = new Table();
-        tableFact.defaults().width(100).height(100).pad(15);
+        tableFact.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
         tableFact.add(imgFact);
-        tableFact.add(new Label("=", skin));
+        Label lblEqFact = new Label("=", skin);
+        tableFact.add(lblEqFact).width(lblEqFact.getPrefWidth());
+        Label lblAddFact = new Label("+", skin);
+        Label lblAddFact2 = new Label("+", skin);
         tableFact.add(imgHouse4);
-        tableFact.add(new Label("+", skin));
+        tableFact.add(lblAddFact).width(lblAddFact.getPrefWidth());
         tableFact.add(imgMine2);
-        tableFact.add(new Label("+", skin));
+        tableFact.add(lblAddFact2).width(lblAddFact2.getPrefWidth());
         tableFact.add(imgWind2);
 
         scrollContent.add(tableFact);
         scrollContent.row();
-        scrollContent.add(new Label("A factory needs a house, a mine and a wind turbine", skin));
+        scrollContent.add(new Label(i18n.get("fact_needs"), skin));
         scrollContent.row();
 
         Table tableMarket = new Table();
-        tableMarket.defaults().width(100).height(100).pad(15);
+        tableMarket.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
 
         tableMarket.add(imgMarket);
-        tableMarket.add(new Label("=", skin));
+        Label lblEqMarket = new Label("=", skin);
+        tableMarket.add(lblEqMarket).width(lblEqMarket.getPrefWidth());
+        Label lblAddMarket = new Label("+", skin);
+        Label lblAddMarket2 = new Label("+", skin);
+
         tableMarket.add(imgHouse5);
-        tableMarket.add(new Label("+", skin));
+        tableMarket.add(lblAddMarket).width(lblAddMarket.getPrefWidth());
         tableMarket.add(imgWind3);
-        tableMarket.add(new Label("+", skin));
+        tableMarket.add(lblAddMarket2).width(lblAddMarket2.getPrefWidth());
         tableMarket.add(imgFact2);
 
         scrollContent.add(tableMarket);
         scrollContent.row();
-        scrollContent.add(new Label("A market needs a house, a wind turbine and a factory", skin));
+        scrollContent.add(new Label(i18n.get("market_needs"), skin));
         scrollContent.row();
 
         Table tableBank = new Table();
-        tableBank.defaults().width(100).height(100).pad(15);
+        tableBank.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
 
         tableBank.add(imgBank);
-        tableBank.add(new Label("=", skin));
+        Label lblEqBank = new Label("=", skin);
+        tableBank.add(lblEqBank).width(lblEqBank.getPrefWidth());
         tableBank.add(imgHouse6);
-        tableBank.add(new Label("+", skin));
+
+        Label lblAddBank = new Label("+", skin);
+        Label lblAddBank2 = new Label("+", skin);
+        Label lblAddBank3 = new Label("+", skin);
+        tableBank.add(lblAddBank).width(lblAddBank.getPrefWidth());
         tableBank.add(imgWind4);
-        tableBank.add(new Label("+", skin));
+        tableBank.add(lblAddBank2).width(lblAddBank2.getPrefWidth());
         tableBank.add(imgMine3);
-        tableBank.add(new Label("+", skin));
+        tableBank.add(lblAddBank3).width(lblAddBank3.getPrefWidth());
         tableBank.add(imgMarket2);
 
         scrollContent.add(tableBank);
         scrollContent.row();
-        scrollContent.add(new Label("A market needs a house, a wind turbine and a factory", skin));
+        scrollContent.add(new Label(i18n.get("bank_needs"), skin));
         scrollContent.row();
 
         Table tableRocket = new Table();
-        tableRocket.defaults().width(100).height(100).pad(15);
+        tableRocket.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
 
         tableRocket.add(imgRocket);
-        tableRocket.add(new Label("=", skin));
+        Label lblEqRocket = new Label("=", skin);
+        tableRocket.add(lblEqRocket).width(lblEqRocket.getPrefWidth());
         tableRocket.add(imgHouse7);
-        tableRocket.add(new Label("+", skin));
+        Label lblAddRocket = new Label("+", skin);
+        Label lblAddRocket2 = new Label("+", skin);
+        Label lblAddRocket3 = new Label("+", skin);
+        tableRocket.add(lblAddRocket).width(lblAddRocket.getPrefWidth());
         tableRocket.add(imgWind5);
-        tableRocket.add(new Label("+", skin));
+        tableRocket.add(lblAddRocket2).width(lblAddRocket2.getPrefWidth());
         tableRocket.add(imgFact3);
-        tableRocket.add(new Label("+", skin));
+        tableRocket.add(lblAddRocket3).width(lblAddRocket3.getPrefWidth());
         tableRocket.add(imgBank2);
 
         scrollContent.add(tableRocket);
         scrollContent.row();
-        scrollContent.add(new Label("A rocket needs a house, a wind turbine, a factory and a bank", skin)).colspan(5);
+        scrollContent.add(new Label(i18n.get("rocket_needs"), skin)).colspan(5);
         scrollContent.row();
     }
 
