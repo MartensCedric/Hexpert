@@ -26,7 +26,7 @@ public class OptionDialog extends StandardDialog
 {
     private HexpertConfig config;
     public OptionDialog(final com.cedricmartens.hexpert.screens.PlayStage playStage, Skin skin) {
-        super(playStage.getHexpert(), skin);
+        super(playStage.getHexpert(), skin.get("gray", WindowStyle.class));
         this.config = hexpert.config;
 
         final TextureRegionDrawable txtRgCorrect = new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_CORRECT)));

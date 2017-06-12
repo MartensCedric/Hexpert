@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/ui9patch.9.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/ui9patch.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -16,7 +16,7 @@ atlasData: {
 			name: ui9patch
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/ui9patch_dwn.9.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/ui9patch_dwn.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -29,7 +29,7 @@ atlasData: {
 			name: ui9patch_dwn
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr24.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr24.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -42,7 +42,7 @@ atlasData: {
 			name: vcr24
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr35.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr35.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -55,7 +55,7 @@ atlasData: {
 			name: vcr35
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr45.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr45.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -68,7 +68,7 @@ atlasData: {
 			name: vcr45
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr701.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr701.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -81,7 +81,7 @@ atlasData: {
 			name: vcr701
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr702.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr702.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -94,7 +94,7 @@ atlasData: {
 			name: vcr702
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/window.9.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -107,7 +107,7 @@ atlasData: {
 			name: window
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/window.9.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -125,7 +125,7 @@ atlasData: {
 			name: window-green
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/window.9.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -143,7 +143,7 @@ atlasData: {
 			name: window-gray
 		}
 		{
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/window.9.png
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -199,22 +199,22 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr24
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr24.fnt
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr24.fnt"
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr35
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr35.fnt
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr35.fnt"
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr45
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr45.fnt
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr45.fnt"
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr70
-			file: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/vcr70.fnt
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr70.fnt"
 		}
 	]
 	classStyleMap: {
@@ -1818,5 +1818,5 @@ preferences: {
 		value: false
 	}
 }
-saveFile: C:/Users/Shawn Martens/Desktop/Hexpert/dev/skin/hexpert.scmp
+saveFile: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert.scmp"
 }

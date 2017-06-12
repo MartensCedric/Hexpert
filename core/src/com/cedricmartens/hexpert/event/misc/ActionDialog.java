@@ -21,30 +21,20 @@ public class ActionDialog extends StandardDialog {
         this.action = action;
 
         getBackground().setMinWidth(1000);
-        getBackground().setMinHeight(600);
+        getBackground().setMinHeight(400);
         text.setWrap(true);
-        text.setWidth(900);
         text.setAlignment(Align.center);
-        text.setX(50);
-        text.setY(375);
 
-        getContentTable().addActor(text);
+        getContentTable().add(text).width(getBackground().getMinWidth()).expandX();
+
+        getButtonTable().defaults().width(200).height(120).pad(15);
 
         TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
-        textButtonYes.setX(250);
-        textButtonYes.setY(50);
-        textButtonYes.setWidth(200);
-        textButtonYes.setHeight(120);
+        getButtonTable().add(textButtonYes);
         setObject(textButtonYes, 1);
-        getButtonTable().addActor(textButtonYes);
-
         TextButton textButtonNo = new TextButton(bundle.get("no"), skin);
-        textButtonNo.setX(600);
-        textButtonNo.setY(50);
-        textButtonNo.setWidth(200);
-        textButtonNo.setHeight(120);
+        getButtonTable().add(textButtonNo);
         setObject(textButtonNo, null);
-        getButtonTable().addActor(textButtonNo);
     }
 
     @Override

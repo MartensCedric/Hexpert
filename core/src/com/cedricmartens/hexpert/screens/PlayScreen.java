@@ -28,6 +28,7 @@ import com.cedricmartens.hexpert.map.Map;
 import com.cedricmartens.hexpert.map.MapResult;
 import com.cedricmartens.hexpert.map.MapUtils;
 import com.cedricmartens.hexpert.map.Objective;
+import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.Dependency;
 import com.cedricmartens.hexpert.tile.Rules;
 import com.cedricmartens.hexpert.tile.TileData;
@@ -69,7 +70,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(com.cedricmartens.hexpert.tile.BuildingType.FARM);
+                                    setSelection(BuildingType.FARM);
                                     hexpert.sounds.get("select").play();
                                 }
                             }
@@ -79,7 +80,7 @@ public class PlayScreen extends PlayStage
                              {
                                  @Override
                                  public void clicked(InputEvent event, float x, float y) {
-                                     setSelection(com.cedricmartens.hexpert.tile.BuildingType.HOUSE);
+                                     setSelection(BuildingType.HOUSE);
                                      hexpert.sounds.get("select").play();
                                  }
                              }
@@ -89,7 +90,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(com.cedricmartens.hexpert.tile.BuildingType.MINE);
+                                    setSelection(BuildingType.MINE);
                                     hexpert.sounds.get("select").play();
                                 }
                             }
@@ -99,7 +100,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(com.cedricmartens.hexpert.tile.BuildingType.WIND);
+                                    setSelection(BuildingType.WIND);
                                     hexpert.sounds.get("select").play();
                                 }
                             }
@@ -109,7 +110,7 @@ public class PlayScreen extends PlayStage
                                {
                                    @Override
                                    public void clicked(InputEvent event, float x, float y) {
-                                       setSelection(com.cedricmartens.hexpert.tile.BuildingType.FACTORY);
+                                       setSelection(BuildingType.FACTORY);
                                        hexpert.sounds.get("select").play();
                                    }
                                }
@@ -119,7 +120,7 @@ public class PlayScreen extends PlayStage
                               {
                                   @Override
                                   public void clicked(InputEvent event, float x, float y) {
-                                      setSelection(com.cedricmartens.hexpert.tile.BuildingType.MARKET);
+                                      setSelection(BuildingType.MARKET);
                                       hexpert.sounds.get("select").play();
                                   }
                               }
@@ -129,7 +130,7 @@ public class PlayScreen extends PlayStage
                             {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(com.cedricmartens.hexpert.tile.BuildingType.BANK);
+                                    setSelection(BuildingType.BANK);
                                     hexpert.sounds.get("select").play();
                                 }
                             }
@@ -139,7 +140,7 @@ public class PlayScreen extends PlayStage
                               {
                                   @Override
                                   public void clicked(InputEvent event, float x, float y) {
-                                      setSelection(com.cedricmartens.hexpert.tile.BuildingType.ROCKET);
+                                      setSelection(BuildingType.ROCKET);
                                       hexpert.sounds.get("select").play();
                                   }
                               }
@@ -176,11 +177,11 @@ public class PlayScreen extends PlayStage
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            if(((TileData)grid.getHexs()[i].getHexData()).getBuildingType() != com.cedricmartens.hexpert.tile.BuildingType.NONE)
+            if(((TileData)grid.getHexs()[i].getHexData()).getBuildingType() != BuildingType.NONE)
                 defaultBuildings.add((TileData) grid.getHexs()[i].getHexData());
         }
 
-        com.cedricmartens.hexpert.tile.BuildingType[] buildingTypes = mapResult.getBuildings();
+        BuildingType[] buildingTypes = mapResult.getBuildings();
 
         if(buildingTypes != null)
         {
@@ -342,7 +343,7 @@ public class PlayScreen extends PlayStage
         return grid;
     }
 
-    public com.cedricmartens.hexpert.tile.BuildingType getSelection() {
+    public BuildingType getSelection() {
         return selection;
     }
 
@@ -395,7 +396,7 @@ public class PlayScreen extends PlayStage
             if(score > mapResult.getScore())
             {
                 mapResult.setScore(score);
-                com.cedricmartens.hexpert.tile.BuildingType[] buildingTypes = new com.cedricmartens.hexpert.tile.BuildingType[grid.getHexs().length];
+                BuildingType[] buildingTypes = new BuildingType[grid.getHexs().length];
                 for(int i = 0; i < grid.getHexs().length; i++)
                 {
                     buildingTypes[i] = ((TileData) grid.getHexs()[i].getHexData()).getBuildingType();
@@ -506,7 +507,7 @@ public class PlayScreen extends PlayStage
             Hexagon<TileData> hex = grid.getHexs()[i];
             TileData data = hex.getHexData();
 
-            if(data.getBuildingType() == com.cedricmartens.hexpert.tile.BuildingType.ROCKET)
+            if(data.getBuildingType() == BuildingType.ROCKET)
             {
                 hexpert.playServices.unlockAchievement(Achievement.TO_SPACE);
 
@@ -516,12 +517,12 @@ public class PlayScreen extends PlayStage
                 for(int j = 0; j < hex.getNeighbors().size(); j++)
                 {
                     TileData neighborData = hex.getNeighbors().get(j).getHexData();
-                    if(neighborData.getBuildingType() == com.cedricmartens.hexpert.tile.BuildingType.ROCKET)
+                    if(neighborData.getBuildingType() == BuildingType.ROCKET)
                         hexpert.playServices.unlockAchievement(Achievement.SPACE_RACE);
                 }
             }
 
-            if(data.getBuildingType() == com.cedricmartens.hexpert.tile.BuildingType.BANK)
+            if(data.getBuildingType() == BuildingType.BANK)
                 numBanks++;
 
             if(data.getBuildingType().getScore() < 0

@@ -19,7 +19,7 @@ public class LevelCompleteDialog extends StandardDialog {
     private boolean shown = false;
 
     public LevelCompleteDialog(Skin skin, com.cedricmartens.hexpert.Hexpert hexpert) {
-        super(hexpert, skin);
+        super(hexpert, skin.get("gold", WindowStyle.class));
 
         I18NBundle bundle = hexpert.i18NBundle;
         Label content = new Label(bundle.get("all_objectives_finished"), skin);

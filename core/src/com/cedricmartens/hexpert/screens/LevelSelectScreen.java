@@ -26,8 +26,12 @@ import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
+import com.cedricmartens.hexpert.gestures.LevelSelectGesture;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.misc.TextureData;
+import com.cedricmartens.hexpert.tile.BuildingType;
+import com.cedricmartens.hexpert.tile.Rules;
+import com.cedricmartens.hexpert.tile.TileData;
 
 import java.util.List;
 
@@ -47,7 +51,7 @@ public class LevelSelectScreen extends StageScreen
     public int currentWorld = 1;
     public final com.cedricmartens.hexpert.Hexpert hexpert;
     private int levelSelect = 1;
-    private HexMap<com.cedricmartens.hexpert.tile.TileData> grid;
+    private HexMap<TileData> grid;
     private HexMap<Texture> gridLvlSelect;
     private SpriteBatch batch, displayBatch;
     private com.cedricmartens.hexpert.map.MapResult result;
@@ -56,12 +60,12 @@ public class LevelSelectScreen extends StageScreen
     private boolean debug = false;
     private Rectangle mapCollision;
     private ShapeRenderer shapeRenderer;
-    private com.cedricmartens.hexpert.gestures.LevelSelectGesture behavior;
+    private LevelSelectGesture behavior;
     private GestureDetector detector;
     private ShaderProgram shdDark, shdLckd;
     private Label lblHexCount,lblHighScore;
     private int[] lockedThereshold = new int[]{0, 5, 12, 21, 33, 45};
-    private List<com.cedricmartens.hexpert.tile.TileData> validBuildings;
+    private List<TileData> validBuildings;
 
     public LevelSelectScreen(final com.cedricmartens.hexpert.Hexpert hexpert)
     {
@@ -191,7 +195,7 @@ public class LevelSelectScreen extends StageScreen
         displayBatch.begin();
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<com.cedricmartens.hexpert.tile.TileData> hex = grid.getHexs()[i];
+            Hexagon<TileData> hex = grid.getHexs()[i];
 
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             displayBatch.draw(hex.getHexData().getTerrainTexture(),
@@ -204,7 +208,7 @@ public class LevelSelectScreen extends StageScreen
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<com.cedricmartens.hexpert.tile.TileData> hex = grid.getHexs()[i];
+            Hexagon<TileData> hex = grid.getHexs()[i];
             if(!validBuildings.contains(hex.getHexData()))
                 displayBatch.setShader(shdLckd);
 
@@ -228,8 +232,8 @@ public class LevelSelectScreen extends StageScreen
             double minHeight = Double.MAX_VALUE, minWidth = Double.MAX_VALUE;
             for(int i = 0; i < grid.getHexs().length; i++)
             {
-                Hexagon<com.cedricmartens.hexpert.tile.TileData> hex = grid.getHexs()[i];
-                com.cedricmartens.hexpert.tile.TileData data = hex.getHexData();
+                Hexagon<TileData> hex = grid.getHexs()[i];
+                TileData data = hex.getHexData();
                 data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
                 data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
                 hex.setHexData(data);
@@ -322,19 +326,19 @@ public class LevelSelectScreen extends StageScreen
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            com.cedricmartens.hexpert.tile.TileData data = (com.cedricmartens.hexpert.tile.TileData) grid.getHexs()[i].getHexData();
+            TileData data = (TileData) grid.getHexs()[i].getHexData();
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
             data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
         }
 
 
-        com.cedricmartens.hexpert.tile.BuildingType[] buildingTypes = result.getBuildings();
+        BuildingType[] buildingTypes = result.getBuildings();
 
         if(buildingTypes != null)
         {
             for(int i = 0; i < grid.getHexs().length; i++)
             {
-                com.cedricmartens.hexpert.tile.TileData data = (com.cedricmartens.hexpert.tile.TileData) grid.getHexs()[i].getHexData();
+                TileData data = (TileData) grid.getHexs()[i].getHexData();
                 data.setBuildingType(buildingTypes[i]);
             }
         }
@@ -345,7 +349,7 @@ public class LevelSelectScreen extends StageScreen
         displayLevelCamera.update();
         setMapCollision();
 
-        validBuildings = com.cedricmartens.hexpert.tile.Rules.getValidBuildings(grid);
+        validBuildings = Rules.getValidBuildings(grid);
         return map;
     }
 
@@ -520,7 +524,7 @@ public class LevelSelectScreen extends StageScreen
 
     private void setMultiplexer()
     {
-        behavior = new com.cedricmartens.hexpert.gestures.LevelSelectGesture(this);
+        behavior = new LevelSelectGesture(this);
         detector = new GestureDetector(behavior);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(getStage());
@@ -539,8 +543,8 @@ public class LevelSelectScreen extends StageScreen
         double minHeight = Double.MAX_VALUE, minWidth = Double.MAX_VALUE;
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<com.cedricmartens.hexpert.tile.TileData> hex = grid.getHexs()[i];
-            com.cedricmartens.hexpert.tile.TileData data = hex.getHexData();
+            Hexagon<TileData> hex = grid.getHexs()[i];
+            TileData data = hex.getHexData();
             data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
             hex.setHexData(data);

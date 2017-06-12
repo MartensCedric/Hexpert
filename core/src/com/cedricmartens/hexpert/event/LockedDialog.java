@@ -12,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class LockedDialog extends StandardDialog {
     public LockedDialog(int currentGoals, int goalsNeeded, com.cedricmartens.hexpert.Hexpert hexpert, Skin skin) {
-        super(hexpert, skin);
+
+        super(hexpert, skin.get("gray", WindowStyle.class));
         getBackground().setMinWidth(1000);
         getBackground().setMinHeight(350);
 
