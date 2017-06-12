@@ -38,7 +38,7 @@ public class ObjectiveDialog extends StandardDialog {
             }
         });
         setObject(textButtonOK, null);
-        getButtonTable().add(textButtonOK).width(200).height(120).pad(15);
+        getButtonTable().add(textButtonOK).width(200).height(120);
 
         getContentTable().defaults().pad(5, 0, 5, 15);
         getContentTable().top();

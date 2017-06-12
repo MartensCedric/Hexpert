@@ -29,6 +29,8 @@ public class OptionDialog extends StandardDialog
         super(playStage.getHexpert(), skin.get("gray", WindowStyle.class));
         this.config = hexpert.config;
 
+        TextButton.TextButtonStyle txtButtonStyle = skin.get("gray", TextButton.TextButtonStyle.class);
+
         final TextureRegionDrawable txtRgCorrect = new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_CORRECT)));
         final TextureRegionDrawable txtRgBad = new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TEXTURE_BAD)));
 
@@ -103,9 +105,10 @@ public class OptionDialog extends StandardDialog
         chkShowReq.getImageCell().expand().fill();
         getContentTable().add(lblShowReq);
 
-        TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), skin);
+        TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), txtButtonStyle);
 
         setObject(textButtonOK, null);
+        getButtonTable().defaults().pad(25);
         getButtonTable().add(textButtonOK).width(200).height(120);
     }
 

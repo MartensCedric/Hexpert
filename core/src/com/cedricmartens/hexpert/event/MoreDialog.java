@@ -10,7 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.misc.ActionDialog;
+import com.cedricmartens.hexpert.screens.PlayStage;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_CORRECT;
@@ -27,7 +29,7 @@ public class MoreDialog extends StandardDialog {
     private com.cedricmartens.hexpert.Hexpert hexpert;
     private com.cedricmartens.hexpert.screens.PlayStage playStage;
 
-    public MoreDialog(final com.cedricmartens.hexpert.Hexpert hexpert, final com.cedricmartens.hexpert.screens.PlayStage playStage, Skin skin) {
+    public MoreDialog(final Hexpert hexpert, final PlayStage playStage, Skin skin) {
         super(hexpert, skin);
 
         this.playStage = playStage;
@@ -152,7 +154,7 @@ public class MoreDialog extends StandardDialog {
         TextButton textButtonClose = new TextButton(i18N.get("close"), hexpert.getSkin());
         getButtonTable().add(textButtonClose)
                 .width(textButtonClose.getLabel().getPrefWidth() + 50)
-                .height(textButtonClose.getLabel().getPrefHeight() + 50).pad(25);
+                .height(textButtonClose.getLabel().getPrefHeight() + 50);
 
         setObject(textButtonClose, null);
     }

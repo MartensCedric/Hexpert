@@ -156,6 +156,19 @@ atlasData: {
 			name: knob
 		}
 		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/window.9.png"
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: gold
+			name: window-gold
+		}
+		{
 			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"
 			bgColor: {
 				r: 1
@@ -180,19 +193,6 @@ atlasData: {
 			tint: null
 			tintName: light_green
 			name: ui9patch_dwn-green
-		}
-		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/window.9.png"
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: gold
-			name: window-gold
 		}
 		{
 			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"

@@ -58,6 +58,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 			a: 1
 		}
 	}
+	window-gold: {
+		name: window
+		color: gold
+	}
 	ui9patch-green: {
 		name: ui9patch
 		color: light_green
@@ -65,10 +69,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	ui9patch_dwn-green: {
 		name: ui9patch_dwn
 		color: light_green
-	}
-	window-gold: {
-		name: window
-		color: gold
 	}
 	ui9patch-gold: {
 		name: ui9patch

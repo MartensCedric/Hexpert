@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.cedricmartens.hexpert.Hexpert;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 
@@ -24,7 +25,7 @@ public class LevelCompleteDialog extends StandardDialog {
 
     private boolean shown = false;
 
-    public LevelCompleteDialog(Skin skin, com.cedricmartens.hexpert.Hexpert hexpert) {
+    public LevelCompleteDialog(Skin skin, Hexpert hexpert) {
         super(hexpert, skin.get("gold", WindowStyle.class));
 
         Image imageTrophy = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS)));
