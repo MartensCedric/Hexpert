@@ -1,0 +1,102 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	vcr24: {
+		file: vcr24.fnt
+	}
+	vcr35: {
+		file: vcr35.fnt
+	}
+	vcr45: {
+		file: vcr45.fnt
+	}
+	vcr70: {
+		file: vcr70.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	dark_green: {
+		r: 0.20108555
+		g: 0.45666668
+		b: 0.19963583
+		a: 1
+	}
+	light_green: {
+		r: 0.29925588
+		g: 0.93
+		b: 0.29965377
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	window-green: {
+		name: window
+		color: {
+			r: 0.29837257
+			g: 0.9272549
+			b: 0.29878086
+			a: 1
+		}
+	}
+	window-gray: {
+		name: window
+		color: {
+			r: 0.5966667
+			g: 0.5966667
+			b: 0.5966667
+			a: 1
+		}
+	}
+	window-gold: {
+		name: window
+		color: {
+			r: 1
+			g: 0.9017512
+			b: 0.30999982
+			a: 1
+		}
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: vcr45
+		fontColor: black
+	}
+	bigger: {
+		font: vcr70
+		fontColor: black
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: vcr70
+		fontColor: black
+		up: ui9patch
+		down: ui9patch_dwn
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window-green
+		titleFont: vcr24
+	}
+	gray: {
+		background: window-gray
+		titleFont: vcr24
+	}
+	gold: {
+		background: window-gold
+		titleFont: vcr24
+	}
+}
+}
