@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.misc.HexpertConfig;
 import com.cedricmartens.hexpert.screens.LevelSelectScreen;
 import com.cedricmartens.hexpert.social.Sharing;
+import com.cedricmartens.hexpert.tile.BuildingType;
+import com.cedricmartens.hexpert.tile.TileType;
 
 import java.util.HashMap;
 
@@ -167,7 +169,7 @@ public class Hexpert extends Game {
 		super.resize(width, height);
 	}
 
-	public Texture getTextureByBuilding(com.cedricmartens.hexpert.tile.BuildingType buildingType)
+	public Texture getTextureByBuilding(BuildingType buildingType)
 	{
 		Texture texture = null;
 
@@ -202,7 +204,7 @@ public class Hexpert extends Game {
 		return texture;
 	}
 
-	public Texture getTextureByTerrain(com.cedricmartens.hexpert.tile.TileType tileType)
+	public Texture getTextureByTerrain(TileType tileType)
 	{
 		Texture texture = null;
 		switch (tileType) {
