@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/ui9patch.9.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -16,7 +16,7 @@ atlasData: {
 			name: ui9patch
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/ui9patch_dwn.9.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch_dwn.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -29,7 +29,7 @@ atlasData: {
 			name: ui9patch_dwn
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr24.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr24.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -42,7 +42,7 @@ atlasData: {
 			name: vcr24
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr35.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr35.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -55,7 +55,7 @@ atlasData: {
 			name: vcr35
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr45.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr45.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -68,7 +68,7 @@ atlasData: {
 			name: vcr45
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr701.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr701.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -81,7 +81,7 @@ atlasData: {
 			name: vcr701
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr702.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr702.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -94,7 +94,7 @@ atlasData: {
 			name: vcr702
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/window.9.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -107,7 +107,7 @@ atlasData: {
 			name: window
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/window.9.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -125,7 +125,7 @@ atlasData: {
 			name: window-green
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/window.9.png"
 			bgColor: {
 				r: 1
 				g: 1
@@ -143,7 +143,46 @@ atlasData: {
 			name: window-gray
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/window.9.png"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/knob.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: knob
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: light_green
+			name: ui9patch-green
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch_dwn.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: light_green
+			name: ui9patch_dwn-green
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/window.9.png"
 			bgColor: {
 				r: 0
 				g: 0
@@ -151,14 +190,35 @@ atlasData: {
 				a: 1
 			}
 			visible: true
-			tint: {
+			tint: null
+			tintName: gold
+			name: window-gold
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"
+			bgColor: {
 				r: 1
-				g: 0.9017512
-				b: 0.30999982
+				g: 1
+				b: 1
 				a: 1
 			}
-			tintName: null
-			name: window-gold
+			visible: true
+			tint: null
+			tintName: gold
+			name: ui9patch-gold
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch_dwn.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: gold
+			name: ui9patch_dwn-gold
 		}
 	]
 }
@@ -187,6 +247,16 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.ColorData
 			color: {
+				r: 1
+				g: 0.9530416
+				b: 0.25
+				a: 1
+			}
+			name: gold
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
 				r: 0.29925588
 				g: 0.93
 				b: 0.29965377
@@ -199,22 +269,22 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr24
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr24.fnt"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr24.fnt"
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr35
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr35.fnt"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr35.fnt"
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr45
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr45.fnt"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr45.fnt"
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: vcr70
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/vcr70.fnt"
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr70.fnt"
 		}
 	]
 	classStyleMap: {
@@ -1092,7 +1162,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: vScrollKnob
 						optional: true
-						value: null
+						value: knob
 					}
 				}
 				deletable: false
@@ -1421,6 +1491,147 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: up
 						optional: true
+						value: ui9patch-green
+					}
+					down: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: down
+						optional: true
+						value: ui9patch_dwn-green
+					}
+					over: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: over
+						optional: true
+						value: null
+					}
+					checked: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: checked
+						optional: true
+						value: null
+					}
+					checkedOver: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: checkedOver
+						optional: true
+						value: null
+					}
+					disabled: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: disabled
+						optional: true
+						value: null
+					}
+					pressedOffsetX: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: pressedOffsetX
+						optional: true
+						value: 0
+					}
+					pressedOffsetY: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: pressedOffsetY
+						optional: true
+						value: 0
+					}
+					unpressedOffsetX: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: unpressedOffsetX
+						optional: true
+						value: 0
+					}
+					unpressedOffsetY: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: unpressedOffsetY
+						optional: true
+						value: 0
+					}
+					checkedOffsetX: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: checkedOffsetX
+						optional: true
+						value: 0
+					}
+					checkedOffsetY: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: checkedOffsetY
+						optional: true
+						value: 0
+					}
+				}
+				deletable: false
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: gray
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.TextButton
+				properties: {
+					font: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: vcr70
+					}
+					fontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: black
+					}
+					downFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: downFontColor
+						optional: true
+						value: null
+					}
+					overFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: overFontColor
+						optional: true
+						value: null
+					}
+					checkedFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: checkedFontColor
+						optional: true
+						value: null
+					}
+					checkedOverFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: checkedOverFontColor
+						optional: true
+						value: null
+					}
+					disabledFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: disabledFontColor
+						optional: true
+						value: null
+					}
+					up: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: up
+						optional: true
 						value: ui9patch
 					}
 					down: {
@@ -1501,7 +1712,148 @@ jsonData: {
 						value: 0
 					}
 				}
-				deletable: false
+				deletable: true
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: gold
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.TextButton
+				properties: {
+					font: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: vcr70
+					}
+					fontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: black
+					}
+					downFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: downFontColor
+						optional: true
+						value: null
+					}
+					overFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: overFontColor
+						optional: true
+						value: null
+					}
+					checkedFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: checkedFontColor
+						optional: true
+						value: null
+					}
+					checkedOverFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: checkedOverFontColor
+						optional: true
+						value: null
+					}
+					disabledFontColor: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.graphics.Color
+						name: disabledFontColor
+						optional: true
+						value: null
+					}
+					up: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: up
+						optional: true
+						value: ui9patch-gold
+					}
+					down: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: down
+						optional: true
+						value: ui9patch_dwn-gold
+					}
+					over: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: over
+						optional: true
+						value: null
+					}
+					checked: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: checked
+						optional: true
+						value: null
+					}
+					checkedOver: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: checkedOver
+						optional: true
+						value: null
+					}
+					disabled: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: disabled
+						optional: true
+						value: null
+					}
+					pressedOffsetX: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: pressedOffsetX
+						optional: true
+						value: 0
+					}
+					pressedOffsetY: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: pressedOffsetY
+						optional: true
+						value: 0
+					}
+					unpressedOffsetX: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: unpressedOffsetX
+						optional: true
+						value: 0
+					}
+					unpressedOffsetY: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: unpressedOffsetY
+						optional: true
+						value: 0
+					}
+					checkedOffsetX: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: checkedOffsetX
+						optional: true
+						value: 0
+					}
+					checkedOffsetY: {
+						class: com.ray3k.skincomposer.data.StyleProperty
+						type: float
+						name: checkedOffsetY
+						optional: true
+						value: 0
+					}
+				}
+				deletable: true
 			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.TextField: [
@@ -1815,7 +2167,7 @@ preferences: {
 	}
 	resources-relative: {
 		class: java.lang.Boolean
-		value: false
+		value: true
 	}
 }
 saveFile: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert.scmp"

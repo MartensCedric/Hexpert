@@ -56,6 +56,14 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+knob
+  rotate: false
+  xy: 81, 72
+  size: 8, 32
+  split: 3, 3, 3, 3
+  orig: 8, 32
+  offset: 0, 0
+  index: -1
 ui9patch
   rotate: false
   xy: 515, 586

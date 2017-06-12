@@ -1,14 +1,20 @@
 package com.cedricmartens.hexpert.event;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
+
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 
 /**
  * Created by Shawn Martens on 2017-05-17.
@@ -21,6 +27,8 @@ public class LevelCompleteDialog extends StandardDialog {
     public LevelCompleteDialog(Skin skin, com.cedricmartens.hexpert.Hexpert hexpert) {
         super(hexpert, skin.get("gold", WindowStyle.class));
 
+        Image imageTrophy = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS)));
+        TextButton.TextButtonStyle txtButtonStyle = skin.get("gold", TextButton.TextButtonStyle.class);
         I18NBundle bundle = hexpert.i18NBundle;
         Label content = new Label(bundle.get("all_objectives_finished"), skin);
 
@@ -28,19 +36,24 @@ public class LevelCompleteDialog extends StandardDialog {
         getBackground().setMinWidth(1000);
         getBackground().setMinHeight(600);
         content.setWrap(true);
+
+        getContentTable().defaults().pad(25);
+
+        getContentTable().add(imageTrophy).width(192).height(192);
+        getContentTable().row();
         getContentTable().add(content).width(900);
 
         getButtonTable().defaults().width(200).height(120).pad(15);
 
-        TextButton textButtonYes = new TextButton(bundle.get("yes"), skin);
+        TextButton textButtonYes = new TextButton(bundle.get("yes"), txtButtonStyle);
         setObject(textButtonYes, 1);
         getButtonTable().add(textButtonYes);
 
-        TextButton textButtonNo = new TextButton(bundle.get("no"), skin);
+        TextButton textButtonNo = new TextButton(bundle.get("no"), txtButtonStyle);
         setObject(textButtonNo, null);
         getButtonTable().add(textButtonNo);
 
-        TextButton textButtonShare = new TextButton(bundle.get("share"), skin);
+        TextButton textButtonShare = new TextButton(bundle.get("share"), txtButtonStyle);
         setObject(textButtonShare, 2);
 
         Cell cellShare = getButtonTable().add(textButtonShare);

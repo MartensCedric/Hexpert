@@ -100,7 +100,7 @@ public class LevelSelectScreen extends StageScreen
         createLevelSelectGrid();
 
         statsTable = new Table();
-        statsTable.defaults().width(192).height(192);
+        statsTable.defaults().width(192gi).height(192);
 
         ImageButton btnGoldHex = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion((Texture)hexpert.assetManager.get(TextureData.TEXTURE_CORRECT))));
