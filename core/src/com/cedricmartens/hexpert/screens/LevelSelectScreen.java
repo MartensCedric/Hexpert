@@ -27,6 +27,10 @@ import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.cedricmartens.hexpert.gestures.LevelSelectGesture;
+import com.cedricmartens.hexpert.map.Map;
+import com.cedricmartens.hexpert.map.MapLoadException;
+import com.cedricmartens.hexpert.map.MapResult;
+import com.cedricmartens.hexpert.map.MapUtils;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.misc.TextureData;
 import com.cedricmartens.hexpert.tile.BuildingType;
@@ -54,7 +58,7 @@ public class LevelSelectScreen extends StageScreen
     private HexMap<TileData> grid;
     private HexMap<Texture> gridLvlSelect;
     private SpriteBatch batch, displayBatch;
-    private com.cedricmartens.hexpert.map.MapResult result;
+    private MapResult result;
     private OrthographicCamera displayLevelCamera;
     private int goalCompleteCount = 0;
     private boolean debug = false;
@@ -307,20 +311,20 @@ public class LevelSelectScreen extends StageScreen
         setMultiplexer();
     }
 
-    private com.cedricmartens.hexpert.map.Map loadDisplayLevel()
+    private Map loadDisplayLevel()
     {
         String mapLoc = Gdx.files.internal("maps/" + hexpert.levelIndex.get(levelSelect) + ".hexmap").readString();
-        com.cedricmartens.hexpert.map.Map map = new JSONDeserializer<com.cedricmartens.hexpert.map.Map>().deserialize(mapLoc);
+        Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
         grid = map.build();
 
         String mapString = hexpert.levelIndex.get(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
-            result = new com.cedricmartens.hexpert.map.MapResult(0, new boolean[map.getObjectives().length]);
+            result = new MapResult(0, new boolean[map.getObjectives().length]);
             JSONSerializer jsonSerializer = new JSONSerializer();
             Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
         }else{
-            JSONDeserializer<com.cedricmartens.hexpert.map.MapResult> deserializer = new JSONDeserializer<>();
+            JSONDeserializer<MapResult> deserializer = new JSONDeserializer<>();
             result = deserializer.deserialize(Gdx.files.local(mapString).readString());
         }
 
@@ -344,7 +348,7 @@ public class LevelSelectScreen extends StageScreen
         }
 
         displayLevelCamera.position.setZero();
-        com.cedricmartens.hexpert.map.MapUtils.adjustCamera(displayLevelCamera, grid);
+        MapUtils.adjustCamera(displayLevelCamera, grid);
         displayLevelCamera.translate(0, -75);
         displayLevelCamera.update();
         setMapCollision();
@@ -357,7 +361,7 @@ public class LevelSelectScreen extends StageScreen
     {
         try{
             levelSelect = levelID;
-            com.cedricmartens.hexpert.map.Map map = loadDisplayLevel();
+            Map map = loadDisplayLevel();
             TextureRegionDrawable textureBad = new TextureRegionDrawable(
                     new TextureRegion(hexpert.assetManager.get(TextureData.TEXTURE_BAD, Texture.class)));
 
@@ -405,7 +409,7 @@ public class LevelSelectScreen extends StageScreen
 
         }catch (Exception e)
         {
-
+            e.printStackTrace();
         }
     }
 
@@ -419,7 +423,7 @@ public class LevelSelectScreen extends StageScreen
             {
                 try {
                     String mapResLoc = Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").readString();
-                    com.cedricmartens.hexpert.map.MapResult mapResult = new JSONDeserializer<com.cedricmartens.hexpert.map.MapResult>().deserialize(mapResLoc);
+                    MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
 
                     for (int j = 0; j < mapResult.getObjectivePassed().length; j++) {
                         total += mapResult.getObjectivePassed()[j] ? 1 : 0;
@@ -434,8 +438,8 @@ public class LevelSelectScreen extends StageScreen
 
             if(shouldCreate){
                 String mapString = Gdx.files.internal("maps/" + hexpert.levelIndex.get(i) + ".hexmap").readString();
-                com.cedricmartens.hexpert.map.Map map = new JSONDeserializer<com.cedricmartens.hexpert.map.Map>().deserialize(mapString);
-                com.cedricmartens.hexpert.map.MapResult res = new com.cedricmartens.hexpert.map.MapResult(0, new boolean[map.getObjectives().length]);
+                Map map = new JSONDeserializer<Map>().deserialize(mapString);
+                MapResult res = new MapResult(0, new boolean[map.getObjectives().length]);
                 JSONSerializer jsonSerializer = new JSONSerializer();
                 Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").writeString(jsonSerializer.deepSerialize(res), false);
             }
@@ -450,10 +454,10 @@ public class LevelSelectScreen extends StageScreen
 
         if(mapresFile.exists())
         {
-            com.cedricmartens.hexpert.map.MapResult mapResult = new JSONDeserializer<com.cedricmartens.hexpert.map.MapResult>().deserialize(mapresFile.readString());
+            MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapresFile.readString());
             return mapResult.getObjectivePassed();
         }else{
-            throw new com.cedricmartens.hexpert.map.MapLoadException(String.format("Can't find %s.mapres", hexpert.levelIndex.get(level)));
+            throw new MapLoadException(String.format("Can't find %s.mapres", hexpert.levelIndex.get(level)));
         }
     }
 
@@ -483,7 +487,7 @@ public class LevelSelectScreen extends StageScreen
             try{
                 boolean[] objectiveStatus = getObjectivePassed((currentWorld - 1) * levelsToDisplay + i);
                 gridLvlSelect.getHexs()[i].setHexData(getTextureByObjectiveStatus(objectiveStatus));
-            }catch (com.cedricmartens.hexpert.map.MapLoadException e)
+            }catch (MapLoadException e)
             {
                 gridLvlSelect.getHexs()[i].setHexData(hexpert.assetManager.get(TextureData.TEXTURE_GRASS));
             }
@@ -580,10 +584,10 @@ public class LevelSelectScreen extends StageScreen
     {
         String mapName = hexpert.levelIndex.get(levelSelect);
         String mapLoc = Gdx.files.internal("maps/" + mapName + ".hexmap").readString();
-        com.cedricmartens.hexpert.map.Map map = new JSONDeserializer<com.cedricmartens.hexpert.map.Map>().deserialize(mapLoc);
+        Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
 
         String mapResLoc = Gdx.files.local(mapName + ".mapres").readString();
-        com.cedricmartens.hexpert.map.MapResult mapResult = new JSONDeserializer<com.cedricmartens.hexpert.map.MapResult>().deserialize(mapResLoc);
+        MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
 
         hexpert.setScreen(new PlayScreen(hexpert, map, mapResult, mapName));
     }

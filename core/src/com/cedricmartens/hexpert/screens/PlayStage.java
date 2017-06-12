@@ -13,6 +13,7 @@ import com.cedricmartens.hexpert.event.HelpDialog;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.MoreDialog;
+import com.cedricmartens.hexpert.tile.BuildingType;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
@@ -37,7 +38,7 @@ public abstract class PlayStage extends StageScreen {
     protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
             btnMore, btnRemove, btnHelp;
 
-    protected com.cedricmartens.hexpert.tile.BuildingType selection;
+    protected BuildingType selection;
     protected ImageButton selectedButton;
     public boolean removeMode = false;
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
@@ -195,7 +196,7 @@ public abstract class PlayStage extends StageScreen {
         super.render(delta);
     }
 
-    public void setBuilding(com.cedricmartens.hexpert.tile.BuildingType selection)
+    public void setBuilding(BuildingType selection)
     {
         tableRequirements.clearChildren();
 
@@ -255,7 +256,7 @@ public abstract class PlayStage extends StageScreen {
         }
     }
 
-    private Image getImgBySelection(com.cedricmartens.hexpert.tile.BuildingType selection)
+    private Image getImgBySelection(BuildingType selection)
     {
         switch (selection) {
             case NONE:
@@ -280,7 +281,7 @@ public abstract class PlayStage extends StageScreen {
         return null;
     }
 
-    public void setSelection(com.cedricmartens.hexpert.tile.BuildingType selection) {
+    public void setSelection(BuildingType selection) {
 
 
         this.selection = selection;
