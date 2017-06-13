@@ -22,7 +22,7 @@ public class BuildingScoreDialog extends TutorialDialog {
         
         getContentTable().defaults().pad(15);
         Label.LabelStyle lblStyle = skin.get("bigger", Label.LabelStyle.class);
-        Label lblExplaination = new Label("When you place a building on a tile, your score will be modified by numbers associated to the building", skin);
+        Label lblExplaination = new Label(hexpert.i18NBundle.get("tut_score"), skin);
         lblExplaination.setWrap(true);
         lblExplaination.setAlignment(Align.center);
         getContentTable().add(lblExplaination).colspan(8).width(8*160);
