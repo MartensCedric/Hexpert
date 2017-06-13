@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
+import com.cedricmartens.hexpert.event.tutorial.BuildingScoreDialog;
 
 /**
  * Created by martens on 6/11/17.
@@ -28,6 +29,14 @@ public class HelpDialog extends StandardDialog {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 new BuildingReqDialog(hexpert, hexpert.getSkin()).show(getStage());
+                hide();
+            }
+        });
+
+        txtBtnScore.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                new BuildingScoreDialog(hexpert, hexpert.getSkin()).show(getStage());
                 hide();
             }
         });

@@ -15,11 +15,13 @@ import com.cedricmartens.hexpert.event.StandardDialog;
 public abstract class TutorialDialog extends StandardDialog {
     protected Table scrollContent;
 
-    public TutorialDialog(Hexpert hexpert, Skin skin) {
+    public TutorialDialog(Hexpert hexpert, Skin skin, boolean useScrollPane) {
         super(hexpert, skin);
         scrollContent = new Table();
-        ScrollPane scrollPane = new ScrollPane(scrollContent, skin);
-        getContentTable().add(scrollPane);
+        if(useScrollPane) {
+            ScrollPane scrollPane = new ScrollPane(scrollContent, skin);
+            getContentTable().add(scrollPane);
+        }
 
         getButtonTable().defaults().pad(15);
         I18NBundle i18N = hexpert.i18NBundle;
@@ -28,5 +30,10 @@ public abstract class TutorialDialog extends StandardDialog {
         getButtonTable().add(textButtonOk);
 
         setObject(textButtonOk, null);
+    }
+
+    public TutorialDialog(Hexpert hexpert, Skin skin)
+    {
+        this(hexpert, skin, true);
     }
 }
