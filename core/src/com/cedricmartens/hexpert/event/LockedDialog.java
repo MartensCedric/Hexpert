@@ -32,7 +32,7 @@ public class LockedDialog extends StandardDialog {
             }
         });
         setObject(textButtonOK, null);
-        getButtonTable().add(textButtonOK).width(200).height(120);
+        getButtonTable().add(textButtonOK);
 
 
     }

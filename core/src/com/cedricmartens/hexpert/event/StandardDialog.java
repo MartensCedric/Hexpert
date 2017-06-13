@@ -14,7 +14,7 @@ public abstract class StandardDialog extends Dialog
     public StandardDialog(Hexpert hexpert, Skin skin) {
         super("", skin);
         this.hexpert = hexpert;
-        getButtonTable().pad(25);
+        getButtonTable().defaults().width(200).height(120).pad(25);
     }
 
     public StandardDialog(Hexpert hexpert, WindowStyle windowStyle) {

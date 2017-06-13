@@ -109,7 +109,7 @@ public class OptionDialog extends StandardDialog
 
         setObject(textButtonOK, null);
         getButtonTable().defaults().pad(25);
-        getButtonTable().add(textButtonOK).width(200).height(120);
+        getButtonTable().add(textButtonOK);
     }
 
     private void saveOptions()

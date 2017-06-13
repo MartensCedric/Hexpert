@@ -44,7 +44,7 @@ public class LevelCompleteDialog extends StandardDialog {
         getContentTable().row();
         getContentTable().add(content).width(900);
 
-        getButtonTable().defaults().width(200).height(120).pad(15);
+        getButtonTable().defaults().pad(15);
 
         TextButton textButtonYes = new TextButton(bundle.get("yes"), txtButtonStyle);
         setObject(textButtonYes, 1);

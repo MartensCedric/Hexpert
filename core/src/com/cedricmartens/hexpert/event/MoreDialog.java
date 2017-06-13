@@ -152,9 +152,7 @@ public class MoreDialog extends StandardDialog {
         getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth());
 
         TextButton textButtonClose = new TextButton(i18N.get("close"), hexpert.getSkin());
-        getButtonTable().add(textButtonClose)
-                .width(textButtonClose.getLabel().getPrefWidth() + 50)
-                .height(textButtonClose.getLabel().getPrefHeight() + 50);
+        getButtonTable().add(textButtonClose).width(325);
 
         setObject(textButtonClose, null);
     }

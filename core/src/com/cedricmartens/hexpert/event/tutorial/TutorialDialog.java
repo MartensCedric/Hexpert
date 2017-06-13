@@ -25,9 +25,7 @@ public abstract class TutorialDialog extends StandardDialog {
         I18NBundle i18N = hexpert.i18NBundle;
 
         TextButton textButtonOk = new TextButton(i18N.get("ok"), skin);
-        getButtonTable().add(textButtonOk)
-                    .width(textButtonOk.getLabel().getPrefWidth() + 25)
-                    .height(textButtonOk.getLabel().getPrefHeight() + 25);
+        getButtonTable().add(textButtonOk);
 
         setObject(textButtonOk, null);
     }
