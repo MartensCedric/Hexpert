@@ -200,12 +200,7 @@ public class BuildingReqDialog extends TutorialDialog {
     }
 
     @Override
-    public float getPrefWidth() {
-        return super.getPrefWidth();
-    }
-
-    @Override
     public float getPrefHeight() {
-        return 800;
+        return 900;
     }
 }
