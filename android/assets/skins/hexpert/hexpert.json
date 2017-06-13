@@ -91,6 +91,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: {
+		background: darkness
 		vScrollKnob: knob
 	}
 }

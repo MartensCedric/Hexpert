@@ -220,6 +220,19 @@ atlasData: {
 			tintName: gold
 			name: ui9patch_dwn-gold
 		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/darkness.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: darkness
+		}
 	]
 }
 jsonData: {
@@ -1127,7 +1140,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: true
-						value: null
+						value: darkness
 					}
 					corner: {
 						class: com.ray3k.skincomposer.data.StyleProperty
