@@ -24,7 +24,7 @@ public class LockedDialog extends StandardDialog {
 
         final TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), txtButtonStyle);
 
-        textButtonOK.addListener(new ClickListener(){
+        textButtonOK.addListener(new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -33,8 +33,6 @@ public class LockedDialog extends StandardDialog {
         });
         setObject(textButtonOK, null);
         getButtonTable().add(textButtonOK);
-
-
     }
 
     @Override

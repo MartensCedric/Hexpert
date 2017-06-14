@@ -10,6 +10,10 @@ import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
 import com.cedricmartens.hexpert.event.tutorial.BuildingScoreDialog;
 import com.cedricmartens.hexpert.event.tutorial.TileEffectDialog;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by martens on 6/11/17.
  */
@@ -51,6 +55,21 @@ public class HelpDialog extends StandardDialog {
         });
 
 
+        getContentTable().defaults().height(120);
+
+        int max = 0;
+
+        List<TextButton> txtButtons = Arrays.asList(txtBtnLck, txtBtnReqs, txtBtnScore, txtBtnSpec);
+        for(int i = 0; i < txtButtons.size(); i++)
+        {
+            TextButton txtButton = txtButtons.get(i);
+            if(max < txtButton.getPrefWidth())
+            {
+                max = (int) txtButton.getPrefWidth();
+            }
+        }
+
+        getContentTable().defaults().width(max + 20);
         getContentTable().add(txtBtnReqs);
         getContentTable().row();
 

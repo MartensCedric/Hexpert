@@ -20,6 +20,7 @@ public abstract class StandardDialog extends Dialog
     public StandardDialog(Hexpert hexpert, WindowStyle windowStyle) {
         super("", windowStyle);
         this.hexpert = hexpert;
+        getButtonTable().defaults().width(200).height(120).pad(25);
     }
 
     @Override

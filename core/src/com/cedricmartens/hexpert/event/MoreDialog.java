@@ -26,8 +26,8 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_RESET;
 
 public class MoreDialog extends StandardDialog {
     private ImageButton btnBack, btnReset, btnOptions, btnLeaderboard, btnGoals;
-    private com.cedricmartens.hexpert.Hexpert hexpert;
-    private com.cedricmartens.hexpert.screens.PlayStage playStage;
+    private Hexpert hexpert;
+    private PlayStage playStage;
 
     public MoreDialog(final Hexpert hexpert, final PlayStage playStage, Skin skin) {
         super(hexpert, skin);
@@ -165,7 +165,7 @@ public class MoreDialog extends StandardDialog {
     private void backToMenu()
     {
         Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
-        com.cedricmartens.hexpert.event.misc.ActionDialog actionDialog = new ActionDialog(text, new com.cedricmartens.hexpert.event.misc.Action() {
+        ActionDialog actionDialog = new ActionDialog(text, new com.cedricmartens.hexpert.event.misc.Action() {
             @Override
             public void doAction() {
                 hexpert.setScreen(hexpert.levelSelectScreen);
@@ -175,7 +175,6 @@ public class MoreDialog extends StandardDialog {
         actionDialog.show(getStage());
         hide();
     }
-
 
     private void showGoals() {
         ObjectiveDialog objectiveDiag = new ObjectiveDialog(hexpert.getSkin(), hexpert);

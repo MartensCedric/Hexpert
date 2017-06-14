@@ -57,8 +57,7 @@ public class LevelCompleteDialog extends StandardDialog {
         TextButton textButtonShare = new TextButton(bundle.get("share"), txtButtonStyle);
         setObject(textButtonShare, 2);
 
-        Cell cellShare = getButtonTable().add(textButtonShare);
-        cellShare.width(cellShare.getPrefWidth() + 30);
+        getButtonTable().add(textButtonShare).width(textButtonShare.getPrefWidth() + 30);
     }
 
     @Override
