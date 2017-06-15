@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
+import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.HexpertConfig;
 import com.cedricmartens.hexpert.screens.LevelSelectScreen;
 import com.cedricmartens.hexpert.social.Sharing;
@@ -152,6 +154,7 @@ public class Hexpert extends Game {
 		sounds.put("win", Gdx.audio.newSound(Gdx.files.internal("sounds/win.wav")));
 		sounds.put("bad", Gdx.audio.newSound(Gdx.files.internal("sounds/bad.wav")));
 		sounds.put("select", Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav")));
+
 		assetManager.finishLoading();
 		i18NBundle = assetManager.get("i18n/language", I18NBundle.class);
 		levelSelectScreen = new LevelSelectScreen(this);

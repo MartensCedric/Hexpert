@@ -14,9 +14,9 @@ import com.cedricmartens.hexpert.event.StandardDialog;
 
 public class ActionDialog extends StandardDialog {
 
-    private Action action;
+    private com.cedricmartens.hexpert.misc.Action action;
 
-    public ActionDialog(Label text, Action action, I18NBundle bundle, Skin skin, Hexpert hexpert) {
+    public ActionDialog(Label text, com.cedricmartens.hexpert.misc.Action action, I18NBundle bundle, Skin skin, Hexpert hexpert) {
         super(hexpert, skin);
         this.action = action;
 

@@ -18,7 +18,7 @@ import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
-import com.cedricmartens.hexpert.event.misc.Action;
+import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.event.misc.ActionDialog;
 import com.cedricmartens.hexpert.event.LevelCompleteDialog;
 import com.cedricmartens.hexpert.effect.MoveEventManager;

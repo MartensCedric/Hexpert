@@ -10,10 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexpert.event.HelpDialog;
+import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
+import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.MoreDialog;
 import com.cedricmartens.hexpert.tile.BuildingType;
+
+import java.util.HashMap;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
@@ -44,9 +48,35 @@ public abstract class PlayStage extends StageScreen {
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
     protected Hexpert hexpert;
 
+    private HashMap<String, Action> onStartActions = new HashMap<>();
+
     public PlayStage(final Hexpert hexpert) {
         super();
         this.hexpert = hexpert;
+
+        onStartActions.put("tutFact", new Action() {
+            @Override
+            public void doAction() {
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), 4).show(getStage());
+            }
+        });
+
+        onStartActions.put("tutMarket", new Action() {
+            @Override
+            public void doAction() {
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), 5).show(getStage());
+            }
+        });
+
+        onStartActions.put("tutBank", new Action() {
+            @Override
+            public void doAction() {
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), 6).show(getStage());
+            }
+        });
+
+
+
 
         TextureRegionDrawable drawableFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
         TextureRegionDrawable drawableHouse = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HOUSE)));

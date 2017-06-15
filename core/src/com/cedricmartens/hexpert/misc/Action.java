@@ -1,4 +1,4 @@
-package com.cedricmartens.hexpert.event.misc;
+package com.cedricmartens.hexpert.misc;
 
 /**
  * Created by martens on 5/22/17.

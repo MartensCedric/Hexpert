@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexpert.misc.Const;
+import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.TileData;
 
 /**
@@ -50,7 +51,7 @@ public class Objective
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
 
-            if(hex.getHexData().getBuildingType() != com.cedricmartens.hexpert.tile.BuildingType.NONE)
+            if(hex.getHexData().getBuildingType() != BuildingType.NONE)
             {
                 score += hex.getHexData().getBuildingType().getScore() * hex.getHexData().getTileType().getMultiplier();
                 buildings[hex.getHexData().getBuildingType().ordinal() - 1]++;
@@ -84,7 +85,7 @@ public class Objective
 
                 s+= bundle.format("objective_building",
                         buildingRequirement[i],
-                        bundle.format(com.cedricmartens.hexpert.tile.BuildingType.values()[i + 1].getName().toLowerCase() + "_choice", buildingRequirement[i]));
+                        bundle.format(BuildingType.values()[i + 1].name().toLowerCase() + "_choice", buildingRequirement[i]));
             }
         }
 
