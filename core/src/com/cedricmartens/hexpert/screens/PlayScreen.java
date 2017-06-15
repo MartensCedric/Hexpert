@@ -206,6 +206,8 @@ public class PlayScreen extends PlayStage
         getCamera().zoom *= 0.6;
         getCamera().translate(0, 25);
         getCamera().update();
+
+        doAction(mapName);
     }
 
     private void setMultiplexer()

@@ -14,12 +14,13 @@ import com.cedricmartens.hexpert.event.StandardDialog;
 
 public abstract class TutorialDialog extends StandardDialog {
     protected Table scrollContent;
+    protected ScrollPane scrollPane;
 
     public TutorialDialog(Hexpert hexpert, Skin skin, boolean useScrollPane) {
         super(hexpert, skin);
         scrollContent = new Table();
         if(useScrollPane) {
-            ScrollPane scrollPane = new ScrollPane(scrollContent, skin);
+            scrollPane = new ScrollPane(scrollContent, skin);
             getContentTable().add(scrollPane);
         }
 

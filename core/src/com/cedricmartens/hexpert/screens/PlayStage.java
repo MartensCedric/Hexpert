@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.cedricmartens.hexpert.event.HelpDialog;
 import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
+import com.cedricmartens.hexpert.event.tutorial.BuildingScoreDialog;
+import com.cedricmartens.hexpert.event.tutorial.TileEffectDialog;
 import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
@@ -57,26 +59,37 @@ public abstract class PlayStage extends StageScreen {
         onStartActions.put("tutFact", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), 4).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), 5).show(getStage());
             }
         });
 
         onStartActions.put("tutMarket", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), 5).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), 6).show(getStage());
             }
         });
 
         onStartActions.put("tutBank", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), 6).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), 7).show(getStage());
             }
         });
 
+        onStartActions.put("handball", new Action() {
+            @Override
+            public void doAction() {
+                new BuildingScoreDialog(hexpert, hexpert.getSkin()).show(getStage());
+            }
+        });
 
-
+        onStartActions.put("holywater", new Action() {
+            @Override
+            public void doAction() {
+                new TileEffectDialog(hexpert, hexpert.getSkin()).show(getStage());
+            }
+        });
 
         TextureRegionDrawable drawableFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
         TextureRegionDrawable drawableHouse = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HOUSE)));
@@ -326,5 +339,13 @@ public abstract class PlayStage extends StageScreen {
 
     public Hexpert getHexpert() {
         return hexpert;
+    }
+
+    protected void doAction(String lvlName)
+    {
+        if(onStartActions.containsKey(lvlName))
+        {
+            onStartActions.get(lvlName).doAction();
+        }
     }
 }
