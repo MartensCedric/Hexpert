@@ -1,5 +1,6 @@
 package com.cedricmartens.hexpert.map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
@@ -52,5 +53,21 @@ public class MapUtils
 
         camera.zoom = (float) (biggestDelta / 500);
         camera.update();
+    }
+
+
+    public static int getLevelIndex(String levelName)
+    {
+        String[] lvlIndexes = Gdx.files.internal("maps.hexindex").readString().split("\n");
+
+        for(int i = 0; i < lvlIndexes.length; i++)
+        {
+            if(lvlIndexes[i].equals(levelName))
+            {
+                return i + 1;
+            }
+        }
+
+        throw new IllegalStateException();
     }
 }

@@ -156,7 +156,7 @@ public class PlayScreen extends PlayStage
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
         objectivePassed = new boolean[map.getObjectives().length];
-        exitDialog = new LevelCompleteDialog(hexpert.getSkin(), hexpert);
+        exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String hint = Gdx.files.internal("shaders/yellowTint.fs").readString();
@@ -331,7 +331,7 @@ public class PlayScreen extends PlayStage
 
         if(!exitDialog.hasBeenShown() && numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length)
         {
-            this.exitDialog = new LevelCompleteDialog(hexpert.getSkin(), hexpert);
+            this.exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
             exitDialog.setShown(true);
             exitDialog.show(getStage());
         }

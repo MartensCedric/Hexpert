@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
+import com.cedricmartens.hexpert.map.MapUtils;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 
@@ -24,9 +25,14 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 public class LevelCompleteDialog extends StandardDialog {
 
     private boolean shown = false;
+    private int score;
+    private int lvlIndex;
 
-    public LevelCompleteDialog(Skin skin, Hexpert hexpert) {
+    public LevelCompleteDialog(int score, String mapName, Skin skin, Hexpert hexpert) {
         super(hexpert, skin.get("gold", WindowStyle.class));
+
+        this.score = score;
+        lvlIndex = MapUtils.getLevelIndex(mapName);
 
         Image imageTrophy = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS)));
         TextButton.TextButtonStyle txtButtonStyle = skin.get("gold", TextButton.TextButtonStyle.class);
@@ -54,10 +60,11 @@ public class LevelCompleteDialog extends StandardDialog {
         setObject(textButtonNo, null);
         getButtonTable().add(textButtonNo);
 
-        TextButton textButtonShare = new TextButton(bundle.get("share"), txtButtonStyle);
-        setObject(textButtonShare, 2);
-
-        getButtonTable().add(textButtonShare).width(textButtonShare.getPrefWidth() + 30);
+        if(lvlIndex > 3) {
+            TextButton textButtonShare = new TextButton(bundle.get("share"), txtButtonStyle);
+            setObject(textButtonShare, 2);
+            getButtonTable().add(textButtonShare).width(textButtonShare.getPrefWidth() + 30);
+        }
     }
 
     @Override
@@ -72,7 +79,7 @@ public class LevelCompleteDialog extends StandardDialog {
                     hexpert.setScreen(hexpert.levelSelectScreen);
                     break;
                 case 2:
-                    hexpert.sharing.shareText("This is a test message for sharing hexpert");
+                    hexpert.sharing.shareText(hexpert.i18NBundle.format("share_message", score, lvlIndex));
                     break;
             }
         }

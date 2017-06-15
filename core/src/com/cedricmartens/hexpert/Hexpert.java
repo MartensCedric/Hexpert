@@ -15,6 +15,7 @@ import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
 import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.HexpertConfig;
 import com.cedricmartens.hexpert.screens.LevelSelectScreen;
+import com.cedricmartens.hexpert.social.PlayServices;
 import com.cedricmartens.hexpert.social.Sharing;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.TileType;
@@ -68,7 +69,7 @@ public class Hexpert extends Game {
 	private BitmapFont font;
 	private Skin skin;
 
-	public Hexpert(com.cedricmartens.hexpert.social.PlayServices playServices, Sharing sharing) {
+	public Hexpert(PlayServices playServices, Sharing sharing) {
 		this.playServices = playServices;
 		this.sharing = sharing;
 	}
