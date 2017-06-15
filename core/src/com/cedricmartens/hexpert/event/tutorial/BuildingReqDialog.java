@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.misc.Const;
@@ -38,7 +39,14 @@ public class BuildingReqDialog extends TutorialDialog {
         super(hexpert, skin);
 
         scrollContent.defaults().pad(PADDING);
+
         I18NBundle i18n = hexpert.i18NBundle;
+
+        Label lblExplaination = new Label(i18n.get("req_diag"), skin);
+        lblExplaination.setAlignment(Align.center);
+        lblExplaination.setWrap(true);
+
+        scrollContent.add(lblExplaination).width(800);
 
         Image imgFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
         Image imgNotFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
