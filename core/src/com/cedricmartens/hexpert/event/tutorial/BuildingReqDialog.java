@@ -46,7 +46,8 @@ public class BuildingReqDialog extends TutorialDialog {
         lblExplaination.setAlignment(Align.center);
         lblExplaination.setWrap(true);
 
-        scrollContent.add(lblExplaination).width(800);
+        scrollContent.add(lblExplaination).width(900);
+        scrollContent.row();
 
         Image imgFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
         Image imgNotFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
