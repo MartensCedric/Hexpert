@@ -136,7 +136,6 @@ public class MoreDialog extends StandardDialog {
             }
         });
 
-
         getContentTable().add(btnBack);
         getContentTable().add(lblBack).width(lblBack.getPrefWidth());
         getContentTable().row();
