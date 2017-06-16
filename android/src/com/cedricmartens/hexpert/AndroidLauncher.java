@@ -19,16 +19,26 @@ public class AndroidLauncher extends AndroidApplication implements com.cedricmar
 	{
 		leaderboardsMap = new HashMap<>();
 		leaderboardsMap.put("handball", "CgkIq5XDzvcOEAIQDg");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
-		leaderboardsMap.put("", "");
+		leaderboardsMap.put("holywater", "CgkIq5XDzvcOEAIQDw");
+		leaderboardsMap.put("triForest", "CgkIq5XDzvcOEAIQEA");
+		leaderboardsMap.put("tightAroundWater", "CgkIq5XDzvcOEAIQEQ");
+		leaderboardsMap.put("bent", "CgkIq5XDzvcOEAIQEg");
+		leaderboardsMap.put("long", "CgkIq5XDzvcOEAIQEw");
+		leaderboardsMap.put("smlLos", "CgkIq5XDzvcOEAIQFA");
+		leaderboardsMap.put("asyLong", "CgkIq5XDzvcOEAIQFQ");
+		leaderboardsMap.put("triHex", "CgkIq5XDzvcOEAIQFg");
+		leaderboardsMap.put("triSoft", "CgkIq5XDzvcOEAIQFw");
+		leaderboardsMap.put("asyHandball", "CgkIq5XDzvcOEAIQGA");
+		leaderboardsMap.put("asyDiag", "CgkIq5XDzvcOEAIQGQ");
+		leaderboardsMap.put("asyQuadSpike", "CgkIq5XDzvcOEAIQGg");
+		leaderboardsMap.put("asyDiagLos", "CgkIq5XDzvcOEAIQGw");
+		leaderboardsMap.put("vBone", "CgkIq5XDzvcOEAIQHA");
+		leaderboardsMap.put("classic", "CgkIq5XDzvcOEAIQHQ");
+		leaderboardsMap.put("triPlane", "CgkIq5XDzvcOEAIQHg");
+		leaderboardsMap.put("triBankLckd", "CgkIq5XDzvcOEAIQHw");
+		leaderboardsMap.put("hexcity", "CgkIq5XDzvcOEAIQIA");
+		leaderboardsMap.put("wobblyPlane", "CgkIq5XDzvcOEAIQIQ");
+		leaderboardsMap.put("crown", "CgkIq5XDzvcOEAIQIg");
 	}
 
 	@Override
