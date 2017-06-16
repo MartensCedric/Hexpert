@@ -19,7 +19,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.martenscedric.hexpert"
+        applicationId "com.cedricmartens.hexpert"
         minSdkVersion 15
         targetSdkVersion 23
     }
@@ -72,7 +72,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.martenscedric.hexcity/com.martenscedric.hexcity.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.cedricmartens.hexpert/com.cedricmartens.hexpert.AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.
