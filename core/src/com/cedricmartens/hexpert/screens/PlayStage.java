@@ -19,8 +19,11 @@ import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.MoreDialog;
 import com.cedricmartens.hexpert.tile.BuildingType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
@@ -41,8 +44,7 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND;
 public abstract class PlayStage extends StageScreen {
 
     protected Table table, tableBtn, tableRequirements, tableScore;
-    protected ImageButton btnFarm, btnHouse, btnMine, btnWind, btnFactory, btnMarket, btnBank, btnRocket,
-            btnMore, btnRemove, btnHelp;
+    protected ImageButton btnMore, btnRemove, btnHelp;
 
     protected BuildingType selection;
     protected ImageButton selectedButton;
@@ -51,29 +53,33 @@ public abstract class PlayStage extends StageScreen {
     protected Hexpert hexpert;
 
     private HashMap<String, Action> onStartActions = new HashMap<>();
+    private HashMap<String, Integer> buildingCountForMap = new HashMap<>();
 
     public PlayStage(final Hexpert hexpert) {
         super();
         this.hexpert = hexpert;
+        buildingCountForMap.put("tutFact", 5);
+        buildingCountForMap.put("tutMarket", 6);
+        buildingCountForMap.put("tutBank", 7);
 
         onStartActions.put("tutFact", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), 5).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), getBuildingCountForMap("tutFact")).show(getStage());
             }
         });
 
         onStartActions.put("tutMarket", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), 6).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), getBuildingCountForMap("tutMarket")).show(getStage());
             }
         });
 
         onStartActions.put("tutBank", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), 7).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), getBuildingCountForMap("tutBank")).show(getStage());
             }
         });
 
@@ -101,7 +107,6 @@ public abstract class PlayStage extends StageScreen {
         TextureRegionDrawable drawableRocket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET)));
 
         TextureRegionDrawable drawableNotFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
-
         imgFarm = new Image(drawableFarm);
         imgHouse = new Image(drawableHouse);
         imgMine = new Image(drawableMine);
@@ -111,61 +116,6 @@ public abstract class PlayStage extends StageScreen {
         imgBank = new Image(drawableBank);
         imgRocket = new Image(drawableRocket);
         imgNotFarm = new Image(drawableNotFarm);
-
-        btnFarm = new ImageButton(drawableFarm);
-        btnFarm.getImageCell().expand().fill();
-
-        btnHouse = new ImageButton(drawableHouse);
-        btnHouse.getImageCell().expand().fill();
-
-        btnMine = new ImageButton(drawableMine);
-        btnMine.getImageCell().expand().fill();
-
-        btnWind = new ImageButton(drawableWind);
-        btnWind.getImageCell().expand().fill();
-
-        btnFactory = new ImageButton(drawableFactory);
-        btnFactory.getImageCell().expand().fill();
-
-        btnMarket = new ImageButton(drawableMarket);
-        btnMarket.getImageCell().expand().fill();
-
-        btnBank = new ImageButton(drawableBank);
-        btnBank.getImageCell().expand().fill();
-
-        btnRocket = new ImageButton(drawableRocket);
-        btnRocket.getImageCell().expand().fill();
-
-        table = new Table();
-        table.defaults().width(200).height(Const.HEIGHT/9).pad(5);
-
-        table.add(btnFarm);
-        table.row();
-
-        table.add(btnHouse);
-        table.row();
-
-        table.add(btnMine);
-        table.row();
-
-        table.add(btnWind);
-        table.row();
-
-        table.add(btnFactory);
-        table.row();
-
-        table.add(btnMarket);
-        table.row();
-
-        table.add(btnBank);
-        table.row();
-
-        table.add(btnRocket);
-
-        table.setX(Const.WIDTH - 100);
-        table.setY(Const.HEIGHT - table.getPrefHeight()/2 - 5);
-
-        table.setDebug(false);
 
         btnMore = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MORE))));
 
@@ -228,7 +178,6 @@ public abstract class PlayStage extends StageScreen {
         tableScore.row();
         tableScore.add(new Label("", lblStyle));
 
-        getStage().addActor(table);
         getStage().addActor(tableBtn);
         getStage().addActor(tableRequirements);
         getStage().addActor(tableScore);
@@ -347,5 +296,13 @@ public abstract class PlayStage extends StageScreen {
         {
             onStartActions.get(lvlName).doAction();
         }
+    }
+
+    protected int getBuildingCountForMap(String str)
+    {
+        if(buildingCountForMap.containsKey(str))
+            return buildingCountForMap.get(str);
+
+        return Const.BUILDING_COUNT;
     }
 }

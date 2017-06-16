@@ -4,13 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
@@ -39,6 +48,7 @@ import java.util.List;
 
 import flexjson.JSONSerializer;
 
+import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.social.Achievement.GREAT_ESCAPE;
 
 /**
@@ -66,85 +76,6 @@ public class PlayScreen extends PlayStage
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
-        btnFarm.addListener(new ClickListener()
-                            {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(BuildingType.FARM);
-                                    hexpert.sounds.get("select").play();
-                                }
-                            }
-        );
-
-        btnHouse.addListener(new ClickListener()
-                             {
-                                 @Override
-                                 public void clicked(InputEvent event, float x, float y) {
-                                     setSelection(BuildingType.HOUSE);
-                                     hexpert.sounds.get("select").play();
-                                 }
-                             }
-        );
-
-        btnMine.addListener(new ClickListener()
-                            {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(BuildingType.MINE);
-                                    hexpert.sounds.get("select").play();
-                                }
-                            }
-        );
-
-        btnWind.addListener(new ClickListener()
-                            {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(BuildingType.WIND);
-                                    hexpert.sounds.get("select").play();
-                                }
-                            }
-        );
-
-        btnFactory.addListener(new ClickListener()
-                               {
-                                   @Override
-                                   public void clicked(InputEvent event, float x, float y) {
-                                       setSelection(BuildingType.FACTORY);
-                                       hexpert.sounds.get("select").play();
-                                   }
-                               }
-        );
-
-        btnMarket.addListener(new ClickListener()
-                              {
-                                  @Override
-                                  public void clicked(InputEvent event, float x, float y) {
-                                      setSelection(BuildingType.MARKET);
-                                      hexpert.sounds.get("select").play();
-                                  }
-                              }
-        );
-
-        btnBank.addListener(new ClickListener()
-                            {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    setSelection(BuildingType.BANK);
-                                    hexpert.sounds.get("select").play();
-                                }
-                            }
-        );
-
-        btnRocket.addListener(new ClickListener()
-                              {
-                                  @Override
-                                  public void clicked(InputEvent event, float x, float y) {
-                                      setSelection(BuildingType.ROCKET);
-                                      hexpert.sounds.get("select").play();
-                                  }
-                              }
-        );
 
         this.hexpert = hexpert;
         this.mapName = mapName;
@@ -157,6 +88,43 @@ public class PlayScreen extends PlayStage
         grid = map.build();
         objectivePassed = new boolean[map.getObjectives().length];
         exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
+
+
+        table = new Table();
+        table.defaults().width(200).height(Const.HEIGHT/9).pad(5);
+        int numberOfBuilding = getBuildingCountForMap(mapName);
+        for(int i = 1; i < BuildingType.values().length; i++)
+        {
+            Actor imgBuilding;
+            if(numberOfBuilding >= i)
+            {
+                final BuildingType buildingType = BuildingType.values()[i];
+                String path = SPRITE_FOLDER + buildingType.name().toLowerCase() + ".png";
+                TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(path)));
+                imgBuilding = new ImageButton(drawable);
+                ImageButton imgButton = (ImageButton) imgBuilding;
+                imgButton.getImageCell().expand().fill();
+                imgButton.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        setSelection(buildingType);
+                        hexpert.sounds.get("select").play();
+                    }
+                });
+
+            }else{
+                imgBuilding = new Image();
+            }
+
+            table.add(imgBuilding);
+            table.row();
+        }
+
+        table.setX(Const.WIDTH - 100);
+        table.setY(Const.HEIGHT - table.getPrefHeight()/2 - 5);
+
+        table.setDebug(false);
+        getStage().addActor(table);
 
         String vertexShader = Gdx.files.internal("shaders/defaultvertex.vs").readString();
         String hint = Gdx.files.internal("shaders/yellowTint.fs").readString();
