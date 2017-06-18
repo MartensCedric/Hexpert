@@ -49,6 +49,8 @@ import java.util.List;
 import flexjson.JSONSerializer;
 
 import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST_CUT;
 import static com.cedricmartens.hexpert.social.Achievement.GREAT_ESCAPE;
 
 /**
@@ -164,7 +166,14 @@ public class PlayScreen extends PlayStage
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
             TileData data = hex.getHexData();
-            data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
+            if(data.getTileType() == TileType.FOREST)
+            {
+                data.setTerrainTexture((Texture) hexpert.assetManager.get(data.getBuildingType() == BuildingType.NONE ?
+                        TEXTURE_FOREST : TEXTURE_FOREST_CUT));
+            }else {
+                data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
+            }
+
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
             hex.setHexData(data);
         }

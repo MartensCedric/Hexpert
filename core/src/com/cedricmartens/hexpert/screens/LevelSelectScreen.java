@@ -36,11 +36,15 @@ import com.cedricmartens.hexpert.misc.TextureData;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.Rules;
 import com.cedricmartens.hexpert.tile.TileData;
+import com.cedricmartens.hexpert.tile.TileType;
 
 import java.util.List;
 
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
+
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST_CUT;
 
 /**
  * Created by Shawn Martens on 2017-04-30.
@@ -549,7 +553,15 @@ public class LevelSelectScreen extends StageScreen
         {
             Hexagon<TileData> hex = grid.getHexs()[i];
             TileData data = hex.getHexData();
-            data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
+
+            if(data.getTileType() == TileType.FOREST)
+            {
+                data.setTerrainTexture((Texture) hexpert.assetManager.get(data.getBuildingType() == BuildingType.NONE ?
+                        TEXTURE_FOREST : TEXTURE_FOREST_CUT));
+            }else {
+                data.setTerrainTexture(hexpert.getTextureByTerrain(data.getTileType()));
+            }
+
             data.setBuildingTexture(hexpert.getTextureByBuilding(data.getBuildingType()));
             hex.setHexData(data);
 

@@ -33,6 +33,7 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_CLOUD;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_CORRECT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST_CUT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_GRASS;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HELP;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
@@ -150,6 +151,8 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_LEFT, Texture.class);
 		assetManager.load(TEXTURE_RIGHT, Texture.class);
 		assetManager.load(TEXTURE_LOCKED, Texture.class);
+
+		assetManager.load(TEXTURE_FOREST_CUT, Texture.class);
 
 		sounds.put("click", Gdx.audio.newSound(Gdx.files.internal("sounds/click.wav")));
 		sounds.put("win", Gdx.audio.newSound(Gdx.files.internal("sounds/win.wav")));

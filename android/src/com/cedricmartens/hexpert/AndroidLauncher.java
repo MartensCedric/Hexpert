@@ -5,13 +5,14 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.cedricmartens.hexpert.social.PlayServices;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.cedricmartens.hexpert.social.Sharing;
 
 import java.util.HashMap;
 
-public class AndroidLauncher extends AndroidApplication implements com.cedricmartens.hexpert.social.PlayServices, Sharing {
+public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing {
 
 	private GameHelper gameHelper;
 	private HashMap<String, String> leaderboardsMap;
