@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
 import com.cedricmartens.hexpert.misc.Action;
+import com.cedricmartens.hexpert.misc.BuildingAnimator;
 import com.cedricmartens.hexpert.misc.HexpertConfig;
 import com.cedricmartens.hexpert.screens.LevelSelectScreen;
 import com.cedricmartens.hexpert.social.PlayServices;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
+import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BAD;
@@ -56,6 +58,9 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_SAND;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WATER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND2;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND3;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND4;
 
 public class Hexpert extends Game {
 
@@ -118,6 +123,9 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_HOUSE, Texture.class);
 		assetManager.load(TEXTURE_MINE, Texture.class);
 		assetManager.load(TEXTURE_WIND, Texture.class);
+		assetManager.load(TEXTURE_WIND2, Texture.class);
+		assetManager.load(TEXTURE_WIND3, Texture.class);
+		assetManager.load(TEXTURE_WIND4, Texture.class);
 		assetManager.load(TEXTURE_FACTORY, Texture.class);
 		assetManager.load(TEXTURE_MARKET, Texture.class);
 		assetManager.load(TEXTURE_BANK, Texture.class);

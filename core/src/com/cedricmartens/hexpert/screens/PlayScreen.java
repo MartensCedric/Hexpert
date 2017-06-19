@@ -25,6 +25,7 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexpert.misc.BuildingAnimator;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.misc.Action;
@@ -75,11 +76,14 @@ public class PlayScreen extends PlayStage
     private List<TileData> defaultBuildings;
     private List<TileData> validBuildings;
     private LevelCompleteDialog exitDialog;
+    private BuildingAnimator windAnimator;
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
 
         this.hexpert = hexpert;
+        this.windAnimator = new BuildingAnimator(1.0f, 4, SPRITE_FOLDER + "wind.png", hexpert);
+
         this.mapName = mapName;
         this.map = map;
         mapResult = result;
@@ -209,6 +213,8 @@ public class PlayScreen extends PlayStage
                 || Math.abs(getCamera().position.y) > 5000)
             hexpert.playServices.unlockAchievement(GREAT_ESCAPE);
 
+        windAnimator.tick(Gdx.graphics.getDeltaTime());
+
         batch.setProjectionMatrix(getCamera().combined);
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -252,8 +258,17 @@ public class PlayScreen extends PlayStage
                 if(!validBuildings.contains(hex.getHexData()))
                     batch.setShader(lockedShader);
 
+                Texture buildingTexture = null;
+
+                if(hex.getHexData().getBuildingType() == BuildingType.WIND)
+                {
+                    buildingTexture = windAnimator.getTexture();
+                }else{
+                    buildingTexture = hex.getHexData().getBuildingTexture();
+                }
+
                 Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-                batch.draw(hex.getHexData().getBuildingTexture(),
+                batch.draw(buildingTexture,
                         (float)(middlePoint.x - grid.getStyle().getSize()/2),
                         (float)(middlePoint.y - grid.getStyle().getSize()/2),
                         (float)grid.getStyle().getSize(),

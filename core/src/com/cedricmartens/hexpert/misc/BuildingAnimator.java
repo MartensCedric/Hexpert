@@ -18,7 +18,7 @@ public class BuildingAnimator
     private String spritePath;
     private Hexpert hexpert;
 
-    public BuildingAnimator(int interval, int frames, String spritePath, Hexpert hexpert) {
+    public BuildingAnimator(float interval, int frames, String spritePath, Hexpert hexpert) {
         this.hexpert = hexpert;
         this.interval = interval;
         this.frames = frames;

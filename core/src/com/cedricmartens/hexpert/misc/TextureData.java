@@ -13,6 +13,10 @@ public class TextureData {
     public static final String TEXTURE_HOUSE = SPRITE_FOLDER + "house.png";
     public static final String TEXTURE_MINE = SPRITE_FOLDER + "mine.png";
     public static final String TEXTURE_WIND = SPRITE_FOLDER + "wind.png";
+    public static final String TEXTURE_WIND2 = SPRITE_FOLDER + "wind2.png";
+    public static final String TEXTURE_WIND3 = SPRITE_FOLDER + "wind3.png";
+    public static final String TEXTURE_WIND4 = SPRITE_FOLDER + "wind4.png";
+
     public static final String TEXTURE_FACTORY = SPRITE_FOLDER + "factory.png";
     public static final String TEXTURE_MARKET = SPRITE_FOLDER + "market.png";
     public static final String TEXTURE_BANK = SPRITE_FOLDER + "bank.png";
