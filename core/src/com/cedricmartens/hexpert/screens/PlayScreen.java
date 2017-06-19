@@ -82,7 +82,7 @@ public class PlayScreen extends PlayStage
         super(hexpert);
 
         this.hexpert = hexpert;
-        this.windAnimator = new BuildingAnimator(1.0f, 4, SPRITE_FOLDER + "wind.png", hexpert);
+        this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
 
         this.mapName = mapName;
         this.map = map;
@@ -321,7 +321,8 @@ public class PlayScreen extends PlayStage
         updateScore();
         super.render(delta);
 
-        if(!exitDialog.hasBeenShown() && numObjectivesPassedCurrent() == mapResult.getObjectivePassed().length)
+        if(!exitDialog.hasBeenShown()
+                && mapResult.getObjectivePassedCount() == map.getObjectives().length)
         {
             this.exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
             exitDialog.setShown(true);
@@ -380,22 +381,12 @@ public class PlayScreen extends PlayStage
         updateValidBuildings();
         if(map.scoreIsCalculated())
         {
-            score = 0;
-            for(int i = 0; i < validBuildings.size(); i++)
-            {
-                TileData data = validBuildings.get(i);
-                score+=data.getBuildingType().getScore() * data.getTileType().getMultiplier();
-            }
+            score = map.getScore(grid);
 
             if(score > mapResult.getScore())
             {
                 mapResult.setScore(score);
-                BuildingType[] buildingTypes = new BuildingType[grid.getHexs().length];
-                for(int i = 0; i < grid.getHexs().length; i++)
-                {
-                    buildingTypes[i] = ((TileData) grid.getHexs()[i].getHexData()).getBuildingType();
-                }
-                mapResult.setBuildings(buildingTypes);
+                mapResult.setBuildings(grid);
 
                 saveResult();
                 try{
@@ -434,52 +425,8 @@ public class PlayScreen extends PlayStage
     }
 
     public void updateObjectives() {
-
-        for(int i = 0; i < map.getObjectives().length; i++)
-        {
-            objectivePassed[i] = (map.getObjectives()[i].hasPassed(grid));
-        }
-
-        if(numObjectivesPassedCurrent() > numObjectivesPassedSave())
-        {
-            mapResult.setObjectivePassed(objectivePassed);
-            saveResult();
-        }
-    }
-
-    private int numObjectivesPassedCurrent()
-    {
-        int n = 0;
-        for(int i = 0; i < map.getObjectives().length; i++)
-        {
-            if(objectivePassed[i])
-                n++;
-        }
-
-        return n;
-    }
-
-    private int numObjectivesPassedSave()
-    {
-        int n = 0;
-        for(int i = 0; i < map.getObjectives().length; i++)
-        {
-            if(mapResult.getObjectivePassed()[i])
-                n++;
-        }
-
-        return n;
-    }
-
-    private Objective getNextObjective()
-    {
-        for(int i = 0; i < map.getObjectives().length; i++)
-        {
-            if(!mapResult.getObjectivePassed()[i])
-                return map.getObjectives()[i];
-        }
-
-        return null;
+        mapResult.setObjectivePassed(map.getObjectives(), grid);
+        objectivePassed = mapResult.getObjectivePassed();
     }
 
     private void saveResult()

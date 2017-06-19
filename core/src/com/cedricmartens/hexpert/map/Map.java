@@ -3,6 +3,10 @@ package com.cedricmartens.hexpert.map;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
+import com.cedricmartens.hexpert.tile.BuildingType;
+import com.cedricmartens.hexpert.tile.Rules;
+import com.cedricmartens.hexpert.tile.TileData;
+import com.cedricmartens.hexpert.tile.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,33 +17,33 @@ import java.util.List;
 
 public class Map
 {
-    private HexFreeShapeBuilder<com.cedricmartens.hexpert.tile.TileData> builder;
-    private com.cedricmartens.hexpert.tile.TileType[] tileTypes;
-    private com.cedricmartens.hexpert.tile.BuildingType[] buildingTypes;
+    private HexFreeShapeBuilder<TileData> builder;
+    private TileType[] tileTypes;
+    private BuildingType[] buildingTypes;
     private boolean calculateScore;
     private Objective[] objectives;
 
-    public void setBuilder(HexFreeShapeBuilder<com.cedricmartens.hexpert.tile.TileData> builder) {
+    public void setBuilder(HexFreeShapeBuilder<TileData> builder) {
         this.builder = builder;
     }
 
-    public void setTileTypes(com.cedricmartens.hexpert.tile.TileType[] tileTypes) {
+    public void setTileTypes(TileType[] tileTypes) {
         this.tileTypes = tileTypes;
     }
 
-    public void setBuildingType(com.cedricmartens.hexpert.tile.BuildingType[] buildingTypes) {
+    public void setBuildingType(BuildingType[] buildingTypes) {
         this.buildingTypes = buildingTypes;
     }
 
-    public com.cedricmartens.hexpert.tile.BuildingType[] getBuildingTypes() {
+    public BuildingType[] getBuildingTypes() {
         return buildingTypes;
     }
 
-    public com.cedricmartens.hexpert.tile.TileType[] getTileTypes() {
+    public TileType[] getTileTypes() {
         return tileTypes;
     }
 
-    public HexFreeShapeBuilder<com.cedricmartens.hexpert.tile.TileData> getBuilder() {
+    public HexFreeShapeBuilder<TileData> getBuilder() {
         return builder;
     }
 
@@ -47,8 +51,19 @@ public class Map
         return objectives;
     }
 
-    public boolean isCalculateScore() {
-        return calculateScore;
+
+    public static int getScore(HexMap<TileData> grid)
+    {
+        List<TileData> validBuildings = Rules.getValidBuildings(grid);
+
+        int score = 0;
+        for(int i = 0; i < validBuildings.size(); i++)
+        {
+            TileData data = validBuildings.get(i);
+            score+=data.getBuildingType().getScore() * data.getTileType().getMultiplier();
+        }
+
+        return score;
     }
 
     public boolean scoreIsCalculated() {
@@ -59,7 +74,7 @@ public class Map
         this.calculateScore = calculateScore;
     }
 
-    public void setBuildingTypes(com.cedricmartens.hexpert.tile.BuildingType[] buildingTypes) {
+    public void setBuildingTypes(BuildingType[] buildingTypes) {
         this.buildingTypes = buildingTypes;
     }
 
@@ -67,31 +82,31 @@ public class Map
         this.objectives = objectives;
     }
 
-    public HexMap<com.cedricmartens.hexpert.tile.TileData> build()
+    public HexMap<TileData> build()
     {
-        HexMap<com.cedricmartens.hexpert.tile.TileData> grid = builder.build();
+        HexMap<TileData> grid = builder.build();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<com.cedricmartens.hexpert.tile.TileData> dataHexagon = grid.getHexs()[i];
-            com.cedricmartens.hexpert.tile.TileData tileData = new com.cedricmartens.hexpert.tile.TileData(dataHexagon);
+            Hexagon<TileData> dataHexagon = grid.getHexs()[i];
+            TileData tileData = new TileData(dataHexagon);
             tileData.setBuildingType(buildingTypes[i]);
             tileData.setTileType(tileTypes[i]);
             dataHexagon.setHexData(tileData);
         }
 
-        Hexagon<com.cedricmartens.hexpert.tile.TileData>[] hexagons = grid.getHexs();
+        Hexagon<TileData>[] hexagons = grid.getHexs();
 
-        List<Hexagon<com.cedricmartens.hexpert.tile.TileData>> sortedHexs = new ArrayList<Hexagon<com.cedricmartens.hexpert.tile.TileData>>();
-        List<com.cedricmartens.hexpert.tile.BuildingType> bTypes = new ArrayList<com.cedricmartens.hexpert.tile.BuildingType>();
-        List<com.cedricmartens.hexpert.tile.TileType> tTypes = new ArrayList<com.cedricmartens.hexpert.tile.TileType>();
+        List<Hexagon<TileData>> sortedHexs = new ArrayList<Hexagon<TileData>>();
+        List<BuildingType> bTypes = new ArrayList<BuildingType>();
+        List<TileType> tTypes = new ArrayList<TileType>();
 
         boolean nulls = false;
         while (!nulls)
         {
             nulls = true;
             int iBest = -1;
-            Hexagon<com.cedricmartens.hexpert.tile.TileData> best = null;
+            Hexagon<TileData> best = null;
             for(int i = 0; i < hexagons.length; i++)
             {
                 if(hexagons[i] != null)
@@ -114,7 +129,7 @@ public class Map
             }
         }
 
-        Hexagon<com.cedricmartens.hexpert.tile.TileData>[] res = new Hexagon[sortedHexs.size()];
+        Hexagon<TileData>[] res = new Hexagon[sortedHexs.size()];
 
         for(int i = 0; i < res.length; i++)
         {

@@ -38,8 +38,10 @@ public class BuildingAnimator
 
     public Texture getTexture()
     {
+        String beforeExt = spritePath.split("\\.")[0];
+        String ext = spritePath.split("\\.")[1];
         return hexpert.assetManager.get(getCurrentFrame() == 1 ?
-                spritePath : spritePath + Integer.toString(getCurrentFrame()));
+                spritePath : beforeExt + Integer.toString(getCurrentFrame()) + "." + ext);
     }
 
     private int getCurrentFrame()

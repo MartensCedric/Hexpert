@@ -72,7 +72,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
                 int score = data.getHexData().getBuildingType().getScore() * data.getHexData().getTileType().getMultiplier();
 
-                if(playScreen.getMap().isCalculateScore())
+                if(playScreen.getMap().scoreIsCalculated())
                     playScreen.getMoveEventManager()
                             .getScoreList().add(
                                     new IntPointTime(score, new Point(pos.x, pos.y), 0.35f)

@@ -324,7 +324,7 @@ public class LevelSelectScreen extends StageScreen
         String mapString = hexpert.levelIndex.get(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
-            result = new MapResult(0, new boolean[map.getObjectives().length]);
+            result = new MapResult(grid);
             JSONSerializer jsonSerializer = new JSONSerializer();
             Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
         }else{
@@ -443,7 +443,7 @@ public class LevelSelectScreen extends StageScreen
             if(shouldCreate){
                 String mapString = Gdx.files.internal("maps/" + hexpert.levelIndex.get(i) + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapString);
-                MapResult res = new MapResult(0, new boolean[map.getObjectives().length]);
+                MapResult res = new MapResult();
                 JSONSerializer jsonSerializer = new JSONSerializer();
                 Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").writeString(jsonSerializer.deepSerialize(res), false);
             }
