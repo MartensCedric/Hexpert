@@ -7,11 +7,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.misc.IntPointTime;
 import com.cedricmartens.hexpert.misc.PointTime;
 import com.cedricmartens.hexpert.screens.PlayScreen;
+import com.cedricmartens.hexpert.screens.PlayStage;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.Rules;
+import com.cedricmartens.hexpert.tile.TileData;
 import com.cedricmartens.hexpert.tile.TileType;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
@@ -24,11 +27,11 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST_CUT;
 public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
     private Stage stage;
-    private HexMap<com.cedricmartens.hexpert.tile.TileData> grid;
-    private com.cedricmartens.hexpert.Hexpert hexpert;
-    private com.cedricmartens.hexpert.screens.PlayStage playStage;
+    private HexMap<TileData> grid;
+    private Hexpert hexpert;
+    private PlayStage playStage;
 
-    public PlayScreenGestureBehavior(com.cedricmartens.hexpert.screens.PlayScreen playStage) {
+    public PlayScreenGestureBehavior(PlayScreen playStage) {
         super(playStage.getCamera());
         this.stage = playStage.getStage();
         this.grid = playStage.getGrid();
@@ -38,13 +41,13 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        com.cedricmartens.hexpert.screens.PlayScreen playScreen = (PlayScreen)playStage;
+        PlayScreen playScreen = (PlayScreen)playStage;
         Viewport viewPort = stage.getViewport();
         Vector3 pos = getCamera().unproject(new Vector3(x,y,0),
                 viewPort.getScreenX(), viewPort.getScreenY(),
                 viewPort.getScreenWidth(), viewPort.getScreenHeight());
 
-        Hexagon<com.cedricmartens.hexpert.tile.TileData> data = grid.getAt(new Point(pos.x, pos.y));
+        Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
         if(data != null && playStage.removeMode && playScreen.isRemovable(data.getHexData()))
         {
@@ -78,7 +81,6 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                                     new IntPointTime(score, new Point(pos.x, pos.y), 0.35f)
                                     );
 
-                playScreen.updateObjectives();
                 hexpert.sounds.get("click").play();
 
                 if(!hexpert.config.isKeepSelection())
@@ -90,6 +92,9 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 hexpert.sounds.get("bad").play();
             }
         }
+        playScreen.updateScore();
+        playScreen.numObjectivePassed = playScreen.numberOfObjectivePassed(
+                playScreen.map.getObjectives(), playScreen.getGrid());
         return true;
     }
 }

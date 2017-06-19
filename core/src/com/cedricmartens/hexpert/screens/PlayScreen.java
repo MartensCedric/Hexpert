@@ -70,7 +70,7 @@ public class PlayScreen extends PlayStage
     private MoveEventManager moveEventManager;
     private boolean debug = false;
     public MapResult mapResult;
-    private boolean[] objectivePassed;
+    public int numObjectivePassed;
     private ShaderProgram hintShader, removeShader, lockedShader;
     public String mapName;
     private List<TileData> defaultBuildings;
@@ -92,7 +92,6 @@ public class PlayScreen extends PlayStage
         shapeRenderer.setAutoShapeType(true);
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
-        objectivePassed = new boolean[map.getObjectives().length];
         exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
 
 
@@ -188,6 +187,7 @@ public class PlayScreen extends PlayStage
         getCamera().translate(0, 25);
         getCamera().update();
 
+        updateScore();
         doAction(mapName);
     }
 
@@ -318,16 +318,29 @@ public class PlayScreen extends PlayStage
             batch.end();
         }
         moveEventManager.render(delta);
-        updateScore();
+
         super.render(delta);
 
         if(!exitDialog.hasBeenShown()
-                && mapResult.getObjectivePassedCount() == map.getObjectives().length)
+                && numObjectivePassed == map.getObjectives().length)
         {
             this.exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
             exitDialog.setShown(true);
             exitDialog.show(getStage());
         }
+    }
+
+    public int numberOfObjectivePassed(Objective[] objectives, HexMap<TileData> grid)
+    {
+        int n = 0;
+
+        for(int i = 0; i < objectives.length; i++)
+        {
+            if(objectives[i].hasPassed(grid))
+                n++;
+        }
+
+        return n;
     }
 
     public Hexpert getHexpert() {
@@ -376,7 +389,7 @@ public class PlayScreen extends PlayStage
         validBuildings = Rules.getValidBuildings(grid);
     }
 
-    private void updateScore()
+    public void updateScore()
     {
         updateValidBuildings();
         if(map.scoreIsCalculated())
@@ -396,6 +409,7 @@ public class PlayScreen extends PlayStage
                 }
             }
         }
+        mapResult.setObjectivePassed(map.getObjectives(), grid);
     }
 
     public void resetGrid()
@@ -424,10 +438,6 @@ public class PlayScreen extends PlayStage
         return moveEventManager;
     }
 
-    public void updateObjectives() {
-        mapResult.setObjectivePassed(map.getObjectives(), grid);
-        objectivePassed = mapResult.getObjectivePassed();
-    }
 
     private void saveResult()
     {
