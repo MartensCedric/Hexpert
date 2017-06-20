@@ -20,6 +20,7 @@ import com.cedricmartens.hexpert.event.MoreDialog;
 import com.cedricmartens.hexpert.tile.BuildingType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,36 +53,45 @@ public abstract class PlayStage extends StageScreen {
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
     protected Hexpert hexpert;
 
-    private HashMap<String, Action> onStartActions = new HashMap<>();
-    private HashMap<String, Integer> buildingCountForMap = new HashMap<>();
+    private HashMap<String, Action> onStartActions = new HashMap<>();;
 
     public PlayStage(final Hexpert hexpert) {
         super();
         this.hexpert = hexpert;
-        buildingCountForMap.put("tutFact", 5);
-        buildingCountForMap.put("tutMarket", 6);
-        buildingCountForMap.put("tutBank", 7);
 
         onStartActions.put("tutFact", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), getBuildingCountForMap("tutFact")).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(),
+                        Arrays.asList(BuildingType.FARM, BuildingType.HOUSE,
+                                BuildingType.MINE, BuildingType.WIND,
+                                BuildingType.FACTORY)).show(getStage());
             }
         });
 
         onStartActions.put("tutMarket", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), getBuildingCountForMap("tutMarket")).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(),
+                        Arrays.asList(BuildingType.MARKET)).show(getStage());
             }
         });
 
         onStartActions.put("tutBank", new Action() {
             @Override
             public void doAction() {
-                new BuildingReqDialog(hexpert, hexpert.getSkin(), getBuildingCountForMap("tutBank")).show(getStage());
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), Arrays.asList(BuildingType.BANK)).show(getStage());
             }
         });
+
+
+        onStartActions.put("tutRocket", new Action() {
+            @Override
+            public void doAction() {
+                new BuildingReqDialog(hexpert, hexpert.getSkin(), Arrays.asList(BuildingType.ROCKET)).show(getStage());
+            }
+        });
+
 
         onStartActions.put("handball", new Action() {
             @Override
@@ -296,13 +306,5 @@ public abstract class PlayStage extends StageScreen {
         {
             onStartActions.get(lvlName).doAction();
         }
-    }
-
-    protected int getBuildingCountForMap(String str)
-    {
-        if(buildingCountForMap.containsKey(str))
-            return buildingCountForMap.get(str);
-
-        return Const.BUILDING_COUNT;
     }
 }

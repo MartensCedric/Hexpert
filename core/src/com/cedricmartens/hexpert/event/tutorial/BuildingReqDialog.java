@@ -13,6 +13,10 @@ import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.tile.BuildingType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
@@ -34,7 +38,7 @@ public class BuildingReqDialog extends TutorialDialog {
     private final int CELL_W = 100;
     private final int CELL_H = 100;
 
-    public BuildingReqDialog(Hexpert hexpert, Skin skin, int numberOfBuildings)
+    public BuildingReqDialog(Hexpert hexpert, Skin skin, List<BuildingType> buildingsToShow)
     {
         super(hexpert, skin);
 
@@ -49,26 +53,32 @@ public class BuildingReqDialog extends TutorialDialog {
         scrollContent.add(lblExplaination).width(900);
         scrollContent.row();
 
-        Image imgFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
-        Image imgNotFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
+        if(buildingsToShow.contains(BuildingType.FARM)) {
 
-        Table tableFarm = new Table();
-        tableFarm.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
-        tableFarm.add(imgFarm);
-        Label lblEqFarm = new Label("=", skin);
-        tableFarm.add(lblEqFarm).width(lblEqFarm.getPrefWidth());
-        tableFarm.add(imgNotFarm);
-        scrollContent.add(tableFarm);
-        scrollContent.row();
-        scrollContent.add(new Label(i18n.get("farm_needs"), skin));
-        scrollContent.row();
+            Image imgFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
+            Image imgNotFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
 
-        for(int i = 2; i < numberOfBuildings + 1; i++)
+            Table tableFarm = new Table();
+            tableFarm.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
+            tableFarm.add(imgFarm);
+            Label lblEqFarm = new Label("=", skin);
+            tableFarm.add(lblEqFarm).width(lblEqFarm.getPrefWidth());
+            tableFarm.add(imgNotFarm);
+            scrollContent.add(tableFarm);
+            scrollContent.row();
+            scrollContent.add(new Label(i18n.get("farm_needs"), skin));
+            scrollContent.row();
+
+        }
+
+        for(BuildingType buildingType : buildingsToShow)
         {
+
+            if(buildingType == BuildingType.FARM)
+                continue;
+
             Table table = new Table();
             table.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
-
-            BuildingType buildingType = BuildingType.values()[i];
 
             String buildingName = buildingType.name().toLowerCase();
             Image imageBuilding = new Image((Texture) hexpert.assetManager.get(SPRITE_FOLDER + buildingName + ".png"));
@@ -113,11 +123,18 @@ public class BuildingReqDialog extends TutorialDialog {
     }
 
     public BuildingReqDialog(Hexpert hexpert, Skin skin) {
-        this(hexpert, skin, Const.BUILDING_COUNT);
+        this(hexpert, skin, Arrays.asList(
+                BuildingType.FARM, BuildingType.HOUSE, BuildingType.MINE, BuildingType.WIND,
+                BuildingType.FACTORY, BuildingType.MARKET, BuildingType.BANK, BuildingType.ROCKET));
     }
 
     @Override
     public float getPrefHeight() {
-        return 900;
+
+        int max = 900;
+        if(super.getPrefHeight() < max)
+            return super.getPrefHeight();
+
+        return max;
     }
 }

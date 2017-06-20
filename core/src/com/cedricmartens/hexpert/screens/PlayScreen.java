@@ -95,7 +95,7 @@ public class PlayScreen extends PlayStage
 
         table = new Table();
         table.defaults().width(200).height(Const.HEIGHT/9).pad(5);
-        int numberOfBuilding = getBuildingCountForMap(mapName);
+        int numberOfBuilding = Const.BUILDING_COUNT;
         for(int i = 1; i < BuildingType.values().length; i++)
         {
             Actor imgBuilding;

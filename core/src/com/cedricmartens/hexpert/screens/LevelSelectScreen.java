@@ -75,7 +75,7 @@ public class LevelSelectScreen extends StageScreen
     private GestureDetector detector;
     private ShaderProgram shdDark, shdLckd;
     private Label lblHexCount,lblHighScore;
-    private int[] lockedThereshold = new int[]{0, 5, 12, 21, 33, 45};
+    private int[] lockedThereshold = new int[]{0, 4, 12, 21, 33, 45};
     private List<TileData> validBuildings;
 
     public LevelSelectScreen(final Hexpert hexpert)
