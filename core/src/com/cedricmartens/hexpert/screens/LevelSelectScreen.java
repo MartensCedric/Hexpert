@@ -386,7 +386,7 @@ public class LevelSelectScreen extends StageScreen
                     y = 1000;
                     break;
                 case 2 :
-                    y = 800;
+                    y = 930;
                     break;
                 case 3 :
                     y = 860;
@@ -429,12 +429,12 @@ public class LevelSelectScreen extends StageScreen
             if(Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").exists())
             {
                 try {
-                    String mapResLoc = Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").readString();
-                    MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapResLoc);
 
-                    for (int j = 0; j < mapResult.getObjectivePassed().length; j++) {
-                        total += mapResult.getObjectivePassed()[j] ? 1 : 0;
+                    boolean[] objectivePassed = getObjectivePassed(i);
+                    for (int j = 0; j < objectivePassed.length; j++) {
+                        total += objectivePassed[j] ? 1 : 0;
                     }
+
                 }catch (Exception e)
                 {
                     shouldCreate = true;
@@ -462,6 +462,20 @@ public class LevelSelectScreen extends StageScreen
         if(mapresFile.exists())
         {
             MapResult mapResult = new JSONDeserializer<MapResult>().deserialize(mapresFile.readString());
+
+           //I would like to verify the integrity of every level with this code, but it does not quite
+            //work yet
+
+            //String mapLoc = Gdx.files.internal("maps/" + hexpert.levelIndex.get(level) + ".hexmap").readString();
+            //Map map = new JSONDeserializer<Map>().deserialize(mapLoc);
+
+            //map.setBuildingTypes(mapResult.getBuildings());
+            //HexMap<TileData> grid = map.build();
+            //mapResult.updateObjectives(map.getObjectives(), grid);
+
+            //JSONSerializer jsonSerializer = new JSONSerializer();
+            //Gdx.files.local(hexpert.levelIndex.get(level) + ".mapres").writeString(jsonSerializer.deepSerialize(mapResult), false);
+
             return mapResult.getObjectivePassed();
         }else{
             throw new MapLoadException(String.format("Can't find %s.mapres", hexpert.levelIndex.get(level)));

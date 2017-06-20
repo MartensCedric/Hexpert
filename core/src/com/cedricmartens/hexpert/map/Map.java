@@ -31,10 +31,6 @@ public class Map
         this.tileTypes = tileTypes;
     }
 
-    public void setBuildingType(BuildingType[] buildingTypes) {
-        this.buildingTypes = buildingTypes;
-    }
-
     public BuildingType[] getBuildingTypes() {
         return buildingTypes;
     }
