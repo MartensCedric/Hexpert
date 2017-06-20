@@ -80,6 +80,7 @@ public class PlayScreen extends PlayStage
 
         this.hexpert = hexpert;
         this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
+        this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
 
         this.mapName = mapName;
         this.map = map;
@@ -94,7 +95,7 @@ public class PlayScreen extends PlayStage
 
         table = new Table();
         table.defaults().width(200).height(Const.HEIGHT/9).pad(5);
-        int numberOfBuilding = Const.BUILDING_COUNT;
+        int numberOfBuilding = getBuildingCountByLevel(mapName);
         for(int i = 1; i < BuildingType.values().length; i++)
         {
             Actor imgBuilding;

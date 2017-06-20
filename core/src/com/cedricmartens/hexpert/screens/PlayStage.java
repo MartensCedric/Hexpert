@@ -307,4 +307,15 @@ public abstract class PlayStage extends StageScreen {
             onStartActions.get(lvlName).doAction();
         }
     }
+
+    protected int getBuildingCountByLevel(String mapName)
+    {
+        if(mapName.equals("tutFact"))
+            return 5;
+        else if(mapName.equals("tutMarket"))
+            return 6;
+        else if(mapName.equals("tutBank"))
+            return 7;
+        else return  Const.BUILDING_COUNT;
+    }
 }

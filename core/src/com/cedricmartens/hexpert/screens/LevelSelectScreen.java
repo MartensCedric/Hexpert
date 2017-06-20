@@ -640,7 +640,7 @@ public class LevelSelectScreen extends StageScreen
         selectLevel(
                 (currentWorld - 1) * getLevelsToDisplay() + 1);
         updateLevelSelectGrid();
-        hexpert.sounds.get("select").play();
+        hexpert.sounds.get("select").play(hexpert.masterVolume);
     }
 
     public void nextWorld()
@@ -651,7 +651,7 @@ public class LevelSelectScreen extends StageScreen
             selectLevel(
                     (currentWorld - 1) * getLevelsToDisplay() + 1);
             updateLevelSelectGrid();
-            hexpert.sounds.get("select").play();
+            hexpert.sounds.get("select").play(hexpert.masterVolume);
         }else{
             new LockedDialog(goalCompleteCount, lockedThereshold[currentWorld],
                     hexpert, hexpert.getSkin()).show(getStage());
