@@ -26,6 +26,6 @@ public abstract class StandardDialog extends Dialog
     @Override
     protected void result(Object object) {
         super.result(object);
-        hexpert.sounds.get("click").play();
+        hexpert.sounds.get("click").play(hexpert.masterVolume);
     }
 }

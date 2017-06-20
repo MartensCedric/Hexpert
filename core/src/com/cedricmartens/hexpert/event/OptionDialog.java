@@ -105,6 +105,28 @@ public class OptionDialog extends StandardDialog
         chkShowReq.getImageCell().expand().fill();
         getContentTable().add(lblShowReq);
 
+        getContentTable().row();
+
+        Label lblSound = new Label(i18n.get("option_play_sounds"), hexpert.getSkin());
+        final ImageButton chkPlaySounds = new ImageButton(imgStyle);
+        chkPlaySounds.setChecked(config.getVolume() > 0);
+
+        chkPlaySounds.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                config.setVolume(config.getVolume() > 0 ? 0 : 1);
+                chkPlaySounds.setChecked(config.getVolume() > 0);
+                hexpert.masterVolume = config.getVolume();
+
+                saveOptions();
+            }
+        });
+
+        getContentTable().add(chkPlaySounds).width(100).height(100);
+        chkPlaySounds.getImageCell().expand().fill();
+        getContentTable().add(lblSound);
+
         TextButton textButtonOK = new TextButton(hexpert.i18NBundle.get("ok"), txtButtonStyle);
 
         setObject(textButtonOK, null);

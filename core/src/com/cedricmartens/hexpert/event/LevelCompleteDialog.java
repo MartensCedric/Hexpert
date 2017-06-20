@@ -98,7 +98,7 @@ public class LevelCompleteDialog extends StandardDialog {
 
     @Override
     public Dialog show(Stage stage, Action action) {
-        hexpert.sounds.get("win").play();
+        hexpert.sounds.get("win").play(hexpert.masterVolume);
         return super.show(stage, action);
     }
 }

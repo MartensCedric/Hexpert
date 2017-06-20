@@ -68,9 +68,10 @@ public class Hexpert extends Game {
 	public LevelSelectScreen levelSelectScreen;
 	public HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 	public I18NBundle i18NBundle;
-	public com.cedricmartens.hexpert.social.PlayServices playServices;
+	public PlayServices playServices;
 	public Sharing sharing;
 	public HexpertConfig config;
+	public float masterVolume = 1;
 	public HashMap<Integer, String> levelIndex;
 	private BitmapFont font;
 	private Skin skin;
@@ -108,6 +109,7 @@ public class Hexpert extends Game {
 			Gdx.files.local("options.config").writeString(jsonSerializer.serialize(config), false);
 		}
 
+		masterVolume = config.getVolume();
 		levelIndex = new HashMap<>();
 
 		String[] lvlIndexes = Gdx.files.internal("maps.hexindex").readString().split("\n");

@@ -81,7 +81,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                                     new IntPointTime(score, new Point(pos.x, pos.y), 0.35f)
                                     );
 
-                hexpert.sounds.get("click").play();
+                hexpert.sounds.get("click").play(hexpert.masterVolume);
 
                 if(!hexpert.config.isKeepSelection())
                     playStage.setSelection(null);
@@ -89,7 +89,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 playScreen.checkAchievements();
             }else{
                 playScreen.getMoveEventManager().getBadMoves().add(new PointTime(new Point(pos.x,pos.y), 0.35f));
-                hexpert.sounds.get("bad").play();
+                hexpert.sounds.get("bad").play(hexpert.masterVolume);
             }
         }
         playScreen.updateScore();

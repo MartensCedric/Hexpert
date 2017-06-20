@@ -14,12 +14,14 @@ public class HexpertConfig
     private boolean buildHelp;
     private boolean keepSelection;
     private boolean showRequirements;
+    private float volume;
 
     public HexpertConfig()
     {
         buildHelp = true;
         keepSelection = false;
         showRequirements = true;
+        volume = 1;
     }
 
     public boolean isShowRequirements() {
@@ -44,5 +46,13 @@ public class HexpertConfig
 
     public void setKeepSelection(boolean keepSelection) {
         this.keepSelection = keepSelection;
+    }
+
+    public float getVolume() {
+        return volume;
+    }
+
+    public void setVolume(float volume) {
+        this.volume = volume;
     }
 }

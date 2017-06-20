@@ -55,7 +55,6 @@ import static com.cedricmartens.hexpert.social.Achievement.GREAT_ESCAPE;
 /**
  * Created by 1544256 on 2017-04-26.
  */
-
 public class PlayScreen extends PlayStage
 {
     private HexMap<TileData> grid;
@@ -111,7 +110,7 @@ public class PlayScreen extends PlayStage
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         setSelection(buildingType);
-                        hexpert.sounds.get("select").play();
+                        hexpert.sounds.get("select").play(hexpert.masterVolume);
                     }
                 });
 
