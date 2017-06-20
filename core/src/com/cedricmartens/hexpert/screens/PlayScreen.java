@@ -399,7 +399,6 @@ public class PlayScreen extends PlayStage
         {
             if(score > mapResult.getScore() && objectivePassed >= objectivePassedBest)
             {
-
                 mapResult.setBuildingFromGrid(grid);
                 mapResult.setScore(score);
                 mapResult.updateObjectives(map.getObjectives(), grid);
