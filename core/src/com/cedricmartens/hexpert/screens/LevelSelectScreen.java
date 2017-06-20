@@ -26,6 +26,8 @@ import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.hexagon.HexagonOrientation;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
+import com.cedricmartens.hexpert.Hexpert;
+import com.cedricmartens.hexpert.event.LockedDialog;
 import com.cedricmartens.hexpert.gestures.LevelSelectGesture;
 import com.cedricmartens.hexpert.map.Map;
 import com.cedricmartens.hexpert.map.MapLoadException;
@@ -33,6 +35,7 @@ import com.cedricmartens.hexpert.map.MapResult;
 import com.cedricmartens.hexpert.map.MapUtils;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.misc.TextureData;
+import com.cedricmartens.hexpert.social.Achievement;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.Rules;
 import com.cedricmartens.hexpert.tile.TileData;
@@ -57,7 +60,7 @@ public class LevelSelectScreen extends StageScreen
     private int levelsToDisplay = 5;
     private int totalLevels;
     public int currentWorld = 1;
-    public final com.cedricmartens.hexpert.Hexpert hexpert;
+    public final Hexpert hexpert;
     private int levelSelect = 1;
     private HexMap<TileData> grid;
     private HexMap<Texture> gridLvlSelect;
@@ -75,7 +78,7 @@ public class LevelSelectScreen extends StageScreen
     private int[] lockedThereshold = new int[]{0, 5, 12, 21, 33, 45};
     private List<TileData> validBuildings;
 
-    public LevelSelectScreen(final com.cedricmartens.hexpert.Hexpert hexpert)
+    public LevelSelectScreen(final Hexpert hexpert)
     {
         super();
         this.totalLevels = hexpert.levelIndex.size();
@@ -324,7 +327,7 @@ public class LevelSelectScreen extends StageScreen
         String mapString = hexpert.levelIndex.get(levelSelect) + ".mapres";
         if(!Gdx.files.local(mapString).exists())
         {
-            result = new MapResult(grid);
+            result = new MapResult(grid, map.getObjectives());
             JSONSerializer jsonSerializer = new JSONSerializer();
             Gdx.files.local(mapString).writeString(jsonSerializer.deepSerialize(result), false);
         }else{
@@ -443,7 +446,7 @@ public class LevelSelectScreen extends StageScreen
             if(shouldCreate){
                 String mapString = Gdx.files.internal("maps/" + hexpert.levelIndex.get(i) + ".hexmap").readString();
                 Map map = new JSONDeserializer<Map>().deserialize(mapString);
-                MapResult res = new MapResult();
+                MapResult res = new MapResult(map.build(), map.getObjectives());
                 JSONSerializer jsonSerializer = new JSONSerializer();
                 Gdx.files.local(hexpert.levelIndex.get(i) + ".mapres").writeString(jsonSerializer.deepSerialize(res), false);
             }
@@ -510,7 +513,7 @@ public class LevelSelectScreen extends StageScreen
             return hexpert.assetManager.get(TextureData.TEXTURE_GRASS, Texture.class);
 
         if(objective.length >= 3 && missingObjectives == 0)
-            hexpert.playServices.unlockAchievement(com.cedricmartens.hexpert.social.Achievement.PERFECT);
+            hexpert.playServices.unlockAchievement(Achievement.PERFECT);
 
 
         switch (missingObjectives)
@@ -636,7 +639,7 @@ public class LevelSelectScreen extends StageScreen
             updateLevelSelectGrid();
             hexpert.sounds.get("select").play();
         }else{
-            new com.cedricmartens.hexpert.event.LockedDialog(goalCompleteCount, lockedThereshold[currentWorld],
+            new LockedDialog(goalCompleteCount, lockedThereshold[currentWorld],
                     hexpert, hexpert.getSkin()).show(getStage());
         }
     }
@@ -645,22 +648,22 @@ public class LevelSelectScreen extends StageScreen
     {
         if(goalCompleteCount >= 3)
         {
-            hexpert.playServices.unlockAchievement(com.cedricmartens.hexpert.social.Achievement.NOVICE);
+            hexpert.playServices.unlockAchievement(Achievement.NOVICE);
         }
 
         if(goalCompleteCount >= 15)
         {
-            hexpert.playServices.unlockAchievement(com.cedricmartens.hexpert.social.Achievement.AMATEUR);
+            hexpert.playServices.unlockAchievement(Achievement.AMATEUR);
         }
 
         if(goalCompleteCount >= 25)
         {
-            hexpert.playServices.unlockAchievement(com.cedricmartens.hexpert.social.Achievement.PROFESSIONAL);
+            hexpert.playServices.unlockAchievement(Achievement.PROFESSIONAL);
         }
 
         if(goalCompleteCount >= 50)
         {
-            hexpert.playServices.unlockAchievement(com.cedricmartens.hexpert.social.Achievement.HEXPERT);
+            hexpert.playServices.unlockAchievement(Achievement.HEXPERT);
         }
     }
 }

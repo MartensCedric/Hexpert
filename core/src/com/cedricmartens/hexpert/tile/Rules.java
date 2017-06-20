@@ -2,6 +2,7 @@ package com.cedricmartens.hexpert.tile;
 
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexpert.misc.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Rules
         int[] neighborStats = getNeighborStats(data);
         for (int i = 1; i < BuildingType.values().length; i++) {
             BuildingType buildingType = BuildingType.values()[i];
-            if (buildingType.getRequired().length == com.cedricmartens.hexpert.misc.Const.BUILDING_COUNT) {
+            if (buildingType.getRequired().length == Const.BUILDING_COUNT) {
                 int requiredAmount = buildingType.getRequired()[data.getBuildingType().ordinal() - 1];
                 if (requiredAmount > 0) {
                     if (neighborStats[i - 1] > 0)
@@ -31,11 +32,11 @@ public class Rules
                             BuildingType neighborBuildingType = neighbor.getBuildingType();
 
                             if (buildingType == neighborBuildingType) {
-                                com.cedricmartens.hexpert.tile.Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType());
+                                Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType());
 
-                                if (logistic == com.cedricmartens.hexpert.tile.Logistic.INSUFFICIENT)
+                                if (logistic == Logistic.INSUFFICIENT)
                                     throw new IllegalStateException();
-                                else if (logistic == com.cedricmartens.hexpert.tile.Logistic.SURPLUS)
+                                else if (logistic == Logistic.SURPLUS)
                                     defaultDep = Dependency.PARTIALLY;
                                 else return Dependency.DEPENDENT;
                             }

@@ -1,5 +1,6 @@
 package com.cedricmartens.hexpert.map;
 
+import com.badlogic.gdx.Gdx;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.TileData;
@@ -18,8 +19,9 @@ public class MapResult
     public MapResult() {
     }
 
-    public MapResult(HexMap<TileData> grid) {
-        setBuildings(grid);
+    public MapResult(HexMap<TileData> grid, Objective[] objectives) {
+        setBuildingFromGrid(grid);
+        objectivePassed = new boolean[objectives.length];
     }
 
     public int getScore()
@@ -32,7 +34,7 @@ public class MapResult
         this.score = score;
     }
 
-    public void setObjectivePassed(Objective[] objectives, HexMap<TileData> grid)
+    public void updateObjectives(Objective[] objectives, HexMap<TileData> grid)
     {
         objectivePassed = new boolean[objectives.length];
 
@@ -40,6 +42,10 @@ public class MapResult
         {
             objectivePassed[i] = objectives[i].hasPassed(grid);
         }
+    }
+
+    public void setObjectivePassed(boolean[] objectivePassed) {
+        this.objectivePassed = objectivePassed;
     }
 
     public boolean[] getObjectivePassed()
@@ -65,7 +71,12 @@ public class MapResult
         return buildings;
     }
 
-    public void setBuildings(HexMap<TileData> grid)
+    public void setBuildings(BuildingType[] buildings)
+    {
+        this.buildings = buildings;
+    }
+
+    public void setBuildingFromGrid(HexMap<TileData> grid)
     {
         buildings = new BuildingType[grid.getHexs().length];
         for(int i = 0; i < grid.getHexs().length; i++)
