@@ -93,7 +93,7 @@ public abstract class PlayStage extends StageScreen {
         });
 
 
-        onStartActions.put("handball", new Action() {
+        onStartActions.put("carrot", new Action() {
             @Override
             public void doAction() {
                 new BuildingScoreDialog(hexpert, hexpert.getSkin()).show(getStage());
