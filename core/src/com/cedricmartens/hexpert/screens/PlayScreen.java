@@ -23,7 +23,8 @@ import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
-import com.cedricmartens.hexpert.misc.BuildingAnimator;
+import com.cedricmartens.hexpert.effect.BuildingAnimator;
+import com.cedricmartens.hexpert.effect.GridEffect;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.misc.Action;
@@ -74,6 +75,7 @@ public class PlayScreen extends PlayStage
     private List<TileData> validBuildings;
     private LevelCompleteDialog exitDialog;
     private BuildingAnimator windAnimator;
+    private GridEffect gridEffect;
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
@@ -188,7 +190,7 @@ public class PlayScreen extends PlayStage
         getCamera().update();
 
         updateScore();
-
+        gridEffect = new GridEffect(grid, 0.2f, 1);
 
         if(mapResult.getObjectivePassedCount() == map.getObjectives().length)
         {
@@ -221,6 +223,7 @@ public class PlayScreen extends PlayStage
             hexpert.playServices.unlockAchievement(GREAT_ESCAPE);
 
         windAnimator.tick(Gdx.graphics.getDeltaTime());
+        gridEffect.tick(Gdx.graphics.getDeltaTime());
 
         batch.setProjectionMatrix(getCamera().combined);
         Gdx.gl.glClearColor(66f/255f, 206f/255f, 244f/255f, 1);
@@ -247,6 +250,16 @@ public class PlayScreen extends PlayStage
                 batch.setShader(hintShader);
             }
 
+            if(gridEffect.getActiveTiles().contains(hex))
+            {
+                Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+                batch.draw(hex.getHexData().getTerrainTexture(),
+                        (float)(middlePoint.x - grid.getStyle().getSize()),
+                        (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
+                        (float)grid.getStyle().getSize()*2,
+                        (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
+            }else{
+
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
@@ -254,6 +267,7 @@ public class PlayScreen extends PlayStage
                     (float)grid.getStyle().getSize()*2,
                     (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
 
+            }
             batch.setShader(null);
         }
 

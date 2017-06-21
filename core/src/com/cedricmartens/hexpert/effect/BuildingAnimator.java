@@ -1,4 +1,4 @@
-package com.cedricmartens.hexpert.misc;
+package com.cedricmartens.hexpert.effect;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

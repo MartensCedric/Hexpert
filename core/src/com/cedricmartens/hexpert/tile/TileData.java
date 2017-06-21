@@ -80,7 +80,6 @@ public class TileData {
         result = 31 * result + (buildingType != null ? buildingType.hashCode() : 0);
         result = 31 * result + (terrainTexture != null ? terrainTexture.hashCode() : 0);
         result = 31 * result + (buildingTexture != null ? buildingTexture.hashCode() : 0);
-        result = 31 * result + (parent != null ? parent.hashCode() : 0);
         return result;
     }
 }

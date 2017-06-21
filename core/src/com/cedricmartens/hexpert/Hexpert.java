@@ -11,9 +11,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
-import com.cedricmartens.hexpert.misc.Action;
-import com.cedricmartens.hexpert.misc.BuildingAnimator;
 import com.cedricmartens.hexpert.misc.HexpertConfig;
 import com.cedricmartens.hexpert.screens.LevelSelectScreen;
 import com.cedricmartens.hexpert.social.PlayServices;
@@ -26,7 +23,6 @@ import java.util.HashMap;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
-import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BAD;
