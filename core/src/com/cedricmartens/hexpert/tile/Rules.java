@@ -13,10 +13,12 @@ import java.util.List;
 
 public class Rules
 {
-    public static Dependency getDependencyLevel(com.cedricmartens.hexpert.tile.TileData data) {
+    public static Dependency getDependencyLevel(TileData data, HexMap<TileData> grid) {
 
         if (data.getBuildingType() == BuildingType.NONE)
             return Dependency.DEPENDENT;
+
+        List<TileData> validBuildings = getValidBuildings(grid);
 
         Dependency defaultDep = Dependency.INDEPENDENT;
         int[] neighborStats = getNeighborStats(data);
@@ -28,14 +30,14 @@ public class Rules
                     if (neighborStats[i - 1] > 0)
                     {
                         for(int j = 0; j < data.getParent().getNeighbors().size(); j++) {
-                            com.cedricmartens.hexpert.tile.TileData neighbor = data.getParent().getNeighbors().get(j).getHexData();
+                            TileData neighbor = data.getParent().getNeighbors().get(j).getHexData();
                             BuildingType neighborBuildingType = neighbor.getBuildingType();
 
                             if (buildingType == neighborBuildingType) {
-                                Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType());
+                                Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType(), validBuildings);
 
                                 if (logistic == Logistic.INSUFFICIENT)
-                                    throw new IllegalStateException();
+                                    return Dependency.INDEPENDENT;
                                 else if (logistic == Logistic.SURPLUS)
                                     defaultDep = Dependency.PARTIALLY;
                                 else return Dependency.DEPENDENT;
@@ -49,26 +51,29 @@ public class Rules
         return defaultDep;
     }
 
-    public static com.cedricmartens.hexpert.tile.Logistic getLogisticalLevel(com.cedricmartens.hexpert.tile.TileData data, BuildingType buildingType)
+    public static Logistic getLogisticalLevel(TileData data, BuildingType buildingType, List<TileData> validBuildings)
     {
+        if(!validBuildings.contains(data))
+            return Logistic.INSUFFICIENT;
+
         int[] neighborData = getNeighborStats(data);
         int requiredAmount = data.getBuildingType().getRequired()[buildingType.ordinal() - 1];
         int neighborAmount = neighborData[buildingType.ordinal() - 1];
 
         if(neighborAmount < requiredAmount)
-            return com.cedricmartens.hexpert.tile.Logistic.INSUFFICIENT;
+            return Logistic.INSUFFICIENT;
         else if(neighborAmount > requiredAmount)
-            return com.cedricmartens.hexpert.tile.Logistic.SURPLUS;
-        else return com.cedricmartens.hexpert.tile.Logistic.NECESSARY;
+            return Logistic.SURPLUS;
+        else return Logistic.NECESSARY;
     }
 
-    public static List<com.cedricmartens.hexpert.tile.TileData> getValidBuildings(HexMap<com.cedricmartens.hexpert.tile.TileData> grid)
+    public static List<TileData> getValidBuildings(HexMap<TileData> grid)
     {
-        List<com.cedricmartens.hexpert.tile.TileData> vBuildings = new ArrayList<>();
+        List<TileData> vBuildings = new ArrayList<>();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            com.cedricmartens.hexpert.tile.TileData data = (com.cedricmartens.hexpert.tile.TileData) grid.getHexs()[i].getHexData();
+            TileData data = (TileData) grid.getHexs()[i].getHexData();
 
             if(isValid(data, data.getBuildingType()))
                 vBuildings.add(data);
@@ -77,7 +82,7 @@ public class Rules
         return vBuildings;
     }
 
-    public static boolean isValid(com.cedricmartens.hexpert.tile.TileData data, BuildingType selection)
+    public static boolean isValid(TileData data, BuildingType selection)
     {
         int[] neighborStats = getNeighborStats(data);
 
@@ -99,7 +104,7 @@ public class Rules
         return true;
     }
 
-    public static boolean isValidPlacement(com.cedricmartens.hexpert.tile.TileData data, BuildingType selection)
+    public static boolean isValidPlacement(TileData data, BuildingType selection)
     {
         if(data.getBuildingType() != BuildingType.NONE)
             return false;
@@ -107,7 +112,7 @@ public class Rules
         return isValid(data, selection);
     }
 
-    private static int neighborCountOf(BuildingType buildingType, com.cedricmartens.hexpert.tile.TileData data)
+    private static int neighborCountOf(BuildingType buildingType, TileData data)
     {
         if(buildingType == BuildingType.NONE)
             throw new IllegalArgumentException();
@@ -115,13 +120,13 @@ public class Rules
         return getNeighborStats(data)[buildingType.ordinal() - 1];
     }
 
-    private static int[] getNeighborStats(com.cedricmartens.hexpert.tile.TileData data)
+    private static int[] getNeighborStats(TileData data)
     {
-        List<Hexagon<com.cedricmartens.hexpert.tile.TileData>> neighbors = data.getParent().getNeighbors();
+        List<Hexagon<TileData>> neighbors = data.getParent().getNeighbors();
         int[] neighborStats = new int[com.cedricmartens.hexpert.misc.Const.BUILDING_COUNT];
 
         for(int i = 0; i < neighbors.size(); i++) {
-            com.cedricmartens.hexpert.tile.TileData tileData = neighbors.get(i).getHexData();
+            TileData tileData = neighbors.get(i).getHexData();
 
             if(tileData.getBuildingType() != BuildingType.NONE)
             {

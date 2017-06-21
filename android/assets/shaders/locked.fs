@@ -11,5 +11,5 @@ void main() {
         vec4 color = texture2D(u_texture, v_texCoords);
 
         float avg = (color.r + color.g + color.b)/3.0;
-        gl_FragColor = vec4(avg, avg, avg, color.a * 0.75);
+        gl_FragColor = vec4(avg, avg, avg, color.a * 0.5);
 }

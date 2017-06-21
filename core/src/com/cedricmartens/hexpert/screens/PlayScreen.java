@@ -188,6 +188,13 @@ public class PlayScreen extends PlayStage
         getCamera().update();
 
         updateScore();
+
+
+        if(mapResult.getObjectivePassedCount() == map.getObjectives().length)
+        {
+            exitDialog.setShown(true);
+        }
+
         doAction(mapName);
     }
 
@@ -226,7 +233,7 @@ public class PlayScreen extends PlayStage
 
             if(removeMode && !defaultBuildings.contains(hex.getHexData()))
             {
-                Dependency dependency = Rules.getDependencyLevel(hex.getHexData());
+                Dependency dependency = Rules.getDependencyLevel(hex.getHexData(), grid);
 
                 if(dependency == Dependency.INDEPENDENT)
                     batch.setShader(removeShader);
@@ -515,6 +522,6 @@ public class PlayScreen extends PlayStage
         if(defaultBuildings.contains(data))
             return false;
 
-        return Rules.getDependencyLevel(data) != Dependency.DEPENDENT;
+        return Rules.getDependencyLevel(data, grid) != Dependency.DEPENDENT;
     }
 }
