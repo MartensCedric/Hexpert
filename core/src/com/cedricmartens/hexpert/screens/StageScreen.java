@@ -10,12 +10,10 @@ import com.cedricmartens.hexpert.misc.Const;
 /**
  * Created by 1544256 on 2017-04-26.
  */
-
 public abstract class StageScreen implements Screen
 {
     private Stage stage;
     private OrthographicCamera camera;
-
 
     public StageScreen() {
         camera = new OrthographicCamera(Const.WIDTH, Const.HEIGHT);

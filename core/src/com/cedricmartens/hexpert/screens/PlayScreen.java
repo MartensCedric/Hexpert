@@ -68,7 +68,7 @@ public class PlayScreen extends PlayStage
     private boolean debug = false;
     public MapResult mapResult;
     public int numObjectivePassed;
-    private ShaderProgram hintShader, removeShader, lockedShader;
+    private ShaderProgram hintShader, removeShader, lockedShader, lightRedShader;
     public String mapName;
     private List<TileData> defaultBuildings;
     private List<TileData> validBuildings;
@@ -80,7 +80,6 @@ public class PlayScreen extends PlayStage
 
         this.hexpert = hexpert;
         this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
-        this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
 
         this.mapName = mapName;
         this.map = map;
@@ -91,7 +90,6 @@ public class PlayScreen extends PlayStage
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
         exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
-
 
         table = new Table();
         table.defaults().width(200).height(Const.HEIGHT/9).pad(5);
@@ -133,6 +131,7 @@ public class PlayScreen extends PlayStage
         String hint = Gdx.files.internal("shaders/yellowTint.fs").readString();
         String rmv = Gdx.files.internal("shaders/redTint.fs").readString();
         String lckd = Gdx.files.internal("shaders/locked.fs").readString();
+        String lightRed = Gdx.files.internal("shaders/lightRed.fs").readString();
 
         hintShader = new ShaderProgram(vertexShader, hint);
         if (!hintShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + hintShader.getLog());
@@ -142,6 +141,9 @@ public class PlayScreen extends PlayStage
 
         lockedShader = new ShaderProgram(vertexShader, lckd);
         if(!lockedShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + lockedShader.getLog());
+
+        lightRedShader = new ShaderProgram(vertexShader, lightRed);
+        if(!lightRedShader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader : " + lightRedShader.getLog());
 
         this.defaultBuildings = new ArrayList<>();
         this.validBuildings = new ArrayList<>();
@@ -253,6 +255,10 @@ public class PlayScreen extends PlayStage
             Hexagon<TileData> hex = grid.getHexs()[i];
             if(hex.getHexData().getBuildingTexture() != null)
             {
+
+                if(removeMode && defaultBuildings.contains(hex.getHexData()))
+                    batch.setShader(lightRedShader);
+
                 if(!validBuildings.contains(hex.getHexData()))
                     batch.setShader(lockedShader);
 
