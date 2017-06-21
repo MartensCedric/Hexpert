@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by martens on 6/21/17.
@@ -46,7 +47,8 @@ public class GridEffect
         upcomingTiles = new Stack<>();
 
         Random random = new Random();
-        for(int i = 0; i < hexs.size(); i++)
+        int hSize = hexs.size();
+        while (upcomingTiles.size() != hSize)
         {
             int n = random.nextInt(hexs.size());
             upcomingTiles.push(hexs.get(n));
@@ -85,6 +87,16 @@ public class GridEffect
                 newCoords.put(tile, y);
             }
         }
+    }
+
+    public boolean isActive()
+    {
+        return !activeTiles.isEmpty();
+    }
+
+    public boolean hasFallen(Hexagon<TileData> data)
+    {
+        return !newCoords.containsKey(data);
     }
 
     public HashMap<Hexagon<TileData>, Double> getNewCoords() {

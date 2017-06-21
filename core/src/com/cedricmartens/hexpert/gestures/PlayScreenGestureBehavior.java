@@ -61,9 +61,9 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
             }
         }
         else if(data != null && playScreen.getSelection() != null
-                && data.getHexData().getBuildingType() == BuildingType.NONE)
+                && data.getHexData().getBuildingType() == BuildingType.NONE
+                && playScreen.canPlaceBuildings())
         {
-
             if(data.getHexData().getTileType()
                     != TileType.WATER && Rules.isValidPlacement(data.getHexData(), playScreen.getSelection()))
             {

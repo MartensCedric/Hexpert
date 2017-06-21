@@ -190,7 +190,7 @@ public class PlayScreen extends PlayStage
         getCamera().update();
 
         updateScore();
-        gridEffect = new GridEffect(grid, 0.2f, 1);
+        gridEffect = new GridEffect(grid, 0.1f, 0.75f);
 
         if(mapResult.getObjectivePassedCount() == map.getObjectives().length)
         {
@@ -258,7 +258,7 @@ public class PlayScreen extends PlayStage
                         (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
                         (float)grid.getStyle().getSize()*2,
                         (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
-            }else{
+            }else if(gridEffect.hasFallen(hex)){
 
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
@@ -292,12 +292,24 @@ public class PlayScreen extends PlayStage
                     buildingTexture = hex.getHexData().getBuildingTexture();
                 }
 
-                Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-                batch.draw(buildingTexture,
-                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
-                        (float)(middlePoint.y - grid.getStyle().getSize()/2),
-                        (float)grid.getStyle().getSize(),
-                        (float)grid.getStyle().getSize());
+                if(gridEffect.getActiveTiles().contains(hex))
+                {
+                    Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+                    batch.draw(buildingTexture,
+                            (float)(middlePoint.x - grid.getStyle().getSize()/2),
+                            (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()/2),
+                            (float)grid.getStyle().getSize(),
+                            (float)grid.getStyle().getSize());
+
+                }else if(gridEffect.hasFallen(hex))
+                {
+                    Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+                    batch.draw(buildingTexture,
+                            (float)(middlePoint.x - grid.getStyle().getSize()/2),
+                            (float)(middlePoint.y - grid.getStyle().getSize()/2),
+                            (float)grid.getStyle().getSize(),
+                            (float)grid.getStyle().getSize());
+                }
                 batch.setShader(null);
             }
         }
@@ -370,6 +382,11 @@ public class PlayScreen extends PlayStage
 
     public Hexpert getHexpert() {
         return super.getHexpert();
+    }
+
+    public boolean canPlaceBuildings()
+    {
+        return !gridEffect.isActive();
     }
 
     public HexMap<TileData> getGrid() {
