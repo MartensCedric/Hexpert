@@ -79,7 +79,7 @@ public class LevelCompleteDialog extends StandardDialog {
                     hexpert.setScreen(hexpert.levelSelectScreen);
                     break;
                 case 2:
-                    hexpert.sharing.shareText(hexpert.i18NBundle.format("share_message", score, lvlIndex));
+                    hexpert.sharing.shareText(hexpert.i18NBundle.format("share_message_score", score, lvlIndex));
                     break;
             }
         }
