@@ -7,4 +7,5 @@ package com.cedricmartens.hexpert.social;
 public interface Sharing
 {
     void shareText(String message);
+    void shareTextAndImage(String message, String picture);
 }

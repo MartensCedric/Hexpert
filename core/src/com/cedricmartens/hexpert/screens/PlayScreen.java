@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
@@ -19,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
@@ -48,6 +52,8 @@ import java.util.List;
 
 import flexjson.JSONSerializer;
 
+import static com.cedricmartens.hexpert.misc.Const.HEIGHT;
+import static com.cedricmartens.hexpert.misc.Const.WIDTH;
 import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST_CUT;
@@ -91,7 +97,7 @@ public class PlayScreen extends PlayStage
         shapeRenderer.setAutoShapeType(true);
         moveEventManager = new MoveEventManager(this);
         grid = map.build();
-        exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
+        exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), this);
 
         table = new Table();
         table.defaults().width(200).height(Const.HEIGHT/9).pad(5);
@@ -123,7 +129,7 @@ public class PlayScreen extends PlayStage
             table.row();
         }
 
-        table.setX(Const.WIDTH - 100);
+        table.setX(WIDTH - 100);
         table.setY(Const.HEIGHT - table.getPrefHeight()/2 - 5);
 
         table.setDebug(false);
@@ -232,83 +238,7 @@ public class PlayScreen extends PlayStage
         batch.begin();
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            Hexagon<TileData> hex = grid.getHexs()[i];
-
-            if(removeMode && !defaultBuildings.contains(hex.getHexData()))
-            {
-                Dependency dependency = Rules.getDependencyLevel(hex.getHexData(), grid);
-
-                if(dependency == Dependency.INDEPENDENT)
-                    batch.setShader(removeShader);
-                else if (dependency == Dependency.PARTIALLY)
-                    batch.setShader(hintShader);
-
-            }
-            else if(hexpert.config.isBuildHelp() && getSelection() != null
-                    && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection()))
-            {
-                batch.setShader(hintShader);
-            }
-
-            if(gridEffect.getActiveTiles().contains(hex))
-            {
-                Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-                batch.draw(hex.getHexData().getTerrainTexture(),
-                        (float)(middlePoint.x - grid.getStyle().getSize()),
-                        (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
-                        (float)grid.getStyle().getSize()*2,
-                        (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
-            }else if(gridEffect.hasFallen(hex)){
-
-            Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-            batch.draw(hex.getHexData().getTerrainTexture(),
-                    (float)(middlePoint.x - grid.getStyle().getSize()),
-                    (float)(middlePoint.y - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
-                    (float)grid.getStyle().getSize()*2,
-                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
-
-            }
-            batch.setShader(null);
-
-            if(hex.getHexData().getBuildingTexture() != null)
-            {
-
-                if(removeMode && defaultBuildings.contains(hex.getHexData()))
-                    batch.setShader(lightRedShader);
-
-                if(!validBuildings.contains(hex.getHexData()))
-                    batch.setShader(lockedShader);
-
-                Texture buildingTexture = null;
-
-                if(hex.getHexData().getBuildingType() == BuildingType.WIND)
-                {
-                    buildingTexture = windAnimator.getTexture();
-                }else{
-                    buildingTexture = hex.getHexData().getBuildingTexture();
-                }
-
-                if(gridEffect.getActiveTiles().contains(hex))
-                {
-                    Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-                    batch.draw(buildingTexture,
-                            (float)(middlePoint.x - grid.getStyle().getSize()/2),
-                            (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()/2),
-                            (float)grid.getStyle().getSize(),
-                            (float)grid.getStyle().getSize());
-
-                }else if(gridEffect.hasFallen(hex))
-                {
-                    Point middlePoint = hex.getHexGeometry().getMiddlePoint();
-                    batch.draw(buildingTexture,
-                            (float)(middlePoint.x - grid.getStyle().getSize()/2),
-                            (float)(middlePoint.y - grid.getStyle().getSize()/2),
-                            (float)grid.getStyle().getSize(),
-                            (float)grid.getStyle().getSize());
-                }
-                batch.setShader(null);
-            }
-
+            drawHexagon(grid.getHexs()[i], batch);
         }
         batch.end();
 
@@ -358,10 +288,92 @@ public class PlayScreen extends PlayStage
         if(!exitDialog.hasBeenShown()
                 && numObjectivePassed == map.getObjectives().length)
         {
-            this.exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), hexpert);
+            this.exitDialog = new LevelCompleteDialog(score, mapName, hexpert.getSkin(), this);
             exitDialog.setShown(true);
             exitDialog.show(getStage());
         }
+    }
+
+    private void drawHexagon(Hexagon<TileData> hexagon, SpriteBatch batch)
+    {
+
+        Hexagon<TileData> hex = hexagon;
+
+        if(removeMode && !defaultBuildings.contains(hex.getHexData()))
+        {
+            Dependency dependency = Rules.getDependencyLevel(hex.getHexData(), grid);
+
+            if(dependency == Dependency.INDEPENDENT)
+                batch.setShader(removeShader);
+            else if (dependency == Dependency.PARTIALLY)
+                batch.setShader(hintShader);
+
+        }
+        else if(hexpert.config.isBuildHelp() && getSelection() != null
+                && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection()))
+        {
+            batch.setShader(hintShader);
+        }
+
+        if(gridEffect.getActiveTiles().contains(hex))
+        {
+            Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+            batch.draw(hex.getHexData().getTerrainTexture(),
+                    (float)(middlePoint.x - grid.getStyle().getSize()),
+                    (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
+                    (float)grid.getStyle().getSize()*2,
+                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
+        }else if(gridEffect.hasFallen(hex)){
+
+            Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+            batch.draw(hex.getHexData().getTerrainTexture(),
+                    (float)(middlePoint.x - grid.getStyle().getSize()),
+                    (float)(middlePoint.y - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
+                    (float)grid.getStyle().getSize()*2,
+                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
+
+        }
+        batch.setShader(null);
+
+        if(hex.getHexData().getBuildingTexture() != null)
+        {
+
+            if(removeMode && defaultBuildings.contains(hex.getHexData()))
+                batch.setShader(lightRedShader);
+
+            if(!validBuildings.contains(hex.getHexData()))
+                batch.setShader(lockedShader);
+
+            Texture buildingTexture = null;
+
+            if(hex.getHexData().getBuildingType() == BuildingType.WIND)
+            {
+                buildingTexture = windAnimator.getTexture();
+            }else{
+                buildingTexture = hex.getHexData().getBuildingTexture();
+            }
+
+            if(gridEffect.getActiveTiles().contains(hex))
+            {
+                Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+                batch.draw(buildingTexture,
+                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
+                        (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()/2),
+                        (float)grid.getStyle().getSize(),
+                        (float)grid.getStyle().getSize());
+
+            }else if(gridEffect.hasFallen(hex))
+            {
+                Point middlePoint = hex.getHexGeometry().getMiddlePoint();
+                batch.draw(buildingTexture,
+                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
+                        (float)(middlePoint.y - grid.getStyle().getSize()/2),
+                        (float)grid.getStyle().getSize(),
+                        (float)grid.getStyle().getSize());
+            }
+            batch.setShader(null);
+        }
+
     }
 
     public int numberOfObjectivePassed(Objective[] objectives, HexMap<TileData> grid)
@@ -544,6 +556,45 @@ public class PlayScreen extends PlayStage
         if(numBanks >= 3)
             hexpert.playServices.unlockAchievement(Achievement.TOO_BIG_TO_FAIL);
     }
+
+    public Pixmap getMapScreenShot()
+    {
+
+        float oldCameraZoom = getCamera().zoom;
+        float oldCameraX = getCamera().position.x;
+        float oldCameraY = getCamera().position.y;
+
+        MapUtils.adjustCamera(getCamera(), grid);
+
+
+        final FrameBuffer fbo = new FrameBuffer(Pixmap.Format.RGBA8888, WIDTH, HEIGHT, false);
+
+        fbo.begin();
+        batch.setProjectionMatrix(getCamera().combined);
+        batch.begin();
+
+        for(int i = 0; i < grid.getHexs().length; i++)
+        {
+            drawHexagon(grid.getHexs()[i], batch);
+        }
+
+        batch.end();
+        ScreenUtils.getFrameBufferPixels(false);
+        fbo.end();
+        Texture tex = fbo.getColorBufferTexture();
+        TextureData texData = tex.getTextureData();
+
+        Pixmap pixmap = texData.consumePixmap();
+
+        fbo.dispose();
+
+        getCamera().zoom = oldCameraZoom;
+        getCamera().position.x = oldCameraX;
+        getCamera().position.y = oldCameraY;
+
+        return pixmap;
+    }
+
 
     public boolean isRemovable(TileData data)
     {

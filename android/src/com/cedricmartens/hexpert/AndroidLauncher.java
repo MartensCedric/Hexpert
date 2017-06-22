@@ -1,15 +1,18 @@
 package com.cedricmartens.hexpert;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.cedricmartens.hexpert.social.PlayServices;
+import com.google.android.gms.drive.internal.StreamContentsRequest;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.cedricmartens.hexpert.social.Sharing;
 
+import java.net.URI;
 import java.util.HashMap;
 
 public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing {
@@ -171,5 +174,18 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		sendIntent.putExtra(Intent.EXTRA_TEXT, message);
 		sendIntent.setType("text/plain");
 		startActivity(Intent.createChooser(sendIntent, "Share via ..."));
+	}
+
+	@Override
+	public void shareTextAndImage(String message, String picturePath) {
+		Intent sendIntent = new Intent();
+
+		Uri picture = Uri.parse(picturePath + "score.png");
+		sendIntent.setAction(Intent.ACTION_SEND);
+		sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+		sendIntent.putExtra(Intent.EXTRA_STREAM, picture);
+		sendIntent.setType("image/*");
+		sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		startActivity(Intent.createChooser(sendIntent, "Share images..."));
 	}
 }

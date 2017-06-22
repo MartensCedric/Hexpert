@@ -1,5 +1,9 @@
 package com.cedricmartens.hexpert.event;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -13,6 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.map.MapUtils;
+import com.cedricmartens.hexpert.screens.PlayScreen;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 
@@ -25,10 +30,12 @@ public class LevelCompleteDialog extends StandardDialog {
     private boolean shown = false;
     private int score;
     private int lvlIndex;
+    private PlayScreen playScreen;
 
-    public LevelCompleteDialog(int score, String mapName, Skin skin, Hexpert hexpert) {
-        super(hexpert, skin.get("gold", WindowStyle.class));
+    public LevelCompleteDialog(int score, String mapName, Skin skin, PlayScreen playScreen) {
+        super(playScreen.getHexpert(), skin.get("gold", WindowStyle.class));
 
+        this.playScreen = playScreen;
         this.score = score;
         lvlIndex = MapUtils.getLevelIndex(mapName);
 
@@ -77,7 +84,12 @@ public class LevelCompleteDialog extends StandardDialog {
                     hexpert.setScreen(hexpert.levelSelectScreen);
                     break;
                 case 2:
-                    hexpert.sharing.shareText(hexpert.i18NBundle.format("share_message_score", score, lvlIndex));
+                    Pixmap pixmap = playScreen.getMapScreenShot();
+                    FileHandle fileHandle = Gdx.files.local("score.png");
+                    PixmapIO.writePNG(fileHandle, pixmap);
+                    playScreen.getHexpert().sharing.shareTextAndImage(
+                            hexpert.i18NBundle.format("share_message_score", score, lvlIndex),
+                            Gdx.files.getLocalStoragePath() + "score.png");
                     break;
             }
         }
