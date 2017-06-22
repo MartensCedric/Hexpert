@@ -269,11 +269,7 @@ public class PlayScreen extends PlayStage
 
             }
             batch.setShader(null);
-        }
 
-        for(int i = 0; i < grid.getHexs().length; i++)
-        {
-            Hexagon<TileData> hex = grid.getHexs()[i];
             if(hex.getHexData().getBuildingTexture() != null)
             {
 
@@ -312,6 +308,7 @@ public class PlayScreen extends PlayStage
                 }
                 batch.setShader(null);
             }
+
         }
         batch.end();
 
