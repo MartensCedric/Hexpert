@@ -1,9 +1,4 @@
-package com.cedricmartens.hexpert.misc;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-
-import flexjson.JSONSerializer;
+package com.cedricmartens.hexpert.config;
 
 /**
  * Created by 1544256 on 2017-05-24.

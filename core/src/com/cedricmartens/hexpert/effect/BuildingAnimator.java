@@ -1,8 +1,6 @@
 package com.cedricmartens.hexpert.effect;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.cedricmartens.hexpert.Hexpert;
 
 /**

@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.cedricmartens.hexpert.misc.HexpertConfig;
+import com.cedricmartens.hexpert.config.HexpertConfig;
 
 import flexjson.JSONSerializer;
 

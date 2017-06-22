@@ -3,30 +3,20 @@ package com.cedricmartens.hexpert.event.tutorial;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
-import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.tile.BuildingType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HOUSE;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MARKET;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ROCKET;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND;
 
 /**
  * Created by martens on 6/11/17.

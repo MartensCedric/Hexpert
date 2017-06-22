@@ -1,8 +1,5 @@
 package com.cedricmartens.hexpert.effect;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexpert.tile.TileData;
@@ -12,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by martens on 6/21/17.

@@ -3,7 +3,7 @@ package com.cedricmartens.hexpert.tile;
 /**
  * Created by Cedric on 2017-04-22.
  */
-public enum  BuildingType
+public enum BuildingType
 {
     NONE(0, new int[]{}, new int[]{}),
     FARM(-1, new int[]{}, new int[]{1, 0, 0, 0, 0, 0, 0, 0}),

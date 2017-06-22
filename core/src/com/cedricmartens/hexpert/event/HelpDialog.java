@@ -11,7 +11,6 @@ import com.cedricmartens.hexpert.event.tutorial.BuildingScoreDialog;
 import com.cedricmartens.hexpert.event.tutorial.LockedTutDialog;
 import com.cedricmartens.hexpert.event.tutorial.TileEffectDialog;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

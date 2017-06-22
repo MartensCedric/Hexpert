@@ -9,22 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.HelpDialog;
+import com.cedricmartens.hexpert.event.MoreDialog;
 import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
 import com.cedricmartens.hexpert.event.tutorial.BuildingScoreDialog;
 import com.cedricmartens.hexpert.event.tutorial.TileEffectDialog;
 import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.Const;
-import com.cedricmartens.hexpert.Hexpert;
-import com.cedricmartens.hexpert.event.MoreDialog;
 import com.cedricmartens.hexpert.tile.BuildingType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
-import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;

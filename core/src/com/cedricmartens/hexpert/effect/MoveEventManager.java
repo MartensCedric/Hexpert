@@ -4,7 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.cedricmartens.hexpert.Hexpert;
+import com.cedricmartens.hexpert.misc.IntPointTime;
 import com.cedricmartens.hexpert.misc.PointTime;
+import com.cedricmartens.hexpert.screens.PlayScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +20,19 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BAD;
 
 public class MoveEventManager
 {
-    private com.cedricmartens.hexpert.Hexpert hexpert;
+    private Hexpert hexpert;
     private Texture badMoveTexture;
     private List<PointTime> badMoves;
-    private List<com.cedricmartens.hexpert.misc.IntPointTime> score;
+    private List<IntPointTime> score;
     private SpriteBatch batch;
     private final int SCALE = 64;
 
-    public MoveEventManager(com.cedricmartens.hexpert.screens.PlayScreen screen) {
+    public MoveEventManager(PlayScreen screen) {
         batch = screen.getBatch();
         this.hexpert = screen.getHexpert();
         this.badMoveTexture = hexpert.assetManager.get(TEXTURE_BAD, Texture.class);
         badMoves = new ArrayList<PointTime>();
-        score = new ArrayList<com.cedricmartens.hexpert.misc.IntPointTime>();
+        score = new ArrayList<IntPointTime>();
     }
 
     public void render(float delta)
@@ -72,7 +75,7 @@ public class MoveEventManager
 
         for(int i = 0; i < score.size(); i++)
         {
-            com.cedricmartens.hexpert.misc.IntPointTime pointTime = score.get(i);
+            IntPointTime pointTime = score.get(i);
 
             BitmapFont f = hexpert.getFont();
             f.draw(batch, pointTime.getN() >=0 ? "+" + Integer.toString(pointTime.getN()) : Integer.toString(pointTime.getN()), (float)pointTime.x, (float)pointTime.y);
@@ -84,7 +87,7 @@ public class MoveEventManager
         return badMoves;
     }
 
-    public List<com.cedricmartens.hexpert.misc.IntPointTime> getScoreList() {
+    public List<IntPointTime> getScoreList() {
         return score;
     }
 }

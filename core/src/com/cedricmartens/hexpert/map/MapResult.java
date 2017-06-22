@@ -1,6 +1,5 @@
 package com.cedricmartens.hexpert.map;
 
-import com.badlogic.gdx.Gdx;
 import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.TileData;
