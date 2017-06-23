@@ -180,7 +180,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	public void shareTextAndImage(String message, String picturePath) {
 		Intent sendIntent = new Intent();
 
-		Uri picture = Uri.parse(picturePath + "score.png");
+		Uri picture = Uri.parse(picturePath);
 		sendIntent.setAction(Intent.ACTION_SEND);
 		sendIntent.putExtra(Intent.EXTRA_TEXT, message);
 		sendIntent.putExtra(Intent.EXTRA_STREAM, picture);

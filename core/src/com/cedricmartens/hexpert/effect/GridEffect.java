@@ -2,6 +2,7 @@ package com.cedricmartens.hexpert.effect;
 
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
+import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.tile.TileData;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class GridEffect
     private HashMap<Hexagon<TileData>, Double> newCoords = new HashMap<>();
     private float length;
     private float time = 0;
+    private Action onCompletion;
 
     private final int DISTANCE = 1000;
 
@@ -50,6 +52,14 @@ public class GridEffect
             upcomingTiles.push(hexs.get(n));
             hexs.remove(n);
         }
+
+        Hexagon<TileData> data = upcomingTiles.pop();
+        getActiveTiles().add(data);
+    }
+
+    public void setAction(Action action)
+    {
+        onCompletion = action;
     }
 
     public void tick(float delta)
@@ -82,6 +92,12 @@ public class GridEffect
             }else{
                 newCoords.put(tile, y);
             }
+        }
+
+        if(onCompletion != null && !isActive())
+        {
+            onCompletion.doAction();
+            onCompletion = null;
         }
     }
 

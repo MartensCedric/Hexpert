@@ -297,12 +297,13 @@ public abstract class PlayStage extends StageScreen {
         return hexpert;
     }
 
-    protected void doAction(String lvlName)
+    protected Action getAction(String lvlName)
     {
         if(onStartActions.containsKey(lvlName))
         {
-            onStartActions.get(lvlName).doAction();
+            return onStartActions.get(lvlName);
         }
+        return null;
     }
 
     protected int getBuildingCountByLevel(String mapName)

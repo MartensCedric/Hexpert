@@ -48,6 +48,7 @@ import com.cedricmartens.hexpert.tile.Rules;
 import com.cedricmartens.hexpert.tile.TileData;
 import com.cedricmartens.hexpert.tile.TileType;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,7 +205,7 @@ public class PlayScreen extends PlayStage
             exitDialog.setShown(true);
         }
 
-        doAction(mapName);
+        gridEffect.setAction(getAction(mapName));
     }
 
     private void setMultiplexer()
@@ -567,17 +568,7 @@ public class PlayScreen extends PlayStage
 
         MapUtils.adjustCamera(getCamera(), grid);
 
-        final FrameBuffer fbo = new FrameBuffer(Pixmap.Format.RGBA8888, WIDTH, HEIGHT, false)
-        {
-            @Override
-            protected Texture createColorTexture() {
-                PixmapTextureData data = new PixmapTextureData(new Pixmap(width, height, format), format, false, false);
-                Texture result = new Texture(data);
-                result.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                result.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-                return result;
-            }
-        };
+        final FrameBuffer fbo = new FrameBuffer(Pixmap.Format.RGBA8888, WIDTH, HEIGHT, false);
 
         fbo.begin();
         batch.setProjectionMatrix(getCamera().combined);
@@ -589,18 +580,15 @@ public class PlayScreen extends PlayStage
         }
 
         batch.end();
-        ScreenUtils.getFrameBufferPixels(false);
-  //      Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(false);
+        Pixmap pixmap = new Pixmap(WIDTH, HEIGHT, Pixmap.Format.RGBA8888);
+        ByteBuffer buffer = pixmap.getPixels();
+        buffer.clear();
+        buffer.put(pixels);
+        buffer.position(0);
         fbo.end();
-        Texture tex = fbo.getColorBufferTexture();
-        TextureData texData = tex.getTextureData();
 
-        if(!texData.isPrepared())
-            texData.prepare();
-
-        Pixmap pixmap = texData.consumePixmap();
-
-        fbo.dispose();
+        //fbo.dispose();
 
         getCamera().zoom = oldCameraZoom;
         getCamera().position.x = oldCameraX;

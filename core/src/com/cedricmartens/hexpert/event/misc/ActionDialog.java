@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.StandardDialog;
+import com.cedricmartens.hexpert.misc.Action;
 
 /**
  * Created by martens on 5/22/17.
@@ -14,9 +15,9 @@ import com.cedricmartens.hexpert.event.StandardDialog;
 
 public class ActionDialog extends StandardDialog {
 
-    private com.cedricmartens.hexpert.misc.Action action;
+    private Action action;
 
-    public ActionDialog(Label text, com.cedricmartens.hexpert.misc.Action action, I18NBundle bundle, Skin skin, Hexpert hexpert) {
+    public ActionDialog(Label text, Action action, I18NBundle bundle, Skin skin, Hexpert hexpert) {
         super(hexpert, skin);
         this.action = action;
 
