@@ -84,13 +84,18 @@ public class LevelCompleteDialog extends StandardDialog {
                     hexpert.setScreen(hexpert.levelSelectScreen);
                     break;
                 case 2:
-                    Pixmap pixmap = playScreen.getMapScreenShot();
-                    FileHandle fileHandle = Gdx.files.local("score.png");
-                    PixmapIO.writePNG(fileHandle, pixmap);
-                    playScreen.getHexpert().sharing.shareTextAndImage(
-                            hexpert.i18NBundle.format("share_message_score", score, lvlIndex),
-                            Gdx.files.getLocalStoragePath() + "score.png");
-                    break;
+                    //Pixmap pixmap = playScreen.getMapScreenShot();
+                    //FileHandle fileHandle = Gdx.files.local("score.png");
+                    //PixmapIO.writePNG(fileHandle, pixmap);
+                    if(playScreen.map.scoreIsCalculated())
+                    {
+                        playScreen.getHexpert().sharing.shareText(
+                                hexpert.i18NBundle.format("share_message_score", score, lvlIndex));
+                    }else{
+                        playScreen.getHexpert().sharing.shareText(
+                                hexpert.i18NBundle.format("share_message", lvlIndex));
+                    }
+                     break;
             }
         }
 
