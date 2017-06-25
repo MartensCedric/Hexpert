@@ -14,6 +14,7 @@ import com.cedricmartens.hexpert.event.HelpDialog;
 import com.cedricmartens.hexpert.event.MoreDialog;
 import com.cedricmartens.hexpert.event.tutorial.BuildingReqDialog;
 import com.cedricmartens.hexpert.event.tutorial.BuildingScoreDialog;
+import com.cedricmartens.hexpert.event.tutorial.LockedTutDialog;
 import com.cedricmartens.hexpert.event.tutorial.TileEffectDialog;
 import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.Const;
@@ -101,6 +102,13 @@ public abstract class PlayStage extends StageScreen {
             @Override
             public void doAction() {
                 new TileEffectDialog(hexpert, hexpert.getSkin()).show(getStage());
+            }
+        });
+
+        onStartActions.put("triBankLckd", new Action() {
+            @Override
+            public void doAction() {
+                new LockedTutDialog(hexpert, hexpert.getSkin()).show(getStage());
             }
         });
 

@@ -79,7 +79,7 @@ public class LevelCompleteDialog extends StandardDialog {
         {
             int res = (int)object;
             switch (res)
-            {
+              {
                 case 1 :
                     hexpert.setScreen(hexpert.levelSelectScreen);
                     break;
