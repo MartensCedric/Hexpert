@@ -203,7 +203,7 @@ public class LevelSelectScreen extends StageScreen
         batch.setShader(null);
 
         batch.end();
-        int hexConst = 28;
+        int hexConst = 22;
         displayBatch.setProjectionMatrix(displayLevelCamera.combined);
         displayBatch.begin();
         for(int i = 0; i < grid.getHexs().length; i++)

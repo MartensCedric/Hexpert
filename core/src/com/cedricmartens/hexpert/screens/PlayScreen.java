@@ -317,7 +317,7 @@ public class PlayScreen extends PlayStage
             batch.setShader(hintShader);
         }
 
-        int hexConst = 28;
+        int hexConst = 22;
 
         if(gridEffect.getActiveTiles().contains(hex))
         {
