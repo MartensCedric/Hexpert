@@ -23,6 +23,7 @@ import com.cedricmartens.hexpert.tile.BuildingType;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static com.cedricmartens.hexpert.misc.Const.HEIGHT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
@@ -165,7 +166,7 @@ public abstract class PlayStage extends StageScreen {
         });
 
         tableBtn = new Table();
-        tableBtn.setY(Const.HEIGHT - 85);
+        tableBtn.setY(HEIGHT - 85);
         tableBtn.setX(235);
         tableBtn.defaults().width(125).height(125).pad(15);
 
@@ -178,9 +179,9 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.add(btnHelp);
 
         tableRequirements = new Table();
-        tableRequirements.defaults().height(100).pad(0, 5, 0, 5);
-        tableRequirements.setHeight(105);
-        tableRequirements.setX(Const.WIDTH/2);
+        tableRequirements.defaults().height(150).pad(0, 5, 0, 5);
+        tableRequirements.setX(Const.WIDTH/2 + 100);
+        tableRequirements.setY(HEIGHT - 105);
         setBuilding(null);
 
         tableScore = new Table();
@@ -209,55 +210,57 @@ public abstract class PlayStage extends StageScreen {
 
         if(selection != null)
         {
-            tableRequirements.add(getImgBySelection(selection)).width(100);
-            tableRequirements.add(new Label("=", hexpert.getSkin()));
+            Label.LabelStyle lblStyle = hexpert.getSkin().get("bigger", Label.LabelStyle.class);
+            int width = 150;
+            tableRequirements.add(getImgBySelection(selection)).width(width);
+            tableRequirements.add(new Label("=", lblStyle));
 
             switch (selection) {
                 case NONE:
                     break;
                 case FARM:
-                    tableRequirements.add(imgNotFarm).width(100);
+                    tableRequirements.add(imgNotFarm).width(width);
                     break;
                 case HOUSE:
-                    tableRequirements.add(imgFarm).width(100);
+                    tableRequirements.add(imgFarm).width(width);
                     break;
                 case MINE:
-                    tableRequirements.add(imgHouse).width(100);
+                    tableRequirements.add(imgHouse).width(width);
                     break;
                 case WIND:
-                    tableRequirements.add(imgHouse).width(100);
+                    tableRequirements.add(imgHouse).width(width);
                     break;
                 case FACTORY:
-                    tableRequirements.add(imgHouse).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgMine).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgWind).width(100);
+                    tableRequirements.add(imgHouse).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgMine).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgWind).width(width);
                     break;
                 case MARKET:
-                    tableRequirements.add(imgHouse).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgWind).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgFactory).width(100);
+                    tableRequirements.add(imgHouse).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgWind).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgFactory).width(width);
                     break;
                 case BANK:
-                    tableRequirements.add(imgHouse).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgMine).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgWind).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgMarket).width(100);
+                    tableRequirements.add(imgHouse).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgMine).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgWind).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgMarket).width(width);
                     break;
                 case ROCKET:
-                    tableRequirements.add(imgHouse).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgWind).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgFactory).width(100);
-                    tableRequirements.add(new Label("+", hexpert.getSkin()));
-                    tableRequirements.add(imgBank).width(100);
+                    tableRequirements.add(imgHouse).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgWind).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgFactory).width(width);
+                    tableRequirements.add(new Label("+", lblStyle));
+                    tableRequirements.add(imgBank).width(width);
                     break;
             }
         }
