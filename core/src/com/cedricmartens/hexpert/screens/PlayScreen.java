@@ -393,6 +393,14 @@ public class PlayScreen extends PlayStage
         return n;
     }
 
+    private Objective getNextObjective(int numObjectivePassed, Objective[] objectives)
+    {
+        if(numObjectivePassed >= objectives.length)
+            return null;
+
+        return objectives[numObjectivePassed];
+    }
+
     public Hexpert getHexpert() {
         return super.getHexpert();
     }
@@ -450,11 +458,11 @@ public class PlayScreen extends PlayStage
 
         score = map.getScore(grid);
         int objectivePassedBest = mapResult.getObjectivePassedCount();
-        int objectivePassed = numberOfObjectivePassed(map.getObjectives(), grid);
+        numObjectivePassed = numberOfObjectivePassed(map.getObjectives(), grid);
 
         if(map.scoreIsCalculated())
         {
-            if(score > mapResult.getScore() && objectivePassed >= objectivePassedBest)
+            if(score > mapResult.getScore() && numObjectivePassed >= objectivePassedBest)
             {
                 mapResult.setBuildingFromGrid(grid);
                 mapResult.setScore(score);
@@ -462,7 +470,7 @@ public class PlayScreen extends PlayStage
 
                 saveResult();
 
-                if(objectivePassed == map.getObjectives().length)
+                if(numObjectivePassed == map.getObjectives().length)
                 {    try{
                         hexpert.playServices.submitScore(score, mapName);
                     }catch (Exception e) {
@@ -471,13 +479,19 @@ public class PlayScreen extends PlayStage
                 }
             }
         }else{
-            if(objectivePassed >= objectivePassedBest)
+            if(numObjectivePassed >= objectivePassedBest)
             {
                 mapResult.setBuildingFromGrid(grid);
                 mapResult.updateObjectives(map.getObjectives(), grid);
                 saveResult();
             }
         }
+
+        Objective nextObjective = getNextObjective(numObjectivePassed, map.getObjectives());
+
+        if(nextObjective == null)
+            lblNextObjective.setText("");
+        else lblNextObjective.setText(nextObjective.toString(hexpert.i18NBundle));
     }
 
     public void resetGrid()

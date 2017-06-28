@@ -48,6 +48,7 @@ public abstract class PlayStage extends StageScreen {
 
     protected BuildingType selection;
     protected ImageButton selectedButton;
+    protected Label lblNextObjective;
     public boolean removeMode = false;
     private Image imgFarm, imgHouse, imgMine, imgWind, imgFactory, imgMarket, imgBank, imgRocket, imgNotFarm;
     protected Hexpert hexpert;
@@ -166,7 +167,7 @@ public abstract class PlayStage extends StageScreen {
         });
 
         tableBtn = new Table();
-        tableBtn.setY(HEIGHT - 85);
+        tableBtn.setY(HEIGHT - 150);
         tableBtn.setX(235);
         tableBtn.defaults().width(125).height(125).pad(15);
 
@@ -177,6 +178,9 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.add(btnMore);
         tableBtn.add(btnRemove);
         tableBtn.add(btnHelp);
+        tableBtn.row();
+        lblNextObjective = new Label("", hexpert.getSkin());
+        tableBtn.add(lblNextObjective).colspan(3).left();
 
         tableRequirements = new Table();
         tableRequirements.defaults().height(150).pad(0, 5, 0, 5);

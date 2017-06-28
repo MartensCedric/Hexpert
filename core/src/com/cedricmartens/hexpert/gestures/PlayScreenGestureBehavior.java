@@ -87,14 +87,14 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                     playStage.setSelection(null);
 
                 playScreen.checkAchievements();
+
             }else{
+
                 playScreen.getMoveEventManager().getBadMoves().add(new PointTime(new Point(pos.x,pos.y), 0.35f));
                 hexpert.sounds.get("bad").play(hexpert.masterVolume);
             }
         }
         playScreen.updateScore();
-        playScreen.numObjectivePassed = playScreen.numberOfObjectivePassed(
-                playScreen.map.getObjectives(), playScreen.getGrid());
         return true;
     }
 }
