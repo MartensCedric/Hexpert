@@ -173,9 +173,12 @@ public class LevelSelectScreen extends StageScreen
 
             if(i > 0 && i < gridLvlSelect.getHexs().length - 1)
             {
+                int lvlNum = (currentWorld - 1) * levelsToDisplay + i;
+                int xDecay = lvlNum >= 10 ? -18 :-10;
+                int yDecay = 30;
                 hexpert.getFont().draw(batch,
-                        Integer.toString((currentWorld - 1) * levelsToDisplay + i),
-                        (int)p.x - 10, (int)p.y + 30);
+                        Integer.toString(lvlNum),
+                        (int)p.x + xDecay, (int)p.y + yDecay);
             }
         }
 
@@ -195,15 +198,19 @@ public class LevelSelectScreen extends StageScreen
 
             if(i > 0 && i < gridLvlSelect.getHexs().length - 1)
             {
+                int lvlNum = (currentWorld - 1) * levelsToDisplay + i;
+                int xDecay = lvlNum >= 10 ? -18 :-10;
+                int yDecay = 30;
+
                 hexpert.getFont().draw(batch,
-                        Integer.toString((currentWorld - 1) * levelsToDisplay + i),
-                        (int)p.x - 10, (int)p.y + 30);
+                        Integer.toString(lvlNum),
+                        (int)p.x + xDecay, (int)p.y + yDecay);
             }
         }
         batch.setShader(null);
 
         batch.end();
-        int hexConst = 22;
+        int hexConst = 24;
         displayBatch.setProjectionMatrix(displayLevelCamera.combined);
         displayBatch.begin();
         for(int i = 0; i < grid.getHexs().length; i++)
