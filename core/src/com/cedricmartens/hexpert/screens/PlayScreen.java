@@ -317,22 +317,24 @@ public class PlayScreen extends PlayStage
             batch.setShader(hintShader);
         }
 
+        int hexConst = 28;
+
         if(gridEffect.getActiveTiles().contains(hex))
         {
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
-                    (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
+                    (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - hexConst,
                     (float)grid.getStyle().getSize()*2,
-                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
+                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + hexConst);
         }else if(gridEffect.hasFallen(hex)){
 
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             batch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
-                    (float)(middlePoint.y - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
+                    (float)(middlePoint.y - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - hexConst,
                     (float)grid.getStyle().getSize()*2,
-                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
+                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + hexConst);
 
         }
         batch.setShader(null);

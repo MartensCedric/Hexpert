@@ -203,6 +203,7 @@ public class LevelSelectScreen extends StageScreen
         batch.setShader(null);
 
         batch.end();
+        int hexConst = 28;
         displayBatch.setProjectionMatrix(displayLevelCamera.combined);
         displayBatch.begin();
         for(int i = 0; i < grid.getHexs().length; i++)
@@ -212,9 +213,9 @@ public class LevelSelectScreen extends StageScreen
             Point middlePoint = hex.getHexGeometry().getMiddlePoint();
             displayBatch.draw(hex.getHexData().getTerrainTexture(),
                     (float)(middlePoint.x - grid.getStyle().getSize()),
-                    (float)(middlePoint.y - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - 24,
+                    (float)(middlePoint.y - grid.getStyle().getSize()* Const.HEX_HEIGHT_RATIO) - hexConst,
                     (float)grid.getStyle().getSize()*2,
-                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + 24);
+                    (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + hexConst );
 
         }
 
