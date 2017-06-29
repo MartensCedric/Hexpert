@@ -478,16 +478,15 @@ public class PlayScreen extends PlayStage
                     }
                 }
             }
-        }else{
-            if(numObjectivePassed >= objectivePassedBest)
-            {
-                mapResult.setBuildingFromGrid(grid);
-                mapResult.updateObjectives(map.getObjectives(), grid);
-                saveResult();
-            }
+        }else if(numObjectivePassed >= objectivePassedBest)
+        {
+            mapResult.setBuildingFromGrid(grid);
+            mapResult.updateObjectives(map.getObjectives(), grid);
+            saveResult();
         }
 
-        Objective nextObjective = getNextObjective(numObjectivePassed, map.getObjectives());
+
+        Objective nextObjective = getNextObjective(mapResult.getObjectivePassedCount(), map.getObjectives());
 
         if(nextObjective == null)
             lblNextObjective.setText("");

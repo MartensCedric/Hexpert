@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.HelpDialog;
 import com.cedricmartens.hexpert.event.MoreDialog;
@@ -180,7 +181,8 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.add(btnHelp);
         tableBtn.row();
         lblNextObjective = new Label("", hexpert.getSkin());
-        tableBtn.add(lblNextObjective).colspan(3).left();
+        lblNextObjective.setAlignment(Align.center);
+        tableBtn.add(lblNextObjective).colspan(3).expandX().center();
 
         tableRequirements = new Table();
         tableRequirements.defaults().height(150).pad(0, 5, 0, 5);
