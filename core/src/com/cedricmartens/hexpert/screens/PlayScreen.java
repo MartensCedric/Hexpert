@@ -80,6 +80,7 @@ public class PlayScreen extends PlayStage
     private ShaderProgram hintShader, removeShader, lockedShader, lightRedShader;
     public String mapName;
     private List<TileData> defaultBuildings;
+    private List<TileData> lockedBuildings;
     private List<TileData> validBuildings;
     private LevelCompleteDialog exitDialog;
     private BuildingAnimator windAnimator;
@@ -157,11 +158,22 @@ public class PlayScreen extends PlayStage
 
         this.defaultBuildings = new ArrayList<>();
         this.validBuildings = new ArrayList<>();
+        this.lockedBuildings = new ArrayList<>();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
-            if(((TileData)grid.getHexs()[i].getHexData()).getBuildingType() != BuildingType.NONE)
-                defaultBuildings.add((TileData) grid.getHexs()[i].getHexData());
+            TileData data = (TileData) grid.getHexs()[i].getHexData();
+            BuildingType buildingType = data.getBuildingType();
+
+            if(buildingType != BuildingType.NONE)
+            {
+                defaultBuildings.add(data);
+                if(!Rules.isValid(data, buildingType))
+                {
+                    lockedBuildings.add(data);
+                }
+            }
+
         }
 
         BuildingType[] buildingTypes = mapResult.getBuildings();
@@ -303,7 +315,7 @@ public class PlayScreen extends PlayStage
 
         if(removeMode && !defaultBuildings.contains(hex.getHexData()))
         {
-            Dependency dependency = Rules.getDependencyLevel(hex.getHexData(), grid);
+            Dependency dependency = Rules.getDependencyLevel(hex.getHexData(), grid, validBuildings, lockedBuildings);
 
             if(dependency == Dependency.INDEPENDENT)
                 batch.setShader(removeShader);
@@ -618,6 +630,22 @@ public class PlayScreen extends PlayStage
         if(defaultBuildings.contains(data))
             return false;
 
-        return Rules.getDependencyLevel(data, grid) != Dependency.DEPENDENT;
+        return Rules.getDependencyLevel(data, grid, validBuildings, lockedBuildings) != Dependency.DEPENDENT;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
+
+    public List<TileData> getDefaultBuildings() {
+        return defaultBuildings;
+    }
+
+    public List<TileData> getLockedBuildings() {
+        return lockedBuildings;
+    }
+
+    public List<TileData> getValidBuildings() {
+        return validBuildings;
     }
 }

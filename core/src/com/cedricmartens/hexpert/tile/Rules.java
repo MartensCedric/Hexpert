@@ -13,12 +13,12 @@ import java.util.List;
 
 public class Rules
 {
-    public static Dependency getDependencyLevel(TileData data, HexMap<TileData> grid) {
+    public static Dependency getDependencyLevel(TileData data, HexMap<TileData> grid,
+                                                List<TileData> validBuildings, List<TileData> lockedBuildings) {
 
         if (data.getBuildingType() == BuildingType.NONE)
             return Dependency.DEPENDENT;
 
-        List<TileData> validBuildings = getValidBuildings(grid);
 
         Dependency defaultDep = Dependency.INDEPENDENT;
         int[] neighborStats = getNeighborStats(data);
@@ -34,7 +34,8 @@ public class Rules
                             BuildingType neighborBuildingType = neighbor.getBuildingType();
 
                             if (buildingType == neighborBuildingType) {
-                                Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType(), validBuildings);
+                                Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType(),
+                                        validBuildings);
 
                                 if (logistic == Logistic.INSUFFICIENT)
                                     return Dependency.INDEPENDENT;
@@ -51,7 +52,8 @@ public class Rules
         return defaultDep;
     }
 
-    public static Logistic getLogisticalLevel(TileData data, BuildingType buildingType, List<TileData> validBuildings)
+    public static Logistic getLogisticalLevel(TileData data, BuildingType buildingType,
+                                              List<TileData> validBuildings)
     {
         if(!validBuildings.contains(data))
             return Logistic.INSUFFICIENT;
@@ -122,13 +124,18 @@ public class Rules
 
     private static int[] getNeighborStats(TileData data)
     {
+        return getNeighborStats(data, new ArrayList<TileData>());
+    }
+
+    private static int[] getNeighborStats(TileData data, List<TileData> lockedBuildings)
+    {
         List<Hexagon<TileData>> neighbors = data.getParent().getNeighbors();
         int[] neighborStats = new int[com.cedricmartens.hexpert.misc.Const.BUILDING_COUNT];
 
         for(int i = 0; i < neighbors.size(); i++) {
             TileData tileData = neighbors.get(i).getHexData();
 
-            if(tileData.getBuildingType() != BuildingType.NONE)
+            if(tileData.getBuildingType() != BuildingType.NONE && !lockedBuildings.contains(tileData))
             {
                 neighborStats[tileData.getBuildingType().ordinal() - 1]++;
             }
