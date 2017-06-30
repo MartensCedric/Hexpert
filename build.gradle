@@ -66,7 +66,6 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         //compile "org.codetome:hexameter-core:3.0.0"
         compile group: 'commons-io', name: 'commons-io', version: '2.5'
-
         testCompile 'junit:junit:4.12'
         //androidTestCompile 'junit:junit:4.12'
         //androidTestCompile 'com.android.support:support-annotations:25.1.1'
