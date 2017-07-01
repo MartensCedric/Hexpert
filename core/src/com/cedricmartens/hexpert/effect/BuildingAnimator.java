@@ -44,6 +44,7 @@ public class BuildingAnimator
 
     private int getCurrentFrame()
     {
-        return (int) (time/interval) + 1;
+        int frame = (int) ((time/interval) + 1);
+        return Math.min(frame, 4);
     }
 }

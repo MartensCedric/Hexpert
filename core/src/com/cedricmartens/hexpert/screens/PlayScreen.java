@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.async.ThreadUtils;
 import com.cedricmartens.hexmap.coordinate.Point;
 import com.cedricmartens.hexmap.hexagon.HexGeometry;
 import com.cedricmartens.hexmap.hexagon.Hexagon;
@@ -49,6 +50,7 @@ import com.cedricmartens.hexpert.tile.Rules;
 import com.cedricmartens.hexpert.tile.TileData;
 import com.cedricmartens.hexpert.tile.TileType;
 
+import java.lang.management.ThreadInfo;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +92,13 @@ public class PlayScreen extends PlayStage
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
         this.hexpert = hexpert;
+
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                //hexpert.purchasing.purchase(Purchasing.Amount.FIVE);
+            }
+        });
 
         this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
         this.mapName = mapName;
