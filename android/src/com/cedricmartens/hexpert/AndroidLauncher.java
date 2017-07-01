@@ -2,27 +2,21 @@ package com.cedricmartens.hexpert;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.cedricmartens.hexpert.social.Purchasing;
 import com.cedricmartens.hexpert.social.PlayServices;
+import com.cedricmartens.hexpert.social.Purchasing;
+import com.cedricmartens.hexpert.social.Sharing;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
-import com.cedricmartens.hexpert.social.Sharing;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.Executor;
 
 public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing, Purchasing, BillingProcessor.IBillingHandler {
 

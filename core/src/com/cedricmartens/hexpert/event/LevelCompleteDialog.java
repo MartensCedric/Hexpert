@@ -1,9 +1,5 @@
 package com.cedricmartens.hexpert.event;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -15,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.map.MapUtils;
 import com.cedricmartens.hexpert.screens.PlayScreen;
 
@@ -77,6 +72,7 @@ public class LevelCompleteDialog extends StandardDialog {
 
         if(object != null)
         {
+            String store_link = "https://play.google.com/store/apps/details?id=com.cedricmartens.hexpert";
             int res = (int)object;
             switch (res)
               {
@@ -90,7 +86,7 @@ public class LevelCompleteDialog extends StandardDialog {
                     if(playScreen.map.scoreIsCalculated())
                     {
                         playScreen.getHexpert().sharing.shareText(
-                                hexpert.i18NBundle.format("share_message_score", score, lvlIndex));
+                                hexpert.i18NBundle.format("share_message_score", score, lvlIndex) + "\n" + store_link );
                     }else{
                         playScreen.getHexpert().sharing.shareText(
                                 hexpert.i18NBundle.format("share_message", lvlIndex));

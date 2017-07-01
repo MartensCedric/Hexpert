@@ -1,5 +1,6 @@
 package com.cedricmartens.hexpert.event;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.social.Purchasing;
+
+import flexjson.JSONSerializer;
 
 /**
  * Created by martens on 7/1/17.
@@ -56,12 +59,27 @@ public class PurchaseDialog extends StandardDialog {
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Purchasing.Amount amount = Purchasing.Amount.values()[(int)slider.getValue()];
+                final Purchasing.Amount amount = Purchasing.Amount.values()[(int)slider.getValue()];
+
+                hexpert.config.setHasMetPurchaseScreen(true);
+
+                JSONSerializer jsonSerializer = new JSONSerializer();
+                Gdx.files.local("options.config").writeString(jsonSerializer.serialize(hexpert.config), false);
+
 
                 if(amount == Purchasing.Amount.ZERO)
                 {
-                   new FreeridingDialog(hexpert, skin).show(getStage());
+                    new FreeridingDialog(hexpert, skin).show(getStage());
+                }else{
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            hexpert.purchasing.purchase(amount);
+                        }
+                    });
                 }
+
+
 
                 hide();
             }
