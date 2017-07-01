@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.misc.ActionDialog;
 import com.cedricmartens.hexpert.misc.Action;
+import com.cedricmartens.hexpert.screens.PlayScreen;
 import com.cedricmartens.hexpert.screens.PlayStage;
 
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BACK;
@@ -148,8 +149,13 @@ public class MoreDialog extends StandardDialog {
         getContentTable().add(btnOptions);
         getContentTable().add(lblOptions).width(lblOptions.getPrefWidth());
         getContentTable().row();
-        getContentTable().add(btnLeaderboard);
-        getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth());
+        PlayScreen playScreen = (PlayScreen)playStage;
+
+        if(playScreen.map.scoreIsCalculated())
+        {
+            getContentTable().add(btnLeaderboard);
+            getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth());
+        }
 
         TextButton textButtonClose = new TextButton(i18N.get("close"), hexpert.getSkin());
         getButtonTable().add(textButtonClose).width(325);

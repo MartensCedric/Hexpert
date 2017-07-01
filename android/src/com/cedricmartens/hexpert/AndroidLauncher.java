@@ -27,6 +27,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		leaderboardsMap = new HashMap<>();
 		leaderboardsMap.put("handball", "CgkIq5XDzvcOEAIQDg");
 		leaderboardsMap.put("holywater", "CgkIq5XDzvcOEAIQDw");
+		leaderboardsMap.put("carrot", "CgkIq5XDzvcOEAIQIw");
+		leaderboardsMap.put("berry", "CgkIq5XDzvcOEAIQJA");
 		leaderboardsMap.put("triForest", "CgkIq5XDzvcOEAIQEA");
 		leaderboardsMap.put("tightAroundWater", "CgkIq5XDzvcOEAIQEQ");
 		leaderboardsMap.put("bent", "CgkIq5XDzvcOEAIQEg");
@@ -46,6 +48,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		leaderboardsMap.put("hexcity", "CgkIq5XDzvcOEAIQIA");
 		leaderboardsMap.put("wobblyPlane", "CgkIq5XDzvcOEAIQIQ");
 		leaderboardsMap.put("crown", "CgkIq5XDzvcOEAIQIg");
+		leaderboardsMap.put("spinner", "CgkIq5XDzvcOEAIQJQ");
 	}
 
 	@Override
