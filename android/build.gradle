@@ -131,5 +131,4 @@ idea {
 
 dependencies {
     compile project(path: ':BaseGameUtils')
-    compile 'org.solovyev.android:checkout:1.0.1'
 }

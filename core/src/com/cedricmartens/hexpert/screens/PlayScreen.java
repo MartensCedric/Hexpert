@@ -96,7 +96,7 @@ public class PlayScreen extends PlayStage
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                //hexpert.purchasing.purchase(Purchasing.Amount.FIVE);
+                hexpert.purchasing.purchase(Purchasing.Amount.FIVE);
             }
         });
 

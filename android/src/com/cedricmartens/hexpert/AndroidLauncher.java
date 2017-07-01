@@ -1,6 +1,7 @@
 package com.cedricmartens.hexpert;
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -15,30 +16,14 @@ import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.cedricmartens.hexpert.social.Sharing;
 
-import org.solovyev.android.checkout.ActivityCheckout;
-import org.solovyev.android.checkout.Billing;
-import org.solovyev.android.checkout.BillingRequests;
-import org.solovyev.android.checkout.Cache;
-import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.EmptyRequestListener;
-import org.solovyev.android.checkout.Inventory;
-import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Purchase;
-import org.solovyev.android.checkout.PurchaseVerifier;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing, Purchasing {
 
 	private GameHelper gameHelper;
-	private ActivityCheckout checkout;
-
 	private HashMap<String, String> leaderboardsMap;
 	{
 		leaderboardsMap = new HashMap<>();
@@ -69,60 +54,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
-		Billing billing = new Billing(this, new Billing.Configuration(){
-
-			@Nonnull
-			@Override
-			public String getPublicKey() {
-				return "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk7CvCwFg6zjMPmczjAxaLlUjiriAudAOS1a+AFAC5KsA1ZeK7dW8g2spFW7ukmLaSAKQWqGgaKwrs+hntgbMsp2cPWe1x77z8gISdXUNZB2XuzjZqUTzRaGU3zoO9kjBAqQmSaZIo7hLb2hn70Yzeoo31fV4m1koHsNtzpMUksYpFwuD/HVJifHeO9E1bvea6ljidGtYz10hdoF/t+Lp77Exv/17pD9IbE8dKO/j0p/MFIAz0LF1+vyhg/bhpZs2X8Y3dWVv3fkthScj4Wemu8yDksTpCH6baDwjeZ5qe7eAoA3KnQsR7kssiUNXWWtUTUOON1GlOqcHVu9BJW52GwIDAQAB";
-			}
-
-			@Nullable
-			@Override
-			public Cache getCache() {
-				return null;
-			}
-
-			@Nonnull
-			@Override
-			public PurchaseVerifier getPurchaseVerifier() {
-				return null;
-			}
-
-			@Nullable
-			@Override
-			public Inventory getFallbackInventory(@Nonnull Checkout checkout, @Nonnull Executor onLoadExecutor) {
-				return null;
-			}
-
-			@Override
-			public boolean isAutoConnect() {
-				return false;
-			}
-		});
-
-		checkout = Checkout.forActivity(this, billing);
-		checkout.start();
-
-		List<String> skus = new ArrayList<String>();
-
-		skus.add("pwyw_one");
-		skus.add("pwyw_two");
-		skus.add("pwyw_three");
-		skus.add("pwyw_four");
-		skus.add("pwyw_five");
-		skus.add("pwyw_six");
-		skus.add("pwyw_seven");
-		skus.add("pwyw_eight");
-		skus.add("pwyw_nine");
-		skus.add("pwyw_ten");
-
-		Inventory inventory = checkout.makeInventory();
-		inventory.load(Inventory.Request.create()
-				.loadAllPurchases()
-				.loadSkus(ProductTypes.IN_APP, skus), new InventoryCallback());
-
+		String pKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk7CvCwFg6zjMPmczjAxaLlUjiriAudAOS1a+AFAC5KsA1ZeK7dW8g2spFW7ukmLaSAKQWqGgaKwrs+hntgbMsp2cPWe1x77z8gISdXUNZB2XuzjZqUTzRaGU3zoO9kjBAqQmSaZIo7hLb2hn70Yzeoo31fV4m1koHsNtzpMUksYpFwuD/HVJifHeO9E1bvea6ljidGtYz10hdoF/t+Lp77Exv/17pD9IbE8dKO/j0p/MFIAz0LF1+vyhg/bhpZs2X8Y3dWVv3fkthScj4Wemu8yDksTpCH6baDwjeZ5qe7eAoA3KnQsR7kssiUNXWWtUTUOON1GlOqcHVu9BJW52GwIDAQAB";
 		gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
 		gameHelper.enableDebugLog(false);
 
@@ -144,7 +76,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		initialize(new Hexpert(this, this, this), config);
 	}
 
-
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -161,7 +92,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		gameHelper.onActivityResult(requestCode, resultCode, data);
-		checkout.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -264,20 +194,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		startActivity(Intent.createChooser(sendIntent, "Share images..."));
 	}
 
-
-	private class PurchaseListener extends EmptyRequestListener<Purchase> {
-		// your code here
-
-	}
-
-	private class InventoryCallback implements Inventory.Callback {
-		@Override
-		public void onLoaded(Inventory.Products products) {
-
-
-		}
-	}
-
 	@Override
 	public void purchase(Amount amount)
 	{
@@ -319,12 +235,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
 		}
 		final String finalDesiredItem = desiredItem;
-		checkout.whenReady(new Checkout.EmptyListener() {
-			@Override
-			public void onReady(BillingRequests requests) {
-				requests.purchase(ProductTypes.IN_APP, finalDesiredItem, null, checkout.getPurchaseFlow());
-			}
-		});
+
 	}
 
 	@Override
