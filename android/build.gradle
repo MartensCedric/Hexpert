@@ -131,4 +131,5 @@ idea {
 
 dependencies {
     compile project(path: ':BaseGameUtils')
+    compile 'com.anjlab.android.iab.v3:library:1.0.+'
 }

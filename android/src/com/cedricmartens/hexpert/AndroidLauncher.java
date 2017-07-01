@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -21,8 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing, Purchasing {
+public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing, Purchasing, BillingProcessor.IBillingHandler {
 
+	private BillingProcessor bp;
 	private GameHelper gameHelper;
 	private HashMap<String, String> leaderboardsMap;
 	{
@@ -58,6 +61,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
 		gameHelper.enableDebugLog(false);
 
+		bp = new BillingProcessor(this, pKey, this);
+
 		GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
 			@Override
 			public void onSignInFailed() {
@@ -92,6 +97,16 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		gameHelper.onActivityResult(requestCode, resultCode, data);
+		if (!bp.handleActivityResult(requestCode, resultCode, data)) {
+			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		if(bp != null)
+			bp.release();
+		super.onDestroy();
 	}
 
 	@Override
@@ -234,12 +249,32 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 				break;
 
 		}
-		final String finalDesiredItem = desiredItem;
 
+		bp.purchase(this, desiredItem);
 	}
 
 	@Override
 	public boolean hasPurchased() {
 		return false;
+	}
+
+	@Override
+	public void onProductPurchased(String productId, TransactionDetails details) {
+		Log.e("BILLING", productId + " has been purchased!");
+	}
+
+	@Override
+	public void onPurchaseHistoryRestored() {
+
+	}
+
+	@Override
+	public void onBillingError(int errorCode, Throwable error) {
+
+	}
+
+	@Override
+	public void onBillingInitialized() {
+
 	}
 }
