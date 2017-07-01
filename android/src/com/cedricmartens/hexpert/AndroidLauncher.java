@@ -6,20 +6,67 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.cedricmartens.hexpert.social.Purchasing;
 import com.cedricmartens.hexpert.social.PlayServices;
-import com.google.android.gms.drive.internal.StreamContentsRequest;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.cedricmartens.hexpert.social.Sharing;
 
-import java.net.URI;
-import java.util.HashMap;
+import org.solovyev.android.checkout.ActivityCheckout;
+import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.BillingRequests;
+import org.solovyev.android.checkout.Cache;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.Inventory;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.PurchaseVerifier;
 
-public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing {
+import java.util.HashMap;
+import java.util.concurrent.Executor;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing, Purchasing {
 
 	private GameHelper gameHelper;
-	private HashMap<String, String> leaderboardsMap;
+	private ActivityCheckout checkout;
 
+	private Billing billing = new Billing(this, new Billing.Configuration(){
+
+		@Nonnull
+		@Override
+		public String getPublicKey() {
+			return null;
+		}
+
+		@Nullable
+		@Override
+		public Cache getCache() {
+			return null;
+		}
+
+		@Nonnull
+		@Override
+		public PurchaseVerifier getPurchaseVerifier() {
+			return null;
+		}
+
+		@Nullable
+		@Override
+		public Inventory getFallbackInventory(@Nonnull Checkout checkout, @Nonnull Executor onLoadExecutor) {
+			return null;
+		}
+
+		@Override
+		public boolean isAutoConnect() {
+			return false;
+		}
+	});
+
+
+	private HashMap<String, String> leaderboardsMap;
 	{
 		leaderboardsMap = new HashMap<>();
 		leaderboardsMap.put("handball", "CgkIq5XDzvcOEAIQDg");
@@ -52,6 +99,9 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
 		gameHelper.enableDebugLog(false);
 
+		checkout = Checkout.forActivity(this, billing);
+
+
 		GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
 			@Override
 			public void onSignInFailed() {
@@ -79,8 +129,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
 	@Override
 	protected void onStop() {
-		super.onStop();
 		gameHelper.onStop();
+		super.onStop();
 	}
 
 	@Override
@@ -187,5 +237,32 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		sendIntent.setType("image/*");
 		sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		startActivity(Intent.createChooser(sendIntent, "Share images..."));
+	}
+
+	@Override
+	public void purchase(Amount amount)
+	{
+		checkout.start();
+
+		Inventory inventory = checkout.makeInventory();
+		inventory.load(Inventory.Request.create()
+				.loadAllPurchases()
+				.loadSkus(ProductTypes.IN_APP, "sku_01"), new Inventory.Callback() {
+			@Override
+			public void onLoaded(@Nonnull Inventory.Products products) {
+				checkout.whenReady(new Checkout.EmptyListener() {
+					@Override
+					public void onReady(BillingRequests requests) {
+						requests.purchase(ProductTypes.IN_APP, "sku_01", null, checkout.getPurchaseFlow());
+					}
+				});
+			}
+		});
+
+	}
+
+	@Override
+	public boolean hasPurchased() {
+		return false;
 	}
 }
