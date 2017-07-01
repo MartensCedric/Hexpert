@@ -42,6 +42,7 @@ import com.cedricmartens.hexpert.map.Objective;
 import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.social.Achievement;
+import com.cedricmartens.hexpert.social.Purchasing;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.Dependency;
 import com.cedricmartens.hexpert.tile.Rules;
@@ -88,10 +89,9 @@ public class PlayScreen extends PlayStage
 
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
-
         this.hexpert = hexpert;
-        this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
 
+        this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
         this.mapName = mapName;
         this.map = map;
         mapResult = result;

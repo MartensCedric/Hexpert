@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.config.HexpertConfig;
 import com.cedricmartens.hexpert.screens.LevelSelectScreen;
 import com.cedricmartens.hexpert.social.PlayServices;
+import com.cedricmartens.hexpert.social.Purchasing;
 import com.cedricmartens.hexpert.social.Sharing;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.TileType;
@@ -66,15 +67,17 @@ public class Hexpert extends Game {
 	public I18NBundle i18NBundle;
 	public PlayServices playServices;
 	public Sharing sharing;
+	public Purchasing purchasing;
 	public HexpertConfig config;
 	public float masterVolume = 1;
 	public HashMap<Integer, String> levelIndex;
 	private BitmapFont font;
 	private Skin skin;
 
-	public Hexpert(PlayServices playServices, Sharing sharing) {
+	public Hexpert(PlayServices playServices, Sharing sharing, Purchasing purchasing) {
 		this.playServices = playServices;
 		this.sharing = sharing;
+		this.purchasing = purchasing;
 	}
 
 	@Override

@@ -19,7 +19,6 @@ public class Rules
         if (data.getBuildingType() == BuildingType.NONE)
             return Dependency.DEPENDENT;
 
-
         Dependency defaultDep = Dependency.INDEPENDENT;
         int[] neighborStats = getNeighborStats(data);
         for (int i = 1; i < BuildingType.values().length; i++) {

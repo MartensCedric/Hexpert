@@ -3,6 +3,7 @@ package com.cedricmartens.hexpert;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -31,40 +32,6 @@ import javax.annotation.Nullable;
 public class AndroidLauncher extends AndroidApplication implements PlayServices, Sharing, Purchasing {
 
 	private GameHelper gameHelper;
-	private ActivityCheckout checkout;
-
-	private Billing billing = new Billing(this, new Billing.Configuration(){
-
-		@Nonnull
-		@Override
-		public String getPublicKey() {
-			return null;
-		}
-
-		@Nullable
-		@Override
-		public Cache getCache() {
-			return null;
-		}
-
-		@Nonnull
-		@Override
-		public PurchaseVerifier getPurchaseVerifier() {
-			return null;
-		}
-
-		@Nullable
-		@Override
-		public Inventory getFallbackInventory(@Nonnull Checkout checkout, @Nonnull Executor onLoadExecutor) {
-			return null;
-		}
-
-		@Override
-		public boolean isAutoConnect() {
-			return false;
-		}
-	});
-
 
 	private HashMap<String, String> leaderboardsMap;
 	{
@@ -96,11 +63,9 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+
 		gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
 		gameHelper.enableDebugLog(false);
-
-		checkout = Checkout.forActivity(this, billing);
-
 
 		GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
 			@Override
@@ -117,7 +82,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		gameHelper.setup(gameHelperListener);
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Hexpert(this, this), config);
+		initialize(new Hexpert(this, this, this), config);
 	}
 
 
@@ -242,18 +207,89 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 	@Override
 	public void purchase(Amount amount)
 	{
+		String desiredItem = "";
+		switch (amount)
+		{
+			case ZERO:
+				return;
+			case ONE:
+				desiredItem = "pwyw_one";
+				break;
+			case TWO:
+				desiredItem = "pwyw_two";
+				break;
+			case THREE:
+				desiredItem = "pwyw_three";
+				break;
+			case FOUR:
+				desiredItem = "pwyw_four";
+				break;
+			case FIVE:
+				desiredItem = "pwyw_five";
+				break;
+			case SIX:
+				desiredItem = "pwyw_six";
+				break;
+			case SEVEN:
+				desiredItem = "pwyw_seven";
+				break;
+			case EIGHT:
+				desiredItem = "pwyw_eight";
+				break;
+			case NINE:
+				desiredItem = "pwyw_nine";
+				break;
+			case TEN:
+				desiredItem = "pwyw_ten";
+				break;
+		}
+
+		Billing billing = new Billing(this, new Billing.Configuration(){
+
+			@Nonnull
+			@Override
+			public String getPublicKey() {
+				return "";
+			}
+
+			@Nullable
+			@Override
+			public Cache getCache() {
+				return null;
+			}
+
+			@Nonnull
+			@Override
+			public PurchaseVerifier getPurchaseVerifier() {
+				return null;
+			}
+
+			@Nullable
+			@Override
+			public Inventory getFallbackInventory(@Nonnull Checkout checkout, @Nonnull Executor onLoadExecutor) {
+				return null;
+			}
+
+			@Override
+			public boolean isAutoConnect() {
+				return false;
+			}
+		});
+
+		final ActivityCheckout checkout = Checkout.forActivity(this, billing);
 		checkout.start();
 
 		Inventory inventory = checkout.makeInventory();
+		final String finalDesiredItem = desiredItem;
 		inventory.load(Inventory.Request.create()
 				.loadAllPurchases()
-				.loadSkus(ProductTypes.IN_APP, "sku_01"), new Inventory.Callback() {
+				.loadSkus(ProductTypes.IN_APP, desiredItem), new Inventory.Callback() {
 			@Override
 			public void onLoaded(@Nonnull Inventory.Products products) {
 				checkout.whenReady(new Checkout.EmptyListener() {
 					@Override
 					public void onReady(BillingRequests requests) {
-						requests.purchase(ProductTypes.IN_APP, "sku_01", null, checkout.getPurchaseFlow());
+						requests.purchase(ProductTypes.IN_APP, finalDesiredItem, null, checkout.getPurchaseFlow());
 					}
 				});
 			}
