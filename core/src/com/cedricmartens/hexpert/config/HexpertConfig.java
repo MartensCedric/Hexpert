@@ -9,11 +9,13 @@ public class HexpertConfig
     private boolean buildHelp;
     private boolean keepSelection;
     private boolean showRequirements;
+    private boolean hasMetPurchaseScreen;
     private float volume;
 
     public HexpertConfig()
     {
         buildHelp = true;
+        hasMetPurchaseScreen = false;
         keepSelection = false;
         showRequirements = true;
         volume = 1;
@@ -49,5 +51,13 @@ public class HexpertConfig
 
     public void setVolume(float volume) {
         this.volume = volume;
+    }
+
+    public boolean isHasMetPurchaseScreen() {
+        return hasMetPurchaseScreen;
+    }
+
+    public void setHasMetPurchaseScreen(boolean hasMetPurchaseScreen) {
+        this.hasMetPurchaseScreen = hasMetPurchaseScreen;
     }
 }

@@ -28,6 +28,7 @@ import com.cedricmartens.hexmap.map.HexMap;
 import com.cedricmartens.hexmap.map.freeshape.HexFreeShapeBuilder;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.LockedDialog;
+import com.cedricmartens.hexpert.event.PurchaseDialog;
 import com.cedricmartens.hexpert.gestures.LevelSelectGesture;
 import com.cedricmartens.hexpert.map.Map;
 import com.cedricmartens.hexpert.map.MapLoadException;
@@ -661,6 +662,12 @@ public class LevelSelectScreen extends StageScreen
                     (currentWorld - 1) * getLevelsToDisplay() + 1);
             updateLevelSelectGrid();
             hexpert.sounds.get("select").play(hexpert.masterVolume);
+
+            if(currentWorld == 3 && !hexpert.config.isHasMetPurchaseScreen())
+            {
+                new PurchaseDialog(hexpert, hexpert.getSkin()).show(getStage());
+            }
+
         }else{
             new LockedDialog(goalCompleteCount, lockedThereshold[currentWorld],
                     hexpert, hexpert.getSkin()).show(getStage());

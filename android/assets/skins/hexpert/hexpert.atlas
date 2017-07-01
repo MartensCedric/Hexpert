@@ -58,7 +58,7 @@ filter: Linear,Linear
 repeat: none
 darkness
   rotate: false
-  xy: 81, 72
+  xy: 515, 606
   size: 32, 32
   split: 12, 12, 12, 12
   pad: 7, 7, 7, 7
@@ -67,15 +67,31 @@ darkness
   index: -1
 knob
   rotate: false
-  xy: 515, 552
+  xy: 1, 1
   size: 8, 32
   split: 3, 3, 3, 3
   orig: 8, 32
   offset: 0, 0
   index: -1
+knob-opaque
+  rotate: false
+  xy: 35, 35
+  size: 8, 32
+  split: 3, 3, 3, 3
+  orig: 8, 32
+  offset: 0, 0
+  index: -1
+slider
+  rotate: false
+  xy: 515, 640
+  size: 78, 12
+  split: 4, 4, 4, 4
+  orig: 78, 12
+  offset: 0, 0
+  index: -1
 ui9patch
   rotate: false
-  xy: 515, 586
+  xy: 1, 35
   size: 32, 32
   split: 12, 12, 12, 12
   pad: 7, 7, 7, 7
@@ -84,7 +100,7 @@ ui9patch
   index: -1
 ui9patch_dwn
   rotate: false
-  xy: 1, 1
+  xy: 81, 106
   size: 32, 32
   split: 12, 12, 12, 12
   pad: 7, 7, 7, 7
@@ -93,14 +109,14 @@ ui9patch_dwn
   index: -1
 vcr702
   rotate: false
-  xy: 1, 106
+  xy: 1, 140
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 window
   rotate: false
-  xy: 1, 35
+  xy: 1, 69
   size: 78, 69
   split: 4, 4, 34, 3
   pad: 3, 4, 35, 4

@@ -233,6 +233,32 @@ atlasData: {
 			tintName: null
 			name: darkness
 		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/slider.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: slider
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/knob-opaque.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: knob-opaque
+		}
 	]
 }
 jsonData: {
@@ -1279,7 +1305,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: false
-						value: null
+						value: slider
 					}
 					disabledBackground: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -1293,7 +1319,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: knob
 						optional: true
-						value: null
+						value: knob-opaque
 					}
 					disabledKnob: {
 						class: com.ray3k.skincomposer.data.StyleProperty

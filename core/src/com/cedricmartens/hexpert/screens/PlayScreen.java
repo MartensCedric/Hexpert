@@ -92,14 +92,6 @@ public class PlayScreen extends PlayStage
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
         this.hexpert = hexpert;
-
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                hexpert.purchasing.purchase(Purchasing.Amount.FIVE);
-            }
-        });
-
         this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
         this.mapName = mapName;
         this.map = map;
