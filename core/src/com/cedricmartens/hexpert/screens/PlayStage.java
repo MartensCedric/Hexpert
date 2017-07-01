@@ -181,8 +181,8 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.add(btnHelp);
         tableBtn.row();
         lblNextObjective = new Label("", hexpert.getSkin());
-        lblNextObjective.setAlignment(Align.center);
-        tableBtn.add(lblNextObjective).colspan(3).expandX().center();
+        lblNextObjective.setWrap(true);
+        tableBtn.add(lblNextObjective).width(lblNextObjective.getPrefWidth()).left();
 
         tableRequirements = new Table();
         tableRequirements.defaults().height(150).pad(0, 5, 0, 5);

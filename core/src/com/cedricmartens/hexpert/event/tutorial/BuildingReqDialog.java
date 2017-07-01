@@ -33,14 +33,14 @@ public class BuildingReqDialog extends TutorialDialog {
         super(hexpert, skin);
 
         scrollContent.defaults().pad(PADDING);
-
+        int prefWidth = 1200;
         I18NBundle i18n = hexpert.i18NBundle;
 
         Label lblExplaination = new Label(i18n.get("req_diag"), skin);
         lblExplaination.setAlignment(Align.center);
         lblExplaination.setWrap(true);
 
-        scrollContent.add(lblExplaination).width(900);
+        scrollContent.add(lblExplaination).width(1000);
         scrollContent.row();
 
         if(buildingsToShow.contains(BuildingType.FARM)) {
@@ -74,6 +74,9 @@ public class BuildingReqDialog extends TutorialDialog {
             Image imageBuilding = new Image((Texture) hexpert.assetManager.get(SPRITE_FOLDER + buildingName + ".png"));
             table.add(imageBuilding);
             Label lblEq = new Label("=", skin);
+            lblEq.setWrap(true);
+            lblEq.setAlignment(Align.center);
+
             table.add(lblEq).width(lblEq.getPrefWidth());
 
             int[] requirements = buildingType.getRequired();
@@ -107,7 +110,10 @@ public class BuildingReqDialog extends TutorialDialog {
 
             scrollContent.add(table);
             scrollContent.row();
-            scrollContent.add(new Label(i18n.get(buildingName + "_needs"), skin));
+            Label lblNeeds = new Label(i18n.get(buildingName + "_needs"), skin);
+            lblNeeds.setAlignment(Align.center);
+            lblNeeds.setWrap(true);
+            scrollContent.add(lblNeeds).width(prefWidth);
             scrollContent.row();
         }
     }
@@ -127,4 +133,6 @@ public class BuildingReqDialog extends TutorialDialog {
 
         return max;
     }
+
+
 }

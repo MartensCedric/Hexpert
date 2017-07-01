@@ -169,7 +169,6 @@ public class PlayScreen extends PlayStage
                     lockedBuildings.add(data);
                 }
             }
-
         }
 
         BuildingType[] buildingTypes = mapResult.getBuildings();
