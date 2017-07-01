@@ -1,8 +1,10 @@
 package com.cedricmartens.hexpert.event;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
@@ -12,7 +14,7 @@ import com.cedricmartens.hexpert.Hexpert;
  */
 
 public class FreeridingDialog extends StandardDialog {
-    public FreeridingDialog(Hexpert hexpert, Skin skin)
+    public FreeridingDialog(final Hexpert hexpert, Skin skin)
     {
         super(hexpert, skin.get("gold", WindowStyle.class));
 
@@ -31,6 +33,15 @@ public class FreeridingDialog extends StandardDialog {
 
         TextButton textButtonRate = new TextButton(i18N.get("rate"), goldenStyle);
         getButtonTable().add(textButtonRate);
+
+        textButtonRate.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                hexpert.playServices.rateGame();
+                hide();
+            }
+        });
+
         setObject(textButtonRate, null);
     }
 
