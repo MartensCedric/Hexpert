@@ -19,5 +19,5 @@ public class Achievement
     public static final String NOVICE = "CgkIq5XDzvcOEAIQBA";
     public static final String AMATEUR = "CgkIq5XDzvcOEAIQBQ";
     public static final String PROFESSIONAL = "CgkIq5XDzvcOEAIQBg";
-    public static final String HEXPERT = "giCgkIq5XDzvcOEAIQBw";
+    public static final String HEXPERT = "CgkIq5XDzvcOEAIQBw";
 }
