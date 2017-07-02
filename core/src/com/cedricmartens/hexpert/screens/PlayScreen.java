@@ -319,7 +319,7 @@ public class PlayScreen extends PlayStage
 
         }
         else if(hexpert.config.isBuildHelp() && getSelection() != null
-                && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection()))
+                && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection(), lockedBuildings))
         {
             batch.setShader(hintShader);
         }
@@ -456,7 +456,7 @@ public class PlayScreen extends PlayStage
 
     private void updateValidBuildings()
     {
-        validBuildings = Rules.getValidBuildings(grid);
+        validBuildings = Rules.getValidBuildings(grid, lockedBuildings);
     }
 
     public void updateScore()

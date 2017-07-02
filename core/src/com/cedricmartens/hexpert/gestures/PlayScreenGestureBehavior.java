@@ -65,7 +65,7 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
                 && playScreen.canPlaceBuildings())
         {
             if(data.getHexData().getTileType()
-                    != TileType.WATER && Rules.isValidPlacement(data.getHexData(), playScreen.getSelection()))
+                    != TileType.WATER && Rules.isValidPlacement(data.getHexData(), playScreen.getSelection(), playScreen.getLockedBuildings()))
             {
                 data.getHexData().setBuildingType(playScreen.getSelection());
                 data.getHexData().setBuildingTexture(hexpert.getTextureByBuilding(playScreen.getSelection()));
