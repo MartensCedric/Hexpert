@@ -39,6 +39,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 		leaderboardsMap.put("triSoft", "CgkIq5XDzvcOEAIQFw");
 		leaderboardsMap.put("asyHandball", "CgkIq5XDzvcOEAIQGA");
 		leaderboardsMap.put("asyDiag", "CgkIq5XDzvcOEAIQGQ");
+		leaderboardsMap.put("multibomb", "CgkIq5XDzvcOEAIQJw");
+		leaderboardsMap.put("jet", "CgkIq5XDzvcOEAIQJg");
 		leaderboardsMap.put("asyQuadSpike", "CgkIq5XDzvcOEAIQGg");
 		leaderboardsMap.put("asyDiagLos", "CgkIq5XDzvcOEAIQGw");
 		leaderboardsMap.put("vBone", "CgkIq5XDzvcOEAIQHA");
