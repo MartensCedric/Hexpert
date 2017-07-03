@@ -602,12 +602,7 @@ public class PlayScreen extends PlayStage
         }
 
         batch.end();
-        byte[] pixels = ScreenUtils.getFrameBufferPixels(false);
-        Pixmap pixmap = new Pixmap(WIDTH, HEIGHT, Pixmap.Format.RGBA8888);
-        ByteBuffer buffer = pixmap.getPixels();
-        buffer.clear();
-        buffer.put(pixels);
-        buffer.position(0);
+        Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(0, 0, WIDTH, HEIGHT);
         fbo.end();
 
         //fbo.dispose();

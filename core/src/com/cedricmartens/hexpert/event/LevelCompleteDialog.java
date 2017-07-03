@@ -1,5 +1,9 @@
 package com.cedricmartens.hexpert.event;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -81,12 +85,12 @@ public class LevelCompleteDialog extends StandardDialog {
                     break;
                 case 2:
                     //Pixmap pixmap = playScreen.getMapScreenShot();
-                    //FileHandle fileHandle = Gdx.files.local("score.png");
+                    //FileHandle fileHandle = Gdx.files.internal("score.png");
                     //PixmapIO.writePNG(fileHandle, pixmap);
                     if(playScreen.map.scoreIsCalculated())
                     {
                         playScreen.getHexpert().sharing.shareText(
-                                hexpert.i18NBundle.format("share_message_score", score, lvlIndex) + "\n" + store_link );
+                                hexpert.i18NBundle.format("share_message_score", score, lvlIndex) + "\n" + store_link);
                     }else{
                         playScreen.getHexpert().sharing.shareText(
                                 hexpert.i18NBundle.format("share_message", lvlIndex));
