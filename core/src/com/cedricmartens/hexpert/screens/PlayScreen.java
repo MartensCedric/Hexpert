@@ -53,6 +53,7 @@ import java.util.List;
 import flexjson.JSONSerializer;
 
 import static com.cedricmartens.hexpert.misc.Const.HEIGHT;
+import static com.cedricmartens.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.cedricmartens.hexpert.misc.Const.WIDTH;
 import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
@@ -87,7 +88,7 @@ public class PlayScreen extends PlayStage
     public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
         super(hexpert);
         this.hexpert = hexpert;
-        this.windAnimator = new BuildingAnimator(0.5f, 4, SPRITE_FOLDER + "wind.png", hexpert);
+        this.windAnimator = new BuildingAnimator(0.5f, 1, SPRITE_FOLDER + "wind.png", hexpert);
         this.mapName = mapName;
         this.map = map;
         mapResult = result;
@@ -364,23 +365,22 @@ public class PlayScreen extends PlayStage
                 buildingTexture = hex.getHexData().getBuildingTexture();
             }
 
+            float dimensions = (float) (grid.getStyle().getSize() / (HEX_HEIGHT_RATIO * HEX_HEIGHT_RATIO));
             if(gridEffect.getActiveTiles().contains(hex))
             {
                 Point middlePoint = hex.getHexGeometry().getMiddlePoint();
                 batch.draw(buildingTexture,
-                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
-                        (float)(gridEffect.getNewCoords().get(hex) - grid.getStyle().getSize()/2),
-                        (float)grid.getStyle().getSize(),
-                        (float)grid.getStyle().getSize());
+                        (float)(middlePoint.x - dimensions/2),
+                        (float)(gridEffect.getNewCoords().get(hex) - dimensions/2),
+                        dimensions, dimensions);
 
             }else if(gridEffect.hasFallen(hex))
             {
                 Point middlePoint = hex.getHexGeometry().getMiddlePoint();
                 batch.draw(buildingTexture,
-                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
-                        (float)(middlePoint.y - grid.getStyle().getSize()/2),
-                        (float)grid.getStyle().getSize(),
-                        (float)grid.getStyle().getSize());
+                        (float)(middlePoint.x - dimensions/2),
+                        (float)(middlePoint.y - dimensions/2),
+                        dimensions, dimensions);
             }
             batch.setShader(null);
         }

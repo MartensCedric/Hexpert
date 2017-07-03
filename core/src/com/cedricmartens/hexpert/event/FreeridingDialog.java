@@ -27,12 +27,14 @@ public class FreeridingDialog extends StandardDialog {
 
         TextButton.TextButtonStyle goldenStyle = skin.get("gold", TextButton.TextButtonStyle.class);
 
-        TextButton textButtonNo = new TextButton(i18N.get("no"), goldenStyle);
-        getButtonTable().add(textButtonNo);
-        setObject(textButtonNo, null);
 
         TextButton textButtonRate = new TextButton(i18N.get("rate"), goldenStyle);
         getButtonTable().add(textButtonRate);
+
+
+        TextButton textButtonNo = new TextButton(i18N.get("no"), goldenStyle);
+        getButtonTable().add(textButtonNo);
+        setObject(textButtonNo, null);
 
         textButtonRate.addListener(new ClickListener(){
             @Override

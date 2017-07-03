@@ -47,6 +47,7 @@ import java.util.List;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
+import static com.cedricmartens.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST_CUT;
 
@@ -226,6 +227,7 @@ public class LevelSelectScreen extends StageScreen
                     (float) ((float)grid.getStyle().getSize()*2 * Const.HEX_HEIGHT_RATIO) + hexConst );
 
         }
+        float dimensions = (float) (grid.getStyle().getSize() / (HEX_HEIGHT_RATIO * HEX_HEIGHT_RATIO));
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
@@ -237,10 +239,9 @@ public class LevelSelectScreen extends StageScreen
             {
                 Point middlePoint = hex.getHexGeometry().getMiddlePoint();
                 displayBatch.draw(hex.getHexData().getBuildingTexture(),
-                        (float)(middlePoint.x - grid.getStyle().getSize()/2),
-                        (float)(middlePoint.y - grid.getStyle().getSize()/2),
-                        (float)grid.getStyle().getSize(),
-                        (float)grid.getStyle().getSize());
+                        (float)(middlePoint.x - dimensions/2),
+                        (float)(middlePoint.y - dimensions/2),
+                        dimensions, dimensions);
             }
             displayBatch.setShader(null);
         }
