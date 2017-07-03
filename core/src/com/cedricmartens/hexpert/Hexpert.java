@@ -28,10 +28,13 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ACHIEVEMENTS;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BACK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BAD;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_CLOUD;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_CORRECT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FOREST_CUT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_GRASS;
@@ -40,11 +43,14 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HEXBRONZE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HEXGOLD;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HEXSILVER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HOUSE;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HOUSE_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_LEADERBOARD;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_LEFT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_LOCKED;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MARKET;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MARKET_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MINE;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MINE_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MORE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_OPTIONS;
@@ -52,12 +58,14 @@ import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_REMOVE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_RESET;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_RIGHT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ROCKET;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ROCKET_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_SAND;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WATER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND2;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND3;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND4;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND_MIN;
 
 public class Hexpert extends Game {
 
@@ -131,6 +139,15 @@ public class Hexpert extends Game {
 		assetManager.load(TEXTURE_MARKET, Texture.class);
 		assetManager.load(TEXTURE_BANK, Texture.class);
 		assetManager.load(TEXTURE_ROCKET, Texture.class);
+
+		assetManager.load(TEXTURE_FARM_MIN, Texture.class);
+		assetManager.load(TEXTURE_HOUSE_MIN, Texture.class);
+		assetManager.load(TEXTURE_MINE_MIN, Texture.class);
+		assetManager.load(TEXTURE_WIND_MIN, Texture.class);
+		assetManager.load(TEXTURE_FACTORY_MIN, Texture.class);
+		assetManager.load(TEXTURE_MARKET_MIN, Texture.class);
+		assetManager.load(TEXTURE_BANK_MIN, Texture.class);
+		assetManager.load(TEXTURE_ROCKET_MIN, Texture.class);
 
 		assetManager.load(TEXTURE_NOT_FARM, Texture.class);
 

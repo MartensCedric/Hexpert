@@ -16,6 +16,7 @@ import java.util.List;
 
 import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 
 /**
@@ -45,7 +46,7 @@ public class BuildingReqDialog extends TutorialDialog {
 
         if(buildingsToShow.contains(BuildingType.FARM)) {
 
-            Image imgFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
+            Image imgFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM_MIN)));
             Image imgNotFarm = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
 
             Table tableFarm = new Table();
@@ -71,7 +72,7 @@ public class BuildingReqDialog extends TutorialDialog {
             table.defaults().width(CELL_W).height(CELL_H).pad(PADDING);
 
             String buildingName = buildingType.name().toLowerCase();
-            Image imageBuilding = new Image((Texture) hexpert.assetManager.get(SPRITE_FOLDER + buildingName + ".png"));
+            Image imageBuilding = new Image((Texture) hexpert.assetManager.get(SPRITE_FOLDER + buildingName + "_min.png"));
             table.add(imageBuilding);
             Label lblEq = new Label("=", skin);
             lblEq.setWrap(true);
@@ -96,7 +97,7 @@ public class BuildingReqDialog extends TutorialDialog {
                 {
                     BuildingType typeReq = BuildingType.values()[j + 1];
 
-                    Image imageReq = new Image((Texture)hexpert.assetManager.get(SPRITE_FOLDER + typeReq.name().toLowerCase() + ".png"));
+                    Image imageReq = new Image((Texture)hexpert.assetManager.get(SPRITE_FOLDER + typeReq.name().toLowerCase() + "_min.png"));
 
                     table.add(imageReq);
                     if(numDone + 1 < numReq)

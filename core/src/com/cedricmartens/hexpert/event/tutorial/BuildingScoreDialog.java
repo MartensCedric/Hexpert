@@ -31,7 +31,7 @@ public class BuildingScoreDialog extends TutorialDialog {
         for (int i = 1; i < BuildingType.values().length; i++) {
             BuildingType buildingType = BuildingType.values()[i];
             Image image = new Image(new TextureRegion((Texture)
-                    hexpert.assetManager.get(SPRITE_FOLDER + buildingType.name().toLowerCase() + ".png")));
+                    hexpert.assetManager.get(SPRITE_FOLDER + buildingType.name().toLowerCase() + "_min.png")));
 
             getContentTable().add(image).width(160).height(160);
             Label lblScore = new Label(Integer.toString(buildingType.getScore()), lblStyle);

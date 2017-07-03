@@ -26,17 +26,25 @@ import java.util.HashMap;
 
 import static com.cedricmartens.hexpert.misc.Const.HEIGHT;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HELP;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HOUSE;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HOUSE_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MARKET;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MARKET_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MINE;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MINE_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MORE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_REMOVE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ROCKET;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ROCKET_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND;
+import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND_MIN;
 
 /**
  * Created by martens on 5/28/17.
@@ -115,14 +123,14 @@ public abstract class PlayStage extends StageScreen {
             }
         });
 
-        TextureRegionDrawable drawableFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM)));
-        TextureRegionDrawable drawableHouse = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HOUSE)));
-        TextureRegionDrawable drawableMine = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MINE)));
-        TextureRegionDrawable drawableWind = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_WIND)));
-        TextureRegionDrawable drawableFactory = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FACTORY)));
-        TextureRegionDrawable drawableMarket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MARKET)));
-        TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK)));
-        TextureRegionDrawable drawableRocket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET)));
+        TextureRegionDrawable drawableFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FARM_MIN)));
+        TextureRegionDrawable drawableHouse = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HOUSE_MIN)));
+        TextureRegionDrawable drawableMine = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MINE_MIN)));
+        TextureRegionDrawable drawableWind = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_WIND_MIN)));
+        TextureRegionDrawable drawableFactory = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_FACTORY_MIN)));
+        TextureRegionDrawable drawableMarket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_MARKET_MIN)));
+        TextureRegionDrawable drawableBank = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_BANK_MIN)));
+        TextureRegionDrawable drawableRocket = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ROCKET_MIN)));
 
         TextureRegionDrawable drawableNotFarm = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_NOT_FARM)));
         imgFarm = new Image(drawableFarm);

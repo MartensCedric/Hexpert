@@ -108,7 +108,7 @@ public class PlayScreen extends PlayStage
             if(numberOfBuilding >= i)
             {
                 final BuildingType buildingType = BuildingType.values()[i];
-                String path = SPRITE_FOLDER + buildingType.name().toLowerCase() + ".png";
+                String path = SPRITE_FOLDER + buildingType.name().toLowerCase() + "_min.png";
                 TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(path)));
                 imgBuilding = new ImageButton(drawable);
                 ImageButton imgButton = (ImageButton) imgBuilding;

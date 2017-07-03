@@ -1,5 +1,11 @@
 package com.cedricmartens.hexpert.misc;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
 /**
  * Created by 1544256 on 2017-04-26.
  */
@@ -21,6 +27,16 @@ public class TextureData {
     public static final String TEXTURE_MARKET = SPRITE_FOLDER + "market.png";
     public static final String TEXTURE_BANK = SPRITE_FOLDER + "bank.png";
     public static final String TEXTURE_ROCKET = SPRITE_FOLDER + "rocket.png";
+
+
+    public static final String TEXTURE_FARM_MIN = SPRITE_FOLDER + "farm_min.png";
+    public static final String TEXTURE_HOUSE_MIN = SPRITE_FOLDER + "house_min.png";
+    public static final String TEXTURE_MINE_MIN = SPRITE_FOLDER + "mine_min.png";
+    public static final String TEXTURE_WIND_MIN = SPRITE_FOLDER + "wind_min.png";
+    public static final String TEXTURE_FACTORY_MIN = SPRITE_FOLDER + "factory_min.png";
+    public static final String TEXTURE_MARKET_MIN = SPRITE_FOLDER + "market_min.png";
+    public static final String TEXTURE_BANK_MIN = SPRITE_FOLDER + "bank_min.png";
+    public static final String TEXTURE_ROCKET_MIN = SPRITE_FOLDER + "rocket_min.png";
 
     public static final String TEXTURE_RESET = SPRITE_FOLDER + "reset.png";
     public static final String TEXTURE_BACK = SPRITE_FOLDER + "back.png";
