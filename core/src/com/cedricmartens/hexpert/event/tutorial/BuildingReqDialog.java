@@ -57,7 +57,10 @@ public class BuildingReqDialog extends TutorialDialog {
             tableFarm.add(imgNotFarm);
             scrollContent.add(tableFarm);
             scrollContent.row();
-            scrollContent.add(new Label(i18n.get("farm_needs"), skin));
+            Label lblFarmNeeds = new Label(i18n.get("farm_needs"), skin);
+            lblFarmNeeds.setWrap(true);
+            lblFarmNeeds.setAlignment(Align.center);
+            scrollContent.add(lblFarmNeeds).width(prefWidth);
             scrollContent.row();
 
         }

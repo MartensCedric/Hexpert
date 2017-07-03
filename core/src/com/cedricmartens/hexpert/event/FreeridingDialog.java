@@ -29,7 +29,7 @@ public class FreeridingDialog extends StandardDialog {
 
 
         TextButton textButtonRate = new TextButton(i18N.get("rate"), goldenStyle);
-        getButtonTable().add(textButtonRate);
+        getButtonTable().add(textButtonRate).width(textButtonRate.getLabel().getPrefWidth() + 20);
 
 
         TextButton textButtonNo = new TextButton(i18N.get("no"), goldenStyle);
