@@ -259,6 +259,32 @@ atlasData: {
 			tintName: null
 			name: uipatchgray
 		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/knob-gold.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: knob-gold
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/slider_black.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: slider_black
+		}
 	]
 }
 jsonData: {
@@ -1305,7 +1331,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: false
-						value: slider
+						value: slider_black
 					}
 					disabledBackground: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -1319,7 +1345,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: knob
 						optional: true
-						value: knob-opaque
+						value: knob-gold
 					}
 					disabledKnob: {
 						class: com.ray3k.skincomposer.data.StyleProperty

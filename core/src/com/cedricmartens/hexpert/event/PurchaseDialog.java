@@ -44,6 +44,7 @@ public class PurchaseDialog extends StandardDialog {
         getContentTable().row();
         final Slider slider = new Slider(0, 10, 1, false, skin);
         slider.setValue(defaultPrice);
+
         slider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
