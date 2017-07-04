@@ -27,7 +27,7 @@ public class PurchaseDialog extends StandardDialog {
     public PurchaseDialog(final Hexpert hexpert, final Skin skin) {
         super(hexpert, skin.get("gold", WindowStyle.class));
 
-        getBackground().setMinWidth(1600);
+        getBackground().setMinWidth(1700);
 
         I18NBundle i18N = hexpert.i18NBundle;
         Label.LabelStyle lblStyleBigger = skin.get("bigger", Label.LabelStyle.class);
@@ -35,12 +35,12 @@ public class PurchaseDialog extends StandardDialog {
         Label lblExplaination = new Label(i18N.get("pwyw"), lblStyleBigger);
         lblExplaination.setWrap(true);
         lblExplaination.setAlignment(Align.center);
-        getContentTable().add(lblExplaination).width(1400);
+        getContentTable().add(lblExplaination).width(1500).pad(50);
         getContentTable().row();
         int defaultPrice = 2;
         lblPrice = new Label(String.format("$%d", defaultPrice), lblStyleBigger);
 
-        getContentTable().add(lblPrice).padTop(150);
+        getContentTable().add(lblPrice);
         getContentTable().row();
         final Slider slider = new Slider(0, 10, 1, false, skin);
         slider.setValue(defaultPrice);
@@ -93,8 +93,14 @@ public class PurchaseDialog extends StandardDialog {
         super.result(object);
     }
 
+
     @Override
     public float getPrefHeight() {
-        return 900;
+
+        int max = 1000;
+        if(super.getPrefHeight() < max)
+            return super.getPrefHeight();
+
+        return max;
     }
 }
