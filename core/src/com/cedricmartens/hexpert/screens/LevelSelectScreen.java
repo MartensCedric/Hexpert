@@ -79,7 +79,7 @@ public class LevelSelectScreen extends StageScreen
     private Label lblHexCount,lblHighScore;
     private int[] lockedThereshold = new int[]{0, 4, 11, 20, 30, 41, 53, 66};
     private List<TileData> validBuildings;
-    private boolean allUnlocked = true;
+    private boolean allUnlocked = false;
 
     public LevelSelectScreen(final Hexpert hexpert)
     {
