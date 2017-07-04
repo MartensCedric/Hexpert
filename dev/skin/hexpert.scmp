@@ -3,32 +3,6 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: null
-			name: ui9patch
-		}
-		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch_dwn.9.png"
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: null
-			name: ui9patch_dwn
-		}
-		{
 			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/vcr24.png"
 			bgColor: {
 				r: 0
@@ -169,58 +143,6 @@ atlasData: {
 			name: window-gold
 		}
 		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: light_green
-			name: ui9patch-green
-		}
-		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch_dwn.9.png"
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: light_green
-			name: ui9patch_dwn-green
-		}
-		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch.9.png"
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: gold
-			name: ui9patch-gold
-		}
-		{
-			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patch_dwn.9.png"
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			visible: true
-			tint: null
-			tintName: gold
-			name: ui9patch_dwn-gold
-		}
-		{
 			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/darkness.9.png"
 			bgColor: {
 				r: 1
@@ -258,6 +180,84 @@ atlasData: {
 			tint: null
 			tintName: null
 			name: knob-opaque
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patchgreen_dwn.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: ui9patchgreen_dwn
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patchgreen.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: ui9patchgreen
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patchgold_dwn.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: ui9patchgold_dwn
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/ui9patchgold.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: ui9patchgold
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/uipatchgray_dwn.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: uipatchgray_dwn
+		}
+		{
+			file: "/home/martens/Documents/Projects/Hexpert/dev/skin/hexpert_data/uipatchgray.9.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			visible: true
+			tint: null
+			tintName: null
+			name: uipatchgray
 		}
 	]
 }
@@ -1530,14 +1530,14 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: up
 						optional: true
-						value: ui9patch-green
+						value: ui9patchgreen
 					}
 					down: {
 						class: com.ray3k.skincomposer.data.StyleProperty
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: down
 						optional: true
-						value: ui9patch_dwn-green
+						value: ui9patchgreen_dwn
 					}
 					over: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -1671,14 +1671,14 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: up
 						optional: true
-						value: ui9patch
+						value: uipatchgray
 					}
 					down: {
 						class: com.ray3k.skincomposer.data.StyleProperty
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: down
 						optional: true
-						value: ui9patch_dwn
+						value: uipatchgray_dwn
 					}
 					over: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -1812,14 +1812,14 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: up
 						optional: true
-						value: ui9patch-gold
+						value: ui9patchgold
 					}
 					down: {
 						class: com.ray3k.skincomposer.data.StyleProperty
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: down
 						optional: true
-						value: ui9patch_dwn-gold
+						value: ui9patchgold_dwn
 					}
 					over: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -2093,7 +2093,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: true
-						value: window-green
+						value: ui9patchgreen
 					}
 					titleFont: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -2129,7 +2129,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: true
-						value: window-gray
+						value: uipatchgray
 					}
 					titleFont: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -2165,7 +2165,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: true
-						value: window-gold
+						value: ui9patchgold
 					}
 					titleFont: {
 						class: com.ray3k.skincomposer.data.StyleProperty

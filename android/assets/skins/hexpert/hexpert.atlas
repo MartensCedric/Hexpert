@@ -58,7 +58,7 @@ filter: Linear,Linear
 repeat: none
 darkness
   rotate: false
-  xy: 515, 606
+  xy: 1, 35
   size: 32, 32
   split: 12, 12, 12, 12
   pad: 7, 7, 7, 7
@@ -67,7 +67,7 @@ darkness
   index: -1
 knob
   rotate: false
-  xy: 1, 1
+  xy: 515, 572
   size: 8, 32
   split: 3, 3, 3, 3
   orig: 8, 32
@@ -75,7 +75,7 @@ knob
   index: -1
 knob-opaque
   rotate: false
-  xy: 35, 35
+  xy: 549, 606
   size: 8, 32
   split: 3, 3, 3, 3
   orig: 8, 32
@@ -89,21 +89,57 @@ slider
   orig: 78, 12
   offset: 0, 0
   index: -1
-ui9patch
+ui9patchgold
   rotate: false
-  xy: 1, 35
+  xy: 35, 35
   size: 32, 32
-  split: 12, 12, 12, 12
-  pad: 7, 7, 7, 7
+  split: 11, 11, 11, 11
+  pad: 14, 14, 14, 14
   orig: 32, 32
   offset: 0, 0
   index: -1
-ui9patch_dwn
+ui9patchgold_dwn
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  split: 11, 11, 11, 11
+  pad: 14, 14, 14, 14
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ui9patchgreen
+  rotate: false
+  xy: 515, 606
+  size: 32, 32
+  split: 11, 11, 11, 11
+  pad: 14, 14, 14, 14
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ui9patchgreen_dwn
   rotate: false
   xy: 81, 106
   size: 32, 32
-  split: 12, 12, 12, 12
-  pad: 7, 7, 7, 7
+  split: 11, 11, 11, 11
+  pad: 14, 14, 14, 14
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+uipatchgray
+  rotate: false
+  xy: 115, 106
+  size: 32, 32
+  split: 11, 11, 11, 11
+  pad: 14, 14, 14, 14
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+uipatchgray_dwn
+  rotate: false
+  xy: 81, 72
+  size: 32, 32
+  split: 11, 11, 11, 11
+  pad: 14, 14, 14, 14
   orig: 32, 32
   offset: 0, 0
   index: -1

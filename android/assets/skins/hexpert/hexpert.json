@@ -62,22 +62,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: window
 		color: gold
 	}
-	ui9patch-green: {
-		name: ui9patch
-		color: light_green
-	}
-	ui9patch_dwn-green: {
-		name: ui9patch_dwn
-		color: light_green
-	}
-	ui9patch-gold: {
-		name: ui9patch
-		color: gold
-	}
-	ui9patch_dwn-gold: {
-		name: ui9patch_dwn
-		color: gold
-	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
@@ -105,20 +89,20 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: vcr70
 		fontColor: black
-		up: ui9patch-green
-		down: ui9patch_dwn-green
+		up: ui9patchgreen
+		down: ui9patchgreen_dwn
 	}
 	gray: {
 		font: vcr70
 		fontColor: black
-		up: ui9patch
-		down: ui9patch_dwn
+		up: uipatchgray
+		down: uipatchgray_dwn
 	}
 	gold: {
 		font: vcr70
 		fontColor: black
-		up: ui9patch-gold
-		down: ui9patch_dwn-gold
+		up: ui9patchgold
+		down: ui9patchgold_dwn
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
@@ -128,15 +112,15 @@ com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
-		background: window-green
+		background: ui9patchgreen
 		titleFont: vcr24
 	}
 	gray: {
-		background: window-gray
+		background: uipatchgray
 		titleFont: vcr24
 	}
 	gold: {
-		background: window-gold
+		background: ui9patchgold
 		titleFont: vcr24
 	}
 }
