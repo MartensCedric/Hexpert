@@ -137,24 +137,25 @@ public class MoreDialog extends StandardDialog {
             }
         });
 
-        getContentTable().add(btnBack);
-        getContentTable().add(lblBack).width(lblBack.getPrefWidth());
+        float extraPadding  = 50;
+        getContentTable().add(btnBack).padTop(extraPadding);
+        getContentTable().add(lblBack).width(lblBack.getPrefWidth()).padRight(extraPadding);
         getContentTable().row();
         getContentTable().add(btnGoals);
-        getContentTable().add(lblGoals).width(lblGoals.getPrefWidth());
+        getContentTable().add(lblGoals).width(lblGoals.getPrefWidth()).padRight(extraPadding);
         getContentTable().row();
         getContentTable().add(btnReset);
-        getContentTable().add(lblReset).width(lblReset.getPrefWidth());
+        getContentTable().add(lblReset).width(lblReset.getPrefWidth()).padRight(extraPadding);
         getContentTable().row();
         getContentTable().add(btnOptions);
-        getContentTable().add(lblOptions).width(lblOptions.getPrefWidth());
+        getContentTable().add(lblOptions).width(lblOptions.getPrefWidth()).padRight(extraPadding);
         getContentTable().row();
         PlayScreen playScreen = (PlayScreen)playStage;
 
         if(playScreen.map.scoreIsCalculated())
         {
             getContentTable().add(btnLeaderboard);
-            getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth());
+            getContentTable().add(lblLeaderboard).width(lblLeaderboard.getPrefWidth()).padRight(extraPadding);
         }
 
         TextButton textButtonClose = new TextButton(i18N.get("close"), hexpert.getSkin());
