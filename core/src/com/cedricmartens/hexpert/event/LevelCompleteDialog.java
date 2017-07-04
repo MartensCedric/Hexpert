@@ -64,10 +64,10 @@ public class LevelCompleteDialog extends StandardDialog {
         setObject(textButtonNo, null);
         getButtonTable().add(textButtonNo);
 
-        if(lvlIndex > 3) {
+        if(lvlIndex > 4) {
             TextButton textButtonShare = new TextButton(bundle.get("share"), txtButtonStyle);
             setObject(textButtonShare, 2);
-            getButtonTable().add(textButtonShare).width(textButtonShare.getPrefWidth() + 30);
+            getButtonTable().add(textButtonShare).width(textButtonShare.getLabelCell().getPrefWidth() + 30);
         }
     }
 
