@@ -49,7 +49,9 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
 
         Hexagon<TileData> data = grid.getAt(new Point(pos.x, pos.y));
 
-        if(data != null && playStage.removeMode && playScreen.isRemovable(data.getHexData()))
+        if(data != null && playStage.removeMode
+                && data.getHexData().getBuildingType() != BuildingType.NONE
+                && playScreen.isRemovable(data.getHexData()))
         {
             data.getHexData().setBuildingTexture(null);
             data.getHexData().setBuildingType(BuildingType.NONE);
@@ -61,11 +63,10 @@ public class PlayScreenGestureBehavior extends StandardGestureBehavior {
             }
         }
         else if(data != null && playScreen.getSelection() != null
-                && data.getHexData().getBuildingType() == BuildingType.NONE
                 && playScreen.canPlaceBuildings())
         {
             if(data.getHexData().getTileType()
-                    != TileType.WATER && Rules.isValidPlacement(data.getHexData(), playScreen.getSelection(), playScreen.getLockedBuildings()))
+                    != TileType.WATER && Rules.isValidPlacement(data.getHexData(), playScreen.getSelection()))
             {
                 data.getHexData().setBuildingType(playScreen.getSelection());
                 data.getHexData().setBuildingTexture(hexpert.getTextureByBuilding(playScreen.getSelection()));

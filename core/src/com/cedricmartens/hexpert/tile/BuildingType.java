@@ -6,14 +6,14 @@ package com.cedricmartens.hexpert.tile;
 public enum BuildingType
 {
     NONE(0, new int[]{}, new int[]{}),
-    FARM(-1, new int[]{}, new int[]{1, 0, 0, 0, 0, 0, 0, 0}),
-    HOUSE(-1, new int[]{1, 0, 0, 0, 0, 0, 0, 0}, new int[]{}),
-    MINE(1, new int[]{0, 1, 0, 0, 0, 0, 0, 0}, new int[]{}),
-    WIND(1, new int[]{0, 1, 0, 0, 0, 0, 0, 0}, new int[]{}),
-    FACTORY(2, new int[]{0, 1, 1, 1, 0, 0, 0, 0}, new int[]{}),
-    MARKET(3, new int[]{0, 1, 0, 1, 1, 0, 0, 0}, new int[]{}),
-    BANK(5, new int[]{0, 1, 1, 1, 0, 1, 0, 0}, new int[]{}),
-    ROCKET(8, new int[]{0, 1, 0, 1, 1, 0, 1, 0}, new int[]{});
+    FARM(-1, new int[]{0, 0, 0, 0, 0, 0, 0, 0}, new int[]{1, 0, 0, 0, 0, 0, 0, 0}),
+    HOUSE(-1, new int[]{1, 0, 0, 0, 0, 0, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}),
+    MINE(1, new int[]{0, 1, 0, 0, 0, 0, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}),
+    WIND(1, new int[]{0, 1, 0, 0, 0, 0, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}),
+    FACTORY(2, new int[]{0, 1, 1, 1, 0, 0, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}),
+    MARKET(3, new int[]{0, 1, 0, 1, 1, 0, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}),
+    BANK(5, new int[]{0, 1, 1, 1, 0, 1, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}),
+    ROCKET(8, new int[]{0, 1, 0, 1, 1, 0, 1, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0});
 
     private int score;
     private int[] required;

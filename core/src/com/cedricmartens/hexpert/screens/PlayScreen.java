@@ -52,6 +52,7 @@ import java.util.List;
 
 import flexjson.JSONSerializer;
 
+import static com.cedricmartens.hexpert.misc.Const.BUILDING_COUNT;
 import static com.cedricmartens.hexpert.misc.Const.HEIGHT;
 import static com.cedricmartens.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.cedricmartens.hexpert.misc.Const.WIDTH;
@@ -165,7 +166,7 @@ public class PlayScreen extends PlayStage
             if(buildingType != BuildingType.NONE)
             {
                 defaultBuildings.add(data);
-                if(!Rules.isValid(data, buildingType))
+                if(!Rules.isValid(data))
                 {
                     lockedBuildings.add(data);
                 }
@@ -309,18 +310,17 @@ public class PlayScreen extends PlayStage
 
         Hexagon<TileData> hex = hexagon;
 
-        if(removeMode && !defaultBuildings.contains(hex.getHexData()))
+        if(removeMode && hex.getHexData().getBuildingType() != BuildingType.NONE
+                && !defaultBuildings.contains(hex.getHexData()))
         {
-            Dependency dependency = Rules.getDependencyLevel(hex.getHexData(), grid, validBuildings, lockedBuildings);
+            boolean isANeed = Rules.isANeed(hex.getHexData(), lockedBuildings);
 
-            if(dependency == Dependency.INDEPENDENT)
+            if(!isANeed)
                 batch.setShader(removeShader);
-            else if (dependency == Dependency.PARTIALLY)
-                batch.setShader(hintShader);
 
         }
         else if(hexpert.config.isBuildHelp() && getSelection() != null
-                && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection(), lockedBuildings))
+                && hex.getHexData().getTileType() != TileType.WATER && Rules.isValidPlacement(hex.getHexData(), getSelection()))
         {
             batch.setShader(hintShader);
         }
@@ -456,7 +456,7 @@ public class PlayScreen extends PlayStage
 
     private void updateValidBuildings()
     {
-        validBuildings = Rules.getValidBuildings(grid, lockedBuildings);
+        validBuildings = Rules.getValidBuildings(grid);
     }
 
     public void updateScore()
@@ -614,13 +614,12 @@ public class PlayScreen extends PlayStage
         return pixmap;
     }
 
-
     public boolean isRemovable(TileData data)
     {
         if(defaultBuildings.contains(data))
             return false;
 
-        return Rules.getDependencyLevel(data, grid, validBuildings, lockedBuildings) != Dependency.DEPENDENT;
+        return !Rules.isANeed(data, lockedBuildings);
     }
 
     public String getMapName() {

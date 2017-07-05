@@ -15,107 +15,20 @@ import static com.cedricmartens.hexpert.misc.Const.BUILDING_COUNT;
 
 public class Rules
 {
-    public static Dependency getDependencyLevel(TileData data, HexMap<TileData> grid,
-                                                List<TileData> validBuildings, List<TileData> lockedBuildings) {
-
-        if (data.getBuildingType() == BuildingType.NONE)
-            return Dependency.DEPENDENT;
-
-        Dependency defaultDep = Dependency.INDEPENDENT;
-        int[] neighborStats = getNeighborStats(data);
-        for (int i = 1; i < BuildingType.values().length; i++) {
-            BuildingType buildingType = BuildingType.values()[i];
-            if (buildingType.getRequired().length == BUILDING_COUNT) {
-                int requiredAmount = buildingType.getRequired()[data.getBuildingType().ordinal() - 1];
-                if (requiredAmount > 0) {
-                    if (neighborStats[i - 1] > 0)
-                    {
-                        for(int j = 0; j < data.getParent().getNeighbors().size(); j++) {
-                            TileData neighbor = data.getParent().getNeighbors().get(j).getHexData();
-                            BuildingType neighborBuildingType = neighbor.getBuildingType();
-
-                            if (buildingType == neighborBuildingType) {
-                                Logistic logistic = getLogisticalLevel(neighbor, data.getBuildingType(),
-                                        validBuildings, lockedBuildings);
-
-                                if (logistic == Logistic.INSUFFICIENT)
-                                    return Dependency.INDEPENDENT;
-                                else if (logistic == Logistic.SURPLUS)
-                                    defaultDep = Dependency.PARTIALLY;
-                                else return Dependency.DEPENDENT;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return defaultDep;
-    }
-
-    public static Logistic getLogisticalLevel(TileData data, BuildingType buildingType,
-                                              List<TileData> validBuildings, List<TileData> lockedBuildings)
-    {
-        if(!validBuildings.contains(data))
-            return Logistic.INSUFFICIENT;
-
-        int[] neighborData = getNeighborStats(data, lockedBuildings);
-        int requiredAmount = data.getBuildingType().getRequired()[buildingType.ordinal() - 1];
-        int neighborAmount = neighborData[buildingType.ordinal() - 1];
-
-        if(neighborAmount < requiredAmount)
-            return Logistic.INSUFFICIENT;
-        else if(neighborAmount > requiredAmount)
-            return Logistic.SURPLUS;
-        else return Logistic.NECESSARY;
-    }
-
-    public static List<TileData> getValidBuildings(HexMap<TileData> grid, List<TileData> lockedBuildings)
+    public static List<TileData> getValidBuildings(HexMap<TileData> grid)
     {
         List<TileData> vBuildings = new ArrayList<>();
 
         for(int i = 0; i < grid.getHexs().length; i++)
         {
             TileData data = (TileData) grid.getHexs()[i].getHexData();
+            if(data.getBuildingType() == BuildingType.NONE) continue;
 
-            if(isValid(data, data.getBuildingType(),lockedBuildings))
+            if(isValid(data))
                 vBuildings.add(data);
         }
 
         return vBuildings;
-    }
-
-    public static List<TileData> getValidBuildings(HexMap<TileData> grid)
-    {
-        return getValidBuildings(grid, new ArrayList<TileData>());
-    }
-
-    public static boolean isValid(TileData data, BuildingType selection)
-    {
-        return isValid(data, selection, new ArrayList<TileData>());
-    }
-
-    public static boolean isValid(TileData data, BuildingType selection, List<TileData> lockedBuildings)
-    {
-
-        int[] neighborStats = getNeighborStats(data, lockedBuildings);
-
-        for(int i = 0; i < selection.getDenied().length; i++)
-        {
-            if(selection.getDenied()[i] != 0
-                    && selection.getDenied()[i] <= neighborStats[i])
-            {
-                return false;
-            }
-        }
-
-        for(int i = 0; i < selection.getRequired().length; i++)
-        {
-            if(neighborStats[i] < selection.getRequired()[i])
-                return false;
-        }
-
-        return true;
     }
 
     public static boolean isValidPlacement(TileData data, BuildingType selection)
@@ -126,49 +39,130 @@ public class Rules
         return isValid(data, selection);
     }
 
-    public static boolean isValidPlacement(TileData data, BuildingType selection, List<TileData> lockedBuildings)
+    public static boolean isValid(TileData data)
     {
-        if(data.getBuildingType() != BuildingType.NONE)
-            return false;
-
-        return isValid(data, selection, lockedBuildings);
+        return isValid(data, data.getBuildingType());
     }
 
-    private static int neighborCountOf(BuildingType buildingType, TileData data)
-    {
-        if(buildingType == BuildingType.NONE)
-            throw new IllegalArgumentException();
-
-        return getNeighborStats(data)[buildingType.ordinal() - 1];
-    }
-
-    private static int[] getNeighborStats(TileData data)
-    {
-        return getNeighborStats(data, new ArrayList<TileData>());
-    }
-
-    private static int[] getNeighborStats(TileData data, List<TileData> lockedBuildings)
+    public static boolean isValid(TileData data, BuildingType selection)
     {
         List<Hexagon<TileData>> neighbors = data.getParent().getNeighbors();
-        int[] neighborStats = new int[BUILDING_COUNT];
+        BuildingType buildingTypeTarget = selection;
 
-        for(int i = 0; i < neighbors.size(); i++) {
-            TileData tileData = neighbors.get(i).getHexData();
+        int[] requirements = new int[buildingTypeTarget.getRequired().length];
+        int[] denied = new int[buildingTypeTarget.getDenied().length];
 
-            if(tileData.getBuildingType() != BuildingType.NONE)
+        for(int i = 0; i < neighbors.size(); i++)
+        {
+            BuildingType buildingTypeNeed = neighbors.get(i).getHexData().getBuildingType();
+            if(buildingTypeNeed == BuildingType.NONE) continue;
+
+            if(isRequired(buildingTypeNeed, buildingTypeTarget) && isValid(neighbors.get(i).getHexData()))
             {
-                if(lockedBuildings.contains(tileData)){
+                requirements[buildingTypeNeed.ordinal() - 1]++;
+            }
+        }
 
-                    if(isValid(tileData, tileData.getBuildingType()))
-                    {
-                        neighborStats[tileData.getBuildingType().ordinal() - 1]++;
-                    }
-                }else{
-                    neighborStats[tileData.getBuildingType().ordinal() - 1]++;
+        for(int i = 0; i < neighbors.size(); i++)
+        {
+            BuildingType buildingTypeNeed = neighbors.get(i).getHexData().getBuildingType();
+            if(buildingTypeNeed == BuildingType.NONE) continue;
+
+            if(isDenied(buildingTypeNeed, buildingTypeTarget) && isValid(neighbors.get(i).getHexData()))
+            {
+                denied[buildingTypeNeed.ordinal() - 1]++;
+
+                int numberOfDenied = denied[buildingTypeNeed.ordinal() - 1];
+                int numberIfReachedInvalid = buildingTypeTarget.getDenied()[buildingTypeNeed.ordinal() - 1];
+
+                if(numberOfDenied >= numberIfReachedInvalid)
+                {
+                    return false;
                 }
             }
         }
 
-        return neighborStats;
+        for(int i = 0; i < buildingTypeTarget.getRequired().length; i++)
+        {
+            int numberItHas = requirements[i];
+
+            if(!hasRequiredAmount(buildingTypeTarget, BuildingType.values()[i + 1], numberItHas))
+                return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isRequired(BuildingType buildingNeed, BuildingType buildingTarget)
+    {
+        if(buildingNeed == BuildingType.NONE || buildingNeed == BuildingType.NONE)
+            throw new NoBuildingException();
+        return buildingTarget.getRequired()[buildingNeed.ordinal() - 1] > 0;
+    }
+
+    public static boolean isDenied(BuildingType buildingNeed, BuildingType buildingTarget)
+    {
+        if(buildingNeed == BuildingType.NONE || buildingNeed == BuildingType.NONE)
+            throw new NoBuildingException();
+        return buildingTarget.getDenied()[buildingNeed.ordinal() - 1] > 0;
+    }
+
+    public static boolean isANeed(TileData data, List<TileData> lockedBuildings)
+    {
+        if(data.getBuildingType() == BuildingType.NONE)
+            throw new NoBuildingException();
+
+        BuildingType buildingTypeNeed = data.getBuildingType();
+        List<Hexagon<TileData>> neighbors = data.getParent().getNeighbors();
+        for(int i = 0; i < neighbors.size(); i++)
+        {
+            TileData neighborData = neighbors.get(i).getHexData();
+            BuildingType buildingTypeTarget = neighborData.getBuildingType();
+            if(buildingTypeTarget == BuildingType.NONE) continue;
+            int neighborCount = neighborCountOf(buildingTypeNeed, neighborData);
+
+            if(hasExactlyRequiredAmount(buildingTypeTarget, buildingTypeNeed, neighborCount))
+            {
+                if(lockedBuildings.contains(neighborData))
+                {
+                    if(isValid(neighborData))
+                        return true;
+                }else{
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean hasRequiredAmount(BuildingType buildingTypeTarget, BuildingType buildingTypeNeed, int count)
+    {
+        return count >= buildingTypeTarget.getRequired()[buildingTypeNeed.ordinal() - 1];
+    }
+
+    public static boolean hasMoreThanRequiredAmount(BuildingType buildingTypeTarget, BuildingType buildingTypeNeed, int count)
+    {
+        return count > buildingTypeTarget.getRequired()[buildingTypeNeed.ordinal() - 1];
+    }
+
+    public static boolean hasExactlyRequiredAmount(BuildingType buildingTypeTarget, BuildingType buildingTypeNeed, int count)
+    {
+        return count == buildingTypeTarget.getRequired()[buildingTypeNeed.ordinal() - 1];
+    }
+
+    public static int neighborCountOf(BuildingType buildingType, TileData data)
+    {
+        int n = 0;
+
+        for(int i = 0; i < data.getParent().getNeighbors().size(); i++)
+        {
+            Hexagon<TileData> neighbor = data.getParent().getNeighbors().get(i);
+
+            if(buildingType == neighbor.getHexData().getBuildingType())
+                n++;
+        }
+
+        return n;
     }
 }
