@@ -39,6 +39,7 @@ import com.cedricmartens.hexpert.map.MapUtils;
 import com.cedricmartens.hexpert.map.Objective;
 import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.misc.Const;
+import com.cedricmartens.hexpert.misc.TextureData;
 import com.cedricmartens.hexpert.social.Achievement;
 import com.cedricmartens.hexpert.tile.BuildingType;
 import com.cedricmartens.hexpert.tile.Dependency;
@@ -408,6 +409,26 @@ public class PlayScreen extends PlayStage
         return objectives[numObjectivePassed];
     }
 
+    private Texture getNextObjectiveTexture(int numObjectivePassed, Objective[] objectives)
+    {
+        if(numObjectivePassed >= objectives.length)
+            return null;
+
+        int diff = objectives.length - numObjectivePassed;
+
+        switch (diff)
+        {
+            case 1 :
+                return hexpert.assetManager.get(TextureData.TEXTURE_HEXGOLD, Texture.class);
+            case 2 :
+                return hexpert.assetManager.get(TextureData.TEXTURE_HEXSILVER, Texture.class);
+            case 3:
+                return hexpert.assetManager.get(TextureData.TEXTURE_HEXBRONZE, Texture.class);
+            default:
+                return hexpert.assetManager.get(TextureData.TEXTURE_GRASS, Texture.class);
+        }
+    }
+
     public Hexpert getHexpert() {
         return super.getHexpert();
     }
@@ -496,8 +517,29 @@ public class PlayScreen extends PlayStage
         Objective nextObjective = getNextObjective(mapResult.getObjectivePassedCount(), map.getObjectives());
 
         if(nextObjective == null)
+        {
             lblNextObjective.setText("");
-        else lblNextObjective.setText(nextObjective.toString(hexpert.i18NBundle));
+            nextObjectiveImage.setVisible(false);
+        }
+        else{
+            updateTableButton(nextObjective);
+        }
+    }
+
+
+    public void updateTableButton(Objective nextObjective)
+    {
+        tableBtn.clearChildren();
+        tableBtn.add(btnMore);
+        tableBtn.add(btnRemove);
+        tableBtn.add(btnHelp);
+        tableBtn.row();
+        lblNextObjective = new Label("", hexpert.getSkin());
+        lblNextObjective.setWrap(true);
+        lblNextObjective.setText(nextObjective.toString(hexpert.i18NBundle));
+        nextObjectiveImage = new Image(getNextObjectiveTexture(mapResult.getObjectivePassedCount(), map.getObjectives()));
+        tableBtn.add(nextObjectiveImage).width(96).height(96);
+        tableBtn.add(lblNextObjective).width(lblNextObjective.getPrefWidth()).left();
     }
 
     public void resetGrid()

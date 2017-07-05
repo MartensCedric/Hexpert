@@ -55,6 +55,8 @@ public abstract class PlayStage extends StageScreen {
     protected Table table, tableBtn, tableRequirements, tableScore;
     protected ImageButton btnMore, btnRemove, btnHelp;
 
+    protected Image nextObjectiveImage;
+
     protected BuildingType selection;
     protected ImageButton selectedButton;
     protected Label lblNextObjective;
@@ -190,6 +192,8 @@ public abstract class PlayStage extends StageScreen {
         tableBtn.row();
         lblNextObjective = new Label("", hexpert.getSkin());
         lblNextObjective.setWrap(true);
+        nextObjectiveImage = new Image();
+        tableBtn.add(nextObjectiveImage).width(48);
         tableBtn.add(lblNextObjective).width(lblNextObjective.getPrefWidth()).left();
 
         tableRequirements = new Table();
