@@ -125,7 +125,7 @@ public class Rules
             {
                 if(lockedBuildings.contains(neighborData))
                 {
-                    if(isValid(neighborData))
+                    if(isANeed(neighborData, lockedBuildings))
                         return true;
                 }else{
                     return true;
