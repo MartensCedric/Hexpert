@@ -17,6 +17,8 @@ public class LockedDialog extends StandardDialog {
         getBackground().setMinWidth(1000);
         getBackground().setMinHeight(350);
 
+        getContentTable().defaults().pad(25);
+
         TextButton.TextButtonStyle txtButtonStyle = skin.get("gray", TextButton.TextButtonStyle.class);
 
         Label label = new Label(hexpert.i18NBundle.format("locked_left", currentGoals, goalsNeeded), skin);

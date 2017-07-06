@@ -178,7 +178,7 @@ public abstract class PlayStage extends StageScreen {
         });
 
         tableBtn = new Table();
-        tableBtn.setY(HEIGHT - 150);
+        tableBtn.setY(HEIGHT - 155);
         tableBtn.setX(235);
         tableBtn.defaults().width(125).height(125).pad(15);
 
@@ -199,7 +199,7 @@ public abstract class PlayStage extends StageScreen {
         tableRequirements = new Table();
         tableRequirements.defaults().height(150).pad(0, 5, 0, 5);
         tableRequirements.setX(Const.WIDTH/2 + 100);
-        tableRequirements.setY(HEIGHT - 105);
+        tableRequirements.setY(HEIGHT - 115);
         setBuilding(null);
 
         tableScore = new Table();
