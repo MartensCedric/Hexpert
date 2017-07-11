@@ -41,7 +41,9 @@ public class LevelCompleteDialog extends StandardDialog {
         Image imageTrophy = new Image(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_ACHIEVEMENTS)));
         TextButton.TextButtonStyle txtButtonStyle = skin.get("gold", TextButton.TextButtonStyle.class);
         I18NBundle bundle = hexpert.i18NBundle;
-        Label content = new Label(bundle.get("all_objectives_finished"), skin);
+        Label content = new Label(lvlIndex > 4 ?
+                bundle.get("all_objectives_finished") : bundle.get("all_objectives_finished_no_quit")
+                , skin);
 
         content.setAlignment(Align.center);
         getBackground().setMinWidth(1000);
@@ -56,18 +58,24 @@ public class LevelCompleteDialog extends StandardDialog {
 
         getButtonTable().defaults().pad(15);
 
-        TextButton textButtonYes = new TextButton(bundle.get("yes"), txtButtonStyle);
-        setObject(textButtonYes, 1);
-        getButtonTable().add(textButtonYes);
-
-        TextButton textButtonNo = new TextButton(bundle.get("no"), txtButtonStyle);
-        setObject(textButtonNo, null);
-        getButtonTable().add(textButtonNo);
-
         if(lvlIndex > 4) {
+
+            TextButton textButtonYes = new TextButton(bundle.get("yes"), txtButtonStyle);
+            setObject(textButtonYes, 1);
+            getButtonTable().add(textButtonYes);
+
+            TextButton textButtonNo = new TextButton(bundle.get("no"), txtButtonStyle);
+            setObject(textButtonNo, null);
+            getButtonTable().add(textButtonNo);
+
             TextButton textButtonShare = new TextButton(bundle.get("share"), txtButtonStyle);
             setObject(textButtonShare, 2);
             getButtonTable().add(textButtonShare).width(textButtonShare.getLabelCell().getPrefWidth() + 30);
+        }else{
+            TextButton textButtonOk = new TextButton(bundle.get("ok"), txtButtonStyle);
+            setObject(textButtonOk, 1);
+            getButtonTable().add(textButtonOk);
+
         }
     }
 
