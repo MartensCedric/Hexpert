@@ -171,16 +171,8 @@ public class MoreDialog extends StandardDialog {
 
     private void backToMenu()
     {
-        Label text = new Label(hexpert.i18NBundle.get("confirm_quit"), hexpert.getSkin());
-        ActionDialog actionDialog = new ActionDialog(text, new Action() {
-            @Override
-            public void doAction() {
-                hexpert.setScreen(hexpert.levelSelectScreen);
-            }
-        }, hexpert.i18NBundle, hexpert.getSkin(), hexpert);
-
-        actionDialog.show(getStage());
         hide();
+        hexpert.setScreen(hexpert.levelSelectScreen);
     }
 
     private void showGoals() {
