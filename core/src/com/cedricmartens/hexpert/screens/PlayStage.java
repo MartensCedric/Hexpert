@@ -1,5 +1,6 @@
 package com.cedricmartens.hexpert.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -158,15 +159,6 @@ public abstract class PlayStage extends StageScreen {
 
         btnRemove = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_REMOVE))));
 
-        btnRemove.addListener(new ClickListener()
-          {
-              @Override
-              public void clicked(InputEvent event, float x, float y) {
-                  removeMode = !removeMode;
-                  setSelection(null);
-              }
-          }
-        );
 
         btnHelp = new ImageButton(new TextureRegionDrawable(new TextureRegion((Texture) hexpert.assetManager.get(TEXTURE_HELP))));
         btnHelp.addListener(new ClickListener()

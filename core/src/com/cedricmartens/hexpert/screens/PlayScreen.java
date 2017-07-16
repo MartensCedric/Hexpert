@@ -86,10 +86,12 @@ public class PlayScreen extends PlayStage
     private LevelCompleteDialog exitDialog;
     private BuildingAnimator windAnimator;
     private GridEffect gridEffect;
+    private float removeTime;
 
-    public PlayScreen(final Hexpert hexpert, final Map map, MapResult result, final String mapName) {
+    public PlayScreen(final Hexpert hexpert, final Map map, final MapResult result, final String mapName) {
         super(hexpert);
         this.hexpert = hexpert;
+        removeTime = 0;
         this.windAnimator = new BuildingAnimator(0.5f, 1, SPRITE_FOLDER + "wind.png", hexpert);
         this.mapName = mapName;
         this.map = map;
@@ -130,6 +132,18 @@ public class PlayScreen extends PlayStage
             table.add(imgBuilding);
             table.row();
         }
+
+
+        btnRemove.addListener(new ClickListener()
+          {
+              @Override
+              public void clicked(InputEvent event, float x, float y) {
+                  removeMode = !removeMode;
+                  setSelection(null);
+                  removeTime = 0f;
+              }
+          }
+        );
 
         table.setX(WIDTH - 100);
         table.setY(Const.HEIGHT - table.getPrefHeight()/2 - 5);
@@ -526,7 +540,6 @@ public class PlayScreen extends PlayStage
         }
     }
 
-
     public void updateTableButton(Objective nextObjective)
     {
         tableBtn.clearChildren();
@@ -567,7 +580,6 @@ public class PlayScreen extends PlayStage
     public MoveEventManager getMoveEventManager() {
         return moveEventManager;
     }
-
 
     private void saveResult()
     {
