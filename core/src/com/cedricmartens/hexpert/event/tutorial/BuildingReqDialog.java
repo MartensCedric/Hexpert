@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.cedricmartens.hexpert.misc.TextureData.SPRITE_FOLDER;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 

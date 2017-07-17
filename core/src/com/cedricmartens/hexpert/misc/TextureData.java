@@ -1,11 +1,5 @@
 package com.cedricmartens.hexpert.misc;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
 /**
  * Created by 1544256 on 2017-04-26.
  */

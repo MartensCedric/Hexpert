@@ -11,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.cedricmartens.hexpert.Hexpert;
-import com.cedricmartens.hexpert.event.misc.ActionDialog;
-import com.cedricmartens.hexpert.misc.Action;
 import com.cedricmartens.hexpert.screens.PlayScreen;
 import com.cedricmartens.hexpert.screens.PlayStage;
 

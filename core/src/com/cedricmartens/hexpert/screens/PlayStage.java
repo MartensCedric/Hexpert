@@ -1,6 +1,5 @@
 package com.cedricmartens.hexpert.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.cedricmartens.hexpert.Hexpert;
 import com.cedricmartens.hexpert.event.HelpDialog;
 import com.cedricmartens.hexpert.event.MoreDialog;
@@ -26,25 +24,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import static com.cedricmartens.hexpert.misc.Const.HEIGHT;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_BANK_MIN;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FACTORY_MIN;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_FARM_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HELP;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HOUSE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_HOUSE_MIN;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MARKET;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MARKET_MIN;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MINE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MINE_MIN;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_MORE;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_NOT_FARM;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_REMOVE;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ROCKET;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_ROCKET_MIN;
-import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND;
 import static com.cedricmartens.hexpert.misc.TextureData.TEXTURE_WIND_MIN;
 
 /**

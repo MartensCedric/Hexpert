@@ -2,12 +2,9 @@ package com.cedricmartens.hexpert.tile;
 
 import com.cedricmartens.hexmap.hexagon.Hexagon;
 import com.cedricmartens.hexmap.map.HexMap;
-import com.cedricmartens.hexpert.misc.Const;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.cedricmartens.hexpert.misc.Const.BUILDING_COUNT;
 
 /**
  * Created by martens on 5/7/17.

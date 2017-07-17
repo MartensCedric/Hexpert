@@ -42,18 +42,15 @@ import com.cedricmartens.hexpert.misc.Const;
 import com.cedricmartens.hexpert.misc.TextureData;
 import com.cedricmartens.hexpert.social.Achievement;
 import com.cedricmartens.hexpert.tile.BuildingType;
-import com.cedricmartens.hexpert.tile.Dependency;
 import com.cedricmartens.hexpert.tile.Rules;
 import com.cedricmartens.hexpert.tile.TileData;
 import com.cedricmartens.hexpert.tile.TileType;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import flexjson.JSONSerializer;
 
-import static com.cedricmartens.hexpert.misc.Const.BUILDING_COUNT;
 import static com.cedricmartens.hexpert.misc.Const.HEIGHT;
 import static com.cedricmartens.hexpert.misc.Const.HEX_HEIGHT_RATIO;
 import static com.cedricmartens.hexpert.misc.Const.WIDTH;
@@ -87,11 +84,15 @@ public class PlayScreen extends PlayStage
     private BuildingAnimator windAnimator;
     private GridEffect gridEffect;
     private float removeTime;
+    private boolean isRemovingPressed;
+    private boolean hasRemovedGrid;
 
     public PlayScreen(final Hexpert hexpert, final Map map, final MapResult result, final String mapName) {
         super(hexpert);
         this.hexpert = hexpert;
         removeTime = 0;
+        isRemovingPressed = false;
+        hasRemovedGrid = false;
         this.windAnimator = new BuildingAnimator(0.5f, 1, SPRITE_FOLDER + "wind.png", hexpert);
         this.mapName = mapName;
         this.map = map;
@@ -138,9 +139,27 @@ public class PlayScreen extends PlayStage
           {
               @Override
               public void clicked(InputEvent event, float x, float y) {
-                  removeMode = !removeMode;
-                  setSelection(null);
-                  removeTime = 0f;
+                  if(!hasRemovedGrid)
+                  {
+                      removeMode = !removeMode;
+                      setSelection(null);
+                  }
+
+                  hasRemovedGrid = false;
+                  removeTime = 0;
+              }
+
+              @Override
+              public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                  isRemovingPressed = true;
+                  removeTime = 0;
+                  return super.touchDown(event, x, y, pointer, button);
+              }
+
+              @Override
+              public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                  super.touchUp(event, x, y, pointer, button);
+                  isRemovingPressed = false;
               }
           }
         );
@@ -253,6 +272,16 @@ public class PlayScreen extends PlayStage
         if(Math.abs(getCamera().position.x) > 5000
                 || Math.abs(getCamera().position.y) > 5000)
             hexpert.playServices.unlockAchievement(GREAT_ESCAPE);
+
+        if(isRemovingPressed)
+        {
+            removeTime += Gdx.graphics.getDeltaTime();
+            if(removeTime >= 1.5f && !hasRemovedGrid)
+            {
+                hasRemovedGrid = true;
+                resetGrid();
+            }
+        }
 
         windAnimator.tick(Gdx.graphics.getDeltaTime());
         gridEffect.tick(Gdx.graphics.getDeltaTime());
