@@ -276,7 +276,7 @@ public class PlayScreen extends PlayStage
         if(isRemovingPressed)
         {
             removeTime += Gdx.graphics.getDeltaTime();
-            if(removeTime >= 1.5f && !hasRemovedGrid)
+            if(removeTime >= 0.75f && !hasRemovedGrid)
             {
                 hasRemovedGrid = true;
                 resetGrid();
