@@ -596,6 +596,13 @@ public class PlayScreen extends PlayStage
                     TileData data = (TileData) grid.getHexs()[i].getHexData();
                     data.setBuildingType(map.getBuildingTypes()[i]);
                     data.setBuildingTexture(hexpert.getTextureByBuilding(map.getBuildingTypes()[i]));
+
+                    TileType tileType = data.getTileType();
+                    if(tileType == TileType.FOREST)
+                    {
+                        data.setTerrainTexture((Texture) hexpert.assetManager.get(TEXTURE_FOREST));
+                    }
+
                 }
 
                 setSelection(null);
