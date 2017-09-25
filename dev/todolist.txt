@@ -1,14 +1,3 @@
-MUST
-==PROGRESS==
-min 30 levels
-
-==SOCIAL==
-Sharing
-Leaderboards
-Complete English, French, Spanish, German translations
-
-+Fix all issues on GitHub
-
 NICE TO HAVE
 Background pictures
 More Achievements
