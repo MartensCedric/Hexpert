@@ -1,4 +1,4 @@
-# XXX PERT
+# Hexpert
 
 ![](/dev/art/banner_new.png?raw=true "Hexpert new banner")
 
